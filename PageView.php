@@ -9,11 +9,6 @@ class PageView
 
     }
 
-    public function __destruct()
-    {
-//code to run
-    }
-
     function showName($Name)
     {
     }

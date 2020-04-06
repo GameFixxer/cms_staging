@@ -1,14 +1,11 @@
 <?php
 
-class PageTreeView
+class PageTreeView extends PageView
 {
     public function __construct()
     {
 
     }
 
-    public function __destruct()
-    {
 
-    }
 }

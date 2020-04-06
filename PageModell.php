@@ -2,29 +2,25 @@
 
 class PageModell
 {
+    protected int $pageID;
+    protected string $pageName;
 
-    Private String $PageName;
-    Private $CreationDate;
-    Private INT $PageID;
+    //private $creationDate; private
 
-    function __construct(String $Name, $ID)
+
+    public function __construct(string $name, int $id)
     {
-        $PageName = $name;
-        $CreationDate = new DateTime();
-        $PageID = $ID;
+        $this->pageName = $name;
+        //$this ->$creationDate = new DateTime();
+        $this->pageID = $id;
 
     }
 
-    public function __destruct()
-    {
 
-    }
-
-    function changeOwnName($Name)
+    public function changeOwnName($name): void
     {
-        $this->PageName = $Name;
+        $this->pageName = $name;
     }
 
 }
 
-?>

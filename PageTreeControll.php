@@ -1,9 +1,9 @@
 <?php
 
-class PageTreeControll
+class PageTreeControll extends PageControll
 {
 
-    function __construct()
+    public function __construct()
     {
 
     }
@@ -24,10 +24,5 @@ class PageTreeControll
 
     private function removePagefromList()
     {
-    }
-
-    public function __destruct()
-    {
-
     }
 }
