@@ -22,5 +22,14 @@ class PageModell
         $this->pageName = $name;
     }
 
+    public function getName(): string
+    {
+        return $this->pageName;
+    }
+
+    public function getId(): int
+    {
+        return $this->pageID;
+    }
 }
 

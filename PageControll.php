@@ -5,18 +5,25 @@ class PageControll
     private $pageModell;
     private $pageView;
 
-    private function __construct(string $name, int $id)
+    protected function __construct(string $name, int $id)
     {
 
-        $this -> pageModell = new PageModell($name, $id);
-        $this ->pageView = new PageView($name);
+        $this->pageModell = new PageModell($name, $id);
+        $this->pageView = new PageView($name);
     }
 
-    private function setName($Name):void
+    protected function setName($name): void
     {
-        $this->pageModell->changeOwnName($Name);
-        $this->pageView->showName($Name);
+        $this->pageModell->changeOwnName($name);
+        $this->pageView->setName($name);
     }
 
-
+    protected function getName(): string
+    {
+        return $this->pageModell->getName();
+    }
+    protected function getId(): int
+    {
+        return $this->pageModell->getId();
+    }
 }

@@ -2,7 +2,9 @@
 
 class PageTreeModell extends PageModell
 {
-    protected array $pages;
+    protected array $pagesinformation;
+    private $pages;
+    private bool $checker;
 
     public function __construct(string $name, int $id)
     {
@@ -10,27 +12,57 @@ class PageTreeModell extends PageModell
         $this->pageName = $name;
         //$this ->$creationDate = new DateTime();
         $this->pageID = $id;
-        $this->addPagetoList($this->pageID);
+        //$this->addPagetoList($this->pageID, $this->pageName);
+        $this->pages = new SplDoublyLinkedList();
     }
 
-
-    public function addPagetoList(int $pageID): void
+    public function addPagetoList(PageControll $newpage): void
     {
-        $this->pages[] = $pageID;
+        $this->pages->push($newpage);
     }
 
     public function removePagefromList(int $pageID): void
     {
-        if (in_array($pageID, $this->pages, true)) {
-            if (array_search($pageID, $this->pages, true) === array_key_last($this->pages)) {
-                array_pop($this->pages);
-            } else {
-                $this->pages[array_search($pageID, $this->pages, true)] = 'gelöscht';
-            }
+
+        if ($this->pages->offsetExists($this->getIndexfromPage($pageID)) === true) {
+
+            $this->pages->offsetUnset($this->getIndexfromPage($pageID));
+
         } else {
             throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht!');
         }
     }
 
+    private function getIndexfromPage(int $id): int
+    {
+        $checker = false;
+        if ($this->pages->isEmpty() === false) {
+
+            for ($i = 0; $i < $this->pages->count(); $i++) {
+                if ($this->pages->offsetGet($i)->getId() === $id) {
+                    $checker = true;
+                    break;
+                }
+            }
+        } else {
+            throw new \http\Exception\InvalidArgumentException('Es existiert noch keine Seite!');
+        }
+        if ($checker === true) {
+            return $i;
+        }
+
+        throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht!');
+    }
+
+    public function changePageName(int $id, string $newName): void
+    {
+        $this->pages->offsetGet($this->getIndexfromPage($id))->setName($newName);
+    }
+
+    public function getPagename(int $id): string
+    {
+        $this->pages->offsetGet($this->getIndexfromPage($id))->getName();
+
+    }
 
 }

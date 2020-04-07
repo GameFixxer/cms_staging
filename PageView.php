@@ -3,13 +3,22 @@
 class PageView
 {
 
+    private string $displayname;
 
-    function __construct($Name)
+    public function __construct($name)
     {
+        $this->displayname = $name;
+        $this->showName();
+    }
+
+    public function setName($name):void
+    {
+        $this->displayname = $name;
 
     }
 
-    function showName($Name)
+    function showName():void
     {
+
     }
 }
