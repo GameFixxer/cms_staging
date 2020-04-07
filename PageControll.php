@@ -22,6 +22,7 @@ class PageControll
     {
         return $this->pageModell->getName();
     }
+
     protected function getId(): int
     {
         return $this->pageModell->getId();

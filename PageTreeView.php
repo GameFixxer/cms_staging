@@ -7,6 +7,11 @@ class PageTreeView extends PageView
         parent:: __construct($name);
     }
 
-    public function removePagefromList( $id){}
-    public function ShowPageonList($name, $id){}
+    public function removePagefromList($id)
+    {
+    }
+
+    public function ShowPageonList($name, $id)
+    {
+    }
 }

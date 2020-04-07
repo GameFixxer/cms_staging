@@ -14,11 +14,13 @@ class PageTreeControll extends PageControll
 
     protected function changeName(int $id, string $name): void
     {
-        $this->pageTreeModell->changePageName($id, $name);
-        $this->pageTreeView->ShowPageonList($name);
+        if ($this->pageTreeModell->isListEmpty() === false && $this->pageTreeModell->doesPageExist($id) === true) {
+            $this->pageTreeModell->changePageName($id, $name);
+            $this->pageTreeView->ShowPageonList($name, $id);
+        }
     }
 
-    protected function createNewPage(int $pageID, string $name):void
+    protected function createNewPage(int $pageID, string $name): void
     {
         $this->addPageToList($pageID, $name);
     }
@@ -30,14 +32,18 @@ class PageTreeControll extends PageControll
 
     private function addPageToList(string $name, int $pageId): void
     {
-        $newpage = new PageControll($name,$pageId);
-        $this->pageTreeModell->addPagetoList($newpage);
-        $this->pageTreeView->ShowPageonList($name);
+        $newPage = new PageControll($name, $pageId);
+        $this->pageTreeModell->addPageToList($newPage);
+        $this->pageTreeView->ShowPageonList($name, $pageId);
     }
 
     private function removePageFromList(int $pageId): void
     {
-        $this->pageTreeModell->removePagefromList($pageId);
-        $this->pageTreeView->removePagefromList($pageId);
+        if ($this->pageTreeModell->isListEmpty() === false && $this->pageTreeModell->doesPageExist($pageId) === true) {
+            $this->pageTreeModell->removePageFromList($pageId);
+            $this->pageTreeView->removePagefromList($pageId);
+        } else {
+            throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht! Evtl');
+        }
     }
 }

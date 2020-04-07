@@ -11,13 +11,13 @@ class PageView
         $this->showName();
     }
 
-    public function setName($name):void
+    public function setName($name): void
     {
         $this->displayname = $name;
 
     }
 
-    function showName():void
+    function showName(): void
     {
 
     }
