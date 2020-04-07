@@ -2,9 +2,8 @@
 
 class PageTreeModell extends PageModell
 {
-    protected array $pagesinformation;
     private $pages;
-    private bool $checker;
+
 
     public function __construct(string $name, int $id)
     {
@@ -13,6 +12,24 @@ class PageTreeModell extends PageModell
         //$this ->$creationDate = new DateTime();
         $this->pageID = $id;
         $this->pages = new SplDoublyLinkedList();
+    }
+
+    public function createArrayOfPageNamesAndIDs(): array
+    {
+        $pageNameAndIdArray = [];
+        for ($i = 0; $i < $this->pages->count(); $i++) {
+            $pageNameAndIdArray = 'Name: ' . $this->getPagename($i) . ' ID: ' . $this->pages->offsetGet($i)->getId();;
+        }
+        return $pageNameAndIdArray;
+    }
+
+    public function createArrayOfPageIds(): array
+    {
+        $pageIdArray = [];
+        for ($i = 0; $i < $this->pages->count(); $i++) {
+            $pageIdArray = $this->pages->offsetGet($i)->getId();
+        }
+        return $pageIdArray;
     }
 
     public function addPageToList(PageControll $newPage): void
@@ -66,7 +83,7 @@ class PageTreeModell extends PageModell
 
     public function getPagename(int $id): string
     {
-        $this->pages->offsetGet($this->getIndexFromPage($id))->getName();
+        return $this->pages->offsetGet($this->getIndexFromPage($id))->getName();
 
     }
 

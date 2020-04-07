@@ -3,22 +3,23 @@
 class PageView
 {
 
-    private string $displayname;
+    private string $displayName;
 
     public function __construct($name)
     {
-        $this->displayname = $name;
+        $this->displayName = $name;
         $this->showName();
     }
 
     public function setName($name): void
     {
-        $this->displayname = $name;
+        $this->displayName = $name;
 
     }
 
-    function showName(): void
+    private function showName(): void
     {
-
+        echo('Name der Seite: ' . $this->displayName);
     }
 }
+

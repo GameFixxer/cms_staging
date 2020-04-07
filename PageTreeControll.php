@@ -16,7 +16,7 @@ class PageTreeControll extends PageControll
     {
         if ($this->pageTreeModell->isListEmpty() === false && $this->pageTreeModell->doesPageExist($id) === true) {
             $this->pageTreeModell->changePageName($id, $name);
-            $this->pageTreeView->ShowPageonList($name, $id);
+            $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
         }
     }
 
@@ -34,14 +34,14 @@ class PageTreeControll extends PageControll
     {
         $newPage = new PageControll($name, $pageId);
         $this->pageTreeModell->addPageToList($newPage);
-        $this->pageTreeView->ShowPageonList($name, $pageId);
+        $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
     }
 
     private function removePageFromList(int $pageId): void
     {
         if ($this->pageTreeModell->isListEmpty() === false && $this->pageTreeModell->doesPageExist($pageId) === true) {
             $this->pageTreeModell->removePageFromList($pageId);
-            $this->pageTreeView->removePagefromList($pageId);
+            $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
         } else {
             throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht! Evtl');
         }
