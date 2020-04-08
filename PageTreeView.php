@@ -2,7 +2,7 @@
 
 class PageTreeView extends PageView
 {
-    public function ShowPageonList(array $namesAndId,string $pageName): void
+    public function ShowPageonList(array $namesAndId, string $pageName): void
     {
         echo('Du hast die ' . $pageName . ' gewählt ' . "<br/>");
         echo('' . "\n");
