@@ -2,14 +2,14 @@
 
 class PageTreeControll extends PageControll
 {
-    private $pageTreeModell;
-    private $pageTreeView;
+    private PageTreeModell $pageTreeModell;
+    private PageTreeView $pageTreeView;
 
-    public function __construct(string $name, int $id)
+    public function __construct(string $ownName, int $ownId)
     {
-        parent::__construct($name, $id);
-        $this->pageTreeModell = new PageTreeModell($name, $id);
-        $this->pageTreeView = new PageTreeView($name);
+        parent::__construct($ownName, $ownId);
+        $this->pageTreeModell = new PageTreeModell($ownName, $ownId);
+        $this->pageTreeView = new PageTreeView($ownName);
     }
 
     protected function changeName(int $id, string $name): void
@@ -20,21 +20,34 @@ class PageTreeControll extends PageControll
         }
     }
 
-    protected function createNewPage(int $pageID, string $name): void
+    public function isEmpty(): bool
     {
-        $this->addPageToList($pageID, $name);
+        return $this->pageTreeModell->isListEmpty();
     }
 
-    protected function deletePage(int $pageID): void
+    public function createNewPage(int $pageId, string $name): void
     {
-        $this->removePageFromList($pageID);
+        if ($this->pageTreeModell->doesPageExist($pageId) === true) {
+            throw new \InvalidArgumentException('Diese SeitenID existiert bereits!');
+
+        }
+
+        $this->addPageToList($name, $pageId,);
+
+
+    }
+
+    public function deletePage(int $pageId): void
+    {
+        $this->removePageFromList($pageId);
     }
 
     private function addPageToList(string $name, int $pageId): void
     {
         $newPage = new PageControll($name, $pageId);
         $this->pageTreeModell->addPageToList($newPage);
-        $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
+        $this->pageTreeModell->createArrayOfPageNamesAndIDs();
+        //$this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
     }
 
     private function removePageFromList(int $pageId): void
@@ -43,7 +56,7 @@ class PageTreeControll extends PageControll
             $this->pageTreeModell->removePageFromList($pageId);
             $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
         } else {
-            throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht! Evtl');
+            throw new InvalidArgumentException('Diese SeitenID existiert nicht!');
         }
     }
 }

@@ -2,12 +2,7 @@
 
 class PageTreeView extends PageView
 {
-    public function __construct($name)
-    {
-        parent:: __construct($name);
-    }
-
-    public function ShowPageonList(array $namesAndId)
+    public function ShowPageonList(array $namesAndId): void
     {
         print_r($namesAndId);
     }

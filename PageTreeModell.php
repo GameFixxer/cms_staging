@@ -2,7 +2,7 @@
 
 class PageTreeModell extends PageModell
 {
-    private $pages;
+    private SplDoublyLinkedList $pages;
 
 
     public function __construct(string $name, int $id)
@@ -16,20 +16,12 @@ class PageTreeModell extends PageModell
 
     public function createArrayOfPageNamesAndIDs(): array
     {
-        $pageNameAndIdArray = [];
+        $pageNameAndIdArray = array();
         for ($i = 0; $i < $this->pages->count(); $i++) {
-            $pageNameAndIdArray = 'Name: ' . $this->getPagename($i) . ' ID: ' . $this->pages->offsetGet($i)->getId();;
+            $pageNameAndIdArray [] = 'Name: ' . $this->pages->offsetGet($i)->getName($i) . ' ID: ' . $this->pages->offsetGet($i)->getId();
+            echo('Reporting:' . $pageNameAndIdArray[$i]);
         }
         return $pageNameAndIdArray;
-    }
-
-    public function createArrayOfPageIds(): array
-    {
-        $pageIdArray = [];
-        for ($i = 0; $i < $this->pages->count(); $i++) {
-            $pageIdArray = $this->pages->offsetGet($i)->getId();
-        }
-        return $pageIdArray;
     }
 
     public function addPageToList(PageControll $newPage): void
@@ -45,30 +37,39 @@ class PageTreeModell extends PageModell
 
     }
 
-    public function doesPageExist(int $pageID): bool
-    {
-        return $this->pages->offsetExists($this->getIndexFromPage($pageID));
-    }
-
-    private function getIndexFromPage(int $id): int
+    public function doesPageExist(int $pageId): bool
     {
         $checker = false;
         if ($this->isListEmpty() === false) {
 
             for ($i = 0; $i < $this->pages->count(); $i++) {
-                if ($this->pages->offsetGet($i)->getId() === $id) {
+                if ($this->pages->offsetGet($i)->getId() === $pageId) {
                     $checker = true;
                     break;
                 }
             }
-        } else {
-            throw new \http\Exception\InvalidArgumentException('Es existiert noch keine Seite!');
-        }
-        if ($checker === true) {
-            return $i;
         }
 
-        throw new \http\Exception\InvalidArgumentException('Diese SeitenID existiert nicht!');
+        return $checker;
+    }
+
+
+    private function getIndexFromPage(int $id): int
+    {
+
+        if ($this->doesPageExist($id) === true) {
+
+            for ($i = 0; $i < $this->pages->count(); $i++) {
+                if ($this->pages->offsetGet($i)->getId() === $id) {
+                    break;
+                }
+            }
+            return $i;
+        } else {
+            throw new InvalidArgumentException('Diese SeitenID existiert nicht!');
+        }
+
+
     }
 
     public function isListEmpty()
@@ -81,10 +82,5 @@ class PageTreeModell extends PageModell
         $this->pages->offsetGet($this->getIndexFromPage($id))->setName($newName);
     }
 
-    public function getPagename(int $id): string
-    {
-        return $this->pages->offsetGet($this->getIndexFromPage($id))->getName();
-
-    }
 
 }

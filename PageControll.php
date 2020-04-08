@@ -5,11 +5,11 @@ class PageControll
     private $pageModell;
     private $pageView;
 
-    protected function __construct(string $name, int $id)
+    protected function __construct(string $ownName, int $ownId)
     {
 
-        $this->pageModell = new PageModell($name, $id);
-        $this->pageView = new PageView($name);
+        $this->pageModell = new PageModell($ownName, $ownId);
+        $this->pageView = new PageView($ownName);
     }
 
     protected function setName($name): void
@@ -18,12 +18,12 @@ class PageControll
         $this->pageView->setName($name);
     }
 
-    protected function getName(): string
+    public function getName(): string
     {
         return $this->pageModell->getName();
     }
 
-    protected function getId(): int
+    public function getId(): int
     {
         return $this->pageModell->getId();
     }
