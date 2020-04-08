@@ -8,7 +8,7 @@ class PageView
     public function __construct($name)
     {
         $this->displayName = $name;
-        $this->showName();
+        // $this->showName();
     }
 
     public function setName($name): void
@@ -17,9 +17,11 @@ class PageView
 
     }
 
-    private function showName(): void
+
+    public function showPage($pageId): void
     {
-        echo('Name der Seite: ' . $this->displayName);
+
+        echo('Name der Seite:' . "&nbsp" . $this->displayName . "<br/>" . 'SeitenID:' . "&nbsp" . $pageId);
     }
 }
 

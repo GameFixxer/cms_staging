@@ -18,8 +18,9 @@ class PageTreeModell extends PageModell
     {
         $pageNameAndIdArray = array();
         for ($i = 0; $i < $this->pages->count(); $i++) {
-            $pageNameAndIdArray [] = 'Name: ' . $this->pages->offsetGet($i)->getName($i) . ' ID: ' . $this->pages->offsetGet($i)->getId();
-            echo('Reporting:' . $pageNameAndIdArray[$i]);
+            $pageNameAndIdArray [] = 'Name: ' . $this->pages->offsetGet($i)->getName($i) . '&nbsp' . '&nbsp' . 'ID: ' . $this->pages->offsetGet($i)->getId();
+            //echo('Reporting:' . $pageNameAndIdArray[$i]);
+
         }
         return $pageNameAndIdArray;
     }
@@ -53,6 +54,10 @@ class PageTreeModell extends PageModell
         return $checker;
     }
 
+    public function pingPage(int $pageId): void
+    {
+        $this->pages->offsetGet($this->getIndexFromPage($pageId))->pageCall();
+    }
 
     private function getIndexFromPage(int $id): int
     {
@@ -72,7 +77,7 @@ class PageTreeModell extends PageModell
 
     }
 
-    public function isListEmpty()
+    public function isListEmpty(): bool
     {
         return $this->pages->isEmpty();
     }

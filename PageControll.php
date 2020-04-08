@@ -18,6 +18,11 @@ class PageControll
         $this->pageView->setName($name);
     }
 
+    public function pageCall(): void
+    {
+        $this->pageView->showPage($this->getId());
+    }
+
     public function getName(): string
     {
         return $this->pageModell->getName();

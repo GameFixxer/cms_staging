@@ -20,6 +20,11 @@ class PageTreeControll extends PageControll
         }
     }
 
+    public function pingPage($pageId): void
+    {
+        $this->pageTreeModell->pingPage($pageId);
+    }
+
     public function isEmpty(): bool
     {
         return $this->pageTreeModell->isListEmpty();
@@ -35,6 +40,16 @@ class PageTreeControll extends PageControll
         $this->addPageToList($name, $pageId,);
 
 
+    }
+
+    public function isPageValid($pageId): bool
+    {
+        return $this->pageTreeModell->doesPageExist($pageId);
+    }
+
+    public function showpagelist(): void
+    {
+        $this->pageTreeView->ShowPageonList($this->pageTreeModell->createArrayOfPageNamesAndIDs());
     }
 
     public function deletePage(int $pageId): void
