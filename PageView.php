@@ -21,7 +21,7 @@ class PageView
     public function showPage($pageId): void
     {
 
-        echo('Name der Seite:' . "&nbsp" . $this->displayName . "<br/>" . 'SeitenID:' . "&nbsp" . $pageId);
+        echo('Name der Seite:' . "" . $this->displayName . "<br/>" . 'SeitenID:' . "&nbsp" . $pageId);
     }
 }
 

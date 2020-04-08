@@ -5,21 +5,29 @@ require_once('PageControll.php');
 require_once('PageTreeModell.php');
 require_once('PageTreeView.php');
 require_once('PageTreeControll.php');
+require_once ('Page404.php');
 
 $pagetree = new PageTreeControll('Listenseite', 1);
 $pagetree->createNewPage(2, 'testseite');
 $pagetree->createNewPage(3, 'testseite2');
 switch ($_GET) {
-    case$_GET['list'] === '':
+    case$_GET:
     {
 
-        echo('Du hast die ' . $pagetree->getName() . ' gewählt ' . "<br/>");
-        echo('' . "\n");
-        echo('-> Hier ist eine Auflistung der verfügbaren Seiten:' . "<br/>");
-        $pagetree->showpagelist();
-        break;
+        $pagetree->action();
+
     }
+    /*
     case$_GET['page'] === 'detail':
+       $pagetree->action();
+        /*
+         * Auslagern in Controller
+         *
+         *
+         * */
+
+
+/*
     {
         switch ($_GET) {
             case$_GET['page']=== 'detail' && $pagetree->isPageValid($_GET['id']) === false:{
@@ -40,6 +48,6 @@ switch ($_GET) {
                 break;
             }
         }
-    }
+    }*/
 }
 
