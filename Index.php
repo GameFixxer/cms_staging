@@ -1,21 +1,27 @@
 <?php
-require_once('PageModell.php');
-require_once('PageView.php');
-require_once('PageControll.php');
-require_once('PageTreeModell.php');
-require_once('PageTreeView.php');
-require_once('PageTreeControll.php');
-require_once('Page404.php');
 
-$pagetree = new PageTreeControll('Listenseite', 1);
-$pagetree->createNewPage(2, 'testseite');
-$pagetree->createNewPage(3, 'testseite2');
+require_once('Modell/DatenModell.php');
+require_once('Controller/Controller.php');
+require_once('Controller/PageControll.php');
+require_once('Controller/ListControll.php');
+require_once('Controller/HomeControll.php');
+require_once('Controller/ErrorControll.php');
+
 switch ($_GET) {
-    case$_GET:
+    case$_GET['page'] === 'list':
     {
-
-        $pagetree->action();
-
+        $list = (new ListControll())->action();
+        break;
+    }
+    case$_GET['page'] === 'home':
+    {
+        $home = (new HomeControll())->action();
+        break;
+    }
+    case$_GET['page'] === 'detail':
+    {
+        $page = (new PageControll())->action();
+        break;
     }
 
 }
