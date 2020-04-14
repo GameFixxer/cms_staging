@@ -3,9 +3,9 @@
 class HomeControll implements Controller
 {
 
-    public function action()
+    public function action():string
     {
-        return include 'Pages/page_home_.html';
+        return include( dirname(__DIR__,1).'VIEW/page_home_.html');
     }
 
 }

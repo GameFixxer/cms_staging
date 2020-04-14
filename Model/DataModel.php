@@ -1,6 +1,6 @@
 <?php
 
-class DatenModell
+class DataModel
 {
     private array $listarray;
 
@@ -13,14 +13,15 @@ class DatenModell
 
     public function createList()
     {
-        $path = 'Pages/';
+        $path = dirname(__DIR__,1).'/VIEW/';
 
         if (is_dir($path)) {
             if ($handle = opendir($path)) {
                 while (($file = readdir($handle)) !== false) {
 
                     {
-                        $this->listarray[] = str_replace('_.html', '', (String)$file);
+                        $this->listarray[] = str_replace('_.html', '', (string)$file);
+                        //$this->extractID($file);
                     }
 
 
@@ -39,6 +40,7 @@ class DatenModell
 
     private function extractID(string $filename)
     {
+        echo ('Ausgabe der FilegetContent'.file_get_contents( dirname(__DIR__,1).'/VIEW/detail_1_.html'));
     }
 
 }

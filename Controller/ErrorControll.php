@@ -3,10 +3,10 @@
 class ErrorControll implements Controller
 {
 
-    public function action()
+    public function action():string
     {
         // TODO: Implement action() method.
-        return include 'Pages/page_404_.html';
+        return include (dirname(__DIR__,1).'VIEW/page_404_.html');
     }
 
 }

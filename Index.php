@@ -1,11 +1,6 @@
 <?php
 
-require_once('Modell/DatenModell.php');
-require_once('Controller/Controller.php');
-require_once('Controller/PageControll.php');
-require_once('Controller/ListControll.php');
-require_once('Controller/HomeControll.php');
-require_once('Controller/ErrorControll.php');
+require_once('vendor/autoload.php');
 
 switch ($_GET) {
     case$_GET['page'] === 'list':

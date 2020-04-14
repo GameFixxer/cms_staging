@@ -2,19 +2,19 @@
 
 class ListControll implements Controller
 {
-    private DatenModell $datamodell;
+    private DataModel $datamodell;
 
     public function __construct()
     {
-        $this->datamodell = new DatenModell();
+        $this->datamodell = new DataModel();
     }
 
-    public function action()
+    public function action():string
     {
 
         // TODO: Implement action() method.
         $this->getListUpdate($this->datamodell->pingListe());
-        return include 'Pages/page_list_.html';
+        return include (dirname(__DIR__,1).'/VIEW/page_list_.html');
 
     }
 
@@ -26,7 +26,7 @@ class ListControll implements Controller
 
     public function pushListUpdate()
     {
-        $list = new DatenModell;
+        $list = new DataModel;
         $list->createList();
     }
 }

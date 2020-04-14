@@ -3,6 +3,6 @@
 Interface Controller
 {
 
-    public function action();
+    public function action():string;
 
 }
