@@ -1,7 +1,8 @@
 <?php
 
-require_once('vendor/autoload.php');
 
+require_once(__DIR__ . '/vendor/autoload.php');
+define('template_path', __DIR__ . '/template');
 switch ($_GET) {
     case$_GET['page'] === 'list':
     {

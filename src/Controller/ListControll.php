@@ -14,7 +14,7 @@ class ListControll implements Controller
 
         // TODO: Implement action() method.
         $this->getListUpdate($this->datamodell->pingListe());
-        return include (dirname(__DIR__,1).'/VIEW/page_list_.html');
+        return include(dirname(__DIR__, 2) . '/Template/page_list_.html');
 
     }
 

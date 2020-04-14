@@ -1,10 +1,10 @@
 {
-"autoload": {
 
-  "classmap": [
-    "./"
-  ]
-}
 
+  "autoload": {
+    "psr-4": {
+     "App\\": "src/"
+    }
+  }
 
 }
