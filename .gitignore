@@ -1,8 +1,5 @@
 .idea/
 vendor
-templates_c
-cache
-configs
 template_c/*
 !template_c/.gitkeep
 cache/*
