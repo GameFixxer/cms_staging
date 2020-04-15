@@ -3,6 +3,6 @@ vendor
 template_c/*
 !template_c/.gitkeep
 cache/*
-!tcache/.gitkeep
+!cache/.gitkeep
 configs/*
 !configs/.gitkeep
