@@ -1,26 +1,26 @@
 <?php
 
-namespace App\controller;
+namespace App\Controller;
 
 use \App\model\DataModel;
+use App\Service\View;
 
 class ListControll implements Controller
 {
-    private \Smarty $smarty;
+    private View $view;
 
-    public function __construct(\Smarty $dependency)
+    public function __construct(View $view)
     {
+        $this->view = $view;
         $this->datamodell = new DataModel();
-        $this->smarty = $dependency;
+
     }
 
     public function action(): void
     {
         $list = new DataModel();
 
-        $this->getListUpdate($list->pingListe());
-
-        // return include(dirname(__DIR__, 2) . '/templates/page_list_.html');
+        $this->view->display();
 
     }
 

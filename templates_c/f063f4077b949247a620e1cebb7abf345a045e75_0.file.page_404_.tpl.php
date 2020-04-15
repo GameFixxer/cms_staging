@@ -1,6 +1,6 @@
 <?php
 /* Smarty version 3.1.36, created on 2020-04-15 13:26:55
-  from '/home/rene/PhpstormProjects/MVC/templates/page_404_.tpl' */
+  from '/home/rene/PhpstormProjects/MVC/templates/404_.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
@@ -11,7 +11,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
     'f063f4077b949247a620e1cebb7abf345a045e75' => 
     array (
-      0 => '/home/rene/PhpstormProjects/MVC/templates/page_404_.tpl',
+      0 => '/home/rene/PhpstormProjects/MVC/templates/404_.tpl',
       1 => 1586949861,
       2 => 'file',
     ),
