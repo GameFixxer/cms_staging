@@ -33,7 +33,10 @@ class DataModel
 
 
     }
+    public function createListOfIds(){
+        $path = dirname(__DIR__, 2) . '/templates/';
 
+    }
     public function pingListe(): array
     {
         return $this->listarray;

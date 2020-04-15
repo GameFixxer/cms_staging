@@ -1,4 +1,4 @@
-<html>
+<html lang="">
   <head>
     <title>Smarty</title>
   </head>

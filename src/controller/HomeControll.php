@@ -4,10 +4,16 @@ namespace App\controller;
 class HomeControll implements Controller
 
 {
+    private \Smarty $smarty;
 
-    public function action(): string
+    public function __construct(\Smarty $dependency)
     {
-        return include(dirname(__DIR__, 1) . '/templates/page_home_.html');
+        $this->smarty = $dependency;
+    }
+
+    public function action(): void
+    {
+        // return include(dirname(__DIR__, 1) . '/templates/page_home_.html');
     }
 
 }

@@ -4,6 +4,6 @@ namespace App\controller;
 Interface Controller
 {
 
-    public function action(): string;
+    public function action();
 
 }
