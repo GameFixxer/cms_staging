@@ -3,6 +3,7 @@
 namespace App\controller;
 
 use \App\model\DataModel;
+
 class ListControll implements Controller
 {
 
@@ -16,7 +17,7 @@ class ListControll implements Controller
         $list = new DataModel();
 
         $this->getListUpdate($list->pingListe());
-        return include(dirname(__DIR__, 2) . '/template/page_list_.html');
+        return include(dirname(__DIR__, 2) . '/templates/page_list_.html');
 
     }
 

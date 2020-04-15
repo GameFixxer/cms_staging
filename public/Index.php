@@ -4,21 +4,21 @@ use App\controller\ListControll;
 use App\controller\HomeControll;
 use App\controller\PageControll;
 
-require_once(__DIR__ . '/vendor/autoload.php');
-define('template_path', __DIR__ . '/template');
+require_once(dirname(__DIR__, 1) .'/vendor/autoload.php');
+define('template_path', dirname(__DIR__, 1) . '/templates');
 
 
-$smarty = new \Smarty();
+$smarty = new Smarty();
 
-$smarty->setTemplateDir('/home/rene/smarty/templates');
-$smarty->setCompileDir('/home/rene/smarty/templates_c');
-$smarty->setCacheDir('/home/rene/smarty/cache');
-$smarty->setConfigDir('/home/rene//smarty/configs');
-
+$smarty->setTemplateDir(dirname(__DIR__, 1).'/templates');
+$smarty->setCompileDir(dirname(__DIR__, 1).'/templates_c');
+$smarty->setCacheDir(dirname(__DIR__, 1).'/cache');
+$smarty->setConfigDir(dirname(__DIR__, 1).'/configs');
 $smarty->assign('name', 'Renégade');
 try {
     $smarty->display('index.tpl');
 } catch (SmartyException $e) {
+} catch (Exception $e) {
 }
 
 switch ($_GET) {
