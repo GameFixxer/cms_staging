@@ -1,21 +1,25 @@
 <?php
 
-use App\Controller\ListControll;
-use App\Controller\HomeControll;
-use App\Controller\PageControll;
+use App\controller\ListControll;
+use App\controller\HomeControll;
+use App\controller\PageControll;
 
 require_once(__DIR__ . '/vendor/autoload.php');
 define('template_path', __DIR__ . '/template');
 
+
 $smarty = new \Smarty();
 
-$smarty->setTemplateDir('/web/www.example.com/smarty/templates');
-$smarty->setCompileDir('/web/www.example.com/smarty/templates_c');
-$smarty->setCacheDir('/web/www.example.com/smarty/cache');
-$smarty->setConfigDir('/web/www.example.com/smarty/configs');
+$smarty->setTemplateDir('/home/rene/smarty/templates');
+$smarty->setCompileDir('/home/rene/smarty/templates_c');
+$smarty->setCacheDir('/home/rene/smarty/cache');
+$smarty->setConfigDir('/home/rene//smarty/configs');
 
-$smarty->assign('name', 'Ned');
-$smarty->display('index.tpl');
+$smarty->assign('name', 'Renégade');
+try {
+    $smarty->display('index.tpl');
+} catch (SmartyException $e) {
+}
 
 switch ($_GET) {
     case$_GET['page'] === 'list':

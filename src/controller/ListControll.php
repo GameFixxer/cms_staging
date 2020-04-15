@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\controller;
 
-use \App\Model\DataModel;
-
+use \App\model\DataModel;
 class ListControll implements Controller
 {
 
@@ -15,9 +14,9 @@ class ListControll implements Controller
     public function action(): string
     {
         $list = new DataModel();
-        // TODO: Implement action() method.
+
         $this->getListUpdate($list->pingListe());
-        return include(dirname(__DIR__, 2) . '/Template/page_list_.html');
+        return include(dirname(__DIR__, 2) . '/template/page_list_.html');
 
     }
 

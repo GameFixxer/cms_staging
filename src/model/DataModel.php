@@ -14,7 +14,7 @@ class DataModel
 
     public function createList()
     {
-        $path = dirname(__DIR__, 2) . '/Template/';
+        $path = dirname(__DIR__, 2) . '/template/';
 
         if (is_dir($path)) {
             if ($handle = opendir($path)) {
@@ -41,7 +41,7 @@ class DataModel
 
     private function extractID(string $filename)
     {
-        echo('Ausgabe der FilegetContent' . file_get_contents(dirname(__DIR__, 1) . '/Template/detail_1_.html'));
+        echo('Ausgabe der FilegetContent' . file_get_contents(dirname(__DIR__, 1) . '/template/detail_1_.html'));
     }
 
 }
