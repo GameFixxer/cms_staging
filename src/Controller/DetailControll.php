@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\View;
@@ -7,6 +8,7 @@ use App\Service\View;
 class DetailControll implements Controller
 {
     private View $view;
+    public const ROUTE = 'detail';
 
     public function __construct(View $view)
     {
@@ -17,15 +19,19 @@ class DetailControll implements Controller
 
     public function action(): void
     {
-        $pageId = (int)$_GET['id'];
-        if(!$pageId){
-            $this->view->addTemplate('404_.tpl');
+        try {
+            $pageId = (int)$_GET['id'];
+        } catch (\InvalidArgumentException $t) {
 
         }
-        else {
-            $pageidparser = ''.$pageId;
+
+        if (!$pageId) {
+            $this->view->addTemplate('404_.tpl');
+
+        } else {
+            $pageidparser = '' . $pageId;
             $this->view->addTemplate('detail_.tpl');
-            $this->view->addTlpParam('detailpage',$pageidparser, ''.$pageId);
+            $this->view->addTlpParam('detailpage', $pageidparser, '' . $pageId);
 
         }
     }

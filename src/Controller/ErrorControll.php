@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Service\View;
@@ -7,6 +8,7 @@ use App\Service\View;
 class ErrorControll implements Controller
 {
     private View $view;
+    public const ROUTE = 'error';
 
     public function __construct(View $view)
     {

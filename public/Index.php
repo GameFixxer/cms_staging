@@ -1,5 +1,9 @@
 <?php
 declare(strict_types=1);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 
 use App\Controller\ListControll;
 use App\Controller\HomeControll;
@@ -14,17 +18,21 @@ define('template_path', $path . '/templates');
 
 $view = new View();
 $controller = new ControllerProvider();
-$request = ucfirst($_GET ['page']);
+$page = $_GET ['page'];
 
-$included = $controller->inArrayMultidimension($request, 'code');
-if ($included === true) {
-    $class =$controller->returnObject($controller->getKeyInMultiArray($request, 'code'));
-    $objectinstance = new $class($view);
-    $objectinstance->action();
-} else {
+$controllerList = $controller->getList();
+$isFind = false;
+foreach ($controllerList as $controller){
+    if (strtolower($controller::ROUTE)===$page){
+        $isFind = true;
+      $controllerClass = new $controller($view);
+      $controllerClass->action();
+      break;
+    }
+}
+if (!$isFind){
     $class = new ErrorControll($view);
     $class->action();
 }
 
-
-
+$view->display();

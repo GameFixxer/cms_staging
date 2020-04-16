@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Model;
 class DataModel
 {
@@ -32,14 +33,15 @@ class DataModel
         }
 
 
-
     }
 
 
-    public function createListOfIds(){
+    public function createListOfIds()
+    {
         $path = dirname(__DIR__, 2) . '/templates/';
 
     }
+
     public function pingListe(): array
     {
         return $this->list;

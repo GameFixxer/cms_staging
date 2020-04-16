@@ -10,70 +10,18 @@ use App\Controller\ListControll;
 
 class ControllerProvider
 {
-    private array $list;// = array();
 
-    public function __construct()
+
+    public function getList(): array
     {
-        $this->createListOfController();
-    }
 
-    public function createListOfController(): void
-    {
-        /*           $list[] = array([DetailControll::class]['detail']);
-                    $this->list[] = array([ErrorControll::class]['error']);
-                    $this->list[] = array([HomeControll::class]['home']);
-                    $this->list[] = array([ListControll::class]['list']);
-                    return $this->list;
-            */
-        $this->list = [
-            (0) =>
-                [
-                    'class' => DetailControll::class,
-                    'code' => 'detail',
-                ],
 
-            (1) =>
-                [
-                    'class' => ErrorControll::class,
-                    'code' => 'error',
-                ],
-
-            (2) =>
-                [
-                    'class' => HomeControll::class,
-                    'code' => 'home',
-                ],
-            (2) =>
-                [
-                    'class' => ListControll::class,
-                    'code' => 'list',
-                ]
+        return [
+            DetailControll::class,
+            ErrorControll::class,
+            HomeControll::class,
+            ListControll::class,
         ];
     }
 
-    public function returnList(): array
-    {
-        return $this->list;
-    }
-
-    public function inArrayMultidimension(string $needle, string $column): bool
-    {
-        if (in_array($needle, array_column($this->list, $column))) {
-            return true;
-
-        } else {
-            return false;
-
-        }
-    }
-
-    public function getKeyInMultiArray(string $needle, string $column)
-    {
-        return array_search($needle, array_column($this->list, $column));
-    }
-
-    public function returnObject(int $key)
-    {
-        return $this->list[$key]['class'];
-    }
 }
