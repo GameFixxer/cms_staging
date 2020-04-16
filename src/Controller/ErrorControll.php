@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\View;
@@ -16,8 +16,8 @@ class ErrorControll implements Controller
 
     public function action(): void
     {
-        $this->view->addTemplate(dirname(__DIR__, 2).'templates/404_.tpl');
-        $this->view->display();
+        $this->view->addTemplate('404_.tpl');
+
     }
 
 }

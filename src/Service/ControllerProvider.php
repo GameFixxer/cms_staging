@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Service;
 
@@ -18,7 +18,7 @@ class ControllerProvider
 
     public function createListOfController(): void
     {
-        /*            $list[] = array([DetailControll::class]['detail']);
+        /*           $list[] = array([DetailControll::class]['detail']);
                     $this->list[] = array([ErrorControll::class]['error']);
                     $this->list[] = array([HomeControll::class]['home']);
                     $this->list[] = array([ListControll::class]['list']);
@@ -57,7 +57,7 @@ class ControllerProvider
 
     public function inArrayMultidimension(string $needle, string $column): bool
     {
-        if(array_search($needle, array_column($this->list, $column)) !== false) {
+        if(in_array($needle, array_column($this->list, $column))) {
             return true;
 
         }

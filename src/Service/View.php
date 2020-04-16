@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Service;
 class View
 {
@@ -20,7 +20,7 @@ class View
 
     }
 
-    public function addTemplate(string $template)
+    public function addTemplate(string $template):void
     {
         $this->template = $template;
 
@@ -31,13 +31,13 @@ class View
         return dirname(__DIR__, 2);
     }
 
-    public function addTlpParam(string $name, string $id, $value)
+    public function addTlpParam(string $name, string $id, $value):void
     {
         $this->smarty->assign('id',  $value);
         $this->smarty->assign('name', $name);
     }
 
-    public function display()
+    public function display():void
     {
         try {
             $this->smarty->display($this->template);

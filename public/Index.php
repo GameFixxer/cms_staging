@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 use App\Controller\ListControll;
 use App\Controller\HomeControll;
 use App\Controller\DetailControll;
 use App\Controller\ErrorControll;
 use App\Service\ControllerProvider;
-
 use App\Service\View;
 
 $path = dirname(__DIR__, 1);
@@ -18,11 +18,12 @@ $request = ucfirst($_GET ['page']);
 
 $included = $controller->inArrayMultidimension($request, 'code');
 if ($included === true) {
-    $class = $controller->getKeyInMultiArray($request, 'code');
+    $class =$controller->returnObject($controller->getKeyInMultiArray($request, 'code'));
     $objectinstance = new $class($view);
     $objectinstance->action();
 } else {
     $class = new ErrorControll($view);
+    $class->action();
 }
 
 

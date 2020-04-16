@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller;
 
 use \App\model\DataModel;
@@ -20,7 +20,7 @@ class ListControll implements Controller
     {
         $list = new DataModel();
 
-        $this->view->display();
+
 
     }
 
@@ -37,7 +37,7 @@ class ListControll implements Controller
     public function pushListUpdate()
     {
         $list = new DataModel;
-        $list->createList();
+        $list->createPageList();
     }
 
 

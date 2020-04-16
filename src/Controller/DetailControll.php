@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller;
 
 use App\Service\View;
@@ -20,12 +20,13 @@ class DetailControll implements Controller
         $pageId = (int)$_GET['id'];
         if(!$pageId){
             $this->view->addTemplate('404_.tpl');
-            $this->view->display();
+
         }
         else {
+            $pageidparser = ''.$pageId;
             $this->view->addTemplate('detail_.tpl');
-            $this->view->addTlpParam('detailpage',$pageId, ''.$pageId);
-            $this->view->display();
+            $this->view->addTlpParam('detailpage',$pageidparser, ''.$pageId);
+
         }
     }
 }
