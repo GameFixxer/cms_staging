@@ -3,11 +3,11 @@
 namespace App\Model;
 class DataModel
 {
-    private array $listarray;
+    private array $list;
 
     public function __construct()
     {
-        $this->listarray = array();
+        $this->list = array();
         $this->createPageList();
 
     }
@@ -21,7 +21,7 @@ class DataModel
                 while (($file = readdir($handle)) !== false) {
 
                     {
-                        $this->listarray[] = str_replace('.tpl', '', (string)$file);
+                        $this->list[] = str_replace('.tpl', '', (string)$file);
                         //$this->extractID($file);
                     }
 
@@ -42,7 +42,7 @@ class DataModel
     }
     public function pingListe(): array
     {
-        return $this->listarray;
+        return $this->list;
     }
 
     private function extractID(string $filename)

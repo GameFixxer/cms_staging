@@ -39,4 +39,6 @@ class ListControll implements Controller
         $list = new DataModel;
         $list->createList();
     }
+
+
 }
