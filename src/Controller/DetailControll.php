@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Service\View;
 
-class PageControll implements Controller
+class DetailControll implements Controller
 {
     private View $view;
 

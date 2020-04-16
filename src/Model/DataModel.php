@@ -8,11 +8,11 @@ class DataModel
     public function __construct()
     {
         $this->listarray = array();
-        $this->createList();
+        $this->createPageList();
 
     }
 
-    public function createList()
+    public function createPageList()
     {
         $path = dirname(__DIR__, 2) . '/templates/';
 
@@ -32,7 +32,10 @@ class DataModel
         }
 
 
+
     }
+
+
     public function createListOfIds(){
         $path = dirname(__DIR__, 2) . '/templates/';
 

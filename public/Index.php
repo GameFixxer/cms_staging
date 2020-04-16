@@ -2,33 +2,31 @@
 
 use App\Controller\ListControll;
 use App\Controller\HomeControll;
-use App\Controller\PageControll;
+use App\Controller\DetailControll;
+use App\Controller\ErrorControll;
+use App\Model\InternClassModel;
 use App\Service\View;
 
-require_once(dirname(__DIR__, 1) . '/vendor/autoload.php');
-define('template_path', dirname(__DIR__, 1) . '/templates');
+$path = dirname(__DIR__, 1);
+require_once($path . '/vendor/autoload.php');
+define('template_path', $path . '/templates');
 
- $view = new View();
+$view = new View();
+$controller = new InternClassModel();
+$request = ucfirst($_GET ['page']);
 
+$included = in_array($request, $controller->createListOfController(), true);
 switch ($_GET) {
-    case$_GET['page'] === 'list':
+    case in_array($request, $controller->createListOfController(), true) === true:
     {
-        $list = new ListControll($view);
-        $list->action();
-        break;
+        $class =$request.'Controll';
+        $objectinstance = new $class($view);
     }
-    case$_GET['page'] === 'home':
+    case in_array($request, $controller->createListOfController(), true) === false:
     {
-        $home = new HomeControll($view);
-        $home->action();
-        break;
+        $class = new ErrorControll($view);
     }
-    case$_GET['page'] === 'detail':
-    {
-        $page = new PageControll($view);
-        $page->action();
-        break;
-    }
+
 
 }
 
