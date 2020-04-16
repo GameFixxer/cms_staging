@@ -21,7 +21,7 @@ class DataModel
                 while (($file = readdir($handle)) !== false) {
 
                     {
-                        $this->listarray[] = str_replace('_.html', '', (string)$file);
+                        $this->listarray[] = str_replace('.tpl', '', (string)$file);
                         //$this->extractID($file);
                     }
 

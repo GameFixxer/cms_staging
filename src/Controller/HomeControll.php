@@ -18,6 +18,7 @@ class HomeControll implements Controller
 
     public function action(): void
     {
+        $this->view->addTemplate('home_.tpl');
         $this->view->display();
     }
 

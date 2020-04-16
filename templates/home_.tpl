@@ -2,4 +2,4 @@
 {block name="title"}
     Page Title
 {/block}
-{block name ="body"}Error 404 Page not found{/block}
+{block name ="body"} There is no place like 127.0.0.1 {/block}

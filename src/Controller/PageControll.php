@@ -20,9 +20,12 @@ class PageControll implements Controller
         $pageId = (int)$_GET['id'];
         if(!$pageId){
             $this->view->addTemplate('404_.tpl');
+            $this->view->display();
         }
-        $this->view->addTemplate('404_.tpl');
-        $this->view->addTlpParam($pageId, null);
-        $this->view->display();
+        else {
+            $this->view->addTemplate('detail_.tpl');
+            $this->view->addTlpParam('detailpage',$pageId, ''.$pageId);
+            $this->view->display();
+        }
     }
 }

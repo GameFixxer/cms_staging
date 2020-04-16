@@ -31,10 +31,10 @@ class View
         return dirname(__DIR__, 2);
     }
 
-    public function addTlpParam(string $id, $value)
+    public function addTlpParam(string $name, string $id, $value)
     {
-        //$this->smarty->assign($id, $value);
-        //$this->smarty->assign('name', 'Renégade');
+        $this->smarty->assign('id',  $value);
+        $this->smarty->assign('name', $name);
     }
 
     public function display()
