@@ -1,0 +1,26 @@
+[
+  {
+    "id": "1",
+    "productname": "Shirt",
+    "description": "black shirt, different sizes with print 'Here could be your advertising'",
+    "path": "<a href=\"http://localhost:8080/Index.php?page=detail&id=1\",>Hier</a>"
+  },
+  {
+    "id": "2",
+    "productname": "Game",
+    "description": "a lovely game about eat, sleep, code, repeat.",
+    "path": "<a href=\"http://localhost:8080/Index.php?page=detail&id=2\",>Hier</a>"
+  },
+  {
+    "id": "3",
+    "productname": "Cake",
+    "description": "The cake is a lie.",
+    "path": "<a href=\"http://localhost:8080/Index.php?page=detail&id=3\",>Hier</a>"
+  },
+  {
+    "id": "4",
+    "productname": "Coffee",
+    "description": "Coffee is love, coffee is life.",
+    "path": "<a href=\"http://localhost:8080/Index.php?page=detail&id=4\",>Hier</a>"
+  }
+]

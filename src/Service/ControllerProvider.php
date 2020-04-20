@@ -8,7 +8,7 @@ use App\Controller\ErrorControll;
 use App\Controller\HomeControll;
 use App\Controller\ListControll;
 
-class ControllerProvider
+class  ControllerProvider
 {
 
 

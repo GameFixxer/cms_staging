@@ -3,6 +3,13 @@
     <title>Smarty</title>
   </head>
   <body>
-    Hello, {$name}!
+  {foreach name=aussen item=page from=$pages}
+  <hr />
+  {foreach key=schluessel item=wert from=$page}
+  {$schluessel}: {$wert}<br>
+  {/foreach}
+
+  {/foreach}
+
   </body>
 </html>

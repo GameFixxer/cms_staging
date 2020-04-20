@@ -3,36 +3,47 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\DataModel;
 use App\Service\View;
 
 class DetailControll implements Controller
 {
+    private DataModel $dm;
     private View $view;
     public const ROUTE = 'detail';
 
     public function __construct(View $view)
     {
         $this->view = $view;
+        $this->dm = new DataModel();
 
     }
 
 
     public function action(): void
     {
-        try {
-            $pageId = (int)$_GET['id'];
-        } catch (\InvalidArgumentException $t) {
+        //try {
+            $pageId = $_GET['id'];
+        //} catch (\InvalidArgumentException $t) {
 
+        //}
+        if ($pageId === null) {
+            echo('reached this beta point ->pageid:'.$pageId);
+            var_dump($pageId);
+            $this->view->addTemplate('404_.tpl');
         }
-
-        if (!$pageId) {
+        else if (!$this->dm->existId($pageId)) {
+            echo('reached this alpha point ->pageid:'.$pageId);
             $this->view->addTemplate('404_.tpl');
 
         } else {
-            $pageidparser = '' . $pageId;
+            $stringpageid = '' . $pageId;
+            $key = $this->dm->getIndex($stringpageid);
             $this->view->addTemplate('detail_.tpl');
-            $this->view->addTlpParam('detailpage', $pageidparser, '' . $pageId);
+            $this->view->addTlpParam($this->dm->getProduct($key), $stringpageid, $this->dm->getDescription($key));
 
         }
     }
+
+
 }

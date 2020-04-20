@@ -9,37 +9,25 @@ use App\Service\View;
 class ListControll implements Controller
 {
     private View $view;
+    private DataModel $dm;
     public const ROUTE = 'list';
 
     public function __construct(View $view)
     {
         $this->view = $view;
-        $this->datamodell = new DataModel();
+        $this->dm = new DataModel();
 
     }
 
     public function action(): void
     {
-        $list = new DataModel();
+
+        $this->view->addTemplate('index.tpl');
+        $this->view->addTlpParamToList($this->dm->returnList());
 
 
     }
 
-    public function getListUpdate(array $listarray)
-    {
-        $liste = implode("<br> ", $listarray);
-        echo($liste);
-    }
-
-    public function makelist()
-    {
-    }
-
-    public function pushListUpdate()
-    {
-        $list = new DataModel;
-        $list->createPageList();
-    }
 
 
 }

@@ -9,6 +9,7 @@ class HomeControll implements Controller
 
 {
     private View $view;
+
     public const ROUTE = 'home';
 
     public function __construct(View $view)
