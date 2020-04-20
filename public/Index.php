@@ -4,7 +4,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-use App\Model\DataModel;
+use App\Model\DataRepository;
 use App\Controller\ListControll;
 use App\Controller\HomeControll;
 use App\Controller\DetailControll;
@@ -16,7 +16,7 @@ $path = dirname(__DIR__, 1);
 require_once($path . '/vendor/autoload.php');
 define('template_path', $path . '/templates');
 
-$dm = new DataModel();
+$dm = new DataRepository();
 $view = new View();
 $controller = new ControllerProvider();
 $page = $_GET ['page'];

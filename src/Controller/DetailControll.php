@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\DataModel;
+use App\Model\DataRepository;
 use App\Service\View;
 
 class DetailControll implements Controller
 {
-    private DataModel $dm;
+    private DataRepository $dm;
     private View $view;
     public const ROUTE = 'detail';
 
     public function __construct(View $view)
     {
         $this->view = $view;
-        $this->dm = new DataModel();
+        $this->dm = new DataRepository();
 
     }
 
@@ -32,7 +32,7 @@ class DetailControll implements Controller
             var_dump($pageId);
             $this->view->addTemplate('404_.tpl');
         }
-        else if (!$this->dm->existId($pageId)) {
+        else if (!$this->dm->hasProduct($pageId)) {
             echo('reached this alpha point ->pageid:'.$pageId);
             $this->view->addTemplate('404_.tpl');
 

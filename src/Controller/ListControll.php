@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use \App\model\DataModel;
+use \App\Model\DataRepository;
 use App\Service\View;
 
 class ListControll implements Controller
 {
     private View $view;
-    private DataModel $dm;
+    private DataRepository $dm;
     public const ROUTE = 'list';
 
     public function __construct(View $view)
     {
         $this->view = $view;
-        $this->dm = new DataModel();
+        $this->dm = new DataRepository();
 
     }
 
@@ -23,7 +23,7 @@ class ListControll implements Controller
     {
 
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParamToList($this->dm->returnList());
+        $this->view->addTlpParamToList($this->dm->getList());
 
 
     }
