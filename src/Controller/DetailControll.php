@@ -22,25 +22,21 @@ class DetailControll implements Controller
 
     public function action(): void
     {
-        //try {
-            $pageId = $_GET['id'];
-        //} catch (\InvalidArgumentException $t) {
+        $pageId = 0;
+        try {
+            $pageId = (int) $_GET['id'];
+        } catch (\InvalidArgumentException $t) {
 
-        //}
-        if ($pageId === null) {
-            echo('reached this beta point ->pageid:'.$pageId);
-            var_dump($pageId);
+        }
+        if ($pageId === 0) {
             $this->view->addTemplate('404_.tpl');
         }
         else if (!$this->dm->hasProduct($pageId)) {
-            echo('reached this alpha point ->pageid:'.$pageId);
             $this->view->addTemplate('404_.tpl');
 
         } else {
-            $stringpageid = '' . $pageId;
-            $key = $this->dm->getIndex($stringpageid);
             $this->view->addTemplate('detail_.tpl');
-            $this->view->addTlpParam($this->dm->getProduct($key), $stringpageid, $this->dm->getDescription($key));
+            $this->view->addTlpParam('',$this->dm->getProduct($pageId));
 
         }
     }

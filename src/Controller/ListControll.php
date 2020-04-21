@@ -23,7 +23,7 @@ class ListControll implements Controller
     {
 
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParamToList($this->dm->getList());
+        $this->view->addTlpParam('',$this->dm->getList());
 
 
     }

@@ -32,18 +32,12 @@ class View
         return dirname(__DIR__, 2);
     }
 
-    public function addTlpParam(string $name, string $value, string $description): void
+    public function addTlpParam(string $name, $value): void
     {
         $this->smarty->assign('id', $value);
-        $this->smarty->assign('productname', $name);
-        $this->smarty->assign('description', $description);
+
     }
 
-    public function addTlpParamToList(array $pages): void
-
-    {
-        $this->smarty->assign('pages', $pages);
-    }
 
     public function display(): void
     {

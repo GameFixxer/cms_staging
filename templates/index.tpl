@@ -1,15 +1,16 @@
 <html lang="">
-  <head>
+<head>
     <title>Smarty</title>
-  </head>
-  <body>
-  {foreach name=aussen item=page from=$pages}
-  <hr />
-  {foreach key=schluessel item=wert from=$page}
-  {$schluessel}: {$wert}<br>
-  {/foreach}
+</head>
+<body>
+{foreach name=aussen item=page from=$id}
+    <hr/>
+    {foreach key=schluessel item=wert from=$page}
+        {$schluessel}: {$wert}
+        <br>
+    {/foreach}
 
-  {/foreach}
+{/foreach}
 
-  </body>
+</body>
 </html>

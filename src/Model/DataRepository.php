@@ -2,6 +2,9 @@
 declare(strict_types=1);
 
 namespace App\Model;
+
+use http\Exception\InvalidArgumentException;
+
 class DataRepository
 {
     private array $list;
@@ -10,51 +13,36 @@ class DataRepository
     public function __construct()
     {
 
-        $url =  dirname(__DIR__, 2).'/database/data.json';
+        $url = dirname(__DIR__, 2) . '/database/data.json';
         $data = file_get_contents($url);
         $array = json_decode($data);
-        foreach($array as $product){
-          $this->list[$product->id] = $product;
+        foreach ($array as $product) {
+            $this->list[(int)$product->id] = $product;
         }
-        var_dump($this->list);
     }
-
 
 
     public function getList(): array
     {
-        return $this->list->product;
+        return $this->list;
     }
 
-    public function hasProduct(string $id): bool
+    public function getProduct(int $index): object
+    {
+        return $this->list[$index];
+    }
+
+    public function hasProduct(int $id): bool
     {
         $exists = false;
-        //$tmp = json_encode($id);
-        //return in_array($tmp, $this->list->id,false);
-        foreach ($this->list as $entry) {
-            if ($entry->id = $id) {
+        try {
+            if ($this->list[$id] !== null) {
                 $exists = true;
             }
+        } catch (\Exception $exception) {
+            return $exists;
         }
         return $exists;
     }
 
-
-
-
-    public function getIndex(string $number): int
-    {
-        $tmp = 0;
-        foreach ($this->list as $row) {
-            echo($tmp);
-            var_dump($this->list[$tmp]->id);
-            if ((string)$this->list[$tmp]->id === $number) {
-                $tmp = $this->list[$tmp]->id - 1;
-                return $tmp;
-            }
-            ++$tmp;
-        }
-
-    }
-
-    }
+}
