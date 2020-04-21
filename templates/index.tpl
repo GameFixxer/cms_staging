@@ -3,12 +3,12 @@
     <title>Smarty</title>
 </head>
 <body>
-{foreach name=aussen item=page from=$id->getProductList()}
+{foreach name=aussen item=page from=$id}
     <hr/>
-    {foreach key=schluessel item=wert from=$page}
-        {$schluessel}: {$wert}
-        <br>
-    {/foreach}
+    {$page->getProductId()}
+    {$page->getProductName()}
+    {$page->getProductDescription()}
+
 
 {/foreach}
 
