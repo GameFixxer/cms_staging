@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use \App\Model\DataRepository;
+use \App\Model\DataTransferObject;
 use App\Service\View;
 
 class ListControll implements Controller
@@ -15,7 +16,6 @@ class ListControll implements Controller
     public function __construct(View $view)
     {
         $this->view = $view;
-        $this->dm = new DataRepository();
 
     }
 
@@ -23,7 +23,7 @@ class ListControll implements Controller
     {
 
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParam('',$this->dm->getList());
+        $this->view->addTlpParam('',new DataTransferObject(new DataRepository(),0, true));
 
 
     }

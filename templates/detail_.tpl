@@ -3,11 +3,11 @@
     Page Title
 {/block}
 {block name ="body"}
-    ID: {$id->id}
+    ID: {$id->getProductId()}
     <br>
-    Productname: {$id->productname}
+    Productname: {$id->getProductName()}
     <br>
-    Description: {$id->description}
+    Description: {$id->getProductDescription()}
     <br>
 
 {/block}
