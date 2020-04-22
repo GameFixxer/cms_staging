@@ -1,11 +1,11 @@
 <html lang="">
 <head>
-    <title>Smarty</title>
+    <title>List</title>
 </head>
 <body>
 {foreach name=aussen item=page from=$id}
     <hr/>
-    {$page->getProductId()}
+    <a href="http://localhost:8080/Index.php?page=detail&id={$page->getProductId()}">{$page->getProductId()}</a>
     {$page->getProductName()}
     {$page->getProductDescription()}
 

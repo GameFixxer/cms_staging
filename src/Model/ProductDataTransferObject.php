@@ -29,8 +29,7 @@ class ProductDataTransferObject
         $this->desc = $desc;
     }
 
-
-    public function getProductId(): string
+    public function getProductId(): int
     {
         return $this->id;
     }

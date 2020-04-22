@@ -11,7 +11,7 @@ class ProductMapper
     public function map(array $product): ProductDataTransferObject
     {
         $productDataTransferObject = new ProductDataTransferObject();
-        $productDataTransferObject->setProductId($product['id']);
+        $productDataTransferObject->setProductId((int)$product['id']);
         $productDataTransferObject->setProductName($product['productname']);
         $productDataTransferObject->setProductDescr($product['description']);
 
