@@ -12,7 +12,7 @@ class HomeControll implements Controller
 
     public const ROUTE = 'home';
 
-    public function __construct(View $view)
+    public function __construct(View $view, object $spaceholder)
     {
         $this->view = $view;
 

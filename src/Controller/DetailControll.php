@@ -14,10 +14,10 @@ class DetailControll implements Controller
     private ProductRepository $pr;
     public const ROUTE = 'detail';
 
-    public function __construct(View $view)
+    public function __construct(View $view, ProductRepository $pr)
     {
         $this->view = $view;
-        $this->pr = new ProductRepository();
+        $this->pr = $pr;
 
 
     }
@@ -35,7 +35,7 @@ class DetailControll implements Controller
 
         if ($pageId === 0) {
             $this->view->addTemplate('404_.tpl');
-        } else if ($this->pr->hasProduct($pageId) ===false) {
+        } else if ($this->pr->hasProduct($pageId) === false) {
             $this->view->addTemplate('404_.tpl');
 
         } else {
@@ -48,8 +48,6 @@ class DetailControll implements Controller
         }
 
     }
-
-
 
 
 }

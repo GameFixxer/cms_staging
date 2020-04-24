@@ -2,8 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Model;
-
-use App\Model\SQLConnector;
+use App\Service\SQLConnector;
 use App\Model\Mapper\ProductMapper;
 use App\Model\Dto\ProductDataTransferObject;
 
@@ -12,14 +11,10 @@ class ProductRepository
     private array $list;
     private SQLConnector $connect;
 
-    public function __construct()
+    public function __construct(SQLConnector $connector)
     {
-        $this->connect = new SQLConnector();
-        $this->connect->connect();
-        /*$url = dirname(__DIR__, 2) . '/database/data.json';
-        $data = file_get_contents($url);
-        $array = json_decode($data, true);*/
-        $array = $this->connect->get();
+        $this->connect = $connector;
+        $array = $this->connect->findAll('product');
         $productMapper = new ProductMapper();
         foreach ($array as $product) {
             $this->list[(int)$product['id']] = $productMapper->map($product);

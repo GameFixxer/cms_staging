@@ -13,21 +13,20 @@ class ListControll implements Controller
     private ProductRepository $pr;
     public const ROUTE = 'list';
 
-    public function __construct(View $view)
+    public function __construct(View $view, ProductRepository $pr)
     {
         $this->view = $view;
-        $this->pr = new ProductRepository();
+        $this->pr = $pr;
     }
 
     public function action(): void
     {
 
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParam('',$this->pr->getList());
+        $this->view->addTlpParam('', $this->pr->getList());
 
 
     }
-
 
 
 }

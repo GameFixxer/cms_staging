@@ -12,27 +12,29 @@ use App\Controller\DetailControll;
 use App\Controller\ErrorControll;
 use App\Service\ControllerProvider;
 use App\Service\View;
+use App\Service\SQLConnector;
 
-
-
-//$connect = new SQLConnector();
 
 $path = dirname(__DIR__, 1);
 require_once($path . '/vendor/autoload.php');
 define('template_path', $path . '/templates');
 
-$dm = new ProductRepository();
+$connect = new SQLConnector();
+$connect->connect();
+
+$dm = new ProductRepository($connect);
 $view = new View();
 $controller = new ControllerProvider();
 $page = $_GET ['page'];
 
 $controllerList = $controller->getList();
 $isFind = false;
+
 foreach ($controllerList as $controller) {
 
     if (strtolower($controller::ROUTE) === $page) {
         $isFind = true;
-        $controllerClass = new $controller($view);
+        $controllerClass = new $controller($view, $dm);
         $controllerClass->action();
         break;
     }

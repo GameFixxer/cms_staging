@@ -10,7 +10,7 @@ class ErrorControll implements Controller
     private View $view;
     public const ROUTE = 'error';
 
-    public function __construct(View $view)
+    public function __construct(View $view, object $spaceholder)
     {
         $this->view = $view;
 
