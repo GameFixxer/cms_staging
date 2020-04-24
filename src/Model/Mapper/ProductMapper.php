@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Mapper;
 
-use App\Model\ProductDataTransferObject;
+use App\Model\Dto\ProductDataTransferObject;
 
 class ProductMapper
 {
@@ -12,7 +12,7 @@ class ProductMapper
     {
         $productDataTransferObject = new ProductDataTransferObject();
         $productDataTransferObject->setProductId((int)$product['id']);
-        $productDataTransferObject->setProductName($product['productname']);
+        $productDataTransferObject->setProductName($product['name']);
         $productDataTransferObject->setProductDescr($product['description']);
 
         return $productDataTransferObject;

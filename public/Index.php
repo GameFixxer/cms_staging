@@ -4,6 +4,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
+
 use App\Model\ProductRepository;
 use App\Controller\ListControll;
 use App\Controller\HomeControll;
@@ -11,6 +12,10 @@ use App\Controller\DetailControll;
 use App\Controller\ErrorControll;
 use App\Service\ControllerProvider;
 use App\Service\View;
+
+
+
+//$connect = new SQLConnector();
 
 $path = dirname(__DIR__, 1);
 require_once($path . '/vendor/autoload.php');
