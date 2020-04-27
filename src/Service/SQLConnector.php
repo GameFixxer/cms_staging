@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 
+use function PHPUnit\Framework\isEmpty;
+
 Class SQLConnector
 {
     private \mysqli $db_link;
@@ -27,15 +29,23 @@ Class SQLConnector
         }
     }
 
-    public function findProduct(int $id, string $table, string $selection)
+    public function get(string $sql, string $whitespace, array $data)
     {
-        return $this->db_link->query('SELECT ' . $id . ' FROM ' . $table . ' ' . $selection);
-    }
+        $stmt = \mysqli_stmt_init($this->db_link);
 
-    public function findAll(string $table)
-    {
-        return $this->db_link->query('SELECT * FROM ' . $table);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            echo('Something went wrong with the sql query.');
+        } else {
+            if (!isEmpty($data)) {
+                mysqli_stmt_bind_param($stmt, $whitespace, $data);
+            }
+            mysqli_stmt_execute($stmt);
 
+
+            return mysqli_stmt_get_result($stmt);
+
+
+        }
 
     }
 
