@@ -12,15 +12,15 @@ class ProductRepository
 {
     private array $list;
     private SQLConnector $connect;
+    private ProductMapper $productmapper;
 
     public function __construct(SQLConnector $connector)
     {
+        $this->connect = $connector;
+        $this->productmapper = new ProductMapper();
+        $this->initList('product');
 
-        $array = $this->makeArrayResult($this->setList($connector, 'product'));
-        $productMapper = new ProductMapper();
-        foreach ($array as $product) {
-            $this->list[(int)$product['id']] = $productMapper->map($product);
-        }
+
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductRepository
         return isset($this->list[$id]);
     }
 
-    private function makeArrayResult($resultobj)
+    private function makeArrayResult(object $resultobj)
     {
         if ($resultobj->num_rows === 0) {
             return array();
@@ -63,10 +63,32 @@ class ProductRepository
         }
     }
 
-    public function setList(SQLConnector $connector, string $data)
+    public function authenticate(string $username, string $password): bool
     {
-        $this->connect = $connector;
-        $tmp = Array();
-        return $this->connect->get('Select * from ' . $data, '', $tmp);
+        return $this->connect->connect($username, $password);
     }
+
+    private function initList(string $data): void
+    {
+        $tmp = Array();
+        if ($this->connect->connect('root', 'pass123')) {
+            $array = $this->makeArrayResult($this->connect->get('Select * from ' . $data, '', $tmp));
+            foreach ($array as $product) {
+                $this->list[(int)$product['id']] = $this->productmapper->map($product);
+            }
+        } else {
+            echo('Could not establish Connection with Database');
+        }
+    }
+
+    public function setProdcut(string $sql, string $whitespace, array $data)
+    {
+        if ($this->connect->connect('root', 'pass123')) {
+            $this->connect->get($sql . $data, $whitespace, $data);
+        } else {
+            echo('Could not establish Connection with Database');
+        }
+    }
+
+
 }

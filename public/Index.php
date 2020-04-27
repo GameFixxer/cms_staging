@@ -20,7 +20,7 @@ require_once($path . '/vendor/autoload.php');
 define('template_path', $path . '/templates');
 
 $connect = new SQLConnector();
-$connect->connect();
+
 
 $dm = new ProductRepository($connect);
 $view = new View();
@@ -40,7 +40,7 @@ foreach ($controllerList as $controller) {
     }
 }
 if (!$isFind) {
-    $class = new ErrorControll($view);
+    $class = new ErrorControll($view, $dm);
     $class->action();
 }
 
