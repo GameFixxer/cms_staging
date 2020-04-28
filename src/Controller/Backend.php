@@ -92,7 +92,7 @@ class Backend implements Controller
 
     private function deleteProduct(array $id): void
     {
-        $this->pr->set('Delete from product where id= ?', $this->encodeArray($id), $id);
+        $this->pr->setToDB('Delete from product where id= ?', $this->encodeArray($id), $id);
     }
 
     private function createProduct(string $name, string $description): void
@@ -100,7 +100,7 @@ class Backend implements Controller
         $tmp = array();
         $tmp[] = $name;
         $tmp[] = $description;
-        $this->pr->set('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($tmp), $tmp);
+        $this->pr->setToDB('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($tmp), $tmp);
     }
 
     private function updateProduct(int $id, string $description): void
@@ -108,7 +108,7 @@ class Backend implements Controller
         $tmp = array();
         $tmp[] = $description;
         $tmp[] = $id;
-        $this->pr->set('Update product set description=(?) where id= ?', $this->encodeArray($tmp), $tmp);
+        $this->pr->setToDB('Update product set description=(?) where id= ?', $this->encodeArray($tmp), $tmp);
     }
 
     private function flushPage(): void

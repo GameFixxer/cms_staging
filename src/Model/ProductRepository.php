@@ -18,9 +18,7 @@ class ProductRepository
     {
         $this->connect = $connector;
         $this->productmapper = new ProductMapper();
-        $this->initList('product');
-
-
+        $this->getFromDB('product');
     }
 
     /**
@@ -28,7 +26,7 @@ class ProductRepository
      */
     public function getList(): array
     {
-        $this->initList('product');
+        $this->getFromDB('product');
         return $this->list;
     }
 
@@ -69,7 +67,7 @@ class ProductRepository
         return $this->connect->connect($username, $password);
     }
 
-    private function initList(string $data): void
+    private function getFromDB(string $data): void
     {
         $tmp = Array();
         if ($this->connect->connect('root', 'pass123')) {
@@ -82,7 +80,7 @@ class ProductRepository
         }
     }
 
-    public function set(string $sql, string $whitespace, array $data)
+    public function setToDB(string $sql, string $whitespace, array $data)
     {
         if ($this->connect->connect('root', 'pass123')) {
             $this->connect->set($sql, $whitespace, $data);
