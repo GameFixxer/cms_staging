@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
 
 Use App\Model\ProductRepository;
 Use App\Service\View;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 
 class Backend implements Controller
 {
@@ -62,7 +64,7 @@ class Backend implements Controller
 
     }
 
-    private function adminstrate()
+    private function adminstrate(): void
     {
         if (!empty($_POST)) {
             switch ($_POST) {
@@ -90,7 +92,7 @@ class Backend implements Controller
 
     private function deleteProduct(array $id): void
     {
-        $this->pr->set('Delete from product where id= ?', 'i', $id);
+        $this->pr->set('Delete from product where id= ?', $this->encodeArray($id), $id);
     }
 
     private function createProduct(string $name, string $description): void
@@ -98,7 +100,7 @@ class Backend implements Controller
         $tmp = array();
         $tmp[] = $name;
         $tmp[] = $description;
-        $this->pr->set('INSERT INTO product (name, description) values(?,?)', 'ss', $tmp);
+        $this->pr->set('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($tmp), $tmp);
     }
 
     private function updateProduct(int $id, string $description): void
@@ -106,12 +108,32 @@ class Backend implements Controller
         $tmp = array();
         $tmp[] = $description;
         $tmp[] = $id;
-        $this->pr->set('Update product set description=(?) where id= ?', 'si', $tmp);
+        $this->pr->set('Update product set description=(?) where id= ?', $this->encodeArray($tmp), $tmp);
     }
 
-    private function flushPage()
+    private function flushPage(): void
     {
         $this->view->addTlpParam('', $this->pr->getList());
         $flush = ($_GET);
+    }
+
+    private function encodeArray(array $params): string
+    {
+        $tmp = '';
+        foreach ($params as $key) {
+            switch ($key) {
+                case is_int(gettype($key)):
+                    $tmp .= 'i';
+                    break;
+                case is_string(gettype($key)):
+                    $tmp .= 's';
+                    break;
+                case is_float(gettype($key)):
+                    $tmp .= 'd';
+                    break;
+            }
+
+        }
+        return $tmp;
     }
 }
