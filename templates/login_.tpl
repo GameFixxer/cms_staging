@@ -3,7 +3,13 @@
     Backend Login
 {/block}
 {block name ="body"}
-    Welcome to the backstage Area!<br><br>
-    Please Enter your credentials in order to log in!<br><br>
-        hint &username=your-username&password=your-password
+
+    <form action="http://localhost:8080/Index.php?" method="get">
+        <input type="hidden" name="page" value="backend">
+        <label for="username">Username:</label>
+        <input type="text" name="username" /><br />
+        <label for="password">Password:</label>
+        <input type="password" id="pwd" name="password">
+        <input type="Submit" value="Submit" />
+    </form>
 {/block}

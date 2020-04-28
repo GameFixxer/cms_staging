@@ -2,83 +2,116 @@
 
 namespace App\Controller;
 
-use App\Controller\Controller;
+
 Use App\Model\ProductRepository;
 Use App\Service\View;
-use Exception;
 
 class Backend implements Controller
 {
     private ProductRepository $pr;
     private View $view;
     public const ROUTE = 'backend';
+    private bool $loggedIn;
 
     public function __construct(View $view, ProductRepository $pr)
     {
+        $this->loggedIn = false;
         $this->view = $view;
         $this->pr = $pr;
     }
 
     private function authentificate(): bool
     {
-        $test = false;
         $password = '';
         $username = '';
-        try {
-            $username = (string)$_POST['username'];
-            $password = (string)$_POST['password'];
+
+        if (!empty($_GET['username']) && !empty($_GET['password'])) {
+            $username = (string)$_GET['username'];
+            $password = (string)$_GET['password'];
+
             if (!$username == '' || !$password == '') {
 
                 if (!$this->pr->authenticate($username, $password)) {
                     echo('Invalid username or password');
-                    false;
+                    $this->loggedIn = false;
 
                 } else {
                     $this->view->addTemplate('backend_.tpl');
                     $this->view->addTlpParam('', $this->pr->getList());
-                    $test = true;
+                    $this->loggedIn = true;
 
                 }
             }
-
-        } catch (Exception $e) {
-            //echo('no valid input for username or password');
-            return false;
+        } else {
+            $this->view->addTemplate('login_.tpl');
         }
 
-        return $test;
+        return $this->loggedIn;
     }
 
     public function action()
     {
-        $this->view->addTemplate('staging.tpl');
-        if (!$this->authentificate()) {
-            echo('If you are not the admin. Please switch page.');
-        } else {
+
+
+        if ($this->authentificate()) {
             $this->adminstrate();
+        } else {
+            $this->view->addTemplate('login_.tpl');
         }
+
+
     }
 
     private function adminstrate()
     {
-        //while($_GET['page']==='backend') {
-        $delete = (string)$_POST['delete'];
-        var_dump($delete);
-        //}
+        if (!empty($_POST)) {
+            switch ($_POST) {
+                case !empty($_POST['delete']):
+                    $tmp [] = (int)$_POST['delete'];
+                    $this->deleteProduct($tmp);
+                    $this->flushPage();
+                    break;
+                case !empty($_POST['update']):
+                    $tmp = (int)$_POST['update'];
+                    $input = (string)$_POST['updatedescription'];
+                    $this->updateProduct($tmp, $input);
+                    $this->flushPage();
+                    break;
+                case !empty($_POST['new']):
+                    $tmp = (string)$_POST['newpname'];
+                    $input = (string)$_POST['newpdescription'];
+                    $this->createProduct($tmp, $input);
+                    $this->flushPage();
+                    break;
+
+            }
+        }
     }
 
-    private function deleteProduct():void
+    private function deleteProduct(array $id): void
     {
-        $this->pr->setProdcut('Delete from product where id=?', 's', $_POST['delete']);
+        $this->pr->set('Delete from product where id= ?', 'i', $id);
     }
 
-    private function createProduct():void
+    private function createProduct(string $name, string $description): void
     {
-        $this->pr->setProdcut();
+        $tmp = array();
+        $tmp[] = $name;
+        $tmp[] = $description;
+        $this->pr->set('INSERT INTO product (name, description) values(?,?)', 'ss', $tmp);
     }
 
-    private function updateProduct():void
+    private function updateProduct(int $id, string $description): void
     {
-        $this->pr->setProdcut();
+        $tmp = array();
+        $tmp[] = $description;
+        $tmp[] = $id;
+        $this->pr->set('Update product set description=(?) where id= ?', 'si', $tmp);
+    }
+
+    private function flushPage()
+    {
+        $this->view->addTlpParam('', $this->pr->getList());
+        $flush = ($_GET);
     }
 }

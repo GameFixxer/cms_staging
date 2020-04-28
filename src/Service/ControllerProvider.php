@@ -9,6 +9,7 @@ use App\Controller\HomeControll;
 use App\Controller\ListControll;
 
 
+
 class  ControllerProvider
 {
 
@@ -22,7 +23,7 @@ class  ControllerProvider
             ErrorControll::class,
             HomeControll::class,
             ListControll::class,
-            Backend::class
+            Backend::class,
         ];
     }
 

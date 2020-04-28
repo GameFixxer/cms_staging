@@ -36,6 +36,8 @@ foreach ($controllerList as $controller) {
         $isFind = true;
         $controllerClass = new $controller($view, $dm);
         $controllerClass->action();
+
+
         break;
     }
 }

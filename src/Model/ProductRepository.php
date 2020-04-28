@@ -28,6 +28,7 @@ class ProductRepository
      */
     public function getList(): array
     {
+        $this->initList('product');
         return $this->list;
     }
 
@@ -81,10 +82,10 @@ class ProductRepository
         }
     }
 
-    public function setProdcut(string $sql, string $whitespace, array $data)
+    public function set(string $sql, string $whitespace, array $data)
     {
         if ($this->connect->connect('root', 'pass123')) {
-            $this->connect->get($sql . $data, $whitespace, $data);
+            $this->connect->set($sql, $whitespace, $data);
         } else {
             echo('Could not establish Connection with Database');
         }

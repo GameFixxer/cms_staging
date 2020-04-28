@@ -33,7 +33,7 @@ Class SQLConnector
         return $this->connection;
     }
 
-    public function get(string $sql, string $whitespace, array $data): object
+    public function get(string $sql, string $whitespace, $data): object
     {
         $stmt = \mysqli_stmt_init($this->db_link);
 
@@ -53,17 +53,18 @@ Class SQLConnector
 
     }
 
-    public function set(string $sql, string $whitespace, array $data): void
+    public function set(string $sql, string $whitespace, $data): void
     {
         $stmt = \mysqli_stmt_init($this->db_link);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo('Something went wrong with the sql query.');
         } else {
-            if (!isEmpty($data)) {
-                mysqli_stmt_bind_param($stmt, $whitespace, $data);
+            if (!empty($data)) {
+                mysqli_stmt_bind_param($stmt, $whitespace, ...$data);
             }
             mysqli_stmt_execute($stmt);
         }
     }
+
 }
