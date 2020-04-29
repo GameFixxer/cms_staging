@@ -41,7 +41,7 @@ class Backend implements Controller
                     } else {
                         $this->view->addTemplate('backend_.tpl');
                         $this->view->addTlpParam('productlist', $this->pr->getList());
-                        session_start();
+                        //session_start();
                         $_SESSION["loggedin"] = true;
                         $_SESSION["username"] = $this->username;
 
@@ -93,6 +93,7 @@ class Backend implements Controller
                     $this->flushPage();
                     break;
                 case !empty($_POST['logout']):
+                    $this->logout();
                     break;
             }
         }
@@ -102,6 +103,7 @@ class Backend implements Controller
     {
         session_unset();
         session_destroy();
+        $this->view->addTemplate('login_.tpl');
     }
 
     private function deleteProduct(array $id): void
