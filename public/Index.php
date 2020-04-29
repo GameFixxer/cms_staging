@@ -14,7 +14,7 @@ use App\Service\ControllerProvider;
 use App\Service\View;
 use App\Service\SQLConnector;
 
-
+session_start();
 $path = dirname(__DIR__, 1);
 require_once($path . '/vendor/autoload.php');
 define('template_path', $path . '/templates');

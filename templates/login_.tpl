@@ -4,7 +4,7 @@
 {/block}
 {block name ="body"}
 
-    <form action="http://localhost:8080/Index.php?" method="get">
+    <form action="" method="post">
         <input type="hidden" name="page" value="backend">
         <label for="username">Username:</label>
         <input type="text" name="username" /><br />

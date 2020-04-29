@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-04-23 12:24:27
+/* Smarty version 3.1.36, created on 2020-04-29 09:00:48
   from '/home/rene/PhpstormProjects/MVC/templates/index.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5ea16cdbb17990_64443767',
+  'unifunc' => 'content_5ea926203db172_72493025',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ea16cdbb17990_64443767 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ea926203db172_72493025 (Smarty_Internal_Template $_smarty_tpl) {
 ?><html lang="">
 <head>
     <title>List</title>

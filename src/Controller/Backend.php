@@ -13,52 +13,59 @@ class Backend implements Controller
     private ProductRepository $pr;
     private View $view;
     public const ROUTE = 'backend';
-    private bool $loggedIn;
+    private string $username;
+    private string $password;
 
     public function __construct(View $view, ProductRepository $pr)
     {
-        $this->loggedIn = false;
+        $this->password = '';
+        $this->username = '';
+
         $this->view = $view;
         $this->pr = $pr;
     }
 
-    private function authentificate(): bool
+    private function authentificate(): void
     {
-        $password = '';
-        $username = '';
 
-        if (!empty($_GET['username']) && !empty($_GET['password'])) {
-            $username = (string)$_GET['username'];
-            $password = (string)$_GET['password'];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
+                $this->username = (string)trim($_POST['username']);
+                $this->password = (string)trim($_POST['password']);
 
-            if (!$username == '' || !$password == '') {
+                if (!$this->username == '' || !$this->password == '') {
 
-                if (!$this->pr->authenticate($username, $password)) {
-                    echo('Invalid username or password');
-                    $this->loggedIn = false;
+                    if (!$this->pr->authenticate($this->username, $this->password)) {
+                        echo('Invalid username or password');
 
-                } else {
-                    $this->view->addTemplate('backend_.tpl');
-                    $this->view->addTlpParam('', $this->pr->getList());
-                    $this->loggedIn = true;
+                    } else {
+                        $this->view->addTemplate('backend_.tpl');
+                        $this->view->addTlpParam('productlist', $this->pr->getList());
+                        session_start();
+                        $_SESSION["loggedin"] = true;
+                        $_SESSION["username"] = $this->username;
 
+
+                    }
                 }
+            } else {
+                $this->view->addTemplate('login_.tpl');
             }
-        } else {
-            $this->view->addTemplate('login_.tpl');
         }
 
-        return $this->loggedIn;
     }
 
     public function action()
     {
-
-
-        if ($this->authentificate()) {
+        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+            $this->view->addTlpParam('productlist', $this->pr->getList());
+            $this->view->addTemplate('backend_.tpl');
             $this->adminstrate();
+
+
         } else {
             $this->view->addTemplate('login_.tpl');
+            $this->authentificate();
         }
 
 
@@ -85,9 +92,16 @@ class Backend implements Controller
                     $this->createProduct($tmp, $input);
                     $this->flushPage();
                     break;
-
+                case !empty($_POST['logout']):
+                    break;
             }
         }
+    }
+
+    private function logout(): void
+    {
+        session_unset();
+        session_destroy();
     }
 
     private function deleteProduct(array $id): void
@@ -95,30 +109,39 @@ class Backend implements Controller
         $this->pr->setToDB('Delete from product where id= ?', $this->encodeArray($id), $id);
     }
 
-    private function createProduct(string $name, string $description): void
-    {
+    private
+    function createProduct(
+        string $name,
+        string $description
+    ): void {
         $tmp = array();
         $tmp[] = $name;
         $tmp[] = $description;
         $this->pr->setToDB('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($tmp), $tmp);
     }
 
-    private function updateProduct(int $id, string $description): void
-    {
+    private
+    function updateProduct(
+        int $id,
+        string $description
+    ): void {
         $tmp = array();
         $tmp[] = $description;
         $tmp[] = $id;
         $this->pr->setToDB('Update product set description=(?) where id= ?', $this->encodeArray($tmp), $tmp);
     }
 
-    private function flushPage(): void
+    private
+    function flushPage(): void
     {
         $this->view->addTlpParam('', $this->pr->getList());
         $flush = ($_GET);
     }
 
-    private function encodeArray(array $params): string
-    {
+    private
+    function encodeArray(
+        array $params
+    ): string {
         $tmp = '';
         foreach ($params as $key) {
             switch ($key) {
@@ -134,6 +157,7 @@ class Backend implements Controller
             }
 
         }
+
         return $tmp;
     }
 }

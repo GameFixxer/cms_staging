@@ -69,7 +69,8 @@ class ProductRepository
 
     private function getFromDB(string $data): void
     {
-        $tmp = Array();
+        $tmp = [];
+        $this->list = [];
         if ($this->connect->connect('root', 'pass123')) {
             $array = $this->makeArrayResult($this->connect->get('Select * from ' . $data, '', $tmp));
             foreach ($array as $product) {

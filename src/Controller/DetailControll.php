@@ -31,14 +31,16 @@ class DetailControll implements Controller
         }
         if ($pageId === 0) {
             $this->view->addTemplate('404_.tpl');
-        } else if ($this->pr->hasProduct($pageId) === false) {
-            $this->view->addTemplate('404_.tpl');
-
         } else {
-            $this->view->addTemplate('detail_.tpl');
-            try {
-                $this->view->addTlpParam('', $this->pr->getProduct($pageId));
-            } catch (\Exception $e) {
+            if ($this->pr->hasProduct($pageId) === false) {
+                $this->view->addTemplate('404_.tpl');
+
+            } else {
+                $this->view->addTemplate('detail_.tpl');
+                try {
+                    $this->view->addTlpParam('', $this->pr->getProduct($pageId));
+                } catch (\Exception $e) {
+                }
             }
         }
 
