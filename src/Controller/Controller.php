@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace App\Controller;
-Interface Controller
+
+interface Controller
 {
-
-    public function action();
-
+    public function action():void ;
 }

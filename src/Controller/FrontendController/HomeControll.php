@@ -1,14 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\FrontendController;
 
+use App\Controller\Controller;
 use App\Service\View;
 
-class ErrorControll implements Controller
+class HomeControll implements Controller
+
 {
     private View $view;
-    public const ROUTE = 'error';
+
+    public const ROUTE = 'home';
 
     public function __construct(View $view, object $spaceholder)
     {
@@ -16,10 +19,10 @@ class ErrorControll implements Controller
 
     }
 
+
     public function action(): void
     {
-        $this->view->addTemplate('404_.tpl');
-
+        $this->view->addTemplate('home.tpl');
     }
 
 }

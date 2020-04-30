@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Service\SQLConnector;
-use App\Model\Mapper\ProductMapper;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Model\Mapper\UserMapper;
+use App\Model\Dto\UserDataTransferObject;
 
-class ProductRepository
+class UserRepository
 {
     private array $list;
     private SQLConnector $connect;
-    private ProductMapper $productmapper;
+    private UserMapper $usermapper;
 
     public function __construct(SQLConnector $connector)
     {
         $this->connect = $connector;
-        $this->productmapper = new ProductMapper();
-        $this->getFromDB('product');
+        $this->usermapper = new UserMapper();
+        $this->getFromDB('user');
     }
 
     private function getFromDB(string $data): void
@@ -29,7 +29,7 @@ class ProductRepository
             $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
             if (!empty($array)) {
                 foreach ($array as $product) {
-                    $this->list[(int)$product['id']] = $this->productmapper->map($product);
+                    $this->list[(int)$product['id']] = $this->usermapper->map($product);
                 }
             } else {
                 echo('Database is empty...');
@@ -54,7 +54,7 @@ class ProductRepository
     }
 
     /**
-     * @return ProductDataTransferObject[]
+     * @return UserDataTransferObject[]
      */
     public function getList(): array
     {
@@ -63,9 +63,9 @@ class ProductRepository
         return $this->list;
     }
 
-    public function getProduct(int $id): ProductDataTransferObject
+    public function getUser(int $id): UserDataTransferObject
     {
-        if (!$this->hasProduct($id)) {
+        if (!$this->hasUser($id)) {
             throw new \Exception('Error! Productid is ivalid.', 1);
             {
             }
@@ -74,22 +74,10 @@ class ProductRepository
         return $this->list[$id];
     }
 
-    public function hasProduct(int $id): bool
+    public function hasUser(int $id): bool
     {
         return isset($this->list[$id]);
     }
 
-    public function authenticate(string $username, string $password): bool
-    {
-        return $this->connect->connect($username, $password);
-    }
-
-    public function setToDB(string $sql, string $whitespace, array $data): void
-    {
-        if ($this->connect->connect('root', 'pass123')) {
-            $this->connect->set($sql, $whitespace, $data);
-        } else {
-            echo('Could not establish Connection with Database');
-        }
-    }
 }
+

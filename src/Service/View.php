@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
+
 class View
 {
-
     private \Smarty $smarty;
 
     private string $template;
@@ -13,18 +14,16 @@ class View
     {
         $this->smarty = new \Smarty();
         $path = $this->navigate();
-        $this->smarty->setTemplateDir($path . '/templates');
-        $this->smarty->setCompileDir($path . '/templates_c');
-        $this->smarty->setCacheDir($path . '/cache');
-        $this->smarty->setConfigDir($path . '/configs');
-
-
+        $this->smarty->setTemplateDir($path.'/templates');
+        $this->smarty->setCompileDir($path.'/templates_c');
+        $this->smarty->setCacheDir($path.'/cache');
+        $this->smarty->setConfigDir($path.'/configs');
+        $this->template = '';
     }
 
     public function addTemplate(string $template): void
     {
         $this->template = $template;
-
     }
 
     public function navigate(): string
@@ -32,6 +31,9 @@ class View
         return dirname(__DIR__, 2);
     }
 
+    /**
+     * @param \App\Model\Dto\ProductDataTransferObject|\App\Model\Dto\ProductDataTransferObject[] $value
+     */
     public function addTlpParam(string $name, $value): void
     {
         $this->smarty->assign('id', $value);
@@ -45,6 +47,4 @@ class View
         } catch (\Exception $e) {
         }
     }
-
-    public function submittedLogin(){}
 }

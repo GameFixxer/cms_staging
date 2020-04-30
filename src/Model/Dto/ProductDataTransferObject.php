@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Dto;
@@ -11,20 +12,22 @@ class ProductDataTransferObject
 
     public function __construct()
     {
-
+        $this->name = '';
+        $this->desc = '';
+        $this->id = 0;
     }
 
-    public function setProductName(string $name)
+    public function setProductName(string $name): void
     {
         $this->name = $name;
     }
 
-    public function setProductId(int $id)
+    public function setProductId(int $id): void
     {
         $this->id = $id;
     }
 
-    public function setProductDescr(string $desc)
+    public function setProductDescr(string $desc): void
     {
         $this->desc = $desc;
     }

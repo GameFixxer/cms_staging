@@ -1,30 +1,31 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
-use App\Controller\Backend;
-use App\Controller\DetailControll;
-use App\Controller\ErrorControll;
-use App\Controller\HomeControll;
-use App\Controller\ListControll;
 
+use App\Controller\BackendController\Backend;
+use App\Controller\FrontendController\DetailControll;
+use App\Controller\FrontendController\ErrorControll;
+use App\Controller\FrontendController\HomeControll;
+use App\Controller\FrontendController\ListControll;
 
-
-class  ControllerProvider
+class ControllerProvider
 {
-
-
-    public function getList(): array
+    public function getFrontEndList(): array
     {
-
-
         return [
-            DetailControll::class,
-            ErrorControll::class,
-            HomeControll::class,
-            ListControll::class,
-            Backend::class,
+                DetailControll::class,
+                ErrorControll::class,
+                HomeControll::class,
+                ListControll::class,
+                Backend::class,
         ];
     }
-
+    public function getBackEndList():array
+    {
+        return [
+                Backend::class,
+        ];
+    }
 }

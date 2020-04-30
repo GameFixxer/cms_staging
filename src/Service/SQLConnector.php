@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-
 use function PHPUnit\Framework\isEmpty;
 
-Class SQLConnector
+class SQLConnector
 {
     private \mysqli $db_link;
     private bool $connection;
 
     public function __construct()
     {
-        $this->connection = true;
 
+        $this->connection = true;
     }
 
     public function __destruct()
@@ -33,7 +32,7 @@ Class SQLConnector
         return $this->connection;
     }
 
-    public function get(string $sql, string $whitespace, $data): object
+    public function get(string $sql, string $whitespace, array $data): object
     {
         $stmt = \mysqli_stmt_init($this->db_link);
 
@@ -45,15 +44,11 @@ Class SQLConnector
             }
             mysqli_stmt_execute($stmt);
 
-
-            return mysqli_stmt_get_result($stmt);
-
-
         }
-
+        return mysqli_stmt_get_result($stmt);
     }
 
-    public function set(string $sql, string $whitespace, $data): void
+    public function set(string $sql, string $whitespace, array $data): void
     {
         $stmt = \mysqli_stmt_init($this->db_link);
 
@@ -66,5 +61,4 @@ Class SQLConnector
             mysqli_stmt_execute($stmt);
         }
     }
-
 }

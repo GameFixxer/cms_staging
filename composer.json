@@ -4,6 +4,7 @@
         "ext-json": "*",
         "ext-mysqli": "*",
         "ext-mysqlnd": "*",
+        "friendsofphp/php-cs-fixer": "2.16.*",
         "phpunit/phpunit": "*",
         "codeception/codeception": "*",
         "codeception/specify": "*",
@@ -19,6 +20,8 @@
     },
     "require-dev": {
         "symfony/var-dumper": "^5.0",
-        "codeception/module-webdriver": "^1.0"
+        "codeception/module-webdriver": "^1.0",
+        "phpstan/phpstan": "^0.12.19",
+        "vimeo/psalm": "^3.11"
     }
 }
