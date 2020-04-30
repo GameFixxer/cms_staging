@@ -1,5 +1,6 @@
 <?php
 namespace App\Service;
+
 class SessionUser
 {
     public function __construct()
@@ -14,10 +15,16 @@ class SessionUser
 
     public function isLoggedIn(): bool
     {
-        return true;
+        return  $_SESSION['loggedin'];
     }
 
-    public function setUser()
+
+    public function setUser($name):void
     {
+        $_SESSION['username'] = $name;
+    }
+    public function getUser(): string
+    {
+        return $_SESSION['username'];
     }
 }

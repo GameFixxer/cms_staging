@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace App\Controller\BackendController;
 
 use App\Controller\BackEndController;
+use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\View;
+use App\Service\SessionUser;
 
 class Backend implements BackEndController
 {
     public const ROUTE = 'backend';
     private ProductRepository $pr;
+    private ProductEntityManager $pem;
     private View $view;
-    private string $username;
-    private string $password;
 
-    public function __construct(View $view, ProductRepository $pr)
+
+    public function __construct(View $view, ProductRepository $pr, ProductEntityManager $pem)
     {
-        $this->password = '';
-        $this->username = '';
 
+        $this->pem = $pem;
         $this->view = $view;
         $this->pr = $pr;
     }
@@ -39,6 +40,7 @@ class Backend implements BackEndController
 
     public function init(): void
     {
+
     }
 
     private function administrate(): void
@@ -72,27 +74,7 @@ class Backend implements BackEndController
 
     private function deleteProduct(array $id): void
     {
-        $this->pr->setToDB('Delete from product where id= ?', $this->encodeArray($id), $id);
-    }
-
-    private function encodeArray(array $params): string
-    {
-        $tmp = '';
-        foreach ($params as $key) {
-            switch ($key) {
-                case is_int(gettype($key)):
-                    $tmp .= 'i';
-                    break;
-                case is_string(gettype($key)):
-                    $tmp .= 's';
-                    break;
-                case is_float(gettype($key)):
-                    $tmp .= 'd';
-                    break;
-            }
-        }
-
-        return $tmp;
+        $this->pem->setToDB('Delete from product where id= ?', $id);
     }
 
     private function flushPage(): void
@@ -105,7 +87,7 @@ class Backend implements BackEndController
         $tmp = array();
         $tmp[] = $description;
         $tmp[] = $id;
-        $this->pr->setToDB('Update product set description=(?) where id= ?', $this->encodeArray($tmp), $tmp);
+        $this->pem->setToDB('Update product set description=(?) where id= ?', $tmp);
     }
 
     private function createProduct(string $name, string $description): void
@@ -113,7 +95,7 @@ class Backend implements BackEndController
         $tmp = array();
         $tmp[] = $name;
         $tmp[] = $description;
-        $this->pr->setToDB('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($tmp), $tmp);
+        $this->pem->setToDB('INSERT INTO product (name, description) values(?,?)', $tmp);
     }
 
     private function logout(): void
@@ -123,27 +105,5 @@ class Backend implements BackEndController
         $this->view->addTemplate('login.tpl');
     }
 
-    private function authenticate(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (!empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
-                $this->username = (string)trim($_POST['username']);
-                $this->password = (string)trim($_POST['password']);
 
-                if (!$this->username == '' || !$this->password == '') {
-                    if (!$this->pr->authenticate($this->username, $this->password)) {
-                        echo('Invalid username or password');
-                    } else {
-                        $this->view->addTemplate('backend.tpl');
-                        $this->view->addTlpParam('productlist', $this->pr->getList());
-                        //session_start();
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['username'] = $this->username;
-                    }
-                }
-            } else {
-                $this->view->addTemplate('login.tpl');
-            }
-        }
-    }
 }

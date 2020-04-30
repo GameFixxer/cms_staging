@@ -6,6 +6,7 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
 use App\Controller\FrontendController\ErrorControll;
+use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\ControllerProvider;
 use App\Service\View;
@@ -18,11 +19,15 @@ define('template_path', $path.'/templates');
 
 $connect = new SQLConnector();
 $dm = new ProductRepository($connect);
+$pem = new ProductEntityManager();
 $view = new View();
 $controller = new ControllerProvider();
 $page = $_GET ['page'];
+$is_admin = false;
+
 if (empty($_GET('admin')) && $_GET['admin'] === 'true') {
     $controllerList = $controller->getBackEndList();
+    $is_admin = true;
 } else {
     $controllerList = $controller->getFrontEndList();
 }
@@ -31,12 +36,17 @@ $isFind = false;
 
 foreach ($controllerList as $controller) {
     if (strtolower($controller::ROUTE) === $page) {
-        $isFind = true;
-        $controllerClass = new $controller($view, $dm);
-        $controllerClass->action();
-
-
-        break;
+        if (!$is_admin) {
+            $isFind = true;
+            $controllerClass = new $controller($view, $dm);
+            $controllerClass->action();
+            break;
+        }
+        if ($is_admin) {
+            $isFind = true;
+            $controllerClass = new $controller($view, $dm, $pem);
+            $controllerClass->init();
+        }
     }
 }
 if (!$isFind) {

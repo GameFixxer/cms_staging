@@ -9,6 +9,7 @@ use App\Controller\FrontendController\DetailControll;
 use App\Controller\FrontendController\ErrorControll;
 use App\Controller\FrontendController\HomeControll;
 use App\Controller\FrontendController\ListControll;
+use App\Controller\FrontendController\Login;
 
 class ControllerProvider
 {
@@ -19,6 +20,7 @@ class ControllerProvider
                 ErrorControll::class,
                 HomeControll::class,
                 ListControll::class,
+                Login::class,
                 Backend::class,
         ];
     }
