@@ -5,6 +5,7 @@ namespace App\Controller\FrontendController;
 
 use App\Controller\Controller;
 use App\Model\ProductRepository;
+use App\Service\Container;
 use App\Service\View;
 
 class DetailControll implements Controller
@@ -14,10 +15,10 @@ class DetailControll implements Controller
     private View $view;
     private ProductRepository $pr;
 
-    public function __construct(View $view, ProductRepository $pr)
+    public function __construct(Container $container)
     {
-        $this->view = $view;
-        $this->pr = $pr;
+        $this->view = $container->get(View::class);
+        $this->pr = $container->get(ProductRepository::class);
 
     }
 

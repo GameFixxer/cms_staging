@@ -5,11 +5,11 @@ namespace App\Controller\Backend;
 use App\Controller\Backend;
 use App\Controller\BackendController;
 use App\Controller\Controller;
+use App\Service\Container;
 use App\Service\SQLConnector;
 use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
-
 
 class Login implements BackendController
 {
@@ -18,14 +18,16 @@ class Login implements BackendController
     private UserRepository $ur;
     private string $username;
     private string $password;
+    private SessionUser $usersession;
 
-    public function __construct(View $view, object $ob1, object $ob2, SQLConnector $connector)
+
+    public function __construct(Container $container)
     {
-        $this->view = $view;
-        $this->ur = new UserRepository($connector);
+        $this->usersession= $container->get(SessionUser::class);
+        $this->view = $container->get(View::class);
+        $this->ur = $container->get(UserRepository::class);
         $this->password = '';
         $this->username = '';
-
     }
 
     public function action(): void
@@ -34,7 +36,11 @@ class Login implements BackendController
     }
     public function init(): void
     {
-        // TODO: Implement init() method.
+        if ($this->usersession->isLoggedIn()) {
+            $this->view->addTemplate('backend.tpl');
+        } else {
+            $this->authenticate();
+        }
     }
 
     private function authenticate(): void
@@ -45,16 +51,16 @@ class Login implements BackendController
                 $this->password = (string)trim($_POST['password']);
 
                 if (!$this->username == '' || !$this->password == '') {
-                    if (!$this->ur->hasUser($this->username)) {
+                    if (!$this->ur->hasUser($this->username, $this->password)) {
                         echo('Invalid username or password');
                     } else {
-
                         $_SESSION['loggedin'] = true;
                         $_SESSION['username'] = $this->username;
+                        $this->view->addTemplate('backend.tpl');
                     }
                 }
             } else {
-                $this->view->addTemplate('login.tpl');
+                $this->action();
             }
         }
     }

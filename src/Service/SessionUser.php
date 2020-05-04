@@ -1,28 +1,32 @@
 <?php
+
 namespace App\Service;
 
 class SessionUser
 {
     public function __construct()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function __destruct()
     {
-        session_destroy();
+        //session_destroy();
     }
 
     public function isLoggedIn(): bool
     {
-        return  $_SESSION['loggedin'];
+        return isset($_SESSION['loggedin']);
     }
 
 
-    public function setUser($name):void
+    public function setUser($name): void
     {
         $_SESSION['username'] = $name;
     }
+
     public function getUser(): string
     {
         return $_SESSION['username'];

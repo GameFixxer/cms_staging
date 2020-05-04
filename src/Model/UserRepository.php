@@ -28,8 +28,8 @@ class UserRepository
         if ($this->connect->connect('root', 'pass123')) {
             $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
             if (!empty($array)) {
-                foreach ($array as $product) {
-                    $this->list[(int)$product['id']] = $this->usermapper->map($product);
+                foreach ($array as $user) {
+                    $this->list[(int)$user['id']] = $this->usermapper->map($user);
                 }
             } else {
                 echo('Database is empty...');
@@ -58,7 +58,7 @@ class UserRepository
      */
     public function getList(): array
     {
-        $this->getFromDB('product');
+        $this->getFromDB('user');
 
         return $this->list;
     }
@@ -74,10 +74,15 @@ class UserRepository
         return $this->list[$username];
     }
 
-    public function hasUser(string $username): bool
+    public function hasUser(string $username, string $passwort): bool
     {
-        return isset($this->list[$username]);
+        $tmp =false;
+        foreach ($this->list as $user) {
+            if ($user->getUsername()===$username && $user->getUserPassword()===$passwort) {
+                $tmp = true;
+                return $tmp;
+            }
+        }
+        return $tmp;
     }
-
 }
-

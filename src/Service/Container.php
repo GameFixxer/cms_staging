@@ -11,7 +11,7 @@ class Container
     public function get($id)
     {
         if ((!isset($this->classes[$id]))) {
-            throw new \Exception('Error! ClassID is ivalid.', 1);
+            throw new \Exception('Error! ClassID is invalid.', 1);
         }
         return $this->classes[$id];
     }

@@ -8,12 +8,12 @@ use App\Model\Dto\UserDataTransferObject;
 class UserMapper
 {
 
-    public function map(array $product): UserDataTransferObject
+    public function map(array $user): UserDataTransferObject
     {
         $userDataTransferObject = new UserDataTransferObject();
-        $userDataTransferObject->setUserId((int)$product['id']);
-        $userDataTransferObject->setUsername($product['name']);
-        $userDataTransferObject->setUserPassword($product['description']);
+        $userDataTransferObject->setUserId((int)$user['id']);
+        $userDataTransferObject->setUsername($user['username']);
+        $userDataTransferObject->setUserPassword($user['passwort']);
 
         return $userDataTransferObject;
 

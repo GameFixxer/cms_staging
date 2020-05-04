@@ -20,7 +20,6 @@ class ControllerProvider
                 ErrorControll::class,
                 HomeControll::class,
                 ListControll::class,
-                Backend::class,
         ];
     }
     public function getBackEndList():array

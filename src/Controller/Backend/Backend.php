@@ -8,6 +8,7 @@ use App\Controller\BackendController;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\View;
+use App\Service\Container;
 use App\Service\SessionUser;
 
 class Backend implements BackendController
@@ -16,31 +17,35 @@ class Backend implements BackendController
     private ProductRepository $productRepository;
     private ProductEntityManager $productEntityManager;
     private View $view;
+    private Login $login;
+    private Container $container;
+    private SessionUser $usersession;
 
-
-    public function __construct(View $view, ProductRepository $pr, ProductEntityManager $pem)
+    public function __construct(Container $container)
     {
-
-        $this->productEntityManager = $pem;
-        $this->view = $view;
-        $this->productRepository = $pr;
+        $this->usersession= $container->get(SessionUser::class);
+        $this->productEntityManager = $container->get(ProductEntityManager::class);
+        $this->view = $container->get(View::class);
+        $this->productRepository = $container->get(ProductRepository::class);
+        $this->container = $container;
     }
 
     public function action(): void
     {
-        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-            $this->view->addTlpParam('productlist', $this->productRepository->getList());
-            $this->view->addTemplate('backend.tpl');
-            $this->administrate();
-        } else {
-            $this->view->addTemplate('login.tpl');
-            $this->authenticate();
-        }
+        $this->view->addTlpParam('productlist', $this->productRepository->getList());
+        $this->view->addTemplate('backend.tpl');
+        $this->administrate();
     }
 
     public function init(): void
     {
-
+        var_dump($this->usersession->isLoggedIn());
+        if ($this->usersession->isLoggedIn()) {
+            $this->action();
+        } else {
+            $this->view->addTemplate('login.tpl');
+            $this->login = new Login($this->container);
+        }
     }
 
     private function administrate(): void
@@ -104,6 +109,4 @@ class Backend implements BackendController
         session_destroy();
         $this->view->addTemplate('login.tpl');
     }
-
-
 }
