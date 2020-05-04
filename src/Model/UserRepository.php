@@ -63,20 +63,20 @@ class UserRepository
         return $this->list;
     }
 
-    public function getUser(int $id): UserDataTransferObject
+    public function getUser(string $username): UserDataTransferObject
     {
-        if (!$this->hasUser($id)) {
+        if (!$this->hasUser($username)) {
             throw new \Exception('Error! Productid is ivalid.', 1);
             {
             }
         }
 
-        return $this->list[$id];
+        return $this->list[$username];
     }
 
-    public function hasUser(int $id): bool
+    public function hasUser(string $username): bool
     {
-        return isset($this->list[$id]);
+        return isset($this->list[$username]);
     }
 
 }

@@ -11,6 +11,7 @@ use App\Model\ProductRepository;
 use App\Service\ControllerProvider;
 use App\Service\View;
 use App\Service\SQLConnector;
+use App\Service\ContainerProvider;
 
 session_start();
 $path = dirname(__DIR__, 1);
@@ -18,14 +19,14 @@ require_once($path.'/vendor/autoload.php');
 define('template_path', $path.'/templates');
 
 $connect = new SQLConnector();
-$dm = new ProductRepository($connect);
-$pem = new ProductEntityManager();
+$productrepository = new ProductRepository($connect);
+$productentitymanager = new ProductEntityManager($connect);
 $view = new View();
 $controller = new ControllerProvider();
 $page = $_GET ['page'];
 $is_admin = false;
 
-if (empty($_GET('admin')) && $_GET['admin'] === 'true') {
+if (!empty($_GET['admin']) && $_GET['admin'] === 'true') {
     $controllerList = $controller->getBackEndList();
     $is_admin = true;
 } else {
@@ -33,24 +34,26 @@ if (empty($_GET('admin')) && $_GET['admin'] === 'true') {
 }
 $isFind = false;
 
+$containerProvider = new ContainerProvider();
+
 
 foreach ($controllerList as $controller) {
     if (strtolower($controller::ROUTE) === $page) {
         if (!$is_admin) {
             $isFind = true;
-            $controllerClass = new $controller($view, $dm);
-            $controllerClass->action();
+            $controller = new $controller($containerProvider->get($controller));
+            $controller->action();
             break;
         }
         if ($is_admin) {
             $isFind = true;
-            $controllerClass = new $controller($view, $dm, $pem);
-            $controllerClass->init();
+            $controller = new $controller($view, $productrepository, $productentitymanager);
+            $controller->init();
         }
     }
 }
 if (!$isFind) {
-    $class = new ErrorControll($view, $dm);
+    $class = new ErrorControll($view, $productrepository);
     $class->action();
 }
 

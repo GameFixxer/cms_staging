@@ -2,34 +2,34 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\BackendController;
+namespace App\Controller\Backend;
 
-use App\Controller\BackEndController;
+use App\Controller\BackendController;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\View;
 use App\Service\SessionUser;
 
-class Backend implements BackEndController
+class Backend implements BackendController
 {
     public const ROUTE = 'backend';
-    private ProductRepository $pr;
-    private ProductEntityManager $pem;
+    private ProductRepository $productRepository;
+    private ProductEntityManager $productEntityManager;
     private View $view;
 
 
     public function __construct(View $view, ProductRepository $pr, ProductEntityManager $pem)
     {
 
-        $this->pem = $pem;
+        $this->productEntityManager = $pem;
         $this->view = $view;
-        $this->pr = $pr;
+        $this->productRepository = $pr;
     }
 
     public function action(): void
     {
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-            $this->view->addTlpParam('productlist', $this->pr->getList());
+            $this->view->addTlpParam('productlist', $this->productRepository->getList());
             $this->view->addTemplate('backend.tpl');
             $this->administrate();
         } else {
@@ -74,12 +74,12 @@ class Backend implements BackEndController
 
     private function deleteProduct(array $id): void
     {
-        $this->pem->setToDB('Delete from product where id= ?', $id);
+        $this->productEntityManager->setToDB('Delete from product where id= ?', $id);
     }
 
     private function flushPage(): void
     {
-        $this->view->addTlpParam('', $this->pr->getList());
+        $this->view->addTlpParam('', $this->productRepository->getList());
     }
 
     private function updateProduct(int $id, string $description): void
@@ -87,7 +87,7 @@ class Backend implements BackEndController
         $tmp = array();
         $tmp[] = $description;
         $tmp[] = $id;
-        $this->pem->setToDB('Update product set description=(?) where id= ?', $tmp);
+        $this->productEntityManager->setToDB('Update product set description=(?) where id= ?', $tmp);
     }
 
     private function createProduct(string $name, string $description): void
@@ -95,7 +95,7 @@ class Backend implements BackEndController
         $tmp = array();
         $tmp[] = $name;
         $tmp[] = $description;
-        $this->pem->setToDB('INSERT INTO product (name, description) values(?,?)', $tmp);
+        $this->productEntityManager->setToDB('INSERT INTO product (name, description) values(?,?)', $tmp);
     }
 
     private function logout(): void

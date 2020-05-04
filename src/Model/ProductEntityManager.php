@@ -8,6 +8,11 @@ class ProductEntityManager
 {
     private SQLConnector $connect;
 
+    public function __construct(SQLConnector $connector)
+    {
+        $this->connect = $connector;
+    }
+
     private function encodeArray(array $params): string
     {
         $tmp = '';
