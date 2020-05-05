@@ -2,7 +2,6 @@
 
 namespace App\Controller\Backend;
 
-use App\Controller\Backend;
 use App\Controller\BackendController;
 use App\Controller\Controller;
 use App\Service\Container;
@@ -10,10 +9,11 @@ use App\Service\SQLConnector;
 use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
+use App\Controller\Backend\Backend;
 
 class Login implements BackendController
 {
-    public const ROUTE = 'backend';
+    public const ROUTE = 'login';
     private View $view;
     private UserRepository $ur;
     private string $username;
@@ -37,8 +37,9 @@ class Login implements BackendController
     public function init(): void
     {
         if ($this->usersession->isLoggedIn()) {
-            $this->view->addTemplate('backend.tpl');
+            $this->redirectToBackend();
         } else {
+            $this->view->addTemplate('login.tpl');
             $this->authenticate();
         }
     }
@@ -54,14 +55,23 @@ class Login implements BackendController
                     if (!$this->ur->hasUser($this->username, $this->password)) {
                         echo('Invalid username or password');
                     } else {
-                        $_SESSION['loggedin'] = true;
-                        $_SESSION['username'] = $this->username;
-                        $this->view->addTemplate('backend.tpl');
+                        $this->redirectToBackend();
                     }
                 }
             } else {
                 $this->action();
             }
         }
+    }
+    private function redirectToBackend():void
+    {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $this->username;
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $extra=  'Index.php?page='. Backend::ROUTE;
+        $extra2='&admin=true';
+        header("Location: http://$host$uri/$extra$extra2");
+        exit;
     }
 }

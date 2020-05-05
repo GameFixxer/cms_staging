@@ -12,7 +12,6 @@ class SQLConnector
 
     public function __construct()
     {
-
         $this->connection = true;
     }
 
@@ -21,7 +20,7 @@ class SQLConnector
         $this->db_link->close();
     }
 
-    public function connect(string $user, string $pw): bool
+    public function connect2(string $user, string $pw): bool
     {
         $this->db_link = new \mysqli('127.0.01:3336', $user, $pw, 'mvc');
         $this->db_link->set_charset('utf8');
@@ -43,7 +42,6 @@ class SQLConnector
                 mysqli_stmt_bind_param($stmt, $whitespace, $data);
             }
             mysqli_stmt_execute($stmt);
-
         }
         return mysqli_stmt_get_result($stmt);
     }

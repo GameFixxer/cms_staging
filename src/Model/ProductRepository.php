@@ -10,7 +10,7 @@ use App\Model\Dto\ProductDataTransferObject;
 
 class ProductRepository
 {
-    private array $list;
+    private array $productList;
     private SQLConnector $connect;
     private ProductMapper $productmapper;
 
@@ -24,12 +24,12 @@ class ProductRepository
     private function getFromDB(string $data): void
     {
         $tmp = [];
-        $this->list = [];
-        if ($this->connect->connect('root', 'pass123')) {
+        $this->productList = [];
+        if ($this->connect->connect2('root', 'pass123')) {
             $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
             if (!empty($array)) {
                 foreach ($array as $product) {
-                    $this->list[(int)$product['id']] = $this->productmapper->map($product);
+                    $this->productList[(int)$product['id']] = $this->productmapper->map($product);
                 }
             } else {
                 echo('Database is empty...');
@@ -56,11 +56,11 @@ class ProductRepository
     /**
      * @return ProductDataTransferObject[]
      */
-    public function getList(): array
+    public function getProductList(): array
     {
         $this->getFromDB('product');
 
-        return $this->list;
+        return $this->productList;
     }
 
     public function getProduct(int $id): ProductDataTransferObject
@@ -71,25 +71,17 @@ class ProductRepository
             }
         }
 
-        return $this->list[$id];
+        return $this->productList[$id];
     }
 
     public function hasProduct(int $id): bool
     {
-        return isset($this->list[$id]);
+        return isset($this->productList[$id]);
     }
 
     public function authenticate(string $username, string $password): bool
     {
-        return $this->connect->connect($username, $password);
+        return $this->connect->connect2($username, $password);
     }
 
-    public function setToDB(string $sql, string $whitespace, array $data): void
-    {
-        if ($this->connect->connect('root', 'pass123')) {
-            $this->connect->set($sql, $whitespace, $data);
-        } else {
-            echo('Could not establish Connection with Database');
-        }
-    }
 }

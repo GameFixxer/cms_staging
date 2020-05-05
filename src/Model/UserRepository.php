@@ -10,7 +10,7 @@ use App\Model\Dto\UserDataTransferObject;
 
 class UserRepository
 {
-    private array $list;
+    private array $userList;
     private SQLConnector $connect;
     private UserMapper $usermapper;
 
@@ -24,12 +24,12 @@ class UserRepository
     private function getFromDB(string $data): void
     {
         $tmp = [];
-        $this->list = [];
-        if ($this->connect->connect('root', 'pass123')) {
+        $this->userList = [];
+        if ($this->connect->connect2('root', 'pass123')) {
             $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
             if (!empty($array)) {
                 foreach ($array as $user) {
-                    $this->list[(int)$user['id']] = $this->usermapper->map($user);
+                    $this->userList[(int)$user['id']] = $this->usermapper->map($user);
                 }
             } else {
                 echo('Database is empty...');
@@ -56,11 +56,11 @@ class UserRepository
     /**
      * @return UserDataTransferObject[]
      */
-    public function getList(): array
+    public function getUserList(): array
     {
         $this->getFromDB('user');
 
-        return $this->list;
+        return $this->userList;
     }
 
     public function getUser(string $username): UserDataTransferObject
@@ -71,13 +71,13 @@ class UserRepository
             }
         }
 
-        return $this->list[$username];
+        return $this->userList[$username];
     }
 
     public function hasUser(string $username, string $passwort): bool
     {
         $tmp =false;
-        foreach ($this->list as $user) {
+        foreach ($this->userList as $user) {
             if ($user->getUsername()===$username && $user->getUserPassword()===$passwort) {
                 $tmp = true;
                 return $tmp;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\FrontendController;
 
 use App\Controller\Controller;
+use App\Service\Container;
 use App\Service\View;
 
 class ErrorControll implements Controller
@@ -11,9 +12,9 @@ class ErrorControll implements Controller
     public const ROUTE = 'error';
     private View $view;
 
-    public function __construct(View $view, object $spaceholder)
+    public function __construct(Container $container)
     {
-        $this->view = $view;
+        $this->view = $container->get(View::class);
     }
 
     public function action(): void

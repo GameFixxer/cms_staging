@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Controller\Backend\Backend;
+use App\Controller\Backend\Dashboard;
+use App\Controller\Backend\ProductController;
 use App\Controller\FrontendController\DetailControll;
 use App\Controller\FrontendController\ErrorControll;
 use App\Controller\FrontendController\HomeControll;
@@ -27,6 +29,7 @@ class ControllerProvider
         return [
                 Login::class,
                 Backend::class,
+                Dashboard::class,
         ];
     }
 

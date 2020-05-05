@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Controller\Backend\ProductController;
 use App\Service\Container;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
@@ -19,5 +20,6 @@ class DependencyProvider
         $container->set(ProductRepository::class, new ProductRepository($container->get(SQLConnector::class)));
         $container->set(UserRepository::class, new UserRepository($container->get(SQLConnector::class)));
         $container->set(ProductEntityManager::class, new ProductEntityManager($container->get(SQLConnector::class)));
+        $container->set(ProductController::class, new ProductController($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
     }
 }
