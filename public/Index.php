@@ -36,17 +36,14 @@ $isFind = false;
 
 foreach ($controllerList as $controller) {
     if (strtolower($controller::ROUTE) === $page) {
-        if (!$is_admin) {
-            $isFind = true;
-            $controller = new $controller($container);
-            $controller->action();
-            break;
-        }
+        $isFind = true;
+        $controller = new $controller($container);
         if ($is_admin) {
             $isFind = true;
             $controller = new $controller($container);
             $controller->init();
         }
+        $controller->action();
     }
 }
 if (!$isFind) {

@@ -2,7 +2,6 @@
 namespace  App\Controller\Backend;
 
 use App\Controller\BackendController;
-use App\Controller\Backend\ProductController;
 use App\Service\Container;
 use App\Model\ProductRepository;
 use App\Service\SessionUser;
@@ -13,7 +12,6 @@ class Dashboard implements BackendController
     public const ROUTE = 'dashboard';
     private ProductRepository $productRepository;
     private View $view;
-    private ProductController $productController;
     private SessionUser $usersession;
 
     public function __construct(Container $container)
@@ -21,15 +19,12 @@ class Dashboard implements BackendController
         $this->usersession= $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
         $this->productRepository = $container->get(ProductRepository::class);
-        $this->productController = $container->get(ProductController::class);
     }
 
     public function init(): void
     {
         if (!$this->usersession->isLoggedIn()) {
-            $this->redirectToPage();
-        } else {
-            $this->action();
+            $this->redirectToPage(Login::ROUTE);
         }
     }
     public function action(): void
@@ -39,8 +34,6 @@ class Dashboard implements BackendController
         if (!empty($_POST)) {
             if (!empty($_POST['logout'])) {
                 $this->logout();
-            } else {
-                $this->productController->action();
             }
         }
     }
@@ -48,13 +41,13 @@ class Dashboard implements BackendController
     {
         session_unset();
         session_destroy();
-        $this->redirectToPage();
+        $this->redirectToPage(Login::ROUTE);
     }
-    private function redirectToPage():void
+    private function redirectToPage(string $route):void
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra= 'Index.php?page='.Login::ROUTE;
+        $extra= 'Index.php?page='.$route;
         $extra2='&admin=true';
         header("Location: http://$host$uri/$extra$extra2");
         exit;

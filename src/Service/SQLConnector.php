@@ -30,16 +30,16 @@ class SQLConnector
         }
         return $this->connection;
     }
-    public function connect() :callable
-    {
-        $this->db_link = new \mysqli('127.0.01:3336', 'root', 'pass123', 'mvc');
-        $this->db_link->set_charset('utf8');
-        if ($this->db_link->connect_errno) {
-            echo "Failed to connect to MySQL: (" . $this->db_link->connect_errno . ") " . $this->db_link->connect_error;
-            $this->connection = false;
-        }
-        return ;
-    }
+    /*  public function connect() :callable
+      {
+          $this->db_link = new \mysqli('127.0.01:3336', 'root', 'pass123', 'mvc');
+          $this->db_link->set_charset('utf8');
+          if ($this->db_link->connect_errno) {
+              echo "Failed to connect to MySQL: (" . $this->db_link->connect_errno . ") " . $this->db_link->connect_error;
+              $this->connection = false;
+          }
+          return ;
+      }*/
 
     public function get(string $sql, string $whitespace, array $data): object
     {

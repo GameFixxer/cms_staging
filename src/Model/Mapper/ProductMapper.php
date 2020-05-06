@@ -13,7 +13,7 @@ class ProductMapper
         $productDataTransferObject = new ProductDataTransferObject();
         $productDataTransferObject->setProductId((int)$product['id']);
         $productDataTransferObject->setProductName($product['name']);
-        $productDataTransferObject->setProductDescr($product['description']);
+        $productDataTransferObject->setProductDescription($product['description']);
 
         return $productDataTransferObject;
 

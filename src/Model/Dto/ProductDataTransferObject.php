@@ -27,7 +27,7 @@ class ProductDataTransferObject
         $this->id = $id;
     }
 
-    public function setProductDescr(string $desc): void
+    public function setProductDescription(string $desc): void
     {
         $this->desc = $desc;
     }

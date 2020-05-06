@@ -42,7 +42,7 @@ class ProductEntityManager
         $this->connect->set('Delete from product where id= ?', $this->encodeArray($data), $data);
     }
 
-    public function safe(ProductDataTransferObject $product): void
+    public function save(ProductDataTransferObject $product): void
     {
         if (!($product->getProductId()===0)) {
             $data [] = $product->getProductName();
