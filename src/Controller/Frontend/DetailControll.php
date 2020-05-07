@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\FrontendController;
+namespace App\Controller\Frontend;
 
 use App\Controller\Controller;
 use App\Model\ProductRepository;
@@ -13,12 +13,12 @@ class DetailControll implements Controller
 
     public const ROUTE = 'detail';
     private View $view;
-    private ProductRepository $pr;
+    private ProductRepository $productRepository;
 
     public function __construct(Container $container)
     {
         $this->view = $container->get(View::class);
-        $this->pr = $container->get(ProductRepository::class);
+        $this->productRepository = $container->get(ProductRepository::class);
 
     }
 
@@ -28,18 +28,18 @@ class DetailControll implements Controller
         $pageId = 0;
         try {
             $pageId = (int)$_GET['id'];
-        } catch (\InvalidArgumentException $t) {
+        } catch (\Exception $e) {
         }
         if ($pageId === 0) {
             $this->view->addTemplate('404.tpl');
         } else {
-            if ($this->pr->hasProduct($pageId) === false) {
+            if ($this->productRepository->hasProduct($pageId) === false) {
                 $this->view->addTemplate('404.tpl');
 
             } else {
                 $this->view->addTemplate('detail.tpl');
                 try {
-                    $this->view->addTlpParam('', $this->pr->getProduct($pageId));
+                    $this->view->addTlpParam('Product', $this->productRepository->getProduct($pageId));
                 } catch (\Exception $e) {
                 }
             }

@@ -12,12 +12,12 @@ class UserRepository
 {
     private array $userList;
     private SQLConnector $connect;
-    private UserMapper $usermapper;
+    private UserMapper $userMapper;
 
     public function __construct(SQLConnector $connector)
     {
         $this->connect = $connector;
-        $this->usermapper = new UserMapper();
+        $this->userMapper = new UserMapper();
         $this->getFromDB('user');
     }
 
@@ -25,17 +25,14 @@ class UserRepository
     {
         $tmp = [];
         $this->userList = [];
-        if ($this->connect->connect2('root', 'pass123')) {
-            $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
-            if (!empty($array)) {
-                foreach ($array as $user) {
-                    $this->userList[(int)$user['id']] = $this->usermapper->map($user);
-                }
-            } else {
-                echo('Database is empty...');
+
+        $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
+        if (!empty($array)) {
+            foreach ($array as $user) {
+                $this->userList[(int)$user['id']] = $this->userMapper->map($user);
             }
         } else {
-            echo('Could not establish Connection with Database');
+            echo('Database is empty...');
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\FrontendController;
+namespace App\Controller\Frontend;
 
 use App\Controller\Controller;
 use App\Service\Container;
@@ -22,6 +22,5 @@ class HomeControll implements Controller
     public function action(): void
     {
         $this->view->addTemplate('home.tpl');
-        //$this->view->display();
     }
 }

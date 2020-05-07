@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Service;
 
 
-use App\Controller\Backend\Dashboard;
+use App\Controller\Backend\DashboardController;
 use App\Controller\Backend\ProductController;
-use App\Controller\FrontendController\DetailControll;
-use App\Controller\FrontendController\ErrorControll;
-use App\Controller\FrontendController\HomeControll;
-use App\Controller\FrontendController\ListControll;
-use App\Controller\Backend\Login;
+use App\Controller\Frontend\DetailControll;
+use App\Controller\Frontend\ErrorControll;
+use App\Controller\Frontend\HomeControll;
+use App\Controller\Frontend\ListControll;
+use App\Controller\Backend\LoginController;
 
 class ControllerProvider
 {
@@ -27,8 +27,8 @@ class ControllerProvider
     public function getBackEndList():array
     {
         return [
-                Login::class,
-                Dashboard::class,
+                LoginController::class,
+                DashboardController::class,
                 ProductController::class,
         ];
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\FrontendController;
+namespace App\Controller\Frontend;
 
 use App\Controller\Controller;
 use \App\Model\ProductRepository;
@@ -12,17 +12,17 @@ class ListControll implements Controller
 {
     public const ROUTE = 'list';
     private View $view;
-    private ProductRepository $pr;
+    private ProductRepository $productRepository;
 
     public function __construct(Container $container)
     {
         $this->view = $container->get(View::class);
-        $this->pr = $container->get(ProductRepository::class);
+        $this->productRepository = $container->get(ProductRepository::class);
     }
 
     public function action(): void
     {
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParam('', $this->pr->getProductList());
+        $this->view->addTlpParam('ProductList', $this->productRepository->getProductList());
     }
 }

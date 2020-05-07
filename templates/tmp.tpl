@@ -44,3 +44,5 @@ Here you can see a list with all existing pages: <br><br>
 </form>
 </body>
 </html>
+Create product <input type="checkbox" name="id" value=''>
+Update product <input type="checkbox" name="id" value={$id->getProductId()}>

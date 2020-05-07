@@ -7,23 +7,23 @@ use App\Model\ProductRepository;
 use App\Service\SessionUser;
 use App\Service\View;
 
-class Dashboard implements BackendController
+class DashboardController implements BackendController
 {
     public const ROUTE = 'dashboard';
     private ProductRepository $productRepository;
     private View $view;
-    private SessionUser $usersession;
+    private SessionUser $userSession;
 
     public function __construct(Container $container)
     {
-        $this->usersession= $container->get(SessionUser::class);
+        $this->userSession= $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
         $this->productRepository = $container->get(ProductRepository::class);
     }
 
     public function init(): void
     {
-        if (!$this->usersession->isLoggedIn()) {
+        if (!$this->userSession->isLoggedIn()) {
             $this->redirectToPage(Login::ROUTE);
         }
     }
@@ -41,7 +41,7 @@ class Dashboard implements BackendController
     {
         session_unset();
         session_destroy();
-        $this->redirectToPage(Login::ROUTE);
+        $this->redirectToPage(LoginController::ROUTE);
     }
     private function redirectToPage(string $route):void
     {

@@ -11,7 +11,7 @@ use App\Service\View;
 
 class ProductController implements BackendController
 {
-    public const ROUTE = 'productcontroll';
+    public const ROUTE = 'product';
     private ProductRepository $productRepository;
     private ProductEntityManager $productEntityManager;
     private SessionUser $userSession;
@@ -28,35 +28,34 @@ class ProductController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->redirectToPage(Login::ROUTE);
+            $this->redirectToPage(LoginCOntroller::ROUTE);
         }
+
     }
 
     public function action(): void
     {
-        $this->loadPage();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
                 case !empty($_POST['delete']):
                     $productId = (int)$_POST['delete'];
                     $this->deleteProduct($productId);
                     break;
-                case !empty($_POST['update']) || !empty($_POST['new']):
-                    echo('check');
-                    $productId =  (int)$_POST['id'];
+                case !empty($_POST['save']):
+                    $productId = (int)$_POST['save'] ;
                     $pageName = (string)$_POST['newpagename'];
                     $description = (string)$_POST['newpagedescription'];
                     $this->saveProduct($productId, $pageName, $description);
-                    $this->loadPage();
                     break;
             }
         }
+        $this->loadPage();
     }
 
     public function deleteProduct(int $id): void
     {
         $this->productEntityManager->delete($this->productRepository->getProduct($id));
-        $this->redirectToPage(Dashboard::ROUTE);
+        $this->redirectToPage(DashboardController::ROUTE);
     }
 
     public function saveProduct(int $id, string $description, string $name): void
@@ -74,19 +73,11 @@ class ProductController implements BackendController
 
     private function loadPage(): void
     {
-        $pageId = 0;
+        $pageId = (int)$_GET['id'];
         try {
-            $pageId = (int)$_GET['id'];
-        } catch (\InvalidArgumentException $t) {
-        }
-        if ($pageId === 0 || $this->productRepository->hasProduct($pageId) === false) {
-            $this->view->addTemplate('404.tpl');
-        } else {
-            $this->view->addTemplate('productEditPage.tpl');
-            try {
-                $this->view->addTlpParam('', $this->productRepository->getProduct($pageId));
-            } catch (\Exception $e) {
-            }
+            $this->view->addTlpParam('', $this->productRepository->getProduct($pageId));
+        } catch (\Exception $e) {
+
         }
     }
 

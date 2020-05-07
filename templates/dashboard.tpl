@@ -7,7 +7,7 @@ Welcome to the backstage area!
 {foreach name=aussen item=page from=$id}
     <hr/>
 
-    <a href="http://localhost:8080/Index.php?page=productcontroll&admin=true&id={$page->getProductId()}">{$page->getProductId()}</a>
+    <a href="http://localhost:8080/Index.php?page=product&admin=true&id={$page->getProductId()}">{$page->getProductId()}</a>
     {$page->getProductName()}
     {$page->getProductDescription()}
 

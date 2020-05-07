@@ -5,7 +5,7 @@ ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-use App\Controller\FrontendController\ErrorControll;
+use App\Controller\Frontend\ErrorControll;
 use App\Service\ControllerProvider;
 use App\Service\View;
 use App\Service\DependencyProvider;
@@ -24,11 +24,10 @@ $containerProvider->providerDependency($container);
 
 $controller = new ControllerProvider();
 $page = $_GET ['page'];
-$is_admin = false;
+$isAdmin = (!empty($_GET['admin']) && $_GET['admin'] === 'true');
 
-if (!empty($_GET['admin']) && $_GET['admin'] === 'true') {
+if ($isAdmin) {
     $controllerList = $controller->getBackEndList();
-    $is_admin = true;
 } else {
     $controllerList = $controller->getFrontEndList();
 }
@@ -38,7 +37,7 @@ foreach ($controllerList as $controller) {
     if (strtolower($controller::ROUTE) === $page) {
         $isFind = true;
         $controller = new $controller($container);
-        if ($is_admin) {
+        if ($isAdmin) {
             $isFind = true;
             $controller = new $controller($container);
             $controller->init();

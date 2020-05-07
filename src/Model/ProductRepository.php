@@ -12,12 +12,12 @@ class ProductRepository
 {
     private array $productList;
     private SQLConnector $connect;
-    private ProductMapper $productmapper;
+    private ProductMapper $productMapper;
 
     public function __construct(SQLConnector $connector)
     {
         $this->connect = $connector;
-        $this->productmapper = new ProductMapper();
+        $this->productMapper = new ProductMapper();
         $this->getFromDB('product');
     }
 
@@ -25,17 +25,14 @@ class ProductRepository
     {
         $tmp = [];
         $this->productList = [];
-        if ($this->connect->connect2('root', 'pass123')) {
-            $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
-            if (!empty($array)) {
-                foreach ($array as $product) {
-                    $this->productList[(int)$product['id']] = $this->productmapper->map($product);
-                }
-            } else {
-                echo('Database is empty...');
+
+        $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
+        if (!empty($array)) {
+            foreach ($array as $product) {
+                $this->productList[(int)$product['id']] = $this->productMapper->map($product);
             }
         } else {
-            echo('Could not establish Connection with Database');
+            echo('Database is empty...');
         }
     }
 
@@ -78,10 +75,4 @@ class ProductRepository
     {
         return isset($this->productList[$id]);
     }
-
-    public function authenticate(string $username, string $password): bool
-    {
-        return $this->connect->connect2($username, $password);
-    }
-
 }

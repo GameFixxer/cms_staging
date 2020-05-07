@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-05-06 11:02:50
+/* Smarty version 3.1.36, created on 2020-05-07 13:23:56
   from '/home/rene/PhpstormProjects/MVC/templates/dashboard.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5eb27d3a8e6234_69697892',
+  'unifunc' => 'content_5eb3efccc553e7_01343473',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '9cf5a64459e96931682c71d901a550ba9f06bb22' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/dashboard.tpl',
-      1 => 1588755763,
+      1 => 1588850618,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5eb27d3a8e6234_69697892 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5eb3efccc553e7_01343473 (Smarty_Internal_Template $_smarty_tpl) {
 ?><html lang="">
 <head>
     <title>Dashboard</title>
@@ -36,7 +36,7 @@ $_smarty_tpl->tpl_vars['page']->do_else = false;
 ?>
     <hr/>
 
-    <a href="http://localhost:8080/Index.php?page=productcontroll&admin=true&id=<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
+    <a href="http://localhost:8080/Index.php?page=product&admin=true&id=<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
 "><?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
 </a>
     <?php echo $_smarty_tpl->tpl_vars['page']->value->getProductName();?>

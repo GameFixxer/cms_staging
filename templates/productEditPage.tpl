@@ -11,9 +11,9 @@
     <br>
     <hr/>
     <form id="form" name="form" action="" method="post">
-    Create product <input type="checkbox" name="id" value=''>
-    Update product <input type="checkbox" name="update" value={$id->getProductId()}>
-    Delete product <input type="checkbox" name="delete" value={$id->getProductId()}>
+        <input type="radio" name="delete" value={$id->getProductId()}>Delete Product</label>
+        <input type="radio" name="save" value={$id->getProductId()}>Update Product</label>
+        <input type="radio" name="save" value=0=>Create Product</label>
     <br>Productname
     <br><input type="text" name="newpagename" size=40 maxlength=40>
     <br>Productdescription

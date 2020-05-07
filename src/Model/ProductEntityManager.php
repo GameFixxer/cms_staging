@@ -13,7 +13,6 @@ class ProductEntityManager
     public function __construct(SQLConnector $connect)
     {
         $this->connect = $connect;
-        $this->connect->connect2('root', 'pass123');
     }
 
     private function encodeArray(array $params): string

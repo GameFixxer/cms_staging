@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-05-06 11:39:07
+/* Smarty version 3.1.36, created on 2020-05-07 13:44:32
   from '/home/rene/PhpstormProjects/MVC/templates/productEditPage.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5eb285bb1066e6_06750997',
+  'unifunc' => 'content_5eb3f4a090efb1_95261616',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '63e9ab0cd3bf51e2b95da9ffdc266808b2d7006b' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/productEditPage.tpl',
-      1 => 1588757908,
+      1 => 1588851859,
       2 => 'file',
     ),
   ),
@@ -20,26 +20,26 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5eb285bb1066e6_06750997 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5eb3f4a090efb1_95261616 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17270962755eb285bb0ebda3_13790625', "title");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_4899966035eb3f4a08fac32_66870094', "title");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_8317548335eb285bb0f5b60_16464620', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_12764343645eb3f4a0900be1_26049554', "body");
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "title"} */
-class Block_17270962755eb285bb0ebda3_13790625 extends Smarty_Internal_Block
+class Block_4899966035eb3f4a08fac32_66870094 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'title' => 
   array (
-    0 => 'Block_17270962755eb285bb0ebda3_13790625',
+    0 => 'Block_4899966035eb3f4a08fac32_66870094',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -52,12 +52,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "title"} */
 /* {block "body"} */
-class Block_8317548335eb285bb0f5b60_16464620 extends Smarty_Internal_Block
+class Block_12764343645eb3f4a0900be1_26049554 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_8317548335eb285bb0f5b60_16464620',
+    0 => 'Block_12764343645eb3f4a0900be1_26049554',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -74,11 +74,11 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     <br>
     <hr/>
     <form id="form" name="form" action="" method="post">
-    Create product <input type="checkbox" name="id" value=''>
-    Update product <input type="checkbox" name="update" value=<?php echo $_smarty_tpl->tpl_vars['id']->value->getProductId();?>
->
-    Delete product <input type="checkbox" name="delete" value=<?php echo $_smarty_tpl->tpl_vars['id']->value->getProductId();?>
->
+        <input type="radio" name="delete" value=<?php echo $_smarty_tpl->tpl_vars['id']->value->getProductId();?>
+>Delete Product</label>
+        <input type="radio" name="save" value=<?php echo $_smarty_tpl->tpl_vars['id']->value->getProductId();?>
+>Update Product</label>
+        <input type="radio" name="save" value=0=>Create Product</label>
     <br>Productname
     <br><input type="text" name="newpagename" size=40 maxlength=40>
     <br>Productdescription

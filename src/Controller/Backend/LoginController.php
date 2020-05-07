@@ -8,7 +8,7 @@ use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
 
-class Login implements BackendController
+class LoginController implements BackendController
 {
     public const ROUTE = 'login';
     private View $view;
@@ -52,7 +52,7 @@ class Login implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra=  'Index.php?page='. Dashboard::ROUTE;
+        $extra=  'Index.php?page='. DashboardController::ROUTE;
         $extra2='&admin=true';
         header("Location: http://$host$uri/$extra$extra2");
         exit;
