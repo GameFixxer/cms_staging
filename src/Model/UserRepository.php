@@ -73,13 +73,13 @@ class UserRepository
 
     public function hasUser(string $username, string $passwort): bool
     {
-        $tmp =false;
+        $credentials =false;
         foreach ($this->userList as $user) {
             if ($user->getUsername()===$username && $user->getUserPassword()===$passwort) {
-                $tmp = true;
-                return $tmp;
+                $credentials = true;
+                return $credentials;
             }
         }
-        return $tmp;
+        return $credentials;
     }
 }

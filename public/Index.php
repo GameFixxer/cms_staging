@@ -23,7 +23,8 @@ $containerProvider->providerDependency($container);
 
 
 $controller = new ControllerProvider();
-$page = $_GET ['page'];
+$route =$_GET['cl'];
+$action = $_GET ['page'];
 $isAdmin = (!empty($_GET['admin']) && $_GET['admin'] === 'true');
 
 if ($isAdmin) {
@@ -34,15 +35,19 @@ if ($isAdmin) {
 $isFind = false;
 
 foreach ($controllerList as $controller) {
-    if (strtolower($controller::ROUTE) === $page) {
+    if (strtolower($controller::ROUTE) === $route) {
         $isFind = true;
         $controller = new $controller($container);
+        $actionName =$action .'Action';
+        $controller = new $controller($container);
         if ($isAdmin) {
-            $isFind = true;
-            $controller = new $controller($container);
             $controller->init();
         }
-        $controller->action();
+        if (method_exists($controller, $actionName)) {
+            $controller->{$actionName}();
+        } else {
+            $controller->action();
+        }
     }
 }
 if (!$isFind) {

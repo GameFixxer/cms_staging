@@ -30,10 +30,13 @@ class ProductController implements BackendController
         if (!$this->userSession->isLoggedIn()) {
             $this->redirectToPage(LoginCOntroller::ROUTE);
         }
-
     }
 
-    public function action(): void
+    public function listAction()
+    {
+    }
+
+    public function detailAction(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
@@ -76,8 +79,8 @@ class ProductController implements BackendController
         $pageId = (int)$_GET['id'];
         try {
             $this->view->addTlpParam('', $this->productRepository->getProduct($pageId));
+            $this->view->addTemplate('productEditPage.tpl');
         } catch (\Exception $e) {
-
         }
     }
 
@@ -86,7 +89,7 @@ class ProductController implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra= 'Index.php?page='.$route;
+        $extra= 'Index.php?cl='.$route;
         $extra2='&admin=true';
         header("Location: http://$host$uri/$extra$extra2");
         exit;

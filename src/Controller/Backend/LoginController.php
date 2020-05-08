@@ -52,9 +52,10 @@ class LoginController implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra=  'Index.php?page='. DashboardController::ROUTE;
-        $extra2='&admin=true';
-        header("Location: http://$host$uri/$extra$extra2");
+        $extra=  'Index.php?cl='. DashboardController::ROUTE;
+        $extra2='&page=list';
+        $extra3='&admin=true';
+        header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
     }
 }

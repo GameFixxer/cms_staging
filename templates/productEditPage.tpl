@@ -22,6 +22,6 @@
     <input type="submit" value="commit">
     </form>
     <hr/>
-    <a href="http://localhost:8080/Index.php?page=dashboard&admin=true">back to dashboard</a>
+    <a href="http://localhost:8080/Index.php?cl=dashboard&page=detail&admin=true">back to dashboard</a>
 
 {/block}
