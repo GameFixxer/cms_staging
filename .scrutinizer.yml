@@ -22,7 +22,7 @@ filter:
     - '*/dist/*'
     - '/node_modules'
     - '/templates_c'
-    - -'/configs'
+    - '/configs'
 checks:
   php: true
   javascript: false
