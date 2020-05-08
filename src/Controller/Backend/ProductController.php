@@ -34,6 +34,13 @@ class ProductController implements BackendController
 
     public function listAction()
     {
+        $this->view->addTlpParam('productlist', $this->productRepository->getProductList());
+        $this->view->addTemplate('productEditList.tpl');
+        if (!empty($_POST)) {
+            if (!empty($_POST['logout'])) {
+                $this->logout();
+            }
+        }
     }
 
     public function detailAction(): void
@@ -84,7 +91,12 @@ class ProductController implements BackendController
         }
     }
 
-
+    private function logout(): void
+    {
+        session_unset();
+        session_destroy();
+        $this->redirectToPage(LoginController::ROUTE);
+    }
     private function redirectToPage(string $route):void
     {
         $host = $_SERVER['HTTP_HOST'];

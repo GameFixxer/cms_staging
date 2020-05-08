@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-05-08 09:45:10
+/* Smarty version 3.1.36, created on 2020-05-08 10:57:09
   from '/home/rene/PhpstormProjects/MVC/templates/productEditPage.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5eb50e06f08c49_91410326',
+  'unifunc' => 'content_5eb51ee54cc131_27330738',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '63e9ab0cd3bf51e2b95da9ffdc266808b2d7006b' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/productEditPage.tpl',
-      1 => 1588923899,
+      1 => 1588928223,
       2 => 'file',
     ),
   ),
@@ -20,26 +20,26 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5eb50e06f08c49_91410326 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5eb51ee54cc131_27330738 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15479501005eb50e06eca9f2_10232072', "title");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_7461028785eb51ee54af8c1_86099592', "title");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2445003875eb50e06ee3552_28464397', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15389302325eb51ee54ba059_02265637', "body");
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "title"} */
-class Block_15479501005eb50e06eca9f2_10232072 extends Smarty_Internal_Block
+class Block_7461028785eb51ee54af8c1_86099592 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'title' => 
   array (
-    0 => 'Block_15479501005eb50e06eca9f2_10232072',
+    0 => 'Block_7461028785eb51ee54af8c1_86099592',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -52,12 +52,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "title"} */
 /* {block "body"} */
-class Block_2445003875eb50e06ee3552_28464397 extends Smarty_Internal_Block
+class Block_15389302325eb51ee54ba059_02265637 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_2445003875eb50e06ee3552_28464397',
+    0 => 'Block_15389302325eb51ee54ba059_02265637',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -87,7 +87,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     <input type="submit" value="commit">
     </form>
     <hr/>
-    <a href="http://localhost:8080/Index.php?cl=dashboard&page=detail&admin=true">back to dashboard</a>
+    <a href="http://localhost:8080/Index.php?cl=product&page=list&admin=true">back to dashboard</a>
 
 <?php
 }

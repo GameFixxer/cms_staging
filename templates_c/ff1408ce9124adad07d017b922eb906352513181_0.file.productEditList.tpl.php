@@ -1,15 +1,15 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-05-08 09:08:45
+/* Smarty version 3.1.36, created on 2020-05-08 10:57:11
   from '/home/rene/PhpstormProjects/MVC/templates/productEditList.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5eb5057dc7ec03_31128381',
+  'unifunc' => 'content_5eb51ee7cee324_90487045',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '9cf5a64459e96931682c71d901a550ba9f06bb22' => 
+    'ff1408ce9124adad07d017b922eb906352513181' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/productEditList.tpl',
       1 => 1588921618,
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5eb5057dc7ec03_31128381 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5eb51ee7cee324_90487045 (Smarty_Internal_Template $_smarty_tpl) {
 ?><html lang="">
 <head>
     <title>Dashboard</title>
