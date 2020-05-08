@@ -22,7 +22,7 @@ filter:
     - '/node_modules'
     - '/templates_c'
     - '/configs'
-    - '/codeception'
+    - '/vendor/bin/codeception'
 checks:
   php: true
 coding_style:
