@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
@@ -37,7 +38,7 @@ class ProductController implements BackendController
         $this->view->addTlpParam('productlist', $this->productRepository->getProductList());
         $this->view->addTemplate('productEditList.tpl');
         if (!empty($_POST)) {
-            if (!empty($_POST['logout'])) {
+            if (isset($_POST['logout'])) {
                 $this->logout();
             }
         }
@@ -48,27 +49,24 @@ class ProductController implements BackendController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
                 case !empty($_POST['delete']):
-                    $productId = (int)$_POST['delete'];
-                    $this->deleteProduct($productId);
+                    $this->deleteProduct((int)$_POST['delete']);
                     break;
                 case !empty($_POST['save']):
-                    $productId = (int)$_POST['save'] ;
-                    $pageName = (string)$_POST['newpagename'];
-                    $description = (string)$_POST['newpagedescription'];
-                    $this->saveProduct($productId, $pageName, $description);
+                    $this->saveProduct((int)$_POST['save'], (string)$_POST['newpagename'], (string)$_POST['newpagedescription']);
                     break;
             }
         }
-        $this->loadPage();
+        $this->view->addTlpParam('', $this->productRepository->getProduct((int)$_GET['id']));
+        $this->view->addTemplate('productEditPage.tpl');
     }
 
-    public function deleteProduct(int $id): void
+    private function deleteProduct(int $id): void
     {
         $this->productEntityManager->delete($this->productRepository->getProduct($id));
         $this->redirectToPage(DashboardController::ROUTE);
     }
 
-    public function saveProduct(int $id, string $description, string $name): void
+    private function saveProduct(int $id, string $description, string $name): void
     {
         if (!empty($id)&& $this->productRepository->hasProduct($id)) {
             $dto = $this->productRepository->getProduct($id);
@@ -81,20 +79,9 @@ class ProductController implements BackendController
         $this->productEntityManager->save($dto);
     }
 
-    private function loadPage(): void
-    {
-        $pageId = (int)$_GET['id'];
-        try {
-            $this->view->addTlpParam('', $this->productRepository->getProduct($pageId));
-            $this->view->addTemplate('productEditPage.tpl');
-        } catch (\Exception $e) {
-        }
-    }
-
     private function logout(): void
     {
-        session_unset();
-        session_destroy();
+        $this->userSession->logoutUser();
         $this->redirectToPage(LoginController::ROUTE);
     }
     private function redirectToPage(string $route):void
@@ -102,8 +89,9 @@ class ProductController implements BackendController
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
         $extra= 'Index.php?cl='.$route;
-        $extra2='&admin=true';
-        header("Location: http://$host$uri/$extra$extra2");
+        $extra2='&page=detail';
+        $extra3='&admin=true';
+        header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
     }
 }

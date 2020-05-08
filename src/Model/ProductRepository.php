@@ -11,43 +11,13 @@ use App\Model\Dto\ProductDataTransferObject;
 class ProductRepository
 {
     private array $productList;
-    private SQLConnector $connect;
+    private SQLConnector $connector;
     private ProductMapper $productMapper;
 
     public function __construct(SQLConnector $connector)
     {
-        $this->connect = $connector;
+        $this->connector = $connector;
         $this->productMapper = new ProductMapper();
-        $this->getFromDB('product');
-    }
-
-    private function getFromDB(string $data): void
-    {
-        $tmp = [];
-        $this->productList = [];
-
-        $array = $this->makeArrayResult($this->connect->get('Select * from '.$data, '', $tmp));
-        if (!empty($array)) {
-            foreach ($array as $product) {
-                $this->productList[(int)$product['id']] = $this->productMapper->map($product);
-            }
-        } else {
-            echo('Database is empty...');
-        }
-    }
-
-    private function makeArrayResult(object $resultobj): array
-    {
-        if ($resultobj->num_rows === 0) {
-            return array();
-        } else {
-            $array = array();
-            while ($line = $resultobj->fetch_array()) {
-                $array[] = $line;
-            }
-
-            return $array;
-        }
     }
 
     /**
@@ -55,7 +25,13 @@ class ProductRepository
      */
     public function getProductList(): array
     {
-        $this->getFromDB('product');
+        $this->productList = [];
+
+        $array = $this->makeArrayResult($this->connector->get('Select * from product', '', []));
+
+        foreach ($array as $product) {
+            $this->productList[(int)$product['id']] = $this->productMapper->map($product);
+        }
 
         return $this->productList;
     }
@@ -64,8 +40,6 @@ class ProductRepository
     {
         if (!$this->hasProduct($id)) {
             throw new \Exception('Error! Productid is ivalid.', 1);
-            {
-            }
         }
 
         return $this->productList[$id];
@@ -73,6 +47,22 @@ class ProductRepository
 
     public function hasProduct(int $id): bool
     {
+        if (!isset($this->productList)) {
+            $this->getProductList();
+        }
+
         return isset($this->productList[$id]);
+    }
+
+    private function makeArrayResult(object $resultobj): array
+    {
+        $result = [];
+        if ($resultobj->num_rows > 0) {
+            while ($line = $resultobj->fetch_array()) {
+                $result[] = $line;
+            }
+        }
+
+        return $result;
     }
 }

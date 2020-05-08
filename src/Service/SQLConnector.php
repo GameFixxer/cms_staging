@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use function PHPUnit\Framework\isEmpty;
-
 class SQLConnector
 {
     private \mysqli $db_link;
@@ -37,7 +35,7 @@ class SQLConnector
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo('Something went wrong with the sql query.');
         } else {
-            if (!isEmpty($data)) {
+            if (!isset($data)) {
                 mysqli_stmt_bind_param($stmt, $whitespace, $data);
             }
             mysqli_stmt_execute($stmt);

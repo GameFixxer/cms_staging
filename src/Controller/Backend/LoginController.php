@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
@@ -38,7 +38,6 @@ class LoginController implements BackendController
                 $password = (string)trim($_POST['password']);
                 if ($this->userRepository->hasUser($username, $password)) {
                     $this->usersession->setUser($username);
-                    $_SESSION['loggedin'] = true;
                     $this->redirectToDashboard();
 
                 }

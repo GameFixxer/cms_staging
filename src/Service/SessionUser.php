@@ -25,10 +25,17 @@ class SessionUser
     public function setUser($name): void
     {
         $_SESSION['username'] = $name;
+        $_SESSION['loggedin'] = true;
     }
 
     public function getUser(): string
     {
         return $_SESSION['username'];
+    }
+
+    public function logoutUser(): void
+    {
+        session_unset();
+        session_destroy();
     }
 }

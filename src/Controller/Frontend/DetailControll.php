@@ -10,7 +10,6 @@ use App\Service\View;
 
 class DetailControll implements Controller
 {
-
     public const ROUTE = 'detail';
     private View $view;
     private ProductRepository $productRepository;
@@ -19,33 +18,18 @@ class DetailControll implements Controller
     {
         $this->view = $container->get(View::class);
         $this->productRepository = $container->get(ProductRepository::class);
-
     }
 
 
     public function action(): void
     {
-        $pageId = 0;
-        try {
-            $pageId = (int)$_GET['id'];
-        } catch (\Exception $e) {
-        }
-        if ($pageId === 0) {
+        $pageId = (int) ($_GET['id'] ?? '0');
+
+        if ($pageId === 0 ||$this->productRepository->hasProduct($pageId) === false) {
             $this->view->addTemplate('404.tpl');
         } else {
-            if ($this->productRepository->hasProduct($pageId) === false) {
-                $this->view->addTemplate('404.tpl');
-
-            } else {
-                $this->view->addTemplate('detail.tpl');
-                try {
-                    $this->view->addTlpParam('Product', $this->productRepository->getProduct($pageId));
-                } catch (\Exception $e) {
-                }
-            }
+            $this->view->addTemplate('detail.tpl');
+            $this->view->addTlpParam('Product', $this->productRepository->getProduct($pageId));
         }
-
     }
-
-
 }

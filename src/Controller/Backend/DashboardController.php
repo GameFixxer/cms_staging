@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace  App\Controller\Backend;
 
 use App\Controller\BackendController;
@@ -28,14 +29,7 @@ class DashboardController implements BackendController
         }
     }
     public function action(): void
-    {/*
-        $this->view->addTlpParam('productlist', $this->productRepository->getProductList());
-        $this->view->addTemplate('productEditList.tpl');
-        if (!empty($_POST)) {
-            if (!empty($_POST['logout'])) {
-                $this->logout();
-            }
-        }*/
+    {
     }
     private function logout(): void
     {

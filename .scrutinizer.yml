@@ -1,0 +1,33 @@
+build:
+  environment:
+    php:
+      version: "7.4"
+  nodes:
+    analysis:
+      project_setup:
+        override:
+          - 'true'
+      tests:
+        override:
+          - php-scrutinizer-run
+          -
+            command: phpcs-run
+            use_website_config: true
+    tests: false
+filter:
+  excluded_paths:
+    - 'tests/*'
+    - '*.tpl.php'
+    - '*.min.js'
+    - '*/dist/*'
+    - '/node_modules'
+    - '/templates_c'
+    - -'/configs'
+checks:
+  php: true
+  javascript: false
+coding_style:
+  php:
+    spaces:
+      other:
+        after_type_cast: false

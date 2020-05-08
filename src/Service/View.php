@@ -31,9 +31,7 @@ class View
         return dirname(__DIR__, 2);
     }
 
-    /**
-     * @param \App\Model\Dto\ProductDataTransferObject|\App\Model\Dto\ProductDataTransferObject[] $value
-     */
+
     public function addTlpParam(string $name, $value): void
     {
         $this->smarty->assign('id', $value);
@@ -41,10 +39,6 @@ class View
 
     public function display(): void
     {
-        try {
-            $this->smarty->display($this->template);
-        } catch (\SmartyException $e) {
-        } catch (\Exception $e) {
-        }
+        $this->smarty->display($this->template);
     }
 }
