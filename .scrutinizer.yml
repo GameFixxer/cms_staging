@@ -9,7 +9,7 @@ build:
           - 'true'
       tests:
         override:
-          - false
+          - 'false' 
 filter:
   excluded_paths:
     - 'tests/*'
