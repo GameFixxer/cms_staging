@@ -11,7 +11,8 @@
         "codeception/verify": "*",
         "me-io/selenium-appium-server": "~1",
         "codeception/module-phpbrowser": "^1.0.0",
-        "codeception/module-asserts": "^1.0.0"
+        "codeception/module-asserts": "^1.0.0",
+        "twbs/bootstrap": "4.4.1"
     },
     "autoload": {
         "psr-4": {

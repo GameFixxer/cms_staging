@@ -15,7 +15,7 @@ session_start();
 
 $path = dirname(__DIR__, 1);
 require_once($path.'/vendor/autoload.php');
-define('template_path', $path.'/templates');
+define('template_path', $path.'/templates/dist');
 
 $container = new Container();
 $containerProvider = new DependencyProvider();
@@ -24,7 +24,7 @@ $containerProvider->providerDependency($container);
 
 $controller = new ControllerProvider();
 $route =$_GET['cl'];
-$action = $_GET ['page'];
+$action = (int) ($_GET['page'] ?? '0');
 $isAdmin = (!empty($_GET['admin']) && $_GET['admin'] === 'true');
 
 if ($isAdmin) {
