@@ -13,16 +13,18 @@ build:
           -
             command: phpcs-run
             use_website_config: true
-          - js-scrutinizer-run
 filter:
   excluded_paths:
     - 'tests/*'
     - '*.tpl.php'
     - '*.min.js'
     - '*/dist/*'
+    - '/node_modules'
+    - '/templates_c'
+    - '/configs'
 checks:
   php: true
-  javascript: true
+  javascript: false
 coding_style:
   php:
     indentation:
