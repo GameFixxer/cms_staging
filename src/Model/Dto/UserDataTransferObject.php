@@ -19,7 +19,7 @@ class UserDataTransferObject
 
     public function setUsername(string $name): void
     {
-        $this-> username= $name;
+        $this-> username = $name;
     }
 
 

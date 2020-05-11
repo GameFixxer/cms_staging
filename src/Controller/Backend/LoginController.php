@@ -18,7 +18,7 @@ class LoginController implements BackendController
 
     public function __construct(Container $container)
     {
-        $this->usersession= $container->get(SessionUser::class);
+        $this->usersession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
         $this->userRepository = $container->get(UserRepository::class);
     }
@@ -51,9 +51,9 @@ class LoginController implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra=  'Index.php?cl='. ProductController::ROUTE;
-        $extra2='&page=list';
-        $extra3='&admin=true';
+        $extra = 'Index.php?cl='.ProductController::ROUTE;
+        $extra2 = '&page=list';
+        $extra3 = '&admin=true';
         header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
     }

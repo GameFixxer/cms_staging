@@ -17,7 +17,7 @@ class DashboardController implements BackendController
 
     public function __construct(Container $container)
     {
-        $this->userSession= $container->get(SessionUser::class);
+        $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
         $this->productRepository = $container->get(ProductRepository::class);
     }
@@ -36,9 +36,9 @@ class DashboardController implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra= 'Index.php?cl='.$route;
-        $extra2='&admin=true';
-        $extra3='&page=list';
+        $extra = 'Index.php?cl='.$route;
+        $extra2 = '&admin=true';
+        $extra3 = '&page=list';
         header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
     }

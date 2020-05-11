@@ -14,7 +14,7 @@ class View
     {
         $this->smarty = new \Smarty();
         $path = $this->navigate();
-        $this->smarty->setTemplateDir($path.'/templates/dist');
+        $this->smarty->setTemplateDir($path.'/templates');
         $this->smarty->setCompileDir($path.'/templates_c');
         $this->smarty->setCacheDir($path.'/cache');
         $this->smarty->setConfigDir($path.'/configs');

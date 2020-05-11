@@ -20,10 +20,10 @@ class ProductController implements BackendController
 
     public function __construct(Container $container)
     {
-        $this->productRepository= $container->get(ProductRepository::class);
-        $this->productEntityManager =$container->get(ProductEntityManager::class);
-        $this->userSession=$container->get(SessionUser::class);
-        $this->view= $container->get(View::class);
+        $this->productRepository = $container->get(ProductRepository::class);
+        $this->productEntityManager = $container->get(ProductEntityManager::class);
+        $this->userSession = $container->get(SessionUser::class);
+        $this->view = $container->get(View::class);
     }
 
     public function init(): void
@@ -48,12 +48,12 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteProduct((int)$_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
-                    $this->saveProduct((int)$_POST['save'], (string)$_POST['newpagename'], (string)$_POST['newpagedescription']);
-                    break;
+            case !empty($_POST['delete']):
+                $this->deleteProduct((int)$_POST['delete']);
+                break;
+            case !empty($_POST['save']):
+                $this->saveProduct((int)$_POST['save'], (string)$_POST['newpagename'], (string)$_POST['newpagedescription']);
+                break;
             }
         }
         $this->view->addTlpParam('', $this->productRepository->getProduct((int)$_GET['id']));
@@ -68,7 +68,7 @@ class ProductController implements BackendController
 
     private function saveProduct(int $id, string $description, string $name): void
     {
-        if (!empty($id)&& $this->productRepository->hasProduct($id)) {
+        if (!empty($id) && $this->productRepository->hasProduct($id)) {
             $dto = $this->productRepository->getProduct($id);
         } else {
             $dto = new ProductDataTransferObject();
@@ -88,9 +88,9 @@ class ProductController implements BackendController
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra= 'Index.php?cl='.$route;
-        $extra2='&page=detail';
-        $extra3='&admin=true';
+        $extra = 'Index.php?cl='.$route;
+        $extra2 = '&page=detail';
+        $extra3 = '&admin=true';
         header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
     }
