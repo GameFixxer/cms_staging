@@ -4,5 +4,5 @@ namespace App\Controller;
 
 interface BackendController extends Controller
 {
-    public function init():void ;
+    public function init():void;
 }

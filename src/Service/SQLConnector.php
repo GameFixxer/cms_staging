@@ -9,7 +9,6 @@ class SQLConnector
 
     public function __construct()
     {
-
     }
 
     public function __destruct()
@@ -22,25 +21,27 @@ class SQLConnector
         $this->db_link = new \mysqli('127.0.01:3336', 'root', 'pass123', 'mvc');
         $this->db_link->set_charset('utf8');
         if ($this->db_link->connect_errno) {
-            echo "Failed to connect to MySQL: (" . $this->db_link->connect_errno . ") " . $this->db_link->connect_error;
-
+            echo "Failed to connect to MySQL: (".$this->db_link->connect_errno.") ".$this->db_link->connect_error;
         }
-
     }
 
-    public function get(string $sql, string $whitespace, array $data): object
+    public function get(string $sql, string $whitespace, array $data)
     {
         $stmt = \mysqli_stmt_init($this->db_link);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo('Something went wrong with the sql query.');
-        } else {
-            if (!isset($data)) {
-                mysqli_stmt_bind_param($stmt, $whitespace, $data);
-            }
-            mysqli_stmt_execute($stmt);
         }
-        return mysqli_stmt_get_result($stmt);
+        if (!isset($data)) {
+            mysqli_stmt_bind_param($stmt, $whitespace, $data);
+        }
+        mysqli_stmt_execute($stmt);
+        $mysqlResult = mysqli_stmt_get_result($stmt);
+        if ($mysqlResult === false) {
+            throw new \Exception('Database error', 1);
+        }
+
+        return $mysqlResult;
     }
 
     public function set(string $sql, string $whitespace, array $data): void

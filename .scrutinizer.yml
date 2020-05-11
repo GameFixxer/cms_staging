@@ -26,6 +26,12 @@ checks:
   php: true
 coding_style:
   php:
+    indentation:
+      switch:
+        indent_case: false
     spaces:
       other:
         after_type_cast: false
+build_failure_conditions:
+  - 'elements.rating(< A).exists'
+  - 'issues.new.exists'

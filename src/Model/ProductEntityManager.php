@@ -19,16 +19,18 @@ class ProductEntityManager
 
     public function delete(ProductDataTransferObject $product):void
     {
+        $data = array();
         $data [] = $product->getProductId();
         $this->connector->set('Delete from product where id= ?', $this->encodeArray($data), $data);
     }
 
     public function save(ProductDataTransferObject $product): void
     {
-        if (!($product->getProductId()===0)) {
+        $data = array();
+        if (!($product->getProductId() === 0)) {
             $data[] = $product->getProductName();
             $data[] = $product->getProductDescription();
-            $data[] = (int) $product->getProductId();
+            $data[] = (int)$product->getProductId();
             $this->connector->set('Update product set description=(?), name=(?) where id= ?', $this->encodeArray($data), $data);
         } else {
             $data[] = $product->getProductName();

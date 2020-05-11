@@ -23,9 +23,9 @@ class DetailControll implements Controller
 
     public function action(): void
     {
-        $pageId = (int) ($_GET['id'] ?? '0');
+        $pageId = (int)($_GET['id'] ?? '0');
 
-        if ($pageId === 0 ||$this->productRepository->hasProduct($pageId) === false) {
+        if ($pageId === 0 || $this->productRepository->hasProduct($pageId) === false) {
             $this->view->addTemplate('404.tpl');
         } else {
             $this->view->addTemplate('detail.tpl');
