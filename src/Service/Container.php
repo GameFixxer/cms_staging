@@ -14,7 +14,7 @@ class Container
     }
     public function get($id)
     {
-        if ((isset($this->classesUses[$id]))) {
+        if ((isset($this->classesUse[$id]))) {
             return$this->classesUse[$id];
         }
         if (!isset($this->classes[$id])) {

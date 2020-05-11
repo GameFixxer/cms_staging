@@ -9,7 +9,6 @@ class SQLConnector
 
     public function __construct()
     {
-
     }
 
     public function __destruct()
@@ -23,14 +22,12 @@ class SQLConnector
         $this->db_link->set_charset('utf8');
         if ($this->db_link->connect_errno) {
             echo "Failed to connect to MySQL: (" . $this->db_link->connect_errno . ") " . $this->db_link->connect_error;
-
         }
-
     }
 
     public function get(string $sql, string $whitespace, array $data): object
     {
-        $stmt = \mysqli_stmt_init($this->db_link);
+        $stmt =\mysqli_stmt_init($this->db_link);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo('Something went wrong with the sql query.');
@@ -39,6 +36,9 @@ class SQLConnector
                 mysqli_stmt_bind_param($stmt, $whitespace, $data);
             }
             mysqli_stmt_execute($stmt);
+        }
+        if (mysqli_stmt_get_result($stmt) === false) {
+            throw new \Exception('Database error', 1);
         }
         return mysqli_stmt_get_result($stmt);
     }

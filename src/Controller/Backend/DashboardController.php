@@ -31,12 +31,7 @@ class DashboardController implements BackendController
     public function action(): void
     {
     }
-    private function logout(): void
-    {
-        session_unset();
-        session_destroy();
-        $this->redirectToPage(LoginController::ROUTE);
-    }
+
     private function redirectToPage(string $route):void
     {
         $host = $_SERVER['HTTP_HOST'];

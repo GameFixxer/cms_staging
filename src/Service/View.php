@@ -34,7 +34,7 @@ class View
 
     public function addTlpParam(string $name, $value): void
     {
-        $this->smarty->assign('id', $value);
+        $this->smarty->assign($name, $value);
     }
 
     public function display(): void
