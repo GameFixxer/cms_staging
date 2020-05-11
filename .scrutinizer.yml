@@ -24,7 +24,6 @@ filter:
     - '/configs'
 checks:
   php: true
-  javascript: false
 coding_style:
   php:
     indentation:
