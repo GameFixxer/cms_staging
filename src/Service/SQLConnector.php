@@ -25,7 +25,7 @@ class SQLConnector
         }
     }
 
-    public function get(string $sql, string $whitespace, array $data): object
+    public function get(string $sql, string $whitespace, array $data)
     {
         $stmt =\mysqli_stmt_init($this->db_link);
 
@@ -36,9 +36,10 @@ class SQLConnector
                 mysqli_stmt_bind_param($stmt, $whitespace, $data);
             }
             mysqli_stmt_execute($stmt);
-        }
-        if (mysqli_stmt_get_result($stmt) === false) {
-            throw new \Exception('Database error', 1);
+
+            if (mysqli_stmt_get_result($stmt) === false) {
+                throw new \Exception('Database error', 1);
+            }
         }
         return mysqli_stmt_get_result($stmt);
     }
