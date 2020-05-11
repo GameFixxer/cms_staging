@@ -63,7 +63,7 @@ class UserRepository
     {
         $result = [];
         if ($resultobj->num_rows > 0) {
-            while ($line =  $resultobj->fetch_array()) {
+            while ($line = $resultobj->fetch_array()) {
                 $result[] = $line;
             }
         }
