@@ -31,17 +31,17 @@ class SQLConnector
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             echo('Something went wrong with the sql query.');
-        } else {
-            if (!isset($data)) {
-                mysqli_stmt_bind_param($stmt, $whitespace, $data);
-            }
-            mysqli_stmt_execute($stmt);
-
-            if (mysqli_stmt_get_result($stmt) === false) {
-                throw new \Exception('Database error', 1);
-            }
         }
-        return mysqli_stmt_get_result($stmt);
+        if (!isset($data)) {
+            mysqli_stmt_bind_param($stmt, $whitespace, $data);
+        }
+        mysqli_stmt_execute($stmt);
+        $mysqlResult = mysqli_stmt_get_result($stmt);
+        if ($mysqlResult=== false) {
+            throw new \Exception('Database error', 1);
+        }
+
+        return $mysqlResult;
     }
 
     public function set(string $sql, string $whitespace, array $data): void
