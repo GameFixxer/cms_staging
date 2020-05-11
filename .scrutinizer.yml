@@ -7,9 +7,7 @@ build:
       project_setup:
         override:
           - 'true'
-      tests:
-        override:
-          command: "php -v"
+      build: { tests: false }
 filter:
   excluded_paths:
     - 'tests/*'
