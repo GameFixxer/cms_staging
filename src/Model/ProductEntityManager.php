@@ -27,10 +27,10 @@ class ProductEntityManager
     public function save(ProductDataTransferObject $product): void
     {
         $data = array();
-        if (!($product->getProductId()===0)) {
+        if (!($product->getProductId() === 0)) {
             $data[] = $product->getProductName();
             $data[] = $product->getProductDescription();
-            $data[] = (int) $product->getProductId();
+            $data[] = (int)$product->getProductId();
             $this->connector->set('Update product set description=(?), name=(?) where id= ?', $this->encodeArray($data), $data);
         } else {
             $data[] = $product->getProductName();

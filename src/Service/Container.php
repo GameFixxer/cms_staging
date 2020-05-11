@@ -6,7 +6,7 @@ use PhpParser\Node\Expr\Cast\Object_;
 class Container
 {
     private array $classes = [];
-    private array $classesUse =[];
+    private array $classesUse = [];
 
     public function set($id, object $class): void
     {
@@ -22,7 +22,7 @@ class Container
         }
         $class = $this->classes[$id];
         if (is_callable($class)) {
-            $this->classes[$id]=$class();
+            $this->classes[$id] = $class();
         }
         return $this->classes[$id];
     }
