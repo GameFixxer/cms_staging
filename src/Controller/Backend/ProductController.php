@@ -56,7 +56,7 @@ class ProductController implements BackendController
                 break;
             }
         }
-        $this->view->addTlpParam('', $this->productRepository->getProduct((int)$_GET['id']));
+        $this->view->addTlpParam('page', $this->productRepository->getProduct((int)$_GET['id']));
         $this->view->addTemplate('productEditPage.tpl');
     }
 

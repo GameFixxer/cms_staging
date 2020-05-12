@@ -23,6 +23,6 @@ class ListControll implements Controller
     public function action(): void
     {
         $this->view->addTemplate('index.tpl');
-        $this->view->addTlpParam('ProductList', $this->productRepository->getProductList());
+        $this->view->addTlpParam('productList', $this->productRepository->getProductList());
     }
 }
