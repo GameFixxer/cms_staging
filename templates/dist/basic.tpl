@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href={block name="customize_css"}"css/styles.css"{/block} rel="stylesheet" />
 </head>
 <body id="page-top">
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -33,6 +33,7 @@
     </div>
 </nav>
 <!-- Masthead-->
+{block name="baselayout"}
 <header class="masthead">
     <div class="container">
         <div class="masthead-subheading">{block name="subtitel_h1"}message message message{/block}</div>
@@ -40,6 +41,7 @@
         <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href={block name="titel_button_href"}"message message message"{/block}>{block name="titel_button"}message message message{/block}</a>
     </div>
 </header>
+{/block}
 {block name="body"}
 {/block}
 <!-- Clients-->

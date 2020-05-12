@@ -29,7 +29,7 @@ class DetailControll implements Controller
             $this->view->addTemplate('404.tpl');
         } else {
             $this->view->addTemplate('detail.tpl');
-            $this->view->addTlpParam('Product', $this->productRepository->getProduct($pageId));
+            $this->view->addTlpParam('page', $this->productRepository->getProduct($pageId));
         }
     }
 }
