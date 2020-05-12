@@ -4,7 +4,7 @@
 </head>
 <body>
 Welcome to the backstage area!
-{foreach name=aussen item=page from=$id}
+{foreach name=aussen item=page from=$productlist}
     <hr/>
 
     <a href="http://localhost:8080/Index.php?cl=product&page=detail&admin=true&id={$page->getProductId()}">{$page->getProductId()}</a>

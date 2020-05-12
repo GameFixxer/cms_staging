@@ -13,19 +13,19 @@ class LoginController implements BackendController
     public const ROUTE = 'login';
     private View $view;
     private UserRepository $userRepository;
-    private SessionUser $usersession;
+    private SessionUser $userSession;
 
 
     public function __construct(Container $container)
     {
-        $this->usersession = $container->get(SessionUser::class);
+        $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
         $this->userRepository = $container->get(UserRepository::class);
     }
 
     public function init(): void
     {
-        if ($this->usersession->isLoggedIn()) {
+        if ($this->userSession->isLoggedIn()) {
             $this->redirectToDashboard();
         }
     }
@@ -37,7 +37,7 @@ class LoginController implements BackendController
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
                 if ($this->userRepository->hasUser($username, $password)) {
-                    $this->usersession->setUser($username);
+                    $this->userSession->setUser($username);
                     $this->redirectToDashboard();
 
                 }

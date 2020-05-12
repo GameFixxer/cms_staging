@@ -1,18 +1,18 @@
 {extends file="basic.tpl"}
 {block name="title"}
-    Detail:{$id->getProductName()}
+    Detail:{$page->getProductName()}
 {/block}
 {block name ="body"}
-    ID: {$id->getProductId()}
+    ID: {$page->getProductId()}
     <br>
-    Productname: {$id->getProductName()}
+    Productname: {$page->getProductName()}
     <br>
-    Description: {$id->getProductDescription()}
+    Description: {$page->getProductDescription()}
     <br>
     <hr/>
     <form id="form" name="form" action="" method="post">
-        <input type="radio" name="delete" value={$id->getProductId()}>Delete Product</label>
-        <input type="radio" name="save" value={$id->getProductId()}>Update Product</label>
+        <input type="radio" name="delete" value={$page->getProductId()}>Delete Product</label>
+        <input type="radio" name="save" value={$page->getProductId()}>Update Product</label>
         <input type="radio" name="save" value=0=>Create Product</label>
     <br>Productname
     <br><input type="text" name="newpagename" size=40 maxlength=40>

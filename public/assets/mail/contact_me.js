@@ -8,8 +8,8 @@ $(function() {
     submitSuccess: function($form, event) {
       event.preventDefault(); // prevent default submit behaviour
       // get values from FORM
-      var name = $("input#name").val();
-      var email = $("input#email").val();
+      var name = $("input#username").val();
+      var email = $("input#password").val();
       var phone = $("input#phone").val();
       var message = $("textarea#message").val();
       var firstName = name; // For Success/Failure Message
@@ -17,27 +17,19 @@ $(function() {
       if (firstName.indexOf(' ') >= 0) {
         firstName = name.split(' ').slice(0, -1).join(' ');
       }
-      $this = $("#sendMessageButton");
+      $this = $("#Submit");
       $this.prop("disabled", true); // Disable submit button until AJAX call is complete to prevent duplicate messages
       $.ajax({
-        url: "contact_me.php",
+        url: "http://localhost:8080/Index.php?cl=login&page=detail&admin=true",
         type: "POST",
         data: {
-          name: name,
-          phone: phone,
-          email: email,
-          message: message
+          username: name,
+          password: email,
         },
         cache: false,
         success: function() {
           // Success message
-          $('#success').html("<div class='alert alert-success'>");
-          $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
-            .append("</button>");
-          $('#success > .alert-success')
-            .append("<strong>Your message has been sent. </strong>");
-          $('#success > .alert-success')
-            .append('</div>');
+          location.href='http://localhost:8080/Index.php?cl=login&page=detail&admin=true';
           //clear all fields
           $('#contactForm').trigger("reset");
         },
