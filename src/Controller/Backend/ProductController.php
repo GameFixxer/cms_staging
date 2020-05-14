@@ -40,18 +40,18 @@ class ProductController implements BackendController
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteProduct((int)$_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
-                    $this->saveProduct(
-                        (int)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
-                case isset($_POST['logout']):
-                    $this->logout();
+            case !empty($_POST['delete']):
+                $this->deleteProduct((int)$_POST['delete']);
+                break;
+            case !empty($_POST['save']):
+                $this->saveProduct(
+                    (int)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
+            case isset($_POST['logout']):
+                $this->logout();
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -61,16 +61,16 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteProduct((int)$_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
-                    $this->saveProduct(
-                        (int)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
+            case !empty($_POST['delete']):
+                $this->deleteProduct((int)$_POST['delete']);
+                break;
+            case !empty($_POST['save']):
+                $this->saveProduct(
+                    (int)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
             }
         }
         $this->view->addTlpParam('product', $this->productRepository->getProduct((int)$_GET['id']));
