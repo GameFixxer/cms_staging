@@ -10,7 +10,7 @@ class Test
         $I->see('Detail:Shirt Detail:Shirt ID: 1 Productname: Shirt Description: black shirt, different sizes with print \'Here could be your advertising\'');
         $I->amOnPage('/Index.php?page=list');
         $I->click('2');
-        $I->see('Detail:Game Detail:Game ID: 2 Productname: Game Description: a lovely game about eat, sleep, code, repeat.' );
+        $I->see('Detail:Game Detail:Game ID: 2 Productname: Game Description: a lovely game about eat, sleep, code, repeat.');
         $I->amOnPage('/Index.php?page=list');
         $I->click('3');
         $I->see('Detail:Cake Detail:Cake ID: 3 Productname: Cake Description: The cake is a lie.');
