@@ -45,9 +45,9 @@ class ProductController implements BackendController
                     break;
                 case !empty($_POST['save']):
                     $this->saveProduct(
-                            (int)$_POST['save'],
-                            (string)$_POST['newpagedescription'],
-                            (string)$_POST['newpagename']
+                        (int)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
                     );
                     break;
                 case isset($_POST['logout']):
@@ -66,9 +66,9 @@ class ProductController implements BackendController
                     break;
                 case !empty($_POST['save']):
                     $this->saveProduct(
-                            (int)$_POST['save'],
-                            (string)$_POST['newpagedescription'],
-                            (string)$_POST['newpagename']
+                        (int)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
                     );
                     break;
             }
