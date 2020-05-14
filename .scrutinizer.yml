@@ -15,7 +15,6 @@ build:
             use_website_config: true
 filter:
   excluded_paths:
-    - 'tests/*'
     - '*.tpl.php'
     - '*.min.js'
     - '*/dist/*'
