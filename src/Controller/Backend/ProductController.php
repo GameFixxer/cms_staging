@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 namespace App\Controller\Backend;
 
@@ -29,7 +30,7 @@ class ProductController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->redirectToPage(LoginCOntroller::ROUTE);
+            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=list');
         }
     }
 
@@ -37,10 +38,22 @@ class ProductController implements BackendController
     {
         $this->view->addTlpParam('productlist', $this->productRepository->getProductList());
         $this->view->addTemplate('productEditList.tpl');
-        if (!empty($_POST)) {
-            if (isset($_POST['logout'])) {
-                $this->logout();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            switch ($_POST) {
+                case !empty($_POST['delete']):
+                    $this->deleteProduct((int)$_POST['delete']);
+                    break;
+                case !empty($_POST['save']):
+                    $this->saveProduct(
+                            (int)$_POST['save'],
+                            (string)$_POST['newpagedescription'],
+                            (string)$_POST['newpagename']
+                    );
+                    break;
+                case isset($_POST['logout']):
+                    $this->logout();
             }
+            $this->redirectToPage(self::ROUTE, '&page=list');
         }
     }
 
@@ -48,22 +61,25 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case !empty($_POST['delete']):
-                $this->deleteProduct((int)$_POST['delete']);
-                break;
-            case !empty($_POST['save']):
-                $this->saveProduct((int)$_POST['save'], (string)$_POST['newpagename'], (string)$_POST['newpagedescription']);
-                break;
+                case !empty($_POST['delete']):
+                    $this->deleteProduct((int)$_POST['delete']);
+                    break;
+                case !empty($_POST['save']):
+                    $this->saveProduct(
+                            (int)$_POST['save'],
+                            (string)$_POST['newpagedescription'],
+                            (string)$_POST['newpagename']
+                    );
+                    break;
             }
         }
-        $this->view->addTlpParam('page', $this->productRepository->getProduct((int)$_GET['id']));
+        $this->view->addTlpParam('product', $this->productRepository->getProduct((int)$_GET['id']));
         $this->view->addTemplate('productEditPage.tpl');
     }
 
     private function deleteProduct(int $id): void
     {
         $this->productEntityManager->delete($this->productRepository->getProduct($id));
-        $this->redirectToPage(DashboardController::ROUTE);
     }
 
     private function saveProduct(int $id, string $description, string $name): void
@@ -82,14 +98,15 @@ class ProductController implements BackendController
     private function logout(): void
     {
         $this->userSession->logoutUser();
-        $this->redirectToPage(LoginController::ROUTE);
+        $this->redirectToPage(LoginController::ROUTE, '');
     }
-    private function redirectToPage(string $route):void
+
+    private function redirectToPage(string $route, string $page): void
     {
         $host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
         $extra = 'Index.php?cl='.$route;
-        $extra2 = '&page=detail';
+        $extra2 = $page;
         $extra3 = '&admin=true';
         header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
