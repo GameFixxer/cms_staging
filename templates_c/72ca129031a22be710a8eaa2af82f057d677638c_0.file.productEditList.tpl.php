@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-05-14 12:12:44
+/* Smarty version 3.1.36, created on 2020-05-14 16:47:18
   from '/home/rene/PhpstormProjects/MVC/templates/dist/productEditList.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5ebd199c489147_07094029',
+  'unifunc' => 'content_5ebd59f66bcc00_15371054',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '72ca129031a22be710a8eaa2af82f057d677638c' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/dist/productEditList.tpl',
-      1 => 1589450983,
+      1 => 1589467636,
       2 => 'file',
     ),
   ),
@@ -20,41 +20,41 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ebd199c489147_07094029 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ebd59f66bcc00_15371054 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 <html lang="">
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_9103482025ebd199c454011_49855824', "subtitel_h1");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_990704855ebd59f669c0c1_95289369', "subtitel_h1");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20432816655ebd199c45c153_19086055', "titel");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20695528615ebd59f66a07b5_42331556', "titel");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_12493240855ebd199c461a78_19298611', "titel_button");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2720942435ebd59f66a43e2_18690617', "titel_button");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_5058277955ebd199c467b76_15294239', "titel_button_href");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1666200265ebd59f66a8f66_94292498', "titel_button_href");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_13338154025ebd199c46eaa5_68408941', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20393143645ebd59f66ab854_12736290', "body");
 ?>
 
 </html><?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "subtitel_h1"} */
-class Block_9103482025ebd199c454011_49855824 extends Smarty_Internal_Block
+class Block_990704855ebd59f669c0c1_95289369 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'subtitel_h1' => 
   array (
-    0 => 'Block_9103482025ebd199c454011_49855824',
+    0 => 'Block_990704855ebd59f669c0c1_95289369',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -64,12 +64,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "subtitel_h1"} */
 /* {block "titel"} */
-class Block_20432816655ebd199c45c153_19086055 extends Smarty_Internal_Block
+class Block_20695528615ebd59f66a07b5_42331556 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel' => 
   array (
-    0 => 'Block_20432816655ebd199c45c153_19086055',
+    0 => 'Block_20695528615ebd59f66a07b5_42331556',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -79,12 +79,12 @@ Welcome to the Backstagearea<?php
 }
 /* {/block "titel"} */
 /* {block "titel_button"} */
-class Block_12493240855ebd199c461a78_19298611 extends Smarty_Internal_Block
+class Block_2720942435ebd59f66a43e2_18690617 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button' => 
   array (
-    0 => 'Block_12493240855ebd199c461a78_19298611',
+    0 => 'Block_2720942435ebd59f66a43e2_18690617',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -94,12 +94,12 @@ Back to home<?php
 }
 /* {/block "titel_button"} */
 /* {block "titel_button_href"} */
-class Block_5058277955ebd199c467b76_15294239 extends Smarty_Internal_Block
+class Block_1666200265ebd59f66a8f66_94292498 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button_href' => 
   array (
-    0 => 'Block_5058277955ebd199c467b76_15294239',
+    0 => 'Block_1666200265ebd59f66a8f66_94292498',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -109,12 +109,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "titel_button_href"} */
 /* {block "body"} */
-class Block_13338154025ebd199c46eaa5_68408941 extends Smarty_Internal_Block
+class Block_20393143645ebd59f66ab854_12736290 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_13338154025ebd199c46eaa5_68408941',
+    0 => 'Block_20393143645ebd59f66ab854_12736290',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -127,8 +127,21 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
                 <h2 class="section-heading text-uppercase">Productlist</h2>
                 <h3 class="section-subheading text-muted">Manage our products</h3>
             </div>
-            <form id="deleteForm" name="deleteform" action="" method="post">
-                <div class="row">
+            <form id="deleteUpdateForm" name="deleteUpdateform" action="" method="post">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Productname</th>
+                        <th scope="col">Description</th>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#model">
+                                Create
+                            </button>
+                        </th>
+                    </tr>
                     <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['productlist']->value, 'page', false, NULL, 'aussen', array (
 ));
@@ -136,126 +149,91 @@ $_smarty_tpl->tpl_vars['page']->do_else = true;
 if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['page']->value) {
 $_smarty_tpl->tpl_vars['page']->do_else = false;
 ?>
-                        <div class="col-lg-4 col-sm-6 mb-4">
-                            <div class="portfolio-item">
-                                <a class="portfolio-link"
-                                   href="http://localhost:8080/Index.php?cl=product&page=detail&admin=true&id=<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
-">
-                                    <div class="portfolio-hover">
-                                        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                    </div>
-                                    <img class="img-fluid" src="assets/img/portfolio/01-thumbnail.jpg" alt=""/></a>
-                                <div class="portfolio-caption">
-                                    <div class="portfolio-caption-heading">
-                                        <div class="form-group">
-                                            <label class="switch">
-                                                <input type="checkbox" id="delete" name="delete"
-                                                       value="<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
-">
-                                                <span class="slider round"></span>
-                                            </label>
-                                            <?php echo $_smarty_tpl->tpl_vars['page']->value->getProductName();?>
-</div>
-                                    </div>
-                                    <div class="portfolio-caption-subheading text-muted"><?php echo $_smarty_tpl->tpl_vars['page']->value->getProductDescription();?>
-</div>
-                                </div>
-                            </div>
-                        </div>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row"><?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
+</th>
+                        <td><?php echo $_smarty_tpl->tpl_vars['page']->value->getProductName();?>
+</td>
+                        <td><?php echo $_smarty_tpl->tpl_vars['page']->value->getProductDescription();?>
+
+                        <td>
+                        <td>
+                            <button class="btn btn-primary btn-sm text-uppercase" id="delete" name="delete"
+                                    type="submit" value=<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
+>Delete
+                            </button>
+                        </td>
+                        <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" id="update"
+                                           href="http://localhost:8080/Index.php?cl=product&page=detail&id=<?php echo $_smarty_tpl->tpl_vars['page']->value->getProductId();?>
+&admin=true"
+                                           type="submit">Edit
+                            </a></th>
+                    </tr
                     <?php
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
-                    <div class="col-lg-4 col-sm-6 mb-4">
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-toggle="modal" href="#model">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="assets/img/portfolio/00-thumbnail.jpg" alt=""
-                                /></a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Name:</div>
-                                <div class="portfolio-caption-subheading text-muted">Id:</div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="text-md-left">
-                    <div id="deleteing"></div>
-                    <button class="btn btn-primary btn-group-sm text-uppercase" id="Delete" type="submit"
-                            value="delete">
-                        Delete
-                    </button>
-                </div>
+                    </tbody>
+                </table>
             </form>
         </div>
-
         <div class="text-center">
             <form id="logout" name="logout" action="" method="post">
-                <button class="btn btn-primary btn-lg text-uppercase" id="logout" type="logout"
-                        value="logout">
+                <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
                     Logout
                 </button>
             </form>
         </div>
     </section>
-    <div class="portfolio-modal modal fade" id="model" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg"/></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-sm-8">
-                            <div class="modal-body">
-                                <!-- Project Details Go Here-->
-                                <h2 class="text-uppercase">New Product</h2>
-                                <p class="item-intro text-muted">Trage hier den neuen Productnamen ein.</p>
-                                <form id="updateform" name="updateform" action="" method="post">
-                                    <div class="row align-items-stretch mb-5">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <input type="hidden" name="page" value="backend">
-                                                <input class="form-control" id="newpagename" type="text"
-                                                       name="newpagename"
-                                                       placeholder="Productname"
-                                                       data-validation-required-message="Please enter your name."/>
-                                                <p class="help-block text-danger"></p>
-                                            </div>
-                                            <div class="form-group">
-                                                <input class="form-control" id="newpagedescription" type="text"
-                                                       name="newpagedescription"
-                                                       placeholder="Description"
-                                                <p class="help-block text-danger"></p>
-                                            </div>
-                                            <label class="switch">
-                                                <input type="checkbox" id="save" name="save"
-                                                <span class="slider round"></span>
-                                                Yes, i want to make theese changes.
-                                            </label>
-                                        </div>
-                                    </div>
-
-
+                <div class="text-center">
+                    <h2 class="text-uppercase">New Product</h2>
+                    <p class="item-intro text-muted"></p>
+                    <form id="create" name="createform" action="" method="post">
+                        <div class="row align-items-stretch mb-5">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <div class="text-center">
-                                        <div id="create"></div>
+                                        <input type="hidden" name="save" value="save">
+                                        <label> Productname:</label>
+                                        <input class="form-control" id="newpagename" type="text"
+                                               name="newpagename"
+                                               placeholder="Productname"
+                                               data-validation-required-message="Please enter your name."/>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label> Description:</label>
+                                    <input class="form-control" id="newpagedescription" type="text"
+                                           name="newpagedescription"
+                                           placeholder="Description"
+                                    <p class="help-block text-danger"></p>
+                                </div>
+
+                                <div class="text-center">
+                                    <div id="create">
                                         <button class="btn btn-primary btn-group-sm text-uppercase" id="save"
-                                                type="submit"
-                                                value="save">
+                                                name="save" type="submit">
                                             Create
                                     </div>
-                                </form>
-                                <p>
-                                    <button class="btn btn-primary" data-dismiss="modal" type="button"><i
-                                                class="fas fa-times mr-1"></i>Close Project
-                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                    <p>
+                        <button class="btn btn-primary btn-sm" data-dismiss="modal" type="button"><i
+                                    class="fas fa-times mr-1"></i>Discard
+                        </button>
                 </div>
             </div>
         </div>
     </div>
+
 
     </body>
 <?php

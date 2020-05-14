@@ -40,10 +40,10 @@ class ProductController implements BackendController
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case !empty($_POST['delete']):
+            case isset($_POST['delete']):
                 $this->deleteProduct((int)$_POST['delete']);
                 break;
-            case !empty($_POST['save']):
+            case isset($_POST['save']):
                 $this->saveProduct(
                     (int)$_POST['save'],
                     (string)$_POST['newpagedescription'],

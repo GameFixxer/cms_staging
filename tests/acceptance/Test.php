@@ -19,7 +19,7 @@ class Test
         $I->see('Detail:Coffee Detail:Coffee ID: 4 Productname: Coffee Description: Coffee is love, coffee is life.');
     }
 
-    public function checkAllSinglePages(AcceptanceTester $I, $link)
+    public function checkAllSinglePages(AcceptanceTester $I)
     {
         $I->amOnPage('/Index.php?page=detail&id=1');
         $I->see('Detail:Shirt Detail:Shirt ID: 1 Productname: Shirt Description: black shirt, different sizes with print \'Here could be your advertising\'');
@@ -31,6 +31,5 @@ class Test
         $I->see('Page Title Page Title There is no place like 127.0.0.1 ');
         $I->amOnPage('/Index.php?page=detail');
         $I->see('404');
-
     }
 }
