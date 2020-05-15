@@ -9,10 +9,16 @@ use App\Service\SQLConnector;
 class ProductEntityManager
 {
     private SQLConnector $connector;
+    /**
+     * @var ProductRepository
+     */
+    private ProductRepository $productRepository;
 
-    public function __construct(SQLConnector $connector)
+
+    public function __construct(SQLConnector $connector, ProductRepository $productRepository)
     {
         $this->connector = $connector;
+        $this->productRepository = $productRepository;
     }
 
 
@@ -22,6 +28,7 @@ class ProductEntityManager
         $data = array();
         $data [] = $product->getProductId();
         $this->connector->set('Delete from product where id= ?', $this->encodeArray($data), $data);
+        $this->productRepository->getProductList();
     }
 
     public function save(ProductDataTransferObject $product): void
@@ -31,12 +38,13 @@ class ProductEntityManager
             $data[] = $product->getProductName();
             $data[] = $product->getProductDescription();
             $data[] = (int)$product->getProductId();
-            $this->connector->set('Update product set description=(?), name=(?) where id= ?', $this->encodeArray($data), $data);
+            $this->connector->set('Update product set name=(?),description=(?) where id= ?', $this->encodeArray($data), $data);
         } else {
             $data[] = $product->getProductName();
             $data[] = $product->getProductDescription();
             $this->connector->set('INSERT INTO product (name, description) values(?,?)', $this->encodeArray($data), $data);
         }
+        $this->productRepository->getProductList();
     }
     private function encodeArray(array $params): string
     {

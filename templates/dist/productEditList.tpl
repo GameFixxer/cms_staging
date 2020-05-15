@@ -21,7 +21,7 @@
                         <th scope="col">Description</th>
                         <th scope="col"></th>
                         <th scope="col">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                            <button type="button" class="btn btn-primary btn-sm" id="create" data-toggle="modal"
                                     data-target="#model">
                                 Create
                             </button>
@@ -40,8 +40,8 @@
                                     type="submit" value={$page->getProductId()}>Delete
                             </button>
                         </td>
-                        <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" id="update"
-                                           href="http://localhost:8080/Index.php?cl=product&page=detail&id={$page->getProductId()}&admin=true"
+                        <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" id={$page->getProductId()}
+                                           name="edit" href="http://localhost:8080/Index.php?cl=product&page=detail&id={$page->getProductId()}&admin=true"
                                            type="submit">Edit
                             </a></th>
                     </tr

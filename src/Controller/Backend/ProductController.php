@@ -41,7 +41,7 @@ class ProductController implements BackendController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
             case isset($_POST['delete']):
-                $this->deleteProduct((int)$_POST['delete']);
+                    $this->deleteProduct((int)$_POST['delete']);
                 break;
             case isset($_POST['save']):
                 $this->saveProduct(
@@ -89,9 +89,8 @@ class ProductController implements BackendController
         } else {
             $dto = new ProductDataTransferObject();
         }
-        $dto->setProductDescription($description);
         $dto->setProductName($name);
-
+        $dto->setProductDescription($description);
         $this->productEntityManager->save($dto);
     }
 

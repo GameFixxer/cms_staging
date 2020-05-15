@@ -53,7 +53,6 @@ class ProductRepository
 
         return isset($this->productList[$id]);
     }
-
     private function makeArrayResult(object $resultobj): array
     {
         $result = [];
