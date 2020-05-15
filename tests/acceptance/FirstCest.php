@@ -44,8 +44,8 @@ class FirstCest
         $I->see('WELCOME TO THE BACKSTAGEAREA');
         $I->see('Create');
         $I->click(['id'=>'create']); // waiting it to show
-        $I->
-        $I->see('New Product', 'modal'); // text inside modal
+
+       
         //$I->click('Ok', '#modal'); // clicking ok insode modal
         $I->fillField('newpagename', 'Miles');
         $I->fillField('newpagedescription', 'Miles');
