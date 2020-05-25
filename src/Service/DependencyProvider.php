@@ -13,7 +13,7 @@ class DependencyProvider
 {
     public function providerDependency(Container $container):void
     {
-        $container->setFactory(SQLConnector::class, function() {
+        $container->setFactory(SQLConnector::class, function () {
             $sqlConnector = new SQLConnector();
             $sqlConnector->connect();
             return $sqlConnector;
@@ -22,6 +22,6 @@ class DependencyProvider
         $container->set(SessionUser::class, new SessionUser());
         $container->set(ProductRepository::class, new ProductRepository($container->get(SQLConnector::class)));
         $container->set(UserRepository::class, new UserRepository($container->get(SQLConnector::class)));
-        $container->set(ProductEntityManager::class, new ProductEntityManager($container->get(SQLConnector::class)));
+        $container->set(ProductEntityManager::class, new ProductEntityManager($container->get(SQLConnector::class), $container->get(ProductRepository::class)));
     }
 }

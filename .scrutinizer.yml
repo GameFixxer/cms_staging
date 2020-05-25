@@ -21,6 +21,8 @@ filter:
     - '/node_modules'
     - '/templates_c'
     - '/configs'
+    - '*/_generated/*'
+
 checks:
   php: true
 coding_style:
