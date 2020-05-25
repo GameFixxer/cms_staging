@@ -12,7 +12,7 @@ trait AcceptanceTesterActions
      */
     abstract protected function getScenario();
 
-    
+
     /**
      * [!] Method is generated. Documentation taken from corresponding module.
      *
@@ -1606,7 +1606,7 @@ trait AcceptanceTesterActions
      * // saved to: tests/_output/debug/2017-05-26_14-24-11_4b3403665fea6.html
      * ```
      *
-     * @param null $name
+     * @param empty $name
      * @see \Codeception\Lib\InnerBrowser::makeHtmlSnapshot()
      */
     public function makeHtmlSnapshot($name = null) {
