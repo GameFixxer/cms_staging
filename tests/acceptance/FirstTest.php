@@ -1,6 +1,6 @@
 <?php
 
-class FirstCest
+class FirstTest
 {
     public function pageListWorks(AcceptanceTester $I)
     {
