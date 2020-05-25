@@ -51,7 +51,7 @@ class FirstCest
         $I->fillField('newpagedescription', 'Tes');
         $I->click(['id'=>'save']);
         //$I->click(['value'=>'Ted', 'name'=>'delete']);
-        $I->click(['id'=>'delete',\Codeception\Util\Locator::lastElement('//table/tr')]);
+        $I->click(['id'=>'delete', \Codeception\Util\Locator::lastElement('//table/tr')]);
     }
 
     public function checkAllSinglePages(AcceptanceTester $I)
