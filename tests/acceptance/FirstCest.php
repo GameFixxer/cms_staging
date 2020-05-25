@@ -1,6 +1,6 @@
 <?php
 
-class FirstTest
+class FirstCest
 {
     public function pageListWorks(AcceptanceTester $I)
     {
@@ -9,8 +9,8 @@ class FirstTest
         $I->click('Productlist');
         $I->amOnPage('/Index.php?cl=list#portfolio');
         $I->see('PRODUCTLIST');
-        $I->click(['id' => '20']);
-        $I->see('20');
+        $I->click(['id' => '34']);
+        $I->see('Ted');
     }
 
     public function loginLogout(AcceptanceTester $I)
@@ -34,27 +34,29 @@ class FirstTest
                 'password' => '1234'
         ]);
         $I->see('WELCOME TO THE BACKSTAGEAREA');
-        $I->click(['id' => '20', 'name'=>'edit']);
+
+        //Update Product
+        $I->click(['id' => '34', 'name'=>'edit']);
         $I->see('Productname');
         $I->fillField('newpagename', 'Miles');
         $I->fillField('newpagedescription', 'Miles');
         $I->click('Update');
-
         $I->click('Return to productlist');
+        //Create Product
         $I->see('WELCOME TO THE BACKSTAGEAREA');
         $I->see('Create');
         $I->click(['id'=>'create']); // waiting it to show
-
-       
-        //$I->click('Ok', '#modal'); // clicking ok insode modal
-        $I->fillField('newpagename', 'Miles');
-        $I->fillField('newpagedescription', 'Miles');
-        $I->click('Create');
+        //Fill Create Form
+        $I->fillField('newpagename', 'Ted');
+        $I->fillField('newpagedescription', 'Tes');
+        $I->click(['id'=>'save']);
+        //$I->click(['value'=>'Ted', 'name'=>'delete']);
+        $I->click(['id'=>'delete',\Codeception\Util\Locator::lastElement('//table/tr')]);
     }
 
     public function checkAllSinglePages(AcceptanceTester $I)
     {
-        $I->amOnPage('/Index.php?cl=detail&id=20');
+        $I->amOnPage('/Index.php?cl=detail&id=34');
         $I->see(
             'DETAIL PAGE'
         );
