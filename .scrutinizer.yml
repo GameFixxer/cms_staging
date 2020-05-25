@@ -21,7 +21,8 @@ filter:
     - '/node_modules'
     - '/templates_c'
     - '/configs'
-    - '/_generated'
+    - '_generated\UnitTesterActions'
+    - '_generated\AcceptanceTesterActions'
 checks:
   php: true
 coding_style:
