@@ -17,8 +17,8 @@
                 <div class="col-lg-4 col-sm-6 mb-4">
                     <div class="portfolio-item">
                         <a class="portfolio-link"
-                           href="http://localhost:8080/Index.php?cl=detail&id={$page->getProductId()}">
-                            <div class="portfolio-hover" id={$page->getProductId()}>
+                           href=/Index.php?cl=detail&id={$page->getProductId()}">
+                            <div class="portfolio-hover" data-title={$page->getProductName()} id={$page->getProductId()}>
                                 <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
                             <img class="img-fluid" src="assets/img/portfolio/01-thumbnail.jpg" alt=""/></a>
