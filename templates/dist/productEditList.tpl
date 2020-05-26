@@ -16,7 +16,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
                         <th scope="col">Productname</th>
                         <th scope="col">Description</th>
                         <th scope="col"></th>
@@ -29,18 +29,17 @@
                     </tr>
                     {foreach name=aussen item=page from=$productlist}
                     </thead>
-                    <tbody>
+                    <tbody id={$page->getProductId()}>
                     <tr>
-                        <th scope="row">{$page->getProductId()}</th>
+                        <th scope="row" id={$page->getProductId()}>{$page->getProductId()}</th>
                         <td>{$page->getProductName()}</td>
-                        <td>{$page->getProductDescription()}
+                        <td>{$page->getProductDescription()}<td>
                         <td>
-                        <td>
-                            <button class="btn btn-primary btn-sm text-uppercase" id="delete" data-title={$page->getProductName()} name="delete"
+                            <button class="btn btn-primary btn-sm text-uppercase" id="delete" data-title={$page->getProductId()} name="delete"
                                     type="submit" value={$page->getProductId()}>Delete
                             </button>
                         </td>
-                        <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" data-title={$page->getProductName()} id={$page->getProductId()}
+                        <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" data-title={$page->getProductId()} id={$page->getProductId()}
                                            name="edit" href="http://localhost:8080/Index.php?cl=product&page=detail&id={$page->getProductId()}&admin=true"
                                            type="submit">Edit
                             </a></th>

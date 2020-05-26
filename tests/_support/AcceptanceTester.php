@@ -22,5 +22,29 @@ class AcceptanceTester extends \Codeception\Actor
 
     /**
      * Define custom actions here
+     * @param string $pageurl
+     * @param string $prediction
+     * @param string $expectation
      */
+    public function isPageAvailableTest(string $pageurl, string $prediction, string $expectation):void
+    {
+        $this->amOnPage($pageurl);
+        $this->expect($prediction);
+        $this->see($expectation);
+    }
+    public function logIn(): void
+    {
+        $this->amOnPage('/Index.php?cl=login&admin=true');
+        $this->click('Login');
+        $this->submitForm(
+            '#contactForm',
+            [
+                        'username' => 'test',
+                        'password' => '1234',
+                ]
+        );
+        $this->click('Login');
+        $this->expect('WELCOME TO THE BACKSTAGEAREA');
+        $this->see('WELCOME TO THE BACKSTAGEAREA');
+    }
 }
