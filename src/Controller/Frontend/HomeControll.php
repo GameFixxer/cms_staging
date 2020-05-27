@@ -21,6 +21,7 @@ class HomeControll implements Controller
 
     public function action(): void
     {
+        $this->view->addTlpParam('home', 'There is no place like 127.0.0.1');
         $this->view->addTemplate('home.tpl');
     }
 }

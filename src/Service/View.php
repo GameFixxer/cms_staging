@@ -31,7 +31,18 @@ class View
         return dirname(__DIR__, 2);
     }
 
-
+    public function getAllParams(): array
+    {
+        return $this->smarty->tpl_vars;
+    }
+    public function getParam(string $name)
+    {
+        $vars =$this->smarty->tpl_vars;
+        if (isset($vars[$name])) {
+            return $vars[$name];
+        }
+        return null;
+    }
     public function addTlpParam(string $name, $value): void
     {
         $this->smarty->assign($name, $value);

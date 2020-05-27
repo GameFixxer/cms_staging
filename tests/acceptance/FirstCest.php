@@ -2,35 +2,39 @@
 
 use \Codeception\Util\Locator;
 
+
 class FirstCest
 {
-    private int $password;
-    public function createProductTest(AcceptanceTester $I)
+    private int $productId;
+
+    public function createProductTest(AcceptanceTester $I):void
     {
         $I->logIn();
         $I->click(['id' => 'create']);
         $I->fillField('newpagename', 'Ted');
         $I->fillField('newpagedescription', 'Tes');
         $I->click(['id' => 'save']);
-        $this->password =  (int) $I->grabTextFrom('//table/tbody[position()=last()]/tr[position()=last()]/th[1]/@id');
-        $I->cantSee('//table/tbody[@id='.$this->password.']');
-        $I->isPageAvailableTest('/Index.php?cl=detail&id='.$this->password.'&admin=false', ''.$this->password, ''.$this->password);
+        $this->productId =  (int) $I->grabTextFrom('//table/tbody[position()=last()]/tr[position()=last()]/th[1]/@id');
+        //$I->seeElement('//table
+        ///tbody[@id='.$this->password.']');
+        $I->doesProductExistInBackendListAndDetail($this->productId, true, 'Ted');
+        $I->isPageAvailableTest('/Index.php?cl=detail&id='.$this->productId.'&admin=false', ''.$this->productId, ''.$this->productId);
     }
 
     public function doesProductExistInFrontEndListTest(AcceptanceTester $I)
     {
         $I->amOnPage('/Index.php?cl=list&admin=false');
-        $I->canSee($I->grabTextFrom('//object[@id='.$this->password.']'));
-        $I->click('//object[@id='.$this->password.']/a');
-        $I->see(''.$this->password);
+        $I->canSee($I->grabTextFrom('//object[@id='.$this->productId.']'));
+        $I->click('//object[@id='.$this->productId.']/a');
+        $I->see(''.$this->productId);
     }
 
 
     public function editProductTest(AcceptanceTester $I): void
     {
         $I->logIn();
-        $I->click('//table/tbody[@id='.$this->password.']/tr[position()=last()]/th[2]/a');
-        $I->see(''.$this->password);
+        $I->click('//table/tbody[@id='.$this->productId.']/tr[position()=last()]/th[2]/a');
+        $I->see(''.$this->productId);
         $I->fillField('newpagename', 'Miles');
         $I->fillField('newpagedescription', 'Miles');
         $I->click('Update');
@@ -40,8 +44,10 @@ class FirstCest
     public function deleteProductTest(AcceptanceTester $I): void
     {
         $I->logIn();
-        $I->click('//table/tbody[@id='.$this->password.']/tr[position()=last()]/td[position()=last()]/button');
-        $I->cantSee('//table/tbody[@id='.$this->password.']');
+        $I->doesProductExistInBackendListAndDetail($this->productId, true, 'Miles');
+        $I->amOnPage('/Index.php?cl=product&page=list&admin=true');
+        $I->click('//table/tbody[@id='.$this->productId.']/tr[position()=last()]/td[position()=last()]/button');
+        $I->cantSee('//table/tbody[@id='.$this->productId.']');
     }
 
     public function logOutTest(AcceptanceTester $I)
@@ -61,4 +67,5 @@ class FirstCest
         $I->isPageAvailableTest('/Index.php?cl=login', 'Page not found', '404');
         $I->isPageAvailableTest('/Index.php?cl=login&admin=true', 'LOGIN AREA', 'LOGIN AREA');
     }
+
 }
