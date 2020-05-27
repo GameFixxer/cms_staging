@@ -14,7 +14,7 @@ class FirstCest
         $I->fillField('newpagename', 'Ted');
         $I->fillField('newpagedescription', 'Tes');
         $I->click(['id' => 'save']);
-        $this->productId =  (int) $I->grabTextFrom('//table/tbody[position()=last()]/tr[position()=last()]/th[1]/@id');
+        $this->productId = (int)$I->grabTextFrom('//table/tbody[position()=last()]/tr[position()=last()]/th[1]/@id');
         //$I->seeElement('//table
         ///tbody[@id='.$this->password.']');
         $I->doesProductExistInBackendListAndDetail($this->productId, true, 'Ted');

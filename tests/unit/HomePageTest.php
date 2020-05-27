@@ -26,7 +26,7 @@ class HomePageTest extends \Codeception\Test\Unit
                 'page'=>'list'
         ];
         $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string) $this->view->getParam('home');
+        $smartyParams = (string)$this->view->getParam('home');
         $this->assertEquals($smartyParams, 'There is no place like 127.0.0.1');
     }
 }

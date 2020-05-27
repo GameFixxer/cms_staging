@@ -36,7 +36,7 @@ class FrontendListPageTest extends \Codeception\Test\Unit
         $containerProvider = new DependencyProvider();
         $containerProvider->providerDependency($this->container);
 
-        $productList = (array) $this->view->getParam('productList');
+        $productList = (array)$this->view->getParam('productList');
 
         $productRepository = $this->container->get(\App\Model\ProductRepository::class);
 
@@ -44,7 +44,7 @@ class FrontendListPageTest extends \Codeception\Test\Unit
 
         $this->view->addTlpParam('productList', $productListFromRepository);
 
-        $secondProductList= (array) $this->view->getParam('productList');
+        $secondProductList = (array)$this->view->getParam('productList');
 
         $this->assertEquals($productList, $secondProductList);
 

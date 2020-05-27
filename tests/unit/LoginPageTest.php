@@ -29,7 +29,7 @@ class LoginPageTest extends \Codeception\Test\Unit
                 'admin'=>'true'
         ];
         $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string) $this->view->getParam('login');
+        $smartyParams = (string)$this->view->getParam('login');
         $this->assertEquals($smartyParams, 'LOGIN AREA');
     }
 }
