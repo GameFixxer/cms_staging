@@ -22,6 +22,7 @@ filter:
     - '/templates_c'
     - '/configs'
     - '*/_generated/*'
+    - 'c3.php'
 
 checks:
   php: true
