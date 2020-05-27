@@ -35,7 +35,7 @@ class DetailPageTest extends \Codeception\Test\Unit
         $containerProvider = new DependencyProvider();
         $containerProvider->providerDependency($this->container);
 
-        $product = (array) $this->view->getParam('page');
+        $product = (array)$this->view->getParam('page');
 
         $productRepository = $this->container->get(\App\Model\ProductRepository::class);
 
@@ -43,7 +43,7 @@ class DetailPageTest extends \Codeception\Test\Unit
 
         $this->view->addTlpParam('page', $productFromRepository);
 
-        $secondProduct= (array) $this->view->getParam('page');
+        $secondProduct = (array)$this->view->getParam('page');
 
         $this->assertEquals($product, $secondProduct);
     }

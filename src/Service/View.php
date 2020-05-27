@@ -37,7 +37,7 @@ class View
     }
     public function getParam(string $name)
     {
-        $vars =$this->smarty->tpl_vars;
+        $vars = $this->smarty->tpl_vars;
         if (isset($vars[$name])) {
             return $vars[$name];
         }

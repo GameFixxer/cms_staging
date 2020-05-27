@@ -36,11 +36,11 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $this->amOnPage('/Index.php?cl=product&page=list&admin=true');
         if ($shouldItExist) {
-            $this->seeElement('//table/tbody[@id='.$productId.']');///tr[position()=last()]/td[1]'));
+            $this->seeElement('//table/tbody[@id='.$productId.']'); ///tr[position()=last()]/td[1]'));
             $this->amOnPage('Index.php?cl=product&page=detail&id='.$productId.'&admin=true');
             $this->see($expectatedProductname);
         } else {
-            $this->cantSee($productId);//$this->grabTextFrom('//table/tbody[@id='.$productId.']'));
+            $this->cantSee($productId); //$this->grabTextFrom('//table/tbody[@id='.$productId.']'));
         }
     }
     public function logIn(): void
