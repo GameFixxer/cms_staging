@@ -19,6 +19,7 @@ class ErrorControll implements Controller
 
     public function action(): void
     {
+        $this->view->addTlpParam('error', '404 Page not found.');
         $this->view->addTemplate('404.tpl');
     }
 }

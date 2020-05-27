@@ -26,6 +26,7 @@ class DetailControll implements Controller
         $pageId = (int)($_GET['id'] ?? '0');
 
         if ($pageId === 0 || $this->productRepository->hasProduct($pageId) === false) {
+            $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
         } else {
             $this->view->addTemplate('detail.tpl');

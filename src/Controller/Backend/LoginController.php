@@ -39,11 +39,11 @@ class LoginController implements BackendController
                 if ($this->userRepository->hasUser($username, $password)) {
                     $this->userSession->setUser($username);
                     $this->redirectToDashboard();
-
                 }
                 $this->view->addTlpParam('error', 'Invalid username or password.');
             }
         }
+        $this->view->addTlpParam('login', 'LOGIN AREA');
         $this->view->addTemplate('login.tpl');
     }
 
