@@ -1,15 +1,12 @@
 <?php
 
-use App\Service\View;
-
 class HomePageTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
+     * @var \UnitTester $tester
      */
-    protected $tester;
-    /** @var  View $view */
-    private View $view;
+    protected UnitTester $tester;
+
     protected function _before()
     {
     }
@@ -25,8 +22,8 @@ class HomePageTest extends \Codeception\Test\Unit
                 'cl' => 'home',
                 'page'=>'list'
         ];
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string)$this->view->getParam('home');
+        $this->tester->arrange();
+        $smartyParams = (string)$this->tester->getSmartyParams('home');
         $this->assertEquals($smartyParams, 'There is no place like 127.0.0.1');
     }
 }

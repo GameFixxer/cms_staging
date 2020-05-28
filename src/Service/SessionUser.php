@@ -26,6 +26,7 @@ class SessionUser
     {
         $_SESSION['username'] = $name;
         $_SESSION['loggedin'] = true;
+
     }
 
     public function getUser(): string

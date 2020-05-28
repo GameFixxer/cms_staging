@@ -1,18 +1,11 @@
 <?php
-use App\Service\View;
-use App\Service\Container;
-use App\Service\DependencyProvider;
 
 class DetailPageTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
+     * @var \UnitTester $tester
      */
-    protected $tester;
-    /** @var  View $view */
-    private View $view;
-    /** @var  Container $container */
-    private Container $container;
+    protected UnitTester $tester;
 
     protected function _before(): void
     {
@@ -30,21 +23,9 @@ class DetailPageTest extends \Codeception\Test\Unit
                 'page'=>'list',
                 'id'=>'5'
         ];
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $this->container = new Container();
-        $containerProvider = new DependencyProvider();
-        $containerProvider->providerDependency($this->container);
-
-        $product = (array)$this->view->getParam('page');
-
-        $productRepository = $this->container->get(\App\Model\ProductRepository::class);
-
-        $productFromRepository = $productRepository->getProduct(5);
-
-        $this->view->addTlpParam('page', $productFromRepository);
-
-        $secondProduct = (array)$this->view->getParam('page');
-
+        $this->tester->arrange();
+        $product = $this->tester->getSmartyParams('page');
+        $secondProduct = $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct(5), 'page');
         $this->assertEquals($product, $secondProduct);
     }
 }

@@ -2,9 +2,8 @@
 
 use \Codeception\Util\Locator;
 
-
 class FirstCest
-{
+{/*
     private int $productId;
 
     public function createProductTest(AcceptanceTester $I):void
@@ -23,10 +22,10 @@ class FirstCest
 
     public function doesProductExistInFrontEndListTest(AcceptanceTester $I)
     {
-        $I->amOnPage('/Index.php?cl=list&admin=false');
-        $I->canSee($I->grabTextFrom('//object[@id='.$this->productId.']'));
-        $I->click('//object[@id='.$this->productId.']/a');
-        $I->see(''.$this->productId);
+        // $I->amOnPage('/Index.php?cl=list&admin=false');
+        //$I->canSee($I->grabTextFrom('//object[@id='.$this->productId.']'));
+        //$I->click('//object[@id='.$this->productId.']/a');
+        //$I->see(''.$this->productId);
     }
 
 
@@ -66,6 +65,5 @@ class FirstCest
         $I->isPageAvailableTest('/Index.php?cl=detail', 'Page not found', '404');
         $I->isPageAvailableTest('/Index.php?cl=login', 'Page not found', '404');
         $I->isPageAvailableTest('/Index.php?cl=login&admin=true', 'LOGIN AREA', 'LOGIN AREA');
-    }
-
+    }*/
 }
