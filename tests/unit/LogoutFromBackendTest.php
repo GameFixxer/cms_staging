@@ -29,7 +29,7 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
                 'page' => 'list',
                 'admin' => 'true'
         ];
-        $_POST=[
+        $_POST = [
                 'logout'=>''
                 ];
         $this->tester->arrange();
