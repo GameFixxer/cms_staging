@@ -1,15 +1,13 @@
 <?php
 
-use App\Service\View;
 
 class LoginPageTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
+     * @var \UnitTester $tester
      */
-    protected $tester;
-    /** @var  View $view */
-    private View $view;
+    protected UnitTester $tester;
+
     protected function _before()
     {
     }
@@ -28,8 +26,8 @@ class LoginPageTest extends \Codeception\Test\Unit
                 'cl' => 'login',
                 'admin'=>'true'
         ];
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string)$this->view->getParam('login');
+        $this->tester->arrange();
+        $smartyParams = (string)$this->tester->getSmartyParams('login');
         $this->assertEquals($smartyParams, 'LOGIN AREA');
     }
 }

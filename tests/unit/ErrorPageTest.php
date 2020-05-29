@@ -1,15 +1,13 @@
 <?php
 
-use App\Service\View;
 
 class ErrorPageTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \UnitTester
+     * @var \UnitTester $tester
      */
-    protected $tester;
-    /** @var  View $view */
-    private View $view;
+    protected UnitTester $tester;
+
 
     protected function _before(): void
     {
@@ -27,8 +25,8 @@ class ErrorPageTest extends \Codeception\Test\Unit
                 'page' => 'list',
                 'admin' => 'true'
         ];
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string)$this->view->getParam('error');
+        $this->tester->arrange();
+        $smartyParams = (string)$this->tester->getSmartyParams('error');
         $this->assertEquals($smartyParams, '404 Page not found.');
     }
 
@@ -38,9 +36,8 @@ class ErrorPageTest extends \Codeception\Test\Unit
                 'cl' => 'detail',
                 'page' => 'detail'
         ];
-
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string)$this->view->getParam('error');
+        $this->tester->arrange();
+        $smartyParams = (string)$this->tester->getSmartyParams('error');
         $this->assertEquals($smartyParams, '404 Page not found.');
     }
     public function testErrorWithNoneAvailableProductPage():void
@@ -50,9 +47,8 @@ class ErrorPageTest extends \Codeception\Test\Unit
                 'page' => 'detail',
                 'id' => '0'
         ];
-
-        $this->view = include __DIR__.'/../../Bootstrap.php';
-        $smartyParams = (string)$this->view->getParam('error');
+        $this->tester->arrange();
+        $smartyParams = (string)$this->tester->getSmartyParams('error');
         $this->assertEquals($smartyParams, '404 Page not found.');
     }
 }

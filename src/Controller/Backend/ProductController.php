@@ -102,12 +102,13 @@ class ProductController implements BackendController
 
     private function redirectToPage(string $route, string $page): void
     {
-        $host = $_SERVER['HTTP_HOST'];
+        // $host =$_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
         $extra = 'Index.php?cl='.$route;
         $extra2 = $page;
         $extra3 = '&admin=true';
-        header("Location: http://$host$uri/$extra$extra2$extra3");
-        exit;
+        //header("Location: http://$host$uri/$extra$extra2$extra3");
+        header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
+
     }
 }
