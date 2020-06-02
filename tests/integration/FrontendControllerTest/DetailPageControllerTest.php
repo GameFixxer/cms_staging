@@ -1,6 +1,6 @@
 <?php
 
-class DetailPageTest extends \Codeception\Test\Unit
+class DetailPageControllerTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester $tester

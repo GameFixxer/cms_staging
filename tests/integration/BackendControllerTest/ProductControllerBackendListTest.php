@@ -2,7 +2,7 @@
 
 
 
-class BackendDashboardPageTest extends \Codeception\Test\Unit
+class ProductControllerBackendListTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester $tester
