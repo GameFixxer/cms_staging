@@ -1,7 +1,7 @@
 <?php
 
 
-class ErrorPageTest extends \Codeception\Test\Unit
+class ErrorControllerTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester $tester

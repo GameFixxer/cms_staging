@@ -1,7 +1,7 @@
 <?php
 
 
-class FrontendListPageTest extends \Codeception\Test\Unit
+class IndexControllerTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester $tester
