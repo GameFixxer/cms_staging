@@ -32,7 +32,7 @@ class EditProductTest extends \Codeception\Test\Unit
         $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmpProductList = (array)$this->tester->getProductList();
-        $singleProduct = (array) $this->tester->exchangeDtoToSmartyParam(end($tmpProductList), 'product');
+        $singleProduct = (array)$this->tester->exchangeDtoToSmartyParam(end($tmpProductList), 'product');
         $id = end($tmpProductList)->getProductId();
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -66,7 +66,7 @@ class EditProductTest extends \Codeception\Test\Unit
         ];
         $this->tester->arrange();
         $this->tester->logIntoBackend();
-        $detailProduct = (array) $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct($id), 'product');
+        $detailProduct = (array)$this->tester->exchangeDtoToSmartyParam($this->tester->getProduct($id), 'product');
         //Is product at Detail Page changed?
         $this->assertNotEquals($singleProduct, $detailProduct);
     }

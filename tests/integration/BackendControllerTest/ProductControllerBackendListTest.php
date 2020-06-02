@@ -30,8 +30,8 @@ class ProductControllerBackendListTest extends \Codeception\Test\Unit
         ];
         $this->tester->arrange();
         $this->tester->logIntoBackend();
-        $productList = (array) $this->tester->getSmartyParams('productlist');
-        $secondProductList = (array) $this->tester->exchangeDtoToSmartyParam($this->tester->getProductList(), 'productlist');
+        $productList = (array)$this->tester->getSmartyParams('productlist');
+        $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam($this->tester->getProductList(), 'productlist');
         $this->assertEquals($productList, $secondProductList);
 
     }

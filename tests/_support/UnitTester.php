@@ -71,7 +71,7 @@ class UnitTester extends \Codeception\Actor
         $this->container = new Container();
         $containerProvider = new DependencyProvider();
         $containerProvider->providerDependency($this->container);
-        $tmp= $this->container->get(\App\Service\SessionUser::class);
+        $tmp = $this->container->get(\App\Service\SessionUser::class);
         $tmp->setUser('test');
     }
 
