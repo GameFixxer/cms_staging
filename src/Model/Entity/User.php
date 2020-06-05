@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Model\Entities;
+namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;

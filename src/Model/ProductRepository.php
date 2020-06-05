@@ -4,20 +4,26 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use App\Model\Entity\Product;
 use App\Service\SQLConnector;
 use App\Model\Mapper\ProductMapper;
 use App\Model\Dto\ProductDataTransferObject;
+use Cycle\ORM\ORM;
+use phpDocumentor\Reflection\Types\This;
 
 class ProductRepository
 {
     private array $productList;
     private SQLConnector $connector;
     private ProductMapper $productMapper;
+    private \Cycle\ORM\RepositoryInterface $ormProductRepository;
 
-    public function __construct(SQLConnector $connector)
+    public function __construct(ORM $orm)
     {
-        $this->connector = $connector;
+        //$this->connector = $connector;
         $this->productMapper = new ProductMapper();
+        $this->ormProductRepository = $orm->getRepository(Product::class);
+        dump($this->ormProductRepository);
     }
 
     /**
@@ -42,16 +48,19 @@ class ProductRepository
             throw new \Exception('Error! Productid is ivalid.', 1);
         }
 
-        return $this->productList[$id];
+        return $this->hasProduct($id);
     }
 
     public function hasProduct(int $id): bool
     {
-        if (!isset($this->productList)) {
-            $this->getProductList();
+        if (!isset($this->productList[$id])) {
+            dump($id);
+            $productEntity = $this->ormProductRepository->findByPK($id);
+            dump($productEntity);
+            $this->productList[$id]=$productEntity;
         }
 
-        return isset($this->productList[$id]);
+        return $this->productList[$id] instanceof Product;
     }
     private function makeArrayResult(object $resultobj): array
     {

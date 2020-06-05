@@ -5,8 +5,8 @@ use Spiral\Database;
 use Cycle\ORM;
 use Cycle\ORM\Schema;
 use Cycle\ORM\Mapper\Mapper;
-use App\Model\Entities\User;
-use App\Model\Entities\Product;
+use App\Model\Entity\User;
+use App\Model\Entity\Product;
 use Cycle\Annotated;
 use Spiral\Tokenizer\ClassLocator;
 use Cycle\Schema as CycleSchema;
@@ -14,13 +14,12 @@ use Spiral\Tokenizer;
 
 class DatabaseManager
 {
+    private ORM\ORM $orm;
+    private Database\DatabaseManager $dbal;
+
     public function __construct()
     {
-
-    }
-    public function connect()
-    {
-        $dbal = new Database\DatabaseManager(
+        $this->dbal = new Database\DatabaseManager(
             new \Spiral\Database\Config\DatabaseConfig([
                 'default' => 'default',
                 'databases' => [
@@ -40,11 +39,13 @@ class DatabaseManager
                 ],
             ])
         );
-
-        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([__DIR__ . '/src/']); // __DIR__ here is folder with entities
+    }
+    public function connect()
+    {
+        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Model/Entity/']); // __DIR__ here is folder with entities
         $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 
-        $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($dbal), [
+        $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($this->dbal), [
             new CycleSchema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
             new Annotated\Embeddings($classLocator),  // register embeddable entities
             new Annotated\Entities($classLocator),    // register annotated entities
@@ -59,23 +60,9 @@ class DatabaseManager
         ]);
 
 
-        $orm = new ORM\ORM(new ORM\Factory($dbal));
-        $orm = $orm->withSchema(new ORM\Schema($schema));
-        $ormTransaction = (new ORM\Transaction($orm));
+        $this->orm = new ORM\ORM(new ORM\Factory($this->dbal));
+        //dump($this->orm->withSchema(new Schema($schema)));
+        return  $this->orm->withSchema(new ORM\Schema($schema));
 
-
-        $ormTransaction->run();
-
-        $repository = $orm->getRepository(User::class);
-        $repository->findAll();
-    }
-    public function get()
-    {
-        //foreach ($repository->findAll(['status' => 'active']) as $e) {
-        //}
-    }
-
-    public function set()
-    {
     }
 }

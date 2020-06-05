@@ -9,7 +9,8 @@
         "me-io/selenium-appium-server": "~1",
         "phpunit/php-code-coverage": "^8.0",
         "cycle/orm": "^1.2",
-        "cycle/annotated": "^2.0"
+        "cycle/annotated": "^2.0",
+        "symfony/finder": "^5.1"
     },
     "autoload": {
         "psr-4": {

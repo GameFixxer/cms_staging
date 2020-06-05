@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Model\Entities;
+namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
@@ -29,20 +29,22 @@ class Product
     protected $description;
 
     /**
-     * @Column(type="int")
-     * @var int
+     * @return int
      */
-    protected $test;
-
     public function getId(): int
     {
         return $this->id;
     }
-
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
+    /**
+     * @param string $name
+     */
 
     public function setName(string $name): void
     {
