@@ -20,10 +20,8 @@ class ProductRepository
 
     public function __construct(ORM $orm)
     {
-        //$this->connector = $connector;
         $this->productMapper = new ProductMapper();
         $this->ormProductRepository = $orm->getRepository(Product::class);
-        dump($this->ormProductRepository);
     }
 
     /**
@@ -33,12 +31,10 @@ class ProductRepository
     {
         $this->productList = [];
 
-        $array = $this->makeArrayResult($this->connector->get('Select * from product', '', []));
-
+        $array = $this->ormProductRepository->select()->fetchALl();
         foreach ($array as $product) {
-            $this->productList[(int)$product['id']] = $this->productMapper->map($product);
+            $this->productList[(int) $product->getId()] = $this->productMapper->map($product);
         }
-
         return $this->productList;
     }
 
@@ -47,30 +43,16 @@ class ProductRepository
         if (!$this->hasProduct($id)) {
             throw new \Exception('Error! Productid is ivalid.', 1);
         }
-
-        return $this->hasProduct($id);
+        return $this->productMapper->map($this->productList[$id]);
     }
 
     public function hasProduct(int $id): bool
     {
         if (!isset($this->productList[$id])) {
-            dump($id);
             $productEntity = $this->ormProductRepository->findByPK($id);
-            dump($productEntity);
             $this->productList[$id]=$productEntity;
         }
-
         return $this->productList[$id] instanceof Product;
     }
-    private function makeArrayResult(object $resultobj): array
-    {
-        $result = [];
-        if ($resultobj->num_rows > 0) {
-            while ($line = $resultobj->fetch_array()) {
-                $result[] = $line;
-            }
-        }
 
-        return $result;
-    }
 }

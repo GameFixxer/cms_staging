@@ -6,7 +6,9 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
 /**
- * @Entity
+ * @Entity(
+ *     table = "product"
+ * )
  */
 class Product
 {

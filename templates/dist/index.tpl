@@ -13,7 +13,7 @@
                 <h3 class="section-subheading text-muted">All available products are here.</h3>
             </div>
             <div class="row">
-                {foreach name=aussen item=page from=$productList}
+                {foreach name=aussen item=page from=$productlist}
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <object class="portfolio-item" id="{$page->getProductId()}" data-title={$page->getProductId()}>
                             <a class="portfolio-link"
