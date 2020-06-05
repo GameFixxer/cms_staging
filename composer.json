@@ -7,7 +7,9 @@
         "friendsofphp/php-cs-fixer": "2.16.*",
         "phpunit/phpunit": "*",
         "me-io/selenium-appium-server": "~1",
-        "phpunit/php-code-coverage": "^8.0"
+        "phpunit/php-code-coverage": "^8.0",
+        "cycle/orm": "^1.2",
+        "cycle/annotated": "^2.0"
     },
     "autoload": {
         "psr-4": {
