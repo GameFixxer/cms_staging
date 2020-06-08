@@ -6,16 +6,10 @@ namespace App\Model\Dto;
 
 class UserDataTransferObject
 {
-    private string $username;
-    private int $id;
-    private string $password;
+    private string $username = '';
+    private int $id = 0;
+    private string $password = '';
 
-    public function __construct()
-    {
-        $this->username = '';
-        $this->password = '';
-        $this->id = 0;
-    }
 
     public function setUsername(string $name): void
     {

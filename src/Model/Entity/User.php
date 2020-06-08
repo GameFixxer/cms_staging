@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
@@ -6,7 +7,9 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
 /**
- * @Entity
+ * @Entity(
+ *     table = "user"
+ *     )
  */
 class User
 {
@@ -20,43 +23,43 @@ class User
      * @Column(type="string")
      * @var string
      */
-    protected $name;
+    protected $username;
 
     /**
-     * @Column(type="string", nullable=true)
+     * @Column(type="string")
      * @var string
      */
-    protected $lastname;
+    protected $password;
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): string
+    public function getUsername(): string
     {
-        return $this->name;
+        return $this->username;
     }
 
-    public function setName(string $name): void
+    public function setUsername(string $username): void
     {
-        $this->name = $name;
+        $this->username = $username;
     }
 
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getPassword(): string
     {
-        return $this->lastname;
+        return $this->password;
     }
 
     /**
-     * @param string $lastname
+     * @param string $password
      */
-    public function setLastname(string $lastname): void
+    public function setPassword(string $password): void
     {
-        $this->lastname = $lastname;
+        $this->password = $password;
     }
 
 

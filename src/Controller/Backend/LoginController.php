@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
+use App\Model\Dto\UserDataTransferObject;
 use App\Service\Container;
 use App\Service\View;
 use App\Model\UserRepository;
@@ -36,7 +37,8 @@ class LoginController implements BackendController
             if (!empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
-                if ($this->userRepository->hasUser($username, $password)) {
+                $userDTO=$this->userRepository->getUser($username, $password);
+                if ($userDTO instanceof UserDataTransferObject) {
                     $this->userSession->setUser($username);
                     $this->redirectToDashboard();
                 }

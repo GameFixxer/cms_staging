@@ -6,16 +6,10 @@ namespace App\Model\Dto;
 
 class ProductDataTransferObject
 {
-    private string $name;
-    private int $id;
-    private string $desc;
+    private string $name ='';
+    private int $id = 0;
+    private string $desc ='';
 
-    public function __construct()
-    {
-        $this->name = '';
-        $this->desc = '';
-        $this->id = 0;
-    }
 
     public function setProductName(string $name): void
     {

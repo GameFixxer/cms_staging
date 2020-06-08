@@ -15,6 +15,5 @@ define('MY_APP_STARTED', true);
 
 
 define('template_path', $path.'/templates/dist');
-
 $view = require __DIR__.'/../Bootstrap.php';
 $view->display();

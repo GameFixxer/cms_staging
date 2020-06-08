@@ -8,8 +8,7 @@ use App\Model\Entity\Product;
 
 class ProductMapper
 {
-
-    public function map( Product $product): ProductDataTransferObject
+    public function map(Product $product): ProductDataTransferObject
     {
         $productDataTransferObject = new ProductDataTransferObject();
         $productDataTransferObject->setProductId((int)$product->getId());
@@ -17,6 +16,5 @@ class ProductMapper
         $productDataTransferObject->setProductDescription($product->getDescription());
 
         return $productDataTransferObject;
-
     }
 }

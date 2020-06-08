@@ -36,10 +36,13 @@ class ProductController implements BackendController
 
     public function listAction()
     {
-        $this->view->addTlpParam('productlist', $this->productRepository->getProductList());
-        $this->view->addTemplate('productEditList.tpl');
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            switch ($_POST) {
+        $productDTO =  $this->productRepository->getProductList();
+        if ($this->checkForValidDTO($productDTO)) {
+            $this->view->addTlpParam('productlist', $productDTO);
+            $this->view->addTemplate('productEditList.tpl');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                switch ($_POST) {
             case isset($_POST['delete']):
                     $this->deleteProduct((int)$_POST['delete']);
                 break;
@@ -53,7 +56,10 @@ class ProductController implements BackendController
             case isset($_POST['logout']):
                 $this->logout();
             }
-            $this->redirectToPage(self::ROUTE, '&page=list');
+                $this->redirectToPage(self::ROUTE, '&page=list');
+            }
+        } else {
+            $this->displayPageDoesNotExists();
         }
     }
 
@@ -65,6 +71,7 @@ class ProductController implements BackendController
                 $this->deleteProduct((int)$_POST['delete']);
                 break;
             case !empty($_POST['save']):
+
                 $this->saveProduct(
                     (int)$_POST['save'],
                     (string)$_POST['newpagedescription'],
@@ -73,27 +80,54 @@ class ProductController implements BackendController
                 break;
             }
         }
-        $this->view->addTlpParam('product', $this->productRepository->getProduct((int)$_GET['id']));
-        $this->view->addTemplate('productEditPage.tpl');
+        $productDTO = $this->productRepository->getProduct((int)$_GET['id']);
+        if ($this->checkForValidDTO($productDTO)) {
+            $this->view->addTlpParam('product', $productDTO);
+            $this->view->addTemplate('productEditPage.tpl');
+        } else {
+            $this->displayPageDoesNotExists();
+        }
     }
 
     private function deleteProduct(int $id): void
     {
-        $this->productEntityManager->delete($this->productRepository->getProduct($id));
+        $productDTO =$this->productRepository->getProduct($id);
+        if ($this->checkForValidDTO($productDTO)) {
+            $this->productEntityManager->delete($productDTO);
+        }
     }
 
     private function saveProduct(int $id, string $description, string $name): void
     {
-        if (!empty($id) && $this->productRepository->hasProduct($id)) {
-            $dto = $this->productRepository->getProduct($id);
+        if (!empty($id)) {
+            $productDTO = $this->productRepository->getProduct($id);
         } else {
-            $dto = new ProductDataTransferObject();
+            $productDTO = new ProductDataTransferObject();
         }
-        $dto->setProductName($name);
-        $dto->setProductDescription($description);
-        $this->productEntityManager->save($dto);
+        if ($this->checkForValidDTO($productDTO)) {
+            $productDTO->setProductName($name);
+            $productDTO->setProductDescription($description);
+            $this->productEntityManager->save($productDTO);
+        }
     }
-
+    
+    private function checkForValidDTO($productDTO) :bool
+    {
+        if (is_array($productDTO)) {
+            foreach ($productDTO as $key) {
+                if (!($key instanceof ProductDataTransferObject)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return $productDTO instanceof ProductDataTransferObject;
+    }
+    private function displayPageDoesNotExists():void
+    {
+        $this->view->addTlpParam('error', '404 Page not found.');
+        $this->view->addTemplate('404.tpl');
+    }
     private function logout(): void
     {
         $this->userSession->logoutUser();
@@ -102,13 +136,12 @@ class ProductController implements BackendController
 
     private function redirectToPage(string $route, string $page): void
     {
-        // $host =$_SERVER['HTTP_HOST'];
+        //$host =$_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
         $extra = 'Index.php?cl='.$route;
         $extra2 = $page;
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");
-        header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
-
+        header("Location:http://localhost:8080$uri/$extra$extra2$extra3");
     }
 }

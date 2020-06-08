@@ -61,7 +61,6 @@ class DatabaseManager
 
 
         $this->orm = new ORM\ORM(new ORM\Factory($this->dbal));
-        //dump($this->orm->withSchema(new Schema($schema)));
         return  $this->orm->withSchema(new ORM\Schema($schema));
 
     }

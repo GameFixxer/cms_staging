@@ -4,7 +4,6 @@ use App\Model\ProductRepository;
 
 class ProductRepositoryTest extends \Codeception\Test\Unit
 {
-    private ProductRepository $productrepository;
 
     public function testGetProductList()
     {
