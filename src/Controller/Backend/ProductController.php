@@ -37,12 +37,9 @@ class ProductController implements BackendController
     public function listAction()
     {
         $productDTO =  $this->productRepository->getProductList();
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTlpParam('productlist', $productDTO);
-            $this->view->addTemplate('productEditList.tpl');
-
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                switch ($_POST) {
+        $this->choosePage($productDTO);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            switch ($_POST) {
             case isset($_POST['delete']):
                     $this->deleteProduct((int)$_POST['delete']);
                 break;
@@ -56,13 +53,19 @@ class ProductController implements BackendController
             case isset($_POST['logout']):
                 $this->logout();
             }
-                $this->redirectToPage(self::ROUTE, '&page=list');
-            }
+            $this->redirectToPage(self::ROUTE, '&page=list');
+        }
+    }
+
+    private function choosePage($productDTO)
+    {
+        if ($this->checkForValidDTO($productDTO)) {
+            $this->view->addTlpParam('productlist', $productDTO);
+            $this->view->addTemplate('productEditList.tpl');
         } else {
             $this->displayPageDoesNotExists();
         }
     }
-
     public function detailAction(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
