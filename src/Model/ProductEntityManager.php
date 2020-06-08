@@ -15,6 +15,7 @@ class ProductEntityManager
      * @var ProductRepository
      */
     private ProductRepository $productRepository;
+    private \Cycle\ORM\RepositoryInterface $ormProductRepository;
 
     private ORM $orm;
 
