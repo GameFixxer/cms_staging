@@ -95,7 +95,7 @@ class ProductController implements BackendController
     private function deleteProduct(int $id): void
     {
         $productDTO =$this->productRepository->getProduct($id);
-        if ($this->checkForValidDTO($productDTO)) {
+        if ($this->checkForValidDTO($productDTO)&& !null) {
             $this->productEntityManager->delete($productDTO);
         }
     }
@@ -107,7 +107,7 @@ class ProductController implements BackendController
         } else {
             $productDTO = new ProductDataTransferObject();
         }
-        if ($this->checkForValidDTO($productDTO)) {
+        if ($this->checkForValidDTO($productDTO)&& !null) {
             $productDTO->setProductName($name);
             $productDTO->setProductDescription($description);
             $this->productEntityManager->save($productDTO);
