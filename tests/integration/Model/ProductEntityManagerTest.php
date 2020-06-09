@@ -3,26 +3,32 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\ProductEntityManager;
-use App\Service\Container;
-use App\Service\DependencyProvider;
-
 /**
  * @group ProductEntityManagerTest
  */
 class ProductEntityManagerTest extends \Codeception\Test\Unit
 {
-    public function testFu()
+    public function testCreateProduct()
     {
-        $container = new Container();
-        $containerProvider = new DependencyProvider();
-        $containerProvider->providerDependency($container);
-        /** @var ProductEntityManager $productEntityManager */
-        $productEntityManager = $container->get(ProductEntityManager::class);
-        $productDTO = new ProductDataTransferObject();
-        $productDTO->setProductName('foo');
-        $productDTO->setProductDescription('fuuuu');
-        $productEntityManager->save($productDTO);
+        $helper = new Helper();
+
+        $createdProduct = $helper->createProduct('fo', 'fu');
+        $this->assertEquals($createdProduct, $helper->getProduct($createdProduct->getProductId()));
+
+        $createdProduct = $helper->updateProduct($createdProduct, 'fabulous', 'even more fabulous');
+        $this->assertEquals($createdProduct, $helper->getProduct($createdProduct->getProductId()));
+
+        $helper->deleteProduct($createdProduct);
+        $this->assertNotEquals($createdProduct, $helper->getProduct($createdProduct->getProductId()));
+
+
+    }
+
+    public function testUpdateProduct()
+    {
+    }
+
+    public function TestDeleteProduct()
+    {
     }
 }

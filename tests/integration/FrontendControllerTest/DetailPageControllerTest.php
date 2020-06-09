@@ -20,7 +20,6 @@ class DetailPageControllerTest extends \Codeception\Test\Unit
     {
         $_GET = [
                 'cl' => 'detail',
-                'page'=>'list',
                 'id'=>'5'
         ];
         $this->tester->arrange();

@@ -43,20 +43,15 @@ class UnitTester extends \Codeception\Actor
         $containerProvider->providerDependency($this->container);
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
-
     public function getProduct(int $id): ?ProductDataTransferObject
     {
-        $productRepository = $this->setUpContainer();
-        $productEntity = $productRepository->getProduct($id);
-        if ($productEntity instanceof Product) {
-            return $productRepository->getProduct($id);
-        }
-        return null;
-    }
+        $productRepository = $this->getProductRepository();
+        return $productRepository->getProduct($id);
 
+    }
     public function getProductList()
     {
-        $productRepository = $this->setUpContainer();
+        $productRepository = $this->getProductRepository();
         return $productRepository->getProductList();
     }
     public function getSmartyParams(string $paramName)
@@ -64,13 +59,11 @@ class UnitTester extends \Codeception\Actor
         //$this->view = $this->setUpSmartyAndView();
         return $this->view->getParam($paramName);
     }
-
     public function exchangeDtoToSmartyParam($value, string $name)
     {
         $this->makeSmarty($value, $name);
         return $this->getSmartyParams($name);
     }
-
     public function logIntoBackend(): void
     {
         $this->container = new Container();
@@ -79,12 +72,11 @@ class UnitTester extends \Codeception\Actor
         $tmp = $this->container->get(\App\Service\SessionUser::class);
         $tmp->setUser('test');
     }
-
     private function makeSmarty($value, string $name):void
     {
         $this->view->addTlpParam($name, $value);
     }
-    private function setUpContainer():\App\Model\ProductRepository
+    private function getProductRepository():\App\Model\ProductRepository
     {
         return $this->container->get(\App\Model\ProductRepository::class);
     }
