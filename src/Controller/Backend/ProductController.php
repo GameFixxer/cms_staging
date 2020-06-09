@@ -96,7 +96,7 @@ class ProductController implements BackendController
     {
         $productDTO =$this->productRepository->getProduct($id);
         if ($this->checkForValidDTO($productDTO)) {
-            $this->productEntityManager->delete($productDTO);
+            $this->productEntityManager->delete(/** @scrutinizer ignore-type */$productDTO);
         }
     }
 
@@ -110,7 +110,7 @@ class ProductController implements BackendController
         if ($this->checkForValidDTO($productDTO)) {
             $productDTO->setProductName($name);
             $productDTO->setProductDescription($description);
-            $this->productEntityManager->save($productDTO);
+            $this->productEntityManager->save(/** @scrutinizer ignore-type */$productDTO);
         }
     }
     
