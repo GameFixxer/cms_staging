@@ -14,12 +14,12 @@ class DependencyProvider
 {
     public function providerDependency(Container $container):void
     {
-        $container->setFactory(SQLConnector::class, function () {
+        $container->setFactory(SQLConnector::class, function() {
             $sqlConnector = new SQLConnector();
             $sqlConnector->connect();
             return $sqlConnector;
         });
-        $container->setFactory(DatabaseManager::class, function () {
+        $container->setFactory(DatabaseManager::class, function() {
             $databaseManager = new DatabaseManager();
             return $databaseManager->connect();
         });

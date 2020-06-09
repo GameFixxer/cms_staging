@@ -27,7 +27,7 @@ class ProductRepository
     public function getProductList(): array
     {
         $productList = [];
-        $productEntityList = (array) $this->ormProductRepository->select()->fetchALl();
+        $productEntityList = (array)$this->ormProductRepository->select()->fetchALl();
         /** @var  Product $product */
         foreach ($productEntityList as $product) {
             $productList[] = $this->productMapper->map($product);

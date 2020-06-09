@@ -23,7 +23,7 @@ class ListControll implements Controller
 
     public function action(): void
     {
-        $productDTO= $this->productRepository->getProductList();
+        $productDTO = $this->productRepository->getProductList();
         if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTemplate('index.tpl');
             $this->view->addTlpParam('productlist', $productDTO);

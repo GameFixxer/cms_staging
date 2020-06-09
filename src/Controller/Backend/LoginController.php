@@ -37,7 +37,7 @@ class LoginController implements BackendController
             if (!empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
-                $userDTO=$this->userRepository->getUser($username, $password);
+                $userDTO = $this->userRepository->getUser($username, $password);
                 if ($userDTO instanceof UserDataTransferObject) {
                     $this->userSession->setUser($username);
                     $this->redirectToDashboard();

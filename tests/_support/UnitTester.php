@@ -44,7 +44,7 @@ class UnitTester extends \Codeception\Actor
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
 
-    public function getProduct(int $id):?ProductDataTransferObject
+    public function getProduct(int $id): ?ProductDataTransferObject
     {
         $productRepository = $this->setUpContainer();
         $productEntity = $productRepository->getProduct($id);
