@@ -71,7 +71,6 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
         $this->productEntityManager->delete($this->productDto);
 
         $this->assertNull($this->container->getProductRepository()->getProduct($this->productDto->getProductId()));
-        ;
     }
 
     private function createDto(String $name, String $description)
