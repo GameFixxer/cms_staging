@@ -95,7 +95,7 @@ class ProductController implements BackendController
     private function deleteProduct(int $id): void
     {
         $productDTO =$this->productRepository->getProduct($id);
-        if ($this->checkForValidDTO($productDTO)&& !null) {
+        if ($this->checkForValidDTO($productDTO)) {
             $this->productEntityManager->delete($productDTO);
         }
     }
@@ -107,7 +107,7 @@ class ProductController implements BackendController
         } else {
             $productDTO = new ProductDataTransferObject();
         }
-        if ($this->checkForValidDTO($productDTO)&& !null) {
+        if ($this->checkForValidDTO($productDTO)) {
             $productDTO->setProductName($name);
             $productDTO->setProductDescription($description);
             $this->productEntityManager->save($productDTO);
@@ -117,14 +117,21 @@ class ProductController implements BackendController
     private function checkForValidDTO($productDTO) :bool
     {
         if (is_array($productDTO)) {
-            foreach ($productDTO as $key) {
-                if (!($key instanceof ProductDataTransferObject)) {
-                    return false;
-                }
-            }
-            return true;
+            return $this->checkArrayOfDTO($productDTO);
+        } elseif ($productDTO === null) {
+            return false;
+        } else {
+            return $productDTO instanceof ProductDataTransferObject;
         }
-        return $productDTO instanceof ProductDataTransferObject;
+    }
+    private function checkArrayOfDTO($productDTO):bool
+    {
+        foreach ($productDTO as $key) {
+            if (!($key instanceof ProductDataTransferObject) || $key === null) {
+                return false;
+            }
+        }
+        return true;
     }
     private function displayPageDoesNotExists():void
     {
