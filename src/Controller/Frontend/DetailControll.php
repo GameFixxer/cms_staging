@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller\Frontend;
 
 use App\Controller\Controller;
+use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductRepository;
 use App\Service\Container;
 use App\Service\View;
@@ -24,13 +25,17 @@ class DetailControll implements Controller
     public function action(): void
     {
         $pageId = (int)($_GET['id'] ?? '0');
-
-        if ($pageId === 0 || $this->productRepository->hasProduct($pageId) === false) {
+        $productDTO =$this->productRepository->getProduct($pageId);
+        if ($pageId === 0 || !($this->checkForValidDTO($productDTO))) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
         } else {
             $this->view->addTemplate('detail.tpl');
-            $this->view->addTlpParam('page', $this->productRepository->getProduct($pageId));
+            $this->view->addTlpParam('page', $productDTO);
         }
+    }
+    private function checkForValidDTO($productDTO) :bool
+    {
+        return $productDTO instanceof ProductDataTransferObject;
     }
 }

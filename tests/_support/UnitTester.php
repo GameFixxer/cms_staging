@@ -18,6 +18,7 @@
 */
 
 use App\Model\Dto\ProductDataTransferObject;
+use App\Model\Entity\Product;
 use App\Service\Container;
 use App\Service\DependencyProvider;
 use App\Service\View;
@@ -43,10 +44,14 @@ class UnitTester extends \Codeception\Actor
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
 
-    public function getProduct(int $id):ProductDataTransferObject
+    public function getProduct(int $id):?ProductDataTransferObject
     {
         $productRepository = $this->setUpContainer();
-        return $productRepository->getProduct($id);
+        $productEntity = $productRepository->getProduct($id);
+        if ($productEntity instanceof Product) {
+            return $productRepository->getProduct($id);
+        }
+        return null;
     }
 
     public function getProductList()
@@ -81,8 +86,6 @@ class UnitTester extends \Codeception\Actor
     }
     private function setUpContainer():\App\Model\ProductRepository
     {
-
         return $this->container->get(\App\Model\ProductRepository::class);
     }
-
 }
