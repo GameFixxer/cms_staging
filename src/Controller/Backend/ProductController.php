@@ -38,7 +38,8 @@ class ProductController implements BackendController
     public function listAction()
     {
         $productDTO = $this->productRepository->getProductList();
-        $this->choosePage($productDTO);
+        $this->view->addTlpParam('productlist', $productDTO);
+        $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
                 case isset($_POST['delete']):
@@ -56,17 +57,9 @@ class ProductController implements BackendController
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
+
     }
 
-    private function choosePage($productDTO)
-    {
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTlpParam('productlist', $productDTO);
-            $this->view->addTemplate('productEditList.tpl');
-        } else {
-            $this->displayPageDoesNotExists();
-        }
-    }
 
     public function detailAction(): void
     {
