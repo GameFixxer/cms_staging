@@ -13,7 +13,6 @@ use Cycle\ORM\Transaction;
 
 class ProductRepositoryTest extends \Codeception\Test\Unit
 {
-    private ProductDataTransferObject $productDto;
     private ContainerHelper $container;
     private Transaction $transaction;
     private \Cycle\ORM\RepositoryInterface $ormProductRepository;
