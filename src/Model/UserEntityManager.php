@@ -41,8 +41,8 @@ class UserEntityManager
         if (!$entity instanceof User) {
             $entity = new User();
         }
-        $entity->setName($user->getUserName());
-        $entity->setDescription($user->getUserPassword());
+        $entity->setUsername($user->getUserName());
+        $entity->setPassword($user->getUserPassword());
 
         $transaction->persist($entity);
         $transaction->run();
