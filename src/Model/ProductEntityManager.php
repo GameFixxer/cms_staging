@@ -39,10 +39,10 @@ class ProductEntityManager
     public function save(ProductDataTransferObject $product): ProductDataTransferObject
     {
         $transaction = new Transaction($this->orm);
-        $entity  = $this->ormProductRepository->findByPK($product->getProductId());
+        $entity = $this->ormProductRepository->findByPK($product->getProductId());
 
         if (!$entity instanceof Product) {
-            $entity  = new Product();
+            $entity = new Product();
         }
         $entity->setName($product->getProductName());
         $entity->setDescription($product->getProductDescription());

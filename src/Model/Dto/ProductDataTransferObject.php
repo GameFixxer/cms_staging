@@ -6,9 +6,9 @@ namespace App\Model\Dto;
 
 class ProductDataTransferObject
 {
-    private string $name ='';
+    private string $name = '';
     private int $id = 0;
-    private string $desc ='';
+    private string $desc = '';
 
 
     public function setProductName(string $name): void

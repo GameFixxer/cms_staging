@@ -46,17 +46,17 @@ class DatabaseManager
         $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 
         $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($this->dbal), [
-            new CycleSchema\Generator\ResetTables(),       // re-declared table schemas (remove columns)
-            new Annotated\Embeddings($classLocator),  // register embeddable entities
-            new Annotated\Entities($classLocator),    // register annotated entities
-            new Annotated\MergeColumns(),             // add @Table column declarations
+            new CycleSchema\Generator\ResetTables(), // re-declared table schemas (remove columns)
+            new Annotated\Embeddings($classLocator), // register embeddable entities
+            new Annotated\Entities($classLocator), // register annotated entities
+            new Annotated\MergeColumns(), // add @Table column declarations
             new CycleSchema\Generator\GenerateRelations(), // generate entity relations
-            new CycleSchema\Generator\ValidateEntities(),  // make sure all entity schemas are correct
-            new CycleSchema\Generator\RenderTables(),      // declare table schemas
-            new CycleSchema\Generator\RenderRelations(),   // declare relation keys and indexes
-            new Annotated\MergeIndexes(),             // add @Table column declarations
-            new CycleSchema\Generator\SyncTables(),        // sync table changes to database
-            new CycleSchema\Generator\GenerateTypecast(),  // typecast non string columns
+            new CycleSchema\Generator\ValidateEntities(), // make sure all entity schemas are correct
+            new CycleSchema\Generator\RenderTables(), // declare table schemas
+            new CycleSchema\Generator\RenderRelations(), // declare relation keys and indexes
+            new Annotated\MergeIndexes(), // add @Table column declarations
+            new CycleSchema\Generator\SyncTables(), // sync table changes to database
+            new CycleSchema\Generator\GenerateTypecast(), // typecast non string columns
         ]);
 
 
