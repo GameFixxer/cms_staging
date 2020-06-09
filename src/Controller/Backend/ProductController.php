@@ -36,7 +36,7 @@ class ProductController implements BackendController
 
     public function listAction()
     {
-        $productDTO =  $this->productRepository->getProductList();
+        $productDTO = $this->productRepository->getProductList();
         $this->choosePage($productDTO);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
@@ -94,7 +94,7 @@ class ProductController implements BackendController
 
     private function deleteProduct(int $id): void
     {
-        $productDTO =$this->productRepository->getProduct($id);
+        $productDTO = $this->productRepository->getProduct($id);
         if ($this->checkForValidDTO($productDTO)) {
             $this->productEntityManager->delete(/** @scrutinizer ignore-type */$productDTO);
         }
