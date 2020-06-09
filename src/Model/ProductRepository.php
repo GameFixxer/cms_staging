@@ -8,7 +8,6 @@ use App\Model\Entity\Product;
 use App\Model\Mapper\ProductMapper;
 use App\Model\Dto\ProductDataTransferObject;
 use Cycle\ORM\ORM;
-use phpDocumentor\Reflection\Types\This;
 
 class ProductRepository
 {

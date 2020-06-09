@@ -13,16 +13,17 @@ use App\Model\Entity\Product;
 /**
  * @group ProductEntityManagerTest
  */
+
 class ProductEntityManagerTest extends \Codeception\Test\Unit
 {
     private ProductDataTransferObject $productDTO;
-    private ContainerHelper $helper;
+    private ContainerHelper $container;
     private ProductEntityManager $productEntityManager;
 
     public function _before()
     {
-        $this->helper = new ContainerHelper();
-        $this->productEntityManager = $this->helper->getProductEntityManager();
+        $this->container = new ContainerHelper();
+        $this->productEntityManager = $this->container->getProductEntityManager();
         $this->createDto('fu', 'ba');
     }
 
@@ -40,7 +41,11 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     {
         $createdProduct = $this->productEntityManager->save($this->productDTO);
 
-        $this->assertEquals($createdProduct, $this->helper->getProductRepository()->getProduct($this->productDTO->getProductId()));
+        $productFromRepository =  $this->container->getProductRepository()->getProduct($this->productDTO->getProductId());
+
+        $this->assertSame($this->productDTO->getProductName(), $productFromRepository->getProductName());
+        $this->assertSame($this->productDTO->getProductDescription(), $productFromRepository->getProductDescription());
+        $this->assertSame($this->productDTO->getProductId(), $productFromRepository->getProductId());
 
         return $createdProduct;
     }
@@ -51,10 +56,12 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->productDTO->setProductName('fabulous');
         $this->productDTO->setProductDescription('even more fabulous');
+        $this->productDTO = $this->productEntityManager->save($this->productDTO);
+        $productFromRepository =  $this->container->getProductRepository()->getProduct($this->productDTO->getProductId());
 
-        $createdProduct = $this->productEntityManager->save($this->productDTO);
-
-        $this->assertEquals($createdProduct, $this->helper->getProductRepository()->getProduct($this->productDTO->getProductId()));
+        $this->assertSame($this->productDTO->getProductName(), $productFromRepository->getProductName());
+        $this->assertSame($this->productDTO->getProductDescription(), $productFromRepository->getProductDescription());
+        $this->assertSame($this->productDTO->getProductId(), $productFromRepository->getProductId());
     }
 
     public function TestDeleteProduct()
@@ -63,7 +70,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->productEntityManager->delete($this->productDTO);
 
-        $this->assertNotEquals($this->productDTO, $this->helper->getProductRepository()->getProduct($this->productDTO->getProductId()));
+        $this->assertNull($this->container->getProductRepository()->getProduct($this->productDTO->getProductId()));
         ;
     }
 

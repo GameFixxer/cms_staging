@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
@@ -40,18 +41,18 @@ class ProductController implements BackendController
         $this->choosePage($productDTO);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case isset($_POST['delete']):
+                case isset($_POST['delete']):
                     $this->deleteProduct((int)$_POST['delete']);
-                break;
-            case isset($_POST['save']):
-                $this->saveProduct(
-                    (int)$_POST['save'],
-                    (string)$_POST['newpagedescription'],
-                    (string)$_POST['newpagename']
-                );
-                break;
-            case isset($_POST['logout']):
-                $this->logout();
+                    break;
+                case isset($_POST['save']):
+                    $this->saveProduct(
+                        (int)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
+                    );
+                    break;
+                case isset($_POST['logout']):
+                    $this->logout();
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -66,21 +67,22 @@ class ProductController implements BackendController
             $this->displayPageDoesNotExists();
         }
     }
+
     public function detailAction(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case !empty($_POST['delete']):
-                $this->deleteProduct((int)$_POST['delete']);
-                break;
-            case !empty($_POST['save']):
+                case !empty($_POST['delete']):
+                    $this->deleteProduct((int)$_POST['delete']);
+                    break;
+                case !empty($_POST['save']):
 
-                $this->saveProduct(
-                    (int)$_POST['save'],
-                    (string)$_POST['newpagedescription'],
-                    (string)$_POST['newpagename']
-                );
-                break;
+                    $this->saveProduct(
+                        (int)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
+                    );
+                    break;
             }
         }
         $productDTO = $this->productRepository->getProduct((int)$_GET['id']);
@@ -95,26 +97,23 @@ class ProductController implements BackendController
     private function deleteProduct(int $id): void
     {
         $productDTO = $this->productRepository->getProduct($id);
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->productEntityManager->delete(/** @scrutinizer ignore-type */$productDTO);
+        if ($productDTO instanceof ProductDataTransferObject) {
+            $this->productEntityManager->delete($productDTO);
         }
     }
 
     private function saveProduct(int $id, string $description, string $name): void
     {
-        if (!empty($id)) {
-            $productDTO = $this->productRepository->getProduct($id);
-        } else {
+        $productDTO = $this->productRepository->getProduct($id);
+        if (!$productDTO instanceof ProductDataTransferObject) {
             $productDTO = new ProductDataTransferObject();
         }
-        if ($this->checkForValidDTO($productDTO)) {
-            $productDTO->setProductName($name);
-            $productDTO->setProductDescription($description);
-            $this->productEntityManager->save(/** @scrutinizer ignore-type */$productDTO);
-        }
+        $productDTO->setProductName($name);
+        $productDTO->setProductDescription($description);
+        $this->productEntityManager->save($productDTO);
     }
-    
-    private function checkForValidDTO($productDTO) :bool
+
+    private function checkForValidDTO($productDTO): bool
     {
         if (is_array($productDTO)) {
             return $this->checkArrayOfDTO($productDTO);
@@ -124,7 +123,8 @@ class ProductController implements BackendController
             return $productDTO instanceof ProductDataTransferObject;
         }
     }
-    private function checkArrayOfDTO($productDTO):bool
+
+    private function checkArrayOfDTO($productDTO): bool
     {
         foreach ($productDTO as $key) {
             if (!($key instanceof ProductDataTransferObject) || $key === null) {
@@ -133,11 +133,13 @@ class ProductController implements BackendController
         }
         return true;
     }
-    private function displayPageDoesNotExists():void
+
+    private function displayPageDoesNotExists(): void
     {
         $this->view->addTlpParam('error', '404 Page not found.');
         $this->view->addTemplate('404.tpl');
     }
+
     private function logout(): void
     {
         $this->userSession->logoutUser();
@@ -148,7 +150,7 @@ class ProductController implements BackendController
     {
         //$host =$_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.$route;
+        $extra = 'Index.php?cl=' . $route;
         $extra2 = $page;
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");

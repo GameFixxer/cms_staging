@@ -3,14 +3,8 @@ namespace App\Service;
 
 use Spiral\Database;
 use Cycle\ORM;
-use Cycle\ORM\Schema;
-use Cycle\ORM\Mapper\Mapper;
-use App\Model\Entity\User;
-use App\Model\Entity\Product;
 use Cycle\Annotated;
-use Spiral\Tokenizer\ClassLocator;
 use Cycle\Schema as CycleSchema;
-use Spiral\Tokenizer;
 
 class DatabaseManager
 {

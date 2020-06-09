@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Model\Entity\User;
-use App\Service\SQLConnector;
 use App\Model\Mapper\UserMapper;
 use App\Model\Dto\UserDataTransferObject;
 use Cycle\ORM\ORM;
