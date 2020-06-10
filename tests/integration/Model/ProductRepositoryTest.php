@@ -87,7 +87,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $this->entity = new Product();
         $this->entity->setName('fucking neighour');
-        $this->entity->setDescription('ich leg dir eine vardammte Rohrbombe in den Garten, wenn du nicht endlich ruhig bist!!!!');
+        $this->entity->setDescription('a very noisy neighbour');
 
         return $this->entity;
     }
