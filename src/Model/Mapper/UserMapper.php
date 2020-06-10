@@ -6,7 +6,7 @@ namespace App\Model\Mapper;
 use App\Model\Dto\UserDataTransferObject;
 use App\Model\Entity\User;
 
-class UserMapper
+class UserMapper implements UserMapperInterface
 {
 
     public function map(User $user): UserDataTransferObject

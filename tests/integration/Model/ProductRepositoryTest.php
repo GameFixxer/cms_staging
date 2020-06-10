@@ -6,6 +6,8 @@ namespace App\Tests\integration\Model;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Entity\Product;
 use App\Model\Entity\TestEntity;
+use App\Model\Mapper\ProductMapper;
+use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\ORM;
@@ -76,11 +78,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $productRepository = $this->container->getProductRepository();
-
-        $productRepository->setOrmProductRepositoryForTesting($orm, TestEntity::class);
-        $this->assertEmpty($productRepository->getProductList());
-
+        $mock = $this->construct(ProductRepository::class, [$productMapper = new ProductMapper(),$orm->getRepository(TestEntity::class)]);
+        $this->assertEmpty($mock->getProductList());
     }
 
     private function createProductEntity() :Product

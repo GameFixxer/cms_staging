@@ -28,7 +28,7 @@ class Container
 
     public function setFactory($id, callable $fnc): void
     {
-        $object = $fnc();
+        $object = $fnc($this);
         $this->set($id, $object);
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Tests\integration\Helper;
 
 use App\Model\ProductEntityManager;
+use App\Model\UserEntityManager;
 use App\Service\Container;
 use App\Service\DependencyProvider;
 
@@ -31,5 +32,13 @@ class ContainerHelper
     public function getProductEntityManager():\App\Model\ProductEntityManager
     {
         return $this->container->get(ProductEntityManager::class);
+    }
+    public function getUserEntityManager():\App\Model\UserEntityManager
+    {
+        return $this->container->get(UserEntityManager::class);
+    }
+    public function getUserRepository():\App\Model\UserRepository
+    {
+        return $this->container->get(\App\Model\UserRepository::class);
     }
 }

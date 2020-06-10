@@ -49,8 +49,4 @@ class ProductRepository
         }
         return null;
     }
-    public function setOrmProductRepositoryForTesting($orm, $entity)
-    {
-        $this->ormProductRepository = $orm->getRepository($entity);
-    }
 }

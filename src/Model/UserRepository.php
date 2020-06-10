@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Model\Entity\User;
-use App\Model\Mapper\UserMapper;
 use App\Model\Dto\UserDataTransferObject;
+use App\Model\Mapper\UserMapperInterface;
 use Cycle\ORM\ORM;
 
 class UserRepository
 {
-    private UserMapper $userMapper;
+    private UserMapperInterface $userMapper;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
 
-    public function __construct(ORM $orm)
+    public function __construct(UserMapperInterface $userMapper, \Cycle\ORM\RepositoryInterface $ormUserRepository)
     {
-        $this->userMapper = new UserMapper();
-        $this->ormUserRepository = $orm->getRepository(User::class);
+        $this->userMapper = $userMapper;
+        $this->ormUserRepository = $ormUserRepository;
     }
 
     /**

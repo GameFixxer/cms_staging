@@ -11,7 +11,7 @@ use Cycle\Annotated\Annotation\Column;
  *     table = "tests"
  * )
  */
-class TestEntity
+class TestEntity implements EntityInterface
 {
     /**
      * @Column(type="primary")
