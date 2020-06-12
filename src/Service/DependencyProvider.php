@@ -32,11 +32,13 @@ class DependencyProvider
      */
     private function persistenceDependency(Container $container): void
     {
+        //Service
         $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
         });
+        $container->set(PasswordManager::class, new PasswordManager());
 
         // Mapper
         $container->set(ProductMapper::class, new ProductMapper());
@@ -65,5 +67,7 @@ class DependencyProvider
             ProductEntityManager::class,
             new ProductEntityManager($container->get(DatabaseManager::class), $container->get(ProductRepository::class))
         );
+
+
     }
 }

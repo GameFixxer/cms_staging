@@ -36,11 +36,10 @@ class UserRepository
         return $userList;
     }
 
-    public function getUser(string $username, string $password): ?UserDataTransferObject
+    public function getUser(string $username): ?UserDataTransferObject
     {
         $userEntity = $this->ormUserRepository->findOne([
-            'username' => $username,
-            'password' => $password
+            'username' => $username
         ]);
         if ($userEntity instanceof User) {
             return $this->userMapper->map($userEntity);
