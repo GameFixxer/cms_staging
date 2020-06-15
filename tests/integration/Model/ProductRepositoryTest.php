@@ -79,7 +79,6 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
         $mock = $this->construct(ProductRepository::class, [$productMapper = new ProductMapper(), $orm->getRepository(TestEntity::class)]);
-        codecept_debug($mock);
         $this->assertEmpty($mock->getProductList());
     }
 

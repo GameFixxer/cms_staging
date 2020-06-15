@@ -15,6 +15,7 @@ class UserMapper implements UserMapperInterface
         $userDataTransferObject->setUserId((int)$user->getId());
         $userDataTransferObject->setUsername($user->getUsername());
         $userDataTransferObject->setUserPassword($user->getPassword());
+        $userDataTransferObject->setUserRole($user->getRole());
 
         return $userDataTransferObject;
 

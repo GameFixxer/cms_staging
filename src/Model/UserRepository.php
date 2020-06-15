@@ -27,10 +27,10 @@ class UserRepository
     {
         $userList = [];
 
-        $userEntityList = $this->ormUserRepository->select()->fetchALl();
-
-        foreach ($userEntityList as $product) {
-            $userList[] = $this->userMapper->map($product);
+        $userEntityList = (array) $this->ormUserRepository->select()->fetchALl();
+        /** @var  User $user */
+        foreach ($userEntityList as $user) {
+            $userList[] = $this->userMapper->map($user);
         }
 
         return $userList;

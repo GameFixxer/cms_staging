@@ -21,12 +21,13 @@ class LoginPageTest extends \Codeception\Test\Unit
     // tests
     public function testLoginPage(): void
     {
+        $this->tester->arrange();
         $_SERVER['REQUEST_METHOD'] = '';
         $_GET = [
                 'cl' => 'login',
                 'admin'=>'true'
         ];
-        $this->tester->arrange();
+        $this->tester->setUpBootstrap();
         $smartyParams = (string)$this->tester->getSmartyParams('login');
         $this->assertEquals($smartyParams, 'LOGIN AREA');
     }

@@ -22,13 +22,15 @@ class ProductControllerBackendListTest extends \Codeception\Test\Unit
     // tests
     public function testLoginIntoBackend(): void
     {
+        $this->tester->arrange();
+        $this->tester->setSession();
         $_SERVER['REQUEST_METHOD'] = '';
         $_GET = [
                 'cl' => 'product',
                 'page' => 'list',
                 'admin' => 'true'
         ];
-        $this->tester->arrange();
+        $this->tester->setUpBootstrap();
         $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam($this->tester->getProductList(), 'productlist');

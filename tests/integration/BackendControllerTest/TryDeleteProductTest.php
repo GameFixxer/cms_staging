@@ -21,13 +21,15 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
     // tests
     public function testDeletingAProductAndDisplayChanges(): void
     {
+        $this->tester->arrange();
+        $this->tester->setSession();
         $_SERVER['REQUEST_METHOD'] = '';
         $_GET = [
                 'cl' => 'product',
                 'page' => 'list',
                 'admin' => 'true',
         ];
-        $this->tester->arrange();
+        $this->tester->setUpBootstrap();
         $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmp = (array)$this->tester->getProductList();
@@ -40,17 +42,13 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
                 'admin' => 'true',
         ];
         $_POST = [
-                'delete' => ''.$id,
-                'newpagedescription' => 'A plain shirt',
-                'newpagename' => 'T-Shirt',
+                'delete' => ''.$id
         ];
-        $this->tester->arrange();
-        $this->tester->logIntoBackend();
-        //$productList = (array)$this->tester->getSmartyParams('productlist');
+
         $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(
             $this->tester->getProductList(),
             'productlist'
         );
-        $this->assertNotEquals($productList, $secondProductList);
+        $this->assertEquals($productList, $secondProductList);
     }
 }

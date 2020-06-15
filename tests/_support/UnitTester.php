@@ -22,6 +22,7 @@ use App\Model\Entity\Product;
 use App\Service\Container;
 use App\Service\DependencyProvider;
 use App\Service\View;
+use App\Service\SessionUser;
 
 class UnitTester extends \Codeception\Actor
 {
@@ -41,13 +42,15 @@ class UnitTester extends \Codeception\Actor
         $this->container = new Container();
         $containerProvider = new DependencyProvider();
         $containerProvider->providerDependency($this->container);
+    }
+    public function setUpBootstrap()
+    {
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
     public function getProduct(int $id): ?ProductDataTransferObject
     {
         $productRepository = $this->getProductRepository();
         return $productRepository->getProduct($id);
-
     }
     public function getProductList()
     {
@@ -64,13 +67,16 @@ class UnitTester extends \Codeception\Actor
         $this->makeSmarty($value, $name);
         return $this->getSmartyParams($name);
     }
+    public function setSession()
+    {
+        $tmp = $this->container->get(SessionUser::class);
+        $tmp->setUser('nina');
+        $tmp->setUserRole('root');
+    }
     public function logIntoBackend(): void
     {
-        $this->container = new Container();
         $containerProvider = new DependencyProvider();
         $containerProvider->providerDependency($this->container);
-        $tmp = $this->container->get(\App\Service\SessionUser::class);
-        $tmp->setUser('test');
     }
     private function makeSmarty($value, string $name):void
     {

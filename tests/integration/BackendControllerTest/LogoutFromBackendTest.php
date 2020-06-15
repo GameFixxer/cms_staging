@@ -23,18 +23,25 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
     // tests
     public function testLoginIntoBackend(): void
     {
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_GET = [
-                'cl' => 'product',
-                'page' => 'list',
-                'admin' => 'true'
-        ];
-        $_POST = [
-                'logout'=>''
-                ];
         $this->tester->arrange();
-        if (isset($_SESSION['loggedin'])) {
-            $this->assertEquals((string)$_SESSION['loggedin'], '0');
-        }
+        $this->tester->setSession();
+
+        $_SERVER['REQUEST_METHOD'] = '';
+
+        $_GET = [
+            'cl' => 'dashboard',
+            'page' => 'list',
+            'admin' => 'true',
+        ];
+
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_POST = ["logout"=>''];
+
+        $this->tester->setUpBootstrap();
+
+
+        codecept_debug($_POST);
+        $this->assertFalse((bool)$_SESSION['loggedin']);
+
     }
 }

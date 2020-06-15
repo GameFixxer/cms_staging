@@ -50,6 +50,7 @@
             </form>
         </div>
         <div class="text-center">
+            <a href="/Index.php?cl=dashboard&admin=true" class="list-group-item list-group-item-action">Return to Dashboard</a>
             <form id="logout" name="logout" action="" method="post">
                 <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
                     Logout
