@@ -41,39 +41,45 @@ class LoginController implements BackendController
 
     public function action(): void
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             if (isset($_POST['login'])&& !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
                 $userDTO = $this->userRepository->getUser($username);
-                if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
+                if ($this->checkUser()) {
                     $this->userSession->setUser($username);
                     $this->redirectToDashboard();
                 }
 
 
                 $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
-
             }
             // no break
             elseif (isset($_POST['createUser'],$_POST['newUsername'],$_POST['newUserPassword'])) {
                 $username = (string)trim($_POST['newUsername']);
                 $password = (string)trim($_POST['newUserPassword']);
-                if (!$this->createUser($username, $password)) {
-                    $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
-                } else {
-                    $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
-                }
+                $this->createUser($username, $password);
             }
         }
 
 
         $this->view->addTemplate('login.tpl');
-
     }
-
+    private function createNewUser(String $username, String $password):void
+    {
+        if (!$this->createUser($username, $password)) {
+            $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
+        } else {
+            $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
+        }
+    }
+    private function checkUser(UserDataTransferObject $userDTO, String $password):bool
+    {
+        if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
+            return true;
+        }
+        return false;
+    }
     private function createUser(String $username, String $password):bool
     {
         if ($userDTO = $this->userRepository->getUser($username) instanceof UserDataTransferObject) {
