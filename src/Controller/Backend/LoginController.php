@@ -42,37 +42,31 @@ class LoginController implements BackendController
     public function action(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['login'])&& !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
+            if (isset($_POST['login']) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
                 $userDTO = $this->userRepository->getUser($username);
-                if ($this->checkUser($userDTO, $password)) {
-                    $this->userSession->setUser($username);
-                    $this->redirectToDashboard();
-                }
-
-
-                $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
-            } elseif (isset($_POST['createUser'],$_POST['newUsername'],$_POST['newUserPassword'])) {
+                $this->loginUser($userDTO, $password, $username);
+            }
+            if (isset($_POST['createUser'], $_POST['newUsername'], $_POST['newUserPassword'])) {
                 $username = (string)trim($_POST['newUsername']);
                 $password = (string)trim($_POST['newUserPassword']);
                 $this->createUser($username, $password);
             }
         }
-
-
         $this->view->addTemplate('login.tpl');
     }
 
-    private function checkUser(UserDataTransferObject $userDTO, String $password):bool
+    private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
-            return true;
+            $this->userSession->setUser($username);
+            $this->redirectToDashboard();
         }
-        return false;
+        $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
     }
-    
-    private function createUser(String $username, String $password):void
+
+    private function createUser(string $username, string $password): void
     {
         if ($userDTO = $this->userRepository->getUser($username) instanceof UserDataTransferObject) {
             $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
@@ -84,6 +78,7 @@ class LoginController implements BackendController
             $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
         }
     }
+
     private function redirectToDashboard(): void
     {
         //$host = $_SERVER['HTTP_HOST'];
