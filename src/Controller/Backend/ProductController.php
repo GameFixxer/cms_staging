@@ -42,18 +42,18 @@ class ProductController implements BackendController
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case isset($_POST['delete']):
-                    $this->deleteProduct((int)$_POST['delete']);
-                    break;
-                case isset($_POST['save']):
-                    $this->saveProduct(
-                        (int)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
-                case isset($_POST['logout']):
-                    $this->logout();
+            case isset($_POST['delete']):
+                $this->deleteProduct((int)$_POST['delete']);
+                break;
+            case isset($_POST['save']):
+                $this->saveProduct(
+                    (int)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
+            case isset($_POST['logout']):
+                $this->logout();
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -65,17 +65,17 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteProduct((int)$_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
+            case !empty($_POST['delete']):
+                $this->deleteProduct((int)$_POST['delete']);
+                break;
+            case !empty($_POST['save']):
 
-                    $this->saveProduct(
-                        (int)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
+                $this->saveProduct(
+                    (int)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
             }
         }
         $productDTO = $this->productRepository->getProduct((int)$_GET['id']);
@@ -143,7 +143,7 @@ class ProductController implements BackendController
     {
         //$host =$_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl=' . $route;
+        $extra = 'Index.php?cl='.$route;
         $extra2 = $page;
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");

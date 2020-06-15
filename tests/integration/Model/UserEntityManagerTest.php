@@ -38,7 +38,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
     {
         $createdProduct = $this->userEntityManager->save($this->userDto);
 
-        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername());
+        $userFromRepository = $this->container->getUserRepository()->getUser($this->userDto->getUsername());
 
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getUserPassword(), $userFromRepository->getUserPassword());
@@ -54,7 +54,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->userDto->setUsername('fabulous');
         $this->userDto->setUserPassword('even more fabulous');
         $this->userDto = $this->userEntityManager->save($this->userDto);
-        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername());
+        $userFromRepository = $this->container->getUserRepository()->getUser($this->userDto->getUsername());
 
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getUserPassword(), $userFromRepository->getUserPassword());
