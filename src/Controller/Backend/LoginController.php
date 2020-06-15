@@ -46,16 +46,14 @@ class LoginController implements BackendController
                 $username = (string)trim($_POST['username']);
                 $password = (string)trim($_POST['password']);
                 $userDTO = $this->userRepository->getUser($username);
-                if ($this->checkUser()) {
+                if ($this->checkUser($userDTO, $password)) {
                     $this->userSession->setUser($username);
                     $this->redirectToDashboard();
                 }
 
 
                 $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
-            }
-            // no break
-            elseif (isset($_POST['createUser'],$_POST['newUsername'],$_POST['newUserPassword'])) {
+            } elseif (isset($_POST['createUser'],$_POST['newUsername'],$_POST['newUserPassword'])) {
                 $username = (string)trim($_POST['newUsername']);
                 $password = (string)trim($_POST['newUserPassword']);
                 $this->createUser($username, $password);
@@ -65,14 +63,7 @@ class LoginController implements BackendController
 
         $this->view->addTemplate('login.tpl');
     }
-    private function createNewUser(String $username, String $password):void
-    {
-        if (!$this->createUser($username, $password)) {
-            $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
-        } else {
-            $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
-        }
-    }
+
     private function checkUser(UserDataTransferObject $userDTO, String $password):bool
     {
         if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
@@ -80,17 +71,18 @@ class LoginController implements BackendController
         }
         return false;
     }
-    private function createUser(String $username, String $password):bool
+    
+    private function createUser(String $username, String $password):void
     {
         if ($userDTO = $this->userRepository->getUser($username) instanceof UserDataTransferObject) {
-            return false;
+            $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
+        } else {
+            $userDTO = new UserDataTransferObject();
+            $userDTO->setUsername($username);
+            $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
+            $this->userEntityManager->save($userDTO);
+            $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
         }
-        $userDTO = new UserDataTransferObject();
-        $userDTO->setUsername($username);
-        $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
-        $this->userEntityManager->save($userDTO);
-
-        return true;
     }
     private function redirectToDashboard(): void
     {
