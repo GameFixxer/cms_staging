@@ -28,7 +28,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $orm = $databaseManager->connect();
 
-        $this->ormProductRepository =  $orm->getRepository(Product::class);
+        $this->ormProductRepository = $orm->getRepository(Product::class);
 
         $this->transaction = new Transaction($orm);
         $this->transaction->persist($this->createProductEntity());
@@ -78,7 +78,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $mock = $this->construct(ProductRepository::class, [$productMapper = new ProductMapper(),$orm->getRepository(TestEntity::class)]);
+        $mock = $this->construct(ProductRepository::class, [$productMapper = new ProductMapper(), $orm->getRepository(TestEntity::class)]);
         codecept_debug($mock);
         $this->assertEmpty($mock->getProductList());
     }

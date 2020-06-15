@@ -45,7 +45,7 @@ class User implements EntityInterface
 
     public function setRole(String $role):void
     {
-        $this->role=$role;
+        $this->role = $role;
     }
 
     public function getId(): int
