@@ -42,10 +42,12 @@ class User implements EntityInterface
     {
         return $this->role;
     }
-    public function setRole(String $role)
+
+    public function setRole(String $role):void
     {
         $this->role=$role;
     }
+
     public function getId(): int
     {
         return $this->id;

@@ -21,7 +21,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
     {
         $this->container = new ContainerHelper();
         $this->userEntityManager = $this->container->getUserEntityManager();
-        $this->createDto('fu', 'ba');
+        $this->createDto('fu', 'ba', 'user');
     }
 
     public function _after()
@@ -38,7 +38,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
     {
         $createdProduct = $this->userEntityManager->save($this->userDto);
 
-        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername(), $this->userDto->getUserPassword());
+        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername());
 
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getUserPassword(), $userFromRepository->getUserPassword());
@@ -54,7 +54,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->userDto->setUsername('fabulous');
         $this->userDto->setUserPassword('even more fabulous');
         $this->userDto = $this->userEntityManager->save($this->userDto);
-        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername(), $this->userDto->getUserPassword());
+        $userFromRepository =  $this->container->getUserRepository()->getUser($this->userDto->getUsername());
 
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getUserPassword(), $userFromRepository->getUserPassword());
@@ -67,14 +67,15 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
 
         $this->userEntityManager->delete($this->userDto);
 
-        $this->assertNull($this->container->getUserRepository()->getUser($this->userDto->getUsername(), $this->userDto->getUserPassword()));
+        $this->assertNull($this->container->getUserRepository()->getUser($this->userDto->getUsername()));
         $this->userDto = $this->testCreateUser();
     }
 
-    private function createDto(String $username, String $password)
+    private function createDto(String $username, String $password, String $role)
     {
         $this->userDto = new UserDataTransferObject();
         $this->userDto->setUsername($username);
         $this->userDto->setUserPassword($password);
+        $this->userDto->setUserRole($role);
     }
 }

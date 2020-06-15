@@ -43,6 +43,7 @@ class UserEntityManager
         }
         $entity->setUsername($user->getUserName());
         $entity->setPassword($user->getUserPassword());
+        $entity->setRole($user->getUserRole());
 
         $transaction->persist($entity);
         $transaction->run();

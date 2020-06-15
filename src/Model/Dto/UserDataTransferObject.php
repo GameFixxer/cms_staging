@@ -9,6 +9,7 @@ class UserDataTransferObject
     private string $username = '';
     private int $id = 0;
     private string $password = '';
+    private string $role = '';
 
 
     public function setUsername(string $name): void
@@ -27,6 +28,16 @@ class UserDataTransferObject
         $this->password = $password;
     }
 
+    public function setUserRole(string $role): void
+    {
+        $this->role = $role;
+    }
+
+    public function getUserRole(): string
+    {
+        return $this->role;
+    }
+
     public function getUserId(): int
     {
         return $this->id;
@@ -42,4 +53,3 @@ class UserDataTransferObject
         return $this->password;
     }
 }
-

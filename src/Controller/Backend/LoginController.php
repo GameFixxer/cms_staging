@@ -41,9 +41,6 @@ class LoginController implements BackendController
 
     public function action(): void
     {
-        //$this->view->addTlpParam('loginMessage', '');
-
-
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -53,7 +50,7 @@ class LoginController implements BackendController
                 $userDTO = $this->userRepository->getUser($username);
                 if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
                     $this->userSession->setUser($username);
-                    //$this->redirectToDashboard();
+                    $this->redirectToDashboard();
                 }
 
 
