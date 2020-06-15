@@ -57,7 +57,7 @@ class LoginController implements BackendController
         $this->view->addTemplate('login.tpl');
     }
 
-    private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
+    private function loginUser($userDTO, string $password, string $username)
     {
         if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
             $this->userSession->setUser($username);
