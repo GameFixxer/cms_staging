@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace App\Model;
 
 use App\Model\Entity\User;
-use App\Service\SQLConnector;
-use App\Model\Mapper\UserMapper;
 use App\Model\Dto\UserDataTransferObject;
+use App\Model\Mapper\UserMapperInterface;
 use Cycle\ORM\ORM;
 
 class UserRepository
 {
-    private UserMapper $userMapper;
+    private UserMapperInterface $userMapper;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
 
-    public function __construct(ORM $orm)
+    public function __construct(UserMapperInterface $userMapper, \Cycle\ORM\RepositoryInterface $ormUserRepository)
     {
-        $this->userMapper = new UserMapper();
-        $this->ormUserRepository = $orm->getRepository(User::class);
+        $this->userMapper = $userMapper;
+        $this->ormUserRepository = $ormUserRepository;
     }
 
     /**
@@ -37,11 +36,10 @@ class UserRepository
         return $userList;
     }
 
-    public function getUser(string $username, string $password): ?UserDataTransferObject
+    public function getUser(string $username): ?UserDataTransferObject
     {
         $userEntity = $this->ormUserRepository->findOne([
-            'username' => $username,
-            'password' => $password
+            'username' => $username
         ]);
         if ($userEntity instanceof User) {
             return $this->userMapper->map($userEntity);

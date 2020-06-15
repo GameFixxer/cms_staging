@@ -1,7 +1,6 @@
 <?php
 namespace App\Service;
 
-use PhpParser\Node\Expr\Cast\Object_;
 
 class Container
 {
@@ -29,7 +28,7 @@ class Container
 
     public function setFactory($id, callable $fnc): void
     {
-        $object = $fnc();
+        $object = $fnc($this);
         $this->set($id, $object);
     }
 }

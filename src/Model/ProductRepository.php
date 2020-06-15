@@ -7,19 +7,25 @@ namespace App\Model;
 use App\Model\Entity\Product;
 use App\Model\Mapper\ProductMapper;
 use App\Model\Dto\ProductDataTransferObject;
+use App\Model\Mapper\ProductMapperInterface;
 use Cycle\ORM\ORM;
-use phpDocumentor\Reflection\Types\This;
 
 class ProductRepository
 {
-    private ProductMapper $productMapper;
+    private ProductMapperInterface $productMapper;
     private \Cycle\ORM\RepositoryInterface $ormProductRepository;
 
-    public function __construct(ORM $orm)
+    /**
+     * ProductRepository constructor.
+     * @param ProductMapperInterface $productMapper
+     * @param \Cycle\ORM\RepositoryInterface $ormProductRepository
+     */
+    public function __construct(ProductMapperInterface $productMapper, \Cycle\ORM\RepositoryInterface $ormProductRepository)
     {
-        $this->productMapper = new ProductMapper();
-        $this->ormProductRepository = $orm->getRepository(Product::class);
+        $this->productMapper = $productMapper;
+        $this->ormProductRepository = $ormProductRepository;
     }
+
 
     /**
      * @return ProductDataTransferObject[]

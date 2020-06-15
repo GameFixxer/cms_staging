@@ -4,8 +4,6 @@ namespace App\Model;
 
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Entity\Product;
-use App\Service\Container;
-
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
@@ -33,12 +31,14 @@ class ProductEntityManager
         $transaction = new Transaction($this->orm);
         $transaction->delete($this->ormProductRepository->findByPK($product->getProductId()));
         $transaction->run();
+
         $this->productRepository->getProductList();
     }
 
     public function save(ProductDataTransferObject $product): ProductDataTransferObject
     {
         $transaction = new Transaction($this->orm);
+
         $entity = $this->ormProductRepository->findByPK($product->getProductId());
 
         if (!$entity instanceof Product) {
@@ -46,9 +46,12 @@ class ProductEntityManager
         }
         $entity->setName($product->getProductName());
         $entity->setDescription($product->getProductDescription());
+
         $transaction->persist($entity);
         $transaction->run();
+
         $product->setProductId($entity->getId());
+
         return $product;
     }
 }

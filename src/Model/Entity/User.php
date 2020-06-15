@@ -5,13 +5,14 @@ namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use PhpParser\Node\Scalar\String_;
 
 /**
  * @Entity(
  *     table = "user"
  *     )
  */
-class User
+class User implements EntityInterface
 {
     /**
      * @Column(type="primary")
@@ -30,6 +31,22 @@ class User
      * @var string
      */
     protected $password;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $role;
+
+    public function getRole():String
+    {
+        return $this->role;
+    }
+
+    public function setRole(String $role):void
+    {
+        $this->role = $role;
+    }
 
     public function getId(): int
     {
@@ -61,6 +78,4 @@ class User
     {
         $this->password = $password;
     }
-
-
 }

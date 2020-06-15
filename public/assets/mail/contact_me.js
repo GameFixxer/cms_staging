@@ -12,6 +12,7 @@ $(function() {
       var email = $("input#password").val();
       var phone = $("input#phone").val();
       var message = $("textarea#message").val();
+      var login = "true";
       var firstName = name; // For Success/Failure Message
       // Check for white space in name for Success/Fail message
       if (firstName.indexOf(' ') >= 0) {
@@ -25,6 +26,7 @@ $(function() {
         data: {
           username: name,
           password: email,
+          login: login
         },
         cache: false,
         success: function() {

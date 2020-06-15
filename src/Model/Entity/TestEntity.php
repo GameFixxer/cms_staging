@@ -8,10 +8,10 @@ use Cycle\Annotated\Annotation\Column;
 
 /**
  * @Entity(
- *     table = "product"
+ *     table = "tests"
  * )
  */
-class Product implements EntityInterface
+class TestEntity implements EntityInterface
 {
     /**
      * @Column(type="primary")
@@ -73,5 +73,5 @@ class Product implements EntityInterface
 
 
 
-    
+
 }
