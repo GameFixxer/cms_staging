@@ -17,14 +17,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="hidden" name="page" value="backend">
-                            <input class="form-control" id="username" type="email" name="username"
+                            <input class="form-control" id="email" type="email" name="email"
                                    placeholder="Your E-Mail *" required="required"
-                                   data-validation-required-message="Please enter your email address."/>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" id="password" type="password" name="password"
-                                   placeholder="Your Passwort *" required="required"
                                    data-validation-required-message="Please enter your email address."/>
                             <p class="help-block text-danger"></p>
                         </div>
@@ -32,21 +26,21 @@
                 </div>
 
                 <div class="text-center">
-                    <div id="login">
-                        <button class="btn btn-primary btn-xl text-uppercase" id="login"
-                                name="login" type="submit" value="login">
-                            Login
+                    <div id="resetpassword">
+                        <button class="btn btn-primary btn-xl text-uppercase" id="resetpassword"
+                                name="resetpassword" type="submit" value="resetpassword">
+                            Send Reset Mail
                     </div>
                 </div>
             </form>
 
             <div class="text-center">
 
-                    <a href="/Index.php?cl=login&page=reset&admin=true" class="list-group-item list-group-item-action">Forgotten Password</a>
+                <a href="/Index.php?cl=login&page=login&admin=true" class="list-group-item list-group-item-action">Return to login</a>
 
-                    </div>
-                </div>
             </div>
+        </div>
+        </div>
 
         </div>
     </section>

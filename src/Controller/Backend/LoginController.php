@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
+use App\Model\Dto\EmailDataTransferObject;
 use App\Model\Dto\UserDataTransferObject;
 use App\Model\UserEntityManager;
 use App\Service\Container;
+use App\Service\EmailManager;
 use App\Service\PasswordManager;
 use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
-use function PHPUnit\Framework\isEmpty;
 
 class LoginController implements BackendController
 {
@@ -21,6 +22,7 @@ class LoginController implements BackendController
     private UserEntityManager $userEntityManager;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
+    private EmailManager $emailManager;
 
 
     public function __construct(Container $container)
@@ -30,6 +32,7 @@ class LoginController implements BackendController
         $this->userRepository = $container->get(UserRepository::class);
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
+        $this->emailManager = $container->get(EmailManager::class);
     }
 
     public function init(): void
@@ -54,16 +57,40 @@ class LoginController implements BackendController
 
         $this->view->addTemplate('login.tpl');
     }
+    public function resetAction()
+    {
+        $this->view->addTemplate('passwordReset.tpl');
+        if (isset($_POST['resetpassword'])&& !empty(trim($_POST['email']))) {
+            $username = (string)trim($_POST['email']);
+            $userDTO = $this->userRepository->getUser($username);
+            if ($userDTO instanceof UserDataTransferObject) {
+                $emailDTO= new EmailDataTransferObject();
+                $emailDTO->setTo($username);
+                $emailDTO->setSubject('Reseting your Password');
+                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number 12345.');
+
+                if ($this->emailManager->sendMail($emailDTO)) {
+                    $this->view->addTemplate('mailCode.tpl');
+                    $this->setEmergencySession($username);
+                } else {
+                    //dump(error_get_last());
+                   // throw new \Exception('Email could not be send.', 1);
+                }
+            } else {
+                $this->view->addTlpParam('loginMessage', 'Invalid Username');
+            }
+        }
+    }
+
     public function logoutAction()
     {
         $this->userSession->logoutUser();
         $this->redirect(LoginController::ROUTE, 'page=login');
-        //$this->view->addTemplate('login.tpl');
     }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
-            $this->userSession->setUser($username);
+            $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
             $this->redirect(DashboardController::ROUTE, 'page=list');
         }
@@ -77,5 +104,12 @@ class LoginController implements BackendController
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");
         header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
+    }
+    private function setEmergencySession(string $username)
+    {
+        $id = $this->passwordManager->encryptPassword($username.time());
+        $this->userSession->setSessionTimer();
+        $this->userSession->setSessionId($id);
+        $this->userSession->loginUser();
     }
 }

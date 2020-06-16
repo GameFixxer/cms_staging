@@ -15,17 +15,45 @@ class SessionUser
     {
         //session_destroy();
     }
+    public function setSessionId(string $id)
+    {
+        $_SESSION['ID']=$id;
+    }
 
+    public function setSessionTimer()
+    {
+        $_SESSION['timeout'] = time();
+    }
+
+    public function sessionTimeout():bool
+    {
+        if (isset($_SESSION['timeout']) && $_SESSION['timeout']-time()>3600) {
+            session_unset();
+            session_destroy();
+            return true;
+        }
+        return false;
+    }
+
+    public function getSessionId():string
+    {
+        return $_SESSION['ID'];
+    }
     public function isLoggedIn(): bool
     {
         return isset($_SESSION['loggedin']);
     }
 
-    public function setUser($name): void
+    public function setUser(String $name):void
+    {
+        $_SESSION['username'] = $name;
+    }
+    public function loginUser(String $name): void
     {
         $_SESSION['username'] = $name;
         $_SESSION['loggedin'] = true;
     }
+
 
     public function getUser(): string
     {
