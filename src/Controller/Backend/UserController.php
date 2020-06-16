@@ -38,7 +38,7 @@ class UserController implements BackendController
             $this->redirectToPage(LoginCOntroller::ROUTE, '&page=list');
         }
         if (!($this->userSession->getUserRole()==='root')) {
-            $this->logout();
+            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=logout');
         }
     }
 
@@ -54,7 +54,6 @@ class UserController implements BackendController
                     break;
                 case isset($_POST['save']):
                     $this->saveUser(
-                        (int)$_POST['save'],
                         (string)$_POST['newuserpassword'],
                         (string)$_POST['newusername'],
                         (string)$_POST['newuserrole'],
@@ -76,7 +75,6 @@ class UserController implements BackendController
                 case !empty($_POST['save']):
 
                     $this->saveUser(
-                        (int)$_POST['save'],
                         (string)$_POST['newuserpassword'],
                         (string)$_POST['newusername'],
                         (string)$_POST['newuserrole']
@@ -101,7 +99,7 @@ class UserController implements BackendController
         }
     }
 
-    private function saveUser(int $id, String $password, String $username, String $role): void
+    private function saveUser( String $password, String $username, String $role): void
     {
         $userDTO = $this->userRepository->getUser($username);
         if (!$userDTO instanceof UserDataTransferObject) {

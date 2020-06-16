@@ -41,9 +41,12 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
             'page' => 'logout',
             'admin' => 'true',
         ];
+        $this->tester->setUpBootstrap();
+        if ($_GET['cl'] === 'login' && $_GET['page'] === 'logout') {
 
-        codecept_debug($_POST);
-
-        $this->assertTrue($_GET['cl'] === 'login', $_GET['page'] === 'login');
+            $this->assertTrue(true);
+        } else {
+            $this->assertTrue(false);
+        }
     }
 }
