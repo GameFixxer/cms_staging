@@ -35,7 +35,7 @@ class LoginIntoBackendTest extends \Codeception\Test\Unit
         ];
         $this->tester->arrange();
         if (isset($_SESSION['loggedin'])) {
-            $this->assertEquals((string)$_SESSION['loggedin'], '1');
+            $this->assertEquals('1', (string)$_SESSION['loggedin']);
         }
     }
 }

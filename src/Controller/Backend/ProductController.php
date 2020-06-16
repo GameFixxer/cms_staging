@@ -31,10 +31,10 @@ class ProductController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=list');
+            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=login');
         }
         if (($this->userSession->getUserRole()==='user')) {
-            $this->logout();
+            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=logout');
         }
     }
 
@@ -55,8 +55,6 @@ class ProductController implements BackendController
                         (string)$_POST['newpagename']
                     );
                     break;
-                case isset($_POST['logout']):
-                    $this->logout();
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -136,11 +134,6 @@ class ProductController implements BackendController
         $this->view->addTemplate('404.tpl');
     }
 
-    private function logout(): void
-    {
-        $this->userSession->logoutUser();
-        $this->redirectToPage(LoginController::ROUTE, '');
-    }
 
     private function redirectToPage(string $route, string $page): void
     {

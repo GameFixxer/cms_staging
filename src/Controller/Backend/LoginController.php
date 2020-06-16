@@ -34,13 +34,13 @@ class LoginController implements BackendController
 
     public function init(): void
     {
-        if ($this->userSession->isLoggedIn()) {
-            $this->redirectToDashboard();
+        if ($this->userSession->isLoggedIn() && !($_GET['page']==='logout')) {
+            $this->redirect(DashboardController::ROUTE, 'page=list');
         }
         $this->view->addTlpParam('login', 'LOGIN AREA');
     }
 
-    public function action(): void
+    public function loginAction(): void
     {
         if (isset($_POST['login']) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
             $username = (string)trim($_POST['username']);
@@ -54,23 +54,28 @@ class LoginController implements BackendController
 
         $this->view->addTemplate('login.tpl');
     }
-
+    public function logoutAction()
+    {
+        $this->userSession->logoutUser();
+        $this->redirect(LoginController::ROUTE, 'page=login');
+        //$this->view->addTemplate('login.tpl');
+    }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
             $this->userSession->setUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
-            $this->redirectToDashboard();
+            $this->redirect(DashboardController::ROUTE, 'page=list');
         }
     }
-    private function redirectToDashboard(): void
+    private function redirect(String $cl, String $page): void
     {
         //$host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.DashboardController::ROUTE;
-        $extra2 = '&page=list';
+        $extra = 'Index.php?cl='.$cl;
+        $extra2 = '&'.$page;
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");
-        header("Location: http://localhost:8080$uri/$extra$extra3");
+        header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
     }
 }

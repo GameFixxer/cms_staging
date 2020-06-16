@@ -16,9 +16,10 @@
         </div>
         <div class="text-center">
             <form id="logout" name="logout" action="" method="post">
-                <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
-                    Logout
-                </button>
+                <a class="btn btn-primary btn-lg text-uppercase"
+                   name="edit" href="/Index.php?cl=login&page=logout&admin=true"
+                   type="submit"> Logout
+                </a>
             </form>
         </div>
     </section>

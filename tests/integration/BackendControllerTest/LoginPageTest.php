@@ -25,6 +25,7 @@ class LoginPageTest extends \Codeception\Test\Unit
         $_SERVER['REQUEST_METHOD'] = '';
         $_GET = [
                 'cl' => 'login',
+                'page'=>'login',
                 'admin'=>'true'
         ];
         $this->tester->setUpBootstrap();

@@ -48,9 +48,6 @@ class DashboardController implements BackendController
     }
     public function action(): void
     {
-        if (isset($_POST['logout'])) {
-            $this->logout();
-        }
     }
 
     private function redirectToPage(string $route):void
@@ -62,10 +59,5 @@ class DashboardController implements BackendController
         $extra3 = '&page=list';
         header("Location: http://$host$uri/$extra$extra2$extra3");
         exit;
-    }
-    private function logout(): void
-    {
-        $this->userSession->logoutUser();
-        $this->view->addTemplate('login.tpl');
     }
 }

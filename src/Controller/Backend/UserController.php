@@ -60,8 +60,6 @@ class UserController implements BackendController
                         (string)$_POST['newuserrole'],
                     );
                     break;
-                case isset($_POST['logout']):
-                    $this->logout();
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -140,12 +138,6 @@ class UserController implements BackendController
     {
         $this->view->addTlpParam('error', '404 Page not found.');
         $this->view->addTemplate('404.tpl');
-    }
-
-    private function logout(): void
-    {
-        $this->userSession->logoutUser();
-        $this->redirectToPage(LoginController::ROUTE, '');
     }
 
     private function redirectToPage(string $route, string $page): void

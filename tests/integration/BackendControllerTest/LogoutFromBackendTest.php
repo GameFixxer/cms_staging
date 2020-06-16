@@ -34,14 +34,16 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
             'admin' => 'true',
         ];
 
-        $_SERVER['REQUEST_METHOD'] = 'POST';
-        $_POST = ["logout"=>''];
-
         $this->tester->setUpBootstrap();
 
+        $_GET = [
+            'cl' => 'login',
+            'page' => 'logout',
+            'admin' => 'true',
+        ];
 
         codecept_debug($_POST);
-        $this->assertFalse((bool)$_SESSION['loggedin']);
 
+        $this->assertTrue($_GET['cl'] === 'login', $_GET['page'] === 'login');
     }
 }
