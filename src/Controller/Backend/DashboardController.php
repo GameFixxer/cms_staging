@@ -14,6 +14,7 @@ class DashboardController implements BackendController
     private ProductRepository $productRepository;
     private View $view;
     private SessionUser $userSession;
+    private String $userRole;
 
     public function __construct(Container $container)
     {
@@ -26,6 +27,23 @@ class DashboardController implements BackendController
     {
         if (!$this->userSession->isLoggedIn()) {
             $this->redirectToPage(LoginController::ROUTE);
+        }
+        $this->userRole = $this->userSession->getUserRole();
+        switch ($this->userRole) {
+            case $this->userRole === 'user':
+                $this->view->addTlpParam('user', $this->userSession->getUser());
+                $this->view->addTemplate('userDashboard.tpl');
+                break;
+            case $this->userRole === 'admin':
+                $this->view->addTlpParam('user', $this->userSession->getUser());
+                $this->view->addTemplate('adminDashboard.tpl');
+                break;
+
+            case $this->userRole === 'root':
+                $this->view->addTlpParam('user', $this->userSession->getUser());
+                $this->view->addTemplate('rootDashboard.tpl');
+                break;
+
         }
     }
     public function action(): void

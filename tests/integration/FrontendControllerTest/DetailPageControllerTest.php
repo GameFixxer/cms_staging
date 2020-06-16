@@ -18,11 +18,13 @@ class DetailPageControllerTest extends \Codeception\Test\Unit
     // tests
     public function testProductDetailPageAndProductAvailability(): void
     {
+        $this->tester->arrange();
+        $this->tester->setSession();
         $_GET = [
                 'cl' => 'detail',
                 'id'=>'5'
         ];
-        $this->tester->arrange();
+        $this->tester->setUpBootstrap();
         $product = $this->tester->getSmartyParams('page');
         $secondProduct = $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct(5), 'page');
         $this->assertEquals($product, $secondProduct);

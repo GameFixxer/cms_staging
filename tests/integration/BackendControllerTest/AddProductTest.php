@@ -21,18 +21,21 @@ class AddProductTest extends \Codeception\Test\Unit
     // tests
     public function testAddingAndDisplayingAProduct(): void
     {
+        $this->tester->arrange();
+        $this->tester->setSession();
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_GET = [
                 'cl' => 'product',
                 'page' => 'list',
                 'admin' => 'true',
         ];
+
         $_POST = [
                 'save' => '',
                 'newpagedescription' => 'A lovely shirt',
                 'newpagename' => 'T-Shirt',
         ];
-        $this->tester->arrange();
+        $this->tester->setUpBootstrap();
         $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(

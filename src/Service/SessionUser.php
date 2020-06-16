@@ -21,12 +21,10 @@ class SessionUser
         return isset($_SESSION['loggedin']);
     }
 
-
     public function setUser($name): void
     {
         $_SESSION['username'] = $name;
         $_SESSION['loggedin'] = true;
-
     }
 
     public function getUser(): string
@@ -34,6 +32,15 @@ class SessionUser
         return $_SESSION['username'];
     }
 
+    public function setUserRole(String $role):void
+    {
+        $_SESSION['role'] = $role;
+    }
+
+    public function getUserRole()
+    {
+        return $_SESSION['role'];
+    }
     public function logoutUser(): void
     {
         session_unset();

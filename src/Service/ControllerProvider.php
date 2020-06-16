@@ -7,6 +7,7 @@ namespace App\Service;
 
 use App\Controller\Backend\DashboardController;
 use App\Controller\Backend\ProductController;
+use App\Controller\Backend\UserController;
 use App\Controller\Frontend\DetailControll;
 use App\Controller\Frontend\ErrorControll;
 use App\Controller\Frontend\HomeControll;
@@ -30,6 +31,7 @@ class ControllerProvider
                 LoginController::class,
                 DashboardController::class,
                 ProductController::class,
+                UserController::class
         ];
     }
 

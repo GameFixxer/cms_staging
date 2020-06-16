@@ -34,57 +34,46 @@ class LoginController implements BackendController
 
     public function init(): void
     {
-        if ($this->userSession->isLoggedIn()) {
-            $this->redirectToDashboard();
+        if ($this->userSession->isLoggedIn() && !($_GET['page']==='logout')) {
+            $this->redirect(DashboardController::ROUTE, 'page=list');
         }
+        $this->view->addTlpParam('login', 'LOGIN AREA');
     }
 
-    public function action(): void
+    public function loginAction(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['login']) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
-                $username = (string)trim($_POST['username']);
-                $password = (string)trim($_POST['password']);
-                $userDTO = $this->userRepository->getUser($username);
+        if (isset($_POST['login']) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
+            $username = (string)trim($_POST['username']);
+            $password = (string)trim($_POST['password']);
+            $userDTO = $this->userRepository->getUser($username);
+            if ($userDTO instanceof UserDataTransferObject) {
                 $this->loginUser($userDTO, $password, $username);
             }
-            if (isset($_POST['createUser'], $_POST['newUsername'], $_POST['newUserPassword'])) {
-                $username = (string)trim($_POST['newUsername']);
-                $password = (string)trim($_POST['newUserPassword']);
-                $this->createUser($username, $password);
-            }
+            $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
         }
+
         $this->view->addTemplate('login.tpl');
     }
-
-    private function loginUser($userDTO, string $password, string $username)
+    public function logoutAction()
     {
-        if (($userDTO instanceof UserDataTransferObject) && ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword()))) {
+        $this->userSession->logoutUser();
+        $this->redirect(LoginController::ROUTE, 'page=login');
+        //$this->view->addTemplate('login.tpl');
+    }
+    private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
+    {
+        if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
             $this->userSession->setUser($username);
-            $this->redirectToDashboard();
-        }
-        $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
-    }
-
-    private function createUser(string $username, string $password): void
-    {
-        if ($userDTO = $this->userRepository->getUser($username) instanceof UserDataTransferObject) {
-            $this->view->addTlpParam('loginMessage', 'Username already exists. Please choose another one.');
-        } else {
-            $userDTO = new UserDataTransferObject();
-            $userDTO->setUsername($username);
-            $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
-            $this->userEntityManager->save($userDTO);
-            $this->view->addTlpParam('loginMessage', 'Account successfully created. You can now login.');
+            $this->userSession->setUserRole($userDTO->getUserRole());
+            $this->redirect(DashboardController::ROUTE, 'page=list');
         }
     }
-
-    private function redirectToDashboard(): void
+    private function redirect(String $cl, String $page): void
     {
         //$host = $_SERVER['HTTP_HOST'];
         $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.ProductController::ROUTE;
-        $extra2 = '&page=list';
+        $extra = 'Index.php?cl='.$cl;
+        $extra2 = '&'.$page;
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");
         header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
