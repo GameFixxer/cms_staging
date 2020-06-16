@@ -80,7 +80,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     {
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $mock = $this->construct(UserRepository::class, [$UserMapper = new UserMapper(), $orm->getRepository(TestEntity::class)]);
+        $mock = $this->construct(UserRepository::class, [ new UserMapper(), $orm->getRepository(TestEntity::class)]);
         $this->assertEmpty($mock->getUserList());
     }
 
