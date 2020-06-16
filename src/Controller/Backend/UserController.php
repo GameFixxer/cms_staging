@@ -37,7 +37,7 @@ class UserController implements BackendController
         if (!$this->userSession->isLoggedIn()) {
             $this->redirectToPage(LoginCOntroller::ROUTE, '&page=list');
         }
-        if (!($this->userSession->getUserRole()==='root')) {
+        if (!($this->userSession->getUserRole() === 'root')) {
             $this->redirectToPage(LoginCOntroller::ROUTE, '&page=logout');
         }
     }
@@ -49,16 +49,16 @@ class UserController implements BackendController
         $this->view->addTemplate('userList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case isset($_POST['delete']):
-                    $this->deleteUser($_POST['delete']);
-                    break;
-                case isset($_POST['save']):
-                    $this->saveUser(
-                        (string)$_POST['newuserpassword'],
-                        (string)$_POST['newusername'],
-                        (string)$_POST['newuserrole'],
-                    );
-                    break;
+            case isset($_POST['delete']):
+                $this->deleteUser($_POST['delete']);
+                break;
+            case isset($_POST['save']):
+                $this->saveUser(
+                    (string)$_POST['newuserpassword'],
+                    (string)$_POST['newusername'],
+                    (string)$_POST['newuserrole'],
+                );
+                break;
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
@@ -69,17 +69,17 @@ class UserController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteUser($_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
+            case !empty($_POST['delete']):
+                $this->deleteUser($_POST['delete']);
+                break;
+            case !empty($_POST['save']):
 
-                    $this->saveUser(
-                        (string)$_POST['newuserpassword'],
-                        (string)$_POST['newusername'],
-                        (string)$_POST['newuserrole']
-                    );
-                    break;
+                $this->saveUser(
+                    (string)$_POST['newuserpassword'],
+                    (string)$_POST['newusername'],
+                    (string)$_POST['newuserrole']
+                );
+                break;
             }
         }
         $userDTO = $this->userRepository->getUser($_GET['id']);
@@ -99,7 +99,7 @@ class UserController implements BackendController
         }
     }
 
-    private function saveUser( String $password, String $username, String $role): void
+    private function saveUser(String $password, String $username, String $role): void
     {
         $userDTO = $this->userRepository->getUser($username);
         if (!$userDTO instanceof UserDataTransferObject) {
