@@ -34,7 +34,7 @@ class LoginController implements BackendController
 
     public function init(): void
     {
-        if ($this->userSession->isLoggedIn() && !($_GET['page']==='logout')) {
+        if ($this->userSession->isLoggedIn() && !($_GET['page'] === 'logout')) {
             $this->redirect(DashboardController::ROUTE, 'page=list');
         }
         $this->view->addTlpParam('login', 'LOGIN AREA');

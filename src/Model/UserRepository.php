@@ -27,7 +27,7 @@ class UserRepository
     {
         $userList = [];
 
-        $userEntityList = (array) $this->ormUserRepository->select()->fetchALl();
+        $userEntityList = (array)$this->ormUserRepository->select()->fetchALl();
         /** @var  User $user */
         foreach ($userEntityList as $user) {
             $userList[] = $this->userMapper->map($user);
