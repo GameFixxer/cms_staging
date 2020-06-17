@@ -10,6 +10,7 @@ use App\Model\UserEntityManager;
 use App\Service\Container;
 use App\Service\EmailManager;
 use App\Service\PasswordManager;
+use App\Service\SymfonyMailerManager;
 use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
@@ -23,6 +24,7 @@ class LoginController implements BackendController
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
     private EmailManager $emailManager;
+    private SymfonyMailerManager $mailManager;
 
 
     public function __construct(Container $container)
@@ -33,6 +35,7 @@ class LoginController implements BackendController
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->emailManager = $container->get(EmailManager::class);
+        $this->mailManager = $container->get(SymfonyMailerManager::class);
     }
 
     public function init(): void
@@ -70,13 +73,15 @@ class LoginController implements BackendController
                 $emailDTO->setSubject('Reseting your Password');
                 $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
 
-                if ($this->emailManager->sendMail($emailDTO)) {
-                    $sessionId = $this->setEmergencySession($username);
-                    $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
-                    $this->redirect(PasswordController::ROUTE, 'page=reset');
-                } else {
-                    throw new \Exception('Email could not be send.', 1);
-                }
+                //if ($this->emailManager->sendMail($emailDTO)) {
+                $this->mailManager->createMail($emailDTO);
+                $this->mailManager->sendMail();
+                $sessionId = $this->setEmergencySession($username);
+                $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
+                $this->redirect(PasswordController::ROUTE, 'page=reset');
+            /*} else {
+                throw new \Exception('Email could not be send.', 1);
+            }*/
             } else {
                 $this->view->addTlpParam('loginMessage', 'Invalid Username');
             }

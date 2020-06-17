@@ -11,7 +11,8 @@
         "cycle/orm": "^1.2",
         "cycle/annotated": "^2.0",
         "symfony/finder": "^5.1",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "symfony/mailer": "^5.1"
     },
     "autoload": {
         "psr-4": {
