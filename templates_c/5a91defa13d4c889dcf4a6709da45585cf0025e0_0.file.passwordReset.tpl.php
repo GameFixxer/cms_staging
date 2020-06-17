@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-06-16 12:18:10
+/* Smarty version 3.1.36, created on 2020-06-17 11:05:45
   from '/home/rene/PhpstormProjects/MVC/templates/dist/passwordReset.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5ee89c6291c9a4_82475072',
+  'unifunc' => 'content_5ee9dce9f1fd46_28380613',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5a91defa13d4c889dcf4a6709da45585cf0025e0' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/dist/passwordReset.tpl',
-      1 => 1592302340,
+      1 => 1592384704,
       2 => 'file',
     ),
   ),
@@ -20,26 +20,26 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ee89c6291c9a4_82475072 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee9dce9f1fd46_28380613 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17548093005ee89c62912a30_87050320', "baselayout");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_12314238885ee9dce9f17013_87802067', "baselayout");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_3583496775ee89c62915ca1_87549481', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_276476055ee9dce9f19cb8_98757413', "body");
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "baselayout"} */
-class Block_17548093005ee89c62912a30_87050320 extends Smarty_Internal_Block
+class Block_12314238885ee9dce9f17013_87802067 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'baselayout' => 
   array (
-    0 => 'Block_17548093005ee89c62912a30_87050320',
+    0 => 'Block_12314238885ee9dce9f17013_87802067',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -47,12 +47,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "baselayout"} */
 /* {block "body"} */
-class Block_3583496775ee89c62915ca1_87549481 extends Smarty_Internal_Block
+class Block_276476055ee9dce9f19cb8_98757413 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_3583496775ee89c62915ca1_87549481',
+    0 => 'Block_276476055ee9dce9f19cb8_98757413',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -63,7 +63,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Login Area</h2>
-                <h3 class="section-subheading text-muted">I am not a robot. I am not a monkey. I will not dance, even if
+                <h3 class="section-subheading text-muted">II am not a robot. I am not a monkey. I will not dance, even if
                     the beat is funky.</h3>
             </div>
             <form novalidate="novalidate" method="post" id="contactForm" name="sentMessage">
@@ -74,7 +74,6 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="hidden" name="page" value="backend">
                             <input class="form-control" id="email" type="email" name="email"
                                    placeholder="Your E-Mail *" required="required"
                                    data-validation-required-message="Please enter your email address."/>

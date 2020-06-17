@@ -64,17 +64,18 @@ class LoginController implements BackendController
             $username = (string)trim($_POST['email']);
             $userDTO = $this->userRepository->getUser($username);
             if ($userDTO instanceof UserDataTransferObject) {
+                $resetCode = $this->passwordManager->createResetPassword();
                 $emailDTO= new EmailDataTransferObject();
                 $emailDTO->setTo($username);
                 $emailDTO->setSubject('Reseting your Password');
-                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number 12345.');
+                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
 
                 if ($this->emailManager->sendMail($emailDTO)) {
-                    $this->view->addTemplate('mailCode.tpl');
-                    $this->setEmergencySession($username);
+                    $sessionId = $this->setEmergencySession($username);
+                    $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
+                    $this->redirect(PasswordController::ROUTE, 'page=reset');
                 } else {
-                    //dump(error_get_last());
-                   // throw new \Exception('Email could not be send.', 1);
+                    throw new \Exception('Email could not be send.', 1);
                 }
             } else {
                 $this->view->addTlpParam('loginMessage', 'Invalid Username');
@@ -105,11 +106,19 @@ class LoginController implements BackendController
         //header("Location: http://$host$uri/$extra$extra2$extra3");
         header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
     }
-    private function setEmergencySession(string $username)
+    private function setEmergencySession(string $username):String
     {
-        $id = $this->passwordManager->encryptPassword($username.time());
+        $sessionId = $this->passwordManager->encryptPassword($username.time());
         $this->userSession->setSessionTimer();
-        $this->userSession->setSessionId($id);
-        $this->userSession->loginUser();
+        $this->userSession->setSessionId($sessionId);
+        $this->userSession->setUser($username);
+        return $sessionId;
+    }
+
+    private function setEmergencyUserData(String $sessionId, string $resetCode, UserDataTransferObject $userDTO)
+    {
+        $userDTO->setSessionId($sessionId);
+        $userDTO->setResetPassword($resetCode);
+        $this->userEntityManager->save($userDTO);
     }
 }

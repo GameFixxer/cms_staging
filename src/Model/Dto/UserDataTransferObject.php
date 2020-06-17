@@ -10,8 +10,8 @@ class UserDataTransferObject
     private int $id = 0;
     private string $password = '';
     private string $role = '';
-    private string $session_id = '';
-    private bool $reset_password = false;
+    private string $session_id = '0';
+    private string $reset_password = '';
 
 
     public function setUsername(string $name): void
@@ -24,9 +24,9 @@ class UserDataTransferObject
         $this-> session_id = $id;
     }
 
-    public function setResetPassword(bool $rese): void
+    public function setResetPassword(string $reset): void
     {
-        $this-> reset_password= $rese;
+        $this-> reset_password= $reset;
     }
 
 
@@ -44,7 +44,7 @@ class UserDataTransferObject
     {
         $this->role = $role;
     }
-    public function getResetPassword():bool
+    public function getResetPassword():string
     {
         return $this->reset_password;
     }

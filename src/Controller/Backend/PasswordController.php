@@ -33,21 +33,53 @@ class PasswordController implements BackendController
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->emailManager = $container->get(EmailManager::class);
+        $this->userSession = $container->get(SessionUser::class);
     }
 
     public function init(): void
     {
-        $this->view->addTemplate('passwordReset.tpl');
+        if ($this->userSession->isLoggedIn()) {
+            $this->redirect(DashboardController::ROUTE, 'page=list');
+        }
     }
 
 
     public function resetAction()
     {
-        if (isset($_POST['resetpassword'])&& !empty(trim($_POST['resetCode']))) {
-            $resetCode = (string)trim($_POST['resetCode']);
-            $userDTO = $this->userRepository->getUser($resetCode);
-
+        $this->view->addTemplate('mailCode.tpl');
+        if (isset($_POST['resetpassword'])&& !empty(trim($_POST['resetcode']))) {
+            $resetCode = (string)trim($_POST['resetcode']);
+            $userDTO = $this->userRepository->getUser($_SESSION['username']);
+            if ($userDTO->getSessionId()===$_SESSION['ID'] && $userDTO->getResetPassword()===$_POST['resetcode']) {
+                $this->view->addTemplate('setNewPassword.tpl');
+                $this->redirect(self::ROUTE, 'page=setnewpassword');
+            }
         }
+    }
+
+    public function setnewpasswordAction()
+    {
+        if (isset($_POST['password'])) {
+            $newUserPassword = $this->passwordManager->encryptPassword(trim($_POST['password']));
+            if ($this->safePassword($newUserPassword)) {
+                $this->redirect('login', 'page=login');
+            }
+            $this->view->addTlpParam('errorMessage', 'This user does not exist');
+        }
+        $this->view->addTemplate('setNewPassword.tpl');
+    }
+
+    private function safePassword(string $password):bool
+    {
+        $userDTO = $this->userRepository->getUser($_SESSION['username']);
+        if ($userDTO instanceof UserDataTransferObject) {
+            $userDTO->setUserPassword($password);
+            $userDTO->setResetPassword('0');
+            $userDTO->setSessionId('0');
+            $this->userEntityManager->save($userDTO);
+            return true;
+        }
+        return false;
     }
 
     private function redirect(String $cl, String $page): void

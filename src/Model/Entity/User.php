@@ -38,12 +38,44 @@ class User implements EntityInterface
      */
     protected $role;
 
-    public function getRole():String
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $session_id;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $resetpassword;
+
+    public function getSessionId():string
+    {
+        return $this->session_id;
+    }
+
+    public function setSessionId(string $sessionId):void
+    {
+        $this->session_id = $sessionId;
+    }
+
+    public function getResetPassword():string
+    {
+        return $this->resetpassword;
+    }
+
+    public function setResetPassword(string $reset):void
+    {
+        $this->resetpassword = $reset;
+    }
+
+    public function getRole():string
     {
         return $this->role;
     }
 
-    public function setRole(String $role):void
+    public function setRole(string $role):void
     {
         $this->role = $role;
     }

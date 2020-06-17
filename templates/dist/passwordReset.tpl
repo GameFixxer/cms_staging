@@ -6,7 +6,7 @@
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Login Area</h2>
-                <h3 class="section-subheading text-muted">I am not a robot. I am not a monkey. I will not dance, even if
+                <h3 class="section-subheading text-muted">II am not a robot. I am not a monkey. I will not dance, even if
                     the beat is funky.</h3>
             </div>
             <form novalidate="novalidate" method="post" id="contactForm" name="sentMessage">
@@ -16,7 +16,6 @@
                 <div class="row align-items-stretch mb-5">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="hidden" name="page" value="backend">
                             <input class="form-control" id="email" type="email" name="email"
                                    placeholder="Your E-Mail *" required="required"
                                    data-validation-required-message="Please enter your email address."/>

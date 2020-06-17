@@ -13,4 +13,10 @@ class PasswordManager
     {
         return password_verify($userInputPassword, $userDatabaseHashedPassword);
     }
+    public function createResetPassword():string
+    {
+        $bytes = openssl_random_pseudo_bytes(4);
+
+        return bin2hex($bytes);
+    }
 }

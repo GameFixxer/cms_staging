@@ -10,7 +10,8 @@
         "phpunit/php-code-coverage": "^8.0",
         "cycle/orm": "^1.2",
         "cycle/annotated": "^2.0",
-        "symfony/finder": "^5.1"
+        "symfony/finder": "^5.1",
+        "ext-openssl": "*"
     },
     "autoload": {
         "psr-4": {
