@@ -45,10 +45,10 @@ class PasswordController implements BackendController
     public function resetAction()
     {
         $this->view->addTemplate('mailCode.tpl');
-        if (isset($_POST['resetpassword'])&& !empty(trim($_POST['resetcode']))) {
+        if (isset($_POST['resetpassword']) && !empty(trim($_POST['resetcode']))) {
             $resetCode = (string)trim($_POST['resetcode']);
             $userDTO = $this->userRepository->getUser($_SESSION['username']);
-            if ($userDTO->getSessionId()===$_SESSION['ID'] && $userDTO->getResetPassword()===$resetCode) {
+            if ($userDTO->getSessionId() === $_SESSION['ID'] && $userDTO->getResetPassword() === $resetCode) {
                 $this->view->addTemplate('setNewPassword.tpl');
                 $this->redirect(self::ROUTE, 'page=setnewpassword');
             }

@@ -60,7 +60,7 @@ class LoginController implements BackendController
     public function resetAction()
     {
         $this->view->addTemplate('passwordReset.tpl');
-        if (isset($_POST['resetpassword'])&& !empty(trim($_POST['email']))) {
+        if (isset($_POST['resetpassword']) && !empty(trim($_POST['email']))) {
             $username = (string)trim($_POST['email']);
             $userDTO = $this->userRepository->getUser($username);
             if ($userDTO instanceof UserDataTransferObject) {
@@ -68,7 +68,7 @@ class LoginController implements BackendController
                 $emailDTO = new EmailDataTransferObject();
                 $emailDTO->setTo($username);
                 $emailDTO->setSubject('Reseting your Password');
-                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:' . $resetCode);
+                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
 
                 if ($this->mailManager->sendMail($emailDTO)) {
                     $sessionId = $this->setEmergencySession($username);
