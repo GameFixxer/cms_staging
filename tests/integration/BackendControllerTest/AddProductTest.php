@@ -1,5 +1,9 @@
 <?php
+namespace App\Tests\integration\BackendControllerTest;
 
+
+
+use UnitTester;
 
 class AddProductTest extends \Codeception\Test\Unit
 {

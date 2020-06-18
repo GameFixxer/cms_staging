@@ -1,5 +1,7 @@
 <?php
+namespace App\Tests\integration\BackendControllerTest;
 
+use UnitTester;
 
 class TryDeleteProductTest extends \Codeception\Test\Unit
 {

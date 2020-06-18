@@ -70,7 +70,7 @@ class UnitTester extends \Codeception\Actor
     public function setSession()
     {
         $tmp = $this->container->get(SessionUser::class);
-        $tmp->setUser('nina');
+        $tmp->loginUser('nina');
         $tmp->setUserRole('root');
     }
     public function logIntoBackend(): void
