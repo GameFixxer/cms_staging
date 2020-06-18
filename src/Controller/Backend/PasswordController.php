@@ -23,7 +23,6 @@ class PasswordController implements BackendController
     private UserEntityManager $userEntityManager;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
-    private EmailManager $emailManager;
 
 
     public function __construct(Container $container)
@@ -32,7 +31,6 @@ class PasswordController implements BackendController
         $this->userRepository = $container->get(UserRepository::class);
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
-        $this->emailManager = $container->get(EmailManager::class);
         $this->userSession = $container->get(SessionUser::class);
     }
 

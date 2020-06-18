@@ -8,7 +8,6 @@ use App\Model\Dto\EmailDataTransferObject;
 use App\Model\Dto\UserDataTransferObject;
 use App\Model\UserEntityManager;
 use App\Service\Container;
-use App\Service\EmailManager;
 use App\Service\PasswordManager;
 use App\Service\SymfonyMailerManager;
 use App\Service\View;
@@ -23,7 +22,6 @@ class LoginController implements BackendController
     private UserEntityManager $userEntityManager;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
-    private EmailManager $emailManager;
     private SymfonyMailerManager $mailManager;
 
 
@@ -34,7 +32,6 @@ class LoginController implements BackendController
         $this->userRepository = $container->get(UserRepository::class);
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
-        $this->emailManager = $container->get(EmailManager::class);
         $this->mailManager = $container->get(SymfonyMailerManager::class);
     }
 

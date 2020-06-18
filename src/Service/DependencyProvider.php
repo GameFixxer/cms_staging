@@ -43,7 +43,6 @@ class DependencyProvider
         // Mapper
         $container->set(ProductMapper::class, new ProductMapper());
         $container->set(UserMapper::class, new UserMapper());
-        $container->set(EmailManager::class, new EmailManager());
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
         // Repositorys
