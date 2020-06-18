@@ -17,7 +17,7 @@ class SessionUser
     }
     public function setSessionId(string $id)
     {
-        $_SESSION['ID']=$id;
+        $_SESSION['ID'] = $id;
     }
 
     public function setSessionTimer()
@@ -27,7 +27,7 @@ class SessionUser
 
     public function sessionTimeout():bool
     {
-        if (isset($_SESSION['timeout']) && $_SESSION['timeout']-time()>3600) {
+        if (isset($_SESSION['timeout']) && $_SESSION['timeout'] - time() > 3600) {
             session_unset();
             session_destroy();
             return true;

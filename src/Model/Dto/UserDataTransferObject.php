@@ -26,7 +26,7 @@ class UserDataTransferObject
 
     public function setResetPassword(string $reset): void
     {
-        $this-> reset_password= $reset;
+        $this-> reset_password = $reset;
     }
 
 
