@@ -68,25 +68,24 @@ class LoginController implements BackendController
             $userDTO = $this->userRepository->getUser($username);
             if ($userDTO instanceof UserDataTransferObject) {
                 $resetCode = $this->passwordManager->createResetPassword();
-                $emailDTO= new EmailDataTransferObject();
+                $emailDTO = new EmailDataTransferObject();
                 $emailDTO->setTo($username);
                 $emailDTO->setSubject('Reseting your Password');
-                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
+                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:' . $resetCode);
 
-                //if ($this->emailManager->sendMail($emailDTO)) {
-                $this->mailManager->createMail($emailDTO);
-                $this->mailManager->sendMail();
-                $sessionId = $this->setEmergencySession($username);
-                $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
-                $this->redirect(PasswordController::ROUTE, 'page=reset');
-            /*} else {
-                throw new \Exception('Email could not be send.', 1);
-            }*/
+                if ($this->mailManager->sendMail($emailDTO)) {
+                    $sessionId = $this->setEmergencySession($username);
+                    $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
+                    $this->redirect(PasswordController::ROUTE, 'page=reset');
+                } else {
+                    throw new \Exception('Email could not be send.', 1);
+                }
             } else {
                 $this->view->addTlpParam('loginMessage', 'Invalid Username');
             }
         }
     }
+
 
     public function logoutAction()
     {

@@ -4,7 +4,7 @@
 namespace App\Service;
 
 use App\Model\Dto\EmailDataTransferObject;
-use Symfony\Component\Mailer\Mailer;
+use App\Service\Mailer;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\Mailer\Transport\Transports;
@@ -19,7 +19,14 @@ class SymfonyMailerManager
     {
         $this->mailer = new Mailer(new Transports(['main' => new EsmtpTransport('localhost', 1025)]));
     }
-    public function createMail(EmailDataTransferObject $emailDTO)
+
+
+    public function sendMail(EmailDataTransferObject $emailDTO):bool
+    {
+        $this->createMail($emailDTO);
+        return $this->mailer->sendMail($this->email);
+    }
+    private function createMail(EmailDataTransferObject $emailDTO)
     {
         $this->email = (new Email())
             ->from('r.berndt@nexus-united.com')
@@ -27,10 +34,5 @@ class SymfonyMailerManager
             ->subject($emailDTO->getSubject())
             ->text($emailDTO->getMessage())
             ->html('<p>See Twig integration for better HTML integration!</p>');
-    }
-
-    public function sendMail()
-    {
-        $this->mailer->send($this->email);
     }
 }
