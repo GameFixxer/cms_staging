@@ -33,7 +33,7 @@ class DependencyProvider
     private function persistenceDependency(Container $container): void
     {
         //Service
-        $container->setFactory(DatabaseManager::class, function () {
+        $container->setFactory(DatabaseManager::class, function() {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
@@ -46,13 +46,13 @@ class DependencyProvider
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
         // Repositorys
-        $container->setFactory(ProductRepository::class, function (Container $container) {
+        $container->setFactory(ProductRepository::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function (Container $container) {
+        $container->setFactory(UserRepository::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
