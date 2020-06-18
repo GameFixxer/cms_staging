@@ -54,9 +54,10 @@
         <div class="text-center">
             <a href="/Index.php?cl=dashboard&admin=true" class="list-group-item list-group-item-action">Return to Dashboard</a>
             <form id="logout" name="logout" action="" method="post">
-                <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
-                    Logout
-                </button>
+                <a class="btn btn-primary btn-lg text-uppercase"
+                   name="edit" href="/Index.php?cl=login&page=logout&admin=true"
+                   type="submit"> Logout
+                </a>
             </form>
         </div>
     </section>
@@ -69,7 +70,7 @@
                     <p class="item-intro text-muted"></p>
                     <form id="usercreation" name="usercreation" action="" method="post">
                         <div class="text-center">
-                            <input type="text" name="newusername" id="newusername" placeholder="username"/>
+                            <input type="email" name="newusername" id="newusername" placeholder="email"/>
                             <input type="password" name="newuserpassword" id="newuserpassword" placeholder="password"/>
                             <br>
                             <br>

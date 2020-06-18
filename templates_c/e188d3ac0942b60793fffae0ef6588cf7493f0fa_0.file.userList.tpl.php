@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-06-15 14:48:08
+/* Smarty version 3.1.36, created on 2020-06-16 11:50:14
   from '/home/rene/PhpstormProjects/MVC/templates/dist/userList.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5ee76e08d741f1_89010561',
+  'unifunc' => 'content_5ee895d6d32620_31530577',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e188d3ac0942b60793fffae0ef6588cf7493f0fa' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/dist/userList.tpl',
-      1 => 1592225285,
+      1 => 1592300996,
       2 => 'file',
     ),
   ),
@@ -20,41 +20,41 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ee76e08d741f1_89010561 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee895d6d32620_31530577 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 <html lang="">
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_7041874565ee76e08d3d6b4_95540582', "subtitel_h1");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_8067741165ee895d6cd7fe1_78008801', "subtitel_h1");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15740261455ee76e08d40985_20953988', "titel");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_14120578975ee895d6ce11c9_57612284', "titel");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15549102635ee76e08d449e8_33205538', "titel_button");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_9384946655ee895d6ce9b63_69509978', "titel_button");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_5582628285ee76e08d483d6_03971699', "titel_button_href");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19312395495ee895d6cf3921_86860822', "titel_button_href");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_71461735ee76e08d4bce8_83338829', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17191123815ee895d6cfc531_30864337', "body");
 ?>
 
 </html><?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "subtitel_h1"} */
-class Block_7041874565ee76e08d3d6b4_95540582 extends Smarty_Internal_Block
+class Block_8067741165ee895d6cd7fe1_78008801 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'subtitel_h1' => 
   array (
-    0 => 'Block_7041874565ee76e08d3d6b4_95540582',
+    0 => 'Block_8067741165ee895d6cd7fe1_78008801',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -64,12 +64,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "subtitel_h1"} */
 /* {block "titel"} */
-class Block_15740261455ee76e08d40985_20953988 extends Smarty_Internal_Block
+class Block_14120578975ee895d6ce11c9_57612284 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel' => 
   array (
-    0 => 'Block_15740261455ee76e08d40985_20953988',
+    0 => 'Block_14120578975ee895d6ce11c9_57612284',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -79,12 +79,12 @@ Welcome to the Backstagearea<?php
 }
 /* {/block "titel"} */
 /* {block "titel_button"} */
-class Block_15549102635ee76e08d449e8_33205538 extends Smarty_Internal_Block
+class Block_9384946655ee895d6ce9b63_69509978 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button' => 
   array (
-    0 => 'Block_15549102635ee76e08d449e8_33205538',
+    0 => 'Block_9384946655ee895d6ce9b63_69509978',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -94,12 +94,12 @@ Back to home<?php
 }
 /* {/block "titel_button"} */
 /* {block "titel_button_href"} */
-class Block_5582628285ee76e08d483d6_03971699 extends Smarty_Internal_Block
+class Block_19312395495ee895d6cf3921_86860822 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button_href' => 
   array (
-    0 => 'Block_5582628285ee76e08d483d6_03971699',
+    0 => 'Block_19312395495ee895d6cf3921_86860822',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -109,12 +109,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "titel_button_href"} */
 /* {block "body"} */
-class Block_71461735ee76e08d4bce8_83338829 extends Smarty_Internal_Block
+class Block_17191123815ee895d6cfc531_30864337 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_71461735ee76e08d4bce8_83338829',
+    0 => 'Block_17191123815ee895d6cfc531_30864337',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -185,9 +185,10 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <div class="text-center">
             <a href="/Index.php?cl=dashboard&admin=true" class="list-group-item list-group-item-action">Return to Dashboard</a>
             <form id="logout" name="logout" action="" method="post">
-                <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
-                    Logout
-                </button>
+                <a class="btn btn-primary btn-lg text-uppercase"
+                   name="edit" href="/Index.php?cl=login&page=logout&admin=true"
+                   type="submit"> Logout
+                </a>
             </form>
         </div>
     </section>
@@ -200,7 +201,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
                     <p class="item-intro text-muted"></p>
                     <form id="usercreation" name="usercreation" action="" method="post">
                         <div class="text-center">
-                            <input type="text" name="newusername" id="newusername" placeholder="username"/>
+                            <input type="email" name="newusername" id="newusername" placeholder="email"/>
                             <input type="password" name="newuserpassword" id="newuserpassword" placeholder="password"/>
                             <br>
                             <br>

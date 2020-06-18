@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.36, created on 2020-06-15 14:51:45
+/* Smarty version 3.1.36, created on 2020-06-16 10:42:03
   from '/home/rene/PhpstormProjects/MVC/templates/dist/productEditList.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.36',
-  'unifunc' => 'content_5ee76ee1897307_08608560',
+  'unifunc' => 'content_5ee885db8c6230_94182992',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '72ca129031a22be710a8eaa2af82f057d677638c' => 
     array (
       0 => '/home/rene/PhpstormProjects/MVC/templates/dist/productEditList.tpl',
-      1 => 1592225322,
+      1 => 1592296431,
       2 => 'file',
     ),
   ),
@@ -20,41 +20,41 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ee76ee1897307_08608560 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee885db8c6230_94182992 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 <html lang="">
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_2761657545ee76ee1866926_79279264', "subtitel_h1");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_9099765465ee885db8860f7_05796017', "subtitel_h1");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_11282876105ee76ee186a667_47798164', "titel");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17171720995ee885db889658_25683242', "titel");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15410558335ee76ee186dd91_78636110', "titel_button");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17506461555ee885db88c4d6_13261767', "titel_button");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17080413915ee76ee1870db5_85386163', "titel_button_href");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_19143925805ee885db88f2b8_96739341', "titel_button_href");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15382182905ee76ee1873c59_69845262', "body");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_9018240985ee885db8933f1_41982822', "body");
 ?>
 
 </html><?php $_smarty_tpl->inheritance->endChild($_smarty_tpl, "basic.tpl");
 }
 /* {block "subtitel_h1"} */
-class Block_2761657545ee76ee1866926_79279264 extends Smarty_Internal_Block
+class Block_9099765465ee885db8860f7_05796017 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'subtitel_h1' => 
   array (
-    0 => 'Block_2761657545ee76ee1866926_79279264',
+    0 => 'Block_9099765465ee885db8860f7_05796017',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -64,12 +64,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "subtitel_h1"} */
 /* {block "titel"} */
-class Block_11282876105ee76ee186a667_47798164 extends Smarty_Internal_Block
+class Block_17171720995ee885db889658_25683242 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel' => 
   array (
-    0 => 'Block_11282876105ee76ee186a667_47798164',
+    0 => 'Block_17171720995ee885db889658_25683242',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -79,12 +79,12 @@ Welcome to the Backstagearea<?php
 }
 /* {/block "titel"} */
 /* {block "titel_button"} */
-class Block_15410558335ee76ee186dd91_78636110 extends Smarty_Internal_Block
+class Block_17506461555ee885db88c4d6_13261767 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button' => 
   array (
-    0 => 'Block_15410558335ee76ee186dd91_78636110',
+    0 => 'Block_17506461555ee885db88c4d6_13261767',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -94,12 +94,12 @@ Back to home<?php
 }
 /* {/block "titel_button"} */
 /* {block "titel_button_href"} */
-class Block_17080413915ee76ee1870db5_85386163 extends Smarty_Internal_Block
+class Block_19143925805ee885db88f2b8_96739341 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'titel_button_href' => 
   array (
-    0 => 'Block_17080413915ee76ee1870db5_85386163',
+    0 => 'Block_19143925805ee885db88f2b8_96739341',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -109,12 +109,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "titel_button_href"} */
 /* {block "body"} */
-class Block_15382182905ee76ee1873c59_69845262 extends Smarty_Internal_Block
+class Block_9018240985ee885db8933f1_41982822 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'body' => 
   array (
-    0 => 'Block_15382182905ee76ee1873c59_69845262',
+    0 => 'Block_9018240985ee885db8933f1_41982822',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -185,9 +185,10 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <div class="text-center">
             <a href="/Index.php?cl=dashboard&admin=true" class="list-group-item list-group-item-action">Return to Dashboard</a>
             <form id="logout" name="logout" action="" method="post">
-                <button class="btn btn-primary btn-lg text-uppercase" id="logout" name="logout" type="submit">
-                    Logout
-                </button>
+                <a class="btn btn-primary btn-lg text-uppercase"
+                   name="edit" href="/Index.php?cl=login&page=logout&admin=true"
+                   type="submit"> Logout
+                </a>
             </form>
         </div>
     </section>

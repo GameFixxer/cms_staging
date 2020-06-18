@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace App\Controller\Backend;
 
 use App\Controller\BackendController;
+use App\Model\Dto\EmailDataTransferObject;
 use App\Model\Dto\UserDataTransferObject;
 use App\Model\UserEntityManager;
 use App\Service\Container;
 use App\Service\PasswordManager;
+use App\Service\SymfonyMailerManager;
 use App\Service\View;
 use App\Model\UserRepository;
 use App\Service\SessionUser;
-use function PHPUnit\Framework\isEmpty;
 
 class LoginController implements BackendController
 {
@@ -21,6 +22,7 @@ class LoginController implements BackendController
     private UserEntityManager $userEntityManager;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
+    private SymfonyMailerManager $mailManager;
 
 
     public function __construct(Container $container)
@@ -30,6 +32,7 @@ class LoginController implements BackendController
         $this->userRepository = $container->get(UserRepository::class);
         $this->userEntityManager = $container->get(UserEntityManager::class);
         $this->passwordManager = $container->get(PasswordManager::class);
+        $this->mailManager = $container->get(SymfonyMailerManager::class);
     }
 
     public function init(): void
@@ -54,16 +57,42 @@ class LoginController implements BackendController
 
         $this->view->addTemplate('login.tpl');
     }
+    public function resetAction()
+    {
+        $this->view->addTemplate('passwordReset.tpl');
+        if (isset($_POST['resetpassword']) && !empty(trim($_POST['email']))) {
+            $username = (string)trim($_POST['email']);
+            $userDTO = $this->userRepository->getUser($username);
+            if ($userDTO instanceof UserDataTransferObject) {
+                $resetCode = $this->passwordManager->createResetPassword();
+                $emailDTO = new EmailDataTransferObject();
+                $emailDTO->setTo($username);
+                $emailDTO->setSubject('Reseting your Password');
+                $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
+
+                if ($this->mailManager->sendMail($emailDTO)) {
+                    $sessionId = $this->setEmergencySession($username);
+                    $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
+                    $this->redirect(PasswordController::ROUTE, 'page=reset');
+                } else {
+                    throw new \Exception('Email could not be send.', 1);
+                }
+            } else {
+                $this->view->addTlpParam('loginMessage', 'Invalid Username');
+            }
+        }
+    }
+
+
     public function logoutAction()
     {
         $this->userSession->logoutUser();
         $this->redirect(LoginController::ROUTE, 'page=login');
-        //$this->view->addTemplate('login.tpl');
     }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
-            $this->userSession->setUser($username);
+            $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
             $this->redirect(DashboardController::ROUTE, 'page=list');
         }
@@ -77,5 +106,20 @@ class LoginController implements BackendController
         $extra3 = '&admin=true';
         //header("Location: http://$host$uri/$extra$extra2$extra3");
         header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
+    }
+    private function setEmergencySession(string $username):String
+    {
+        $sessionId = $this->passwordManager->encryptPassword($username.time());
+        $this->userSession->setSessionTimer();
+        $this->userSession->setSessionId($sessionId);
+        $this->userSession->setUser($username);
+        return $sessionId;
+    }
+
+    private function setEmergencyUserData(String $sessionId, string $resetCode, UserDataTransferObject $userDTO)
+    {
+        $userDTO->setSessionId($sessionId);
+        $userDTO->setResetPassword($resetCode);
+        $this->userEntityManager->save($userDTO);
     }
 }
