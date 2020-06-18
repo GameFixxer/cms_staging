@@ -1,7 +1,9 @@
 <?php
 
 
+namespace App\Tests\integration\BackendControllerTest;
 
+use UnitTester;
 
 class LogoutFromBackendTest extends \Codeception\Test\Unit
 {
@@ -21,6 +23,7 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
     }
 
     // tests
+
     public function testLoginIntoBackend(): void
     {
         $this->tester->arrange();
@@ -29,21 +32,17 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
         $_SERVER['REQUEST_METHOD'] = '';
 
         $_GET = [
-            'cl' => 'dashboard',
-            'page' => 'list',
-            'admin' => 'true',
-        ];
-
-        $this->tester->setUpBootstrap();
-
-        $_GET = [
             'cl' => 'login',
             'page' => 'logout',
             'admin' => 'true',
         ];
+
+        $this->tester->setUpBootstrap();
+
+
         $this->tester->setUpBootstrap();
         if ($_GET['cl'] === 'login' && $_GET['page'] === 'logout') {
-
+            $this->assertEmpty($_SESSION);
             $this->assertTrue(true);
         } else {
             $this->assertTrue(false);

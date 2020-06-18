@@ -90,6 +90,8 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setUsername('mate');
         $this->entity->setPassword('seeyou');
         $this->entity->setRole('user');
+        $this->entity->setSessionId('');
+        $this->entity->setResetPassword('');
 
         return $this->entity;
     }
