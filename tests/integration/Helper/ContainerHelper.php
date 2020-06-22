@@ -31,8 +31,8 @@ class ContainerHelper
     public function createArticleNumber():string
     {
         $list = $this->getProductRepository()->getProductList();
-        $idCounter = end($list)->getProductId()+1;
-        return (string) $idCounter;
+        $idCounter = end($list)->getProductId() + 1;
+        return (string)$idCounter;
     }
     public function getProductRepository():\App\Model\ProductRepository
     {

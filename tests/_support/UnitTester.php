@@ -80,8 +80,8 @@ class UnitTester extends \Codeception\Actor
     public function createArticleNumber():string
     {
         $list = $this->getProductRepository()->getProductList();
-        $idCounter = end($list)->getProductId()+1;
-        return (string) $idCounter;
+        $idCounter = end($list)->getProductId() + 1;
+        return (string)$idCounter;
     }
     public function logIntoBackend(): void
     {

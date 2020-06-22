@@ -89,6 +89,6 @@ class Product implements EntityInterface
      */
     public function setArticleNumber(string $articleNumber)
     {
-        $this->articleNumber =$articleNumber;
+        $this->articleNumber = $articleNumber;
     }
 }

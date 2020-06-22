@@ -130,8 +130,8 @@ class ProductController implements BackendController
     private function createArticleNumber():string
     {
         $list = $this->productRepository->getProductList();
-        $idCounter = end($list)->getProductId()+1;
-        return (string) $idCounter;
+        $idCounter = end($list)->getProductId() + 1;
+        return (string)$idCounter;
     }
 
     private function displayPageDoesNotExists(): void
