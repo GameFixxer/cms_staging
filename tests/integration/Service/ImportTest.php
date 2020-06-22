@@ -26,7 +26,7 @@ class ImportTest extends \Codeception\Test\Unit
         $this->container = new ContainerHelper();
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
-        $this->importer= new Importer($this->productEntityManager, $this->productRepository, dirname(__DIR__, 3).'/import/test/');
+        $this->importer = new Importer($this->productEntityManager, $this->productRepository, dirname(__DIR__, 3).'/import/test/');
         $rawProductList = $this->importer->mapCSVToDTO();
         if ($rawProductList !== null) {
             $this->deleteTestArticleFromDB($rawProductList);
@@ -54,7 +54,7 @@ class ImportTest extends \Codeception\Test\Unit
         $this->importer->import();
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
-            if ($productFromRepository!== null) {
+            if ($productFromRepository !== null) {
                 $this->assertEquals($product->getProductName(), $productFromRepository->getProductName());
                 $this->assertEquals($product->getProductDescription(), $productFromRepository->getProductDescription());
             }
@@ -65,7 +65,7 @@ class ImportTest extends \Codeception\Test\Unit
     public function deleteTestArticleFromDB(array $testArticleList)
     {
         foreach ($testArticleList as $product) {
-            if ($this->productRepository->getProduct($product->getArticleNumber())!== null) {
+            if ($this->productRepository->getProduct($product->getArticleNumber()) !== null) {
                 $this->productEntityManager->delete($product);
             }
         }
@@ -75,9 +75,9 @@ class ImportTest extends \Codeception\Test\Unit
     {
         $filesystem = new Filesystem();
         $filesystem->copy(
-            dirname(__DIR__, 3). '/import/dumper/test_product_abstract.csv',
+            dirname(__DIR__, 3).'/import/dumper/test_product_abstract.csv',
             dirname(__DIR__, 3).'//import/test/test_product_abstract.csv'
         );
-        $filesystem->remove(dirname(__DIR__, 3) . '/import/dumper/test_product_abstract.csv');
+        $filesystem->remove(dirname(__DIR__, 3).'/import/dumper/test_product_abstract.csv');
     }
 }

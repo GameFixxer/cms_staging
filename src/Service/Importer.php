@@ -37,11 +37,11 @@ class Importer
         }
     }
 
-    public function loadFromCSV() :?object
+    public function loadFromCSV() : ?object
     {
         $finder = new Finder();
         $finder->files()->name('*.csv')->in($this->path);
-        $productList = null ;
+        $productList = null;
         if ($finder->hasResults()) {
             foreach ($finder as $file) {
                 $csv = Reader::createFromPath($file->getPathname());
@@ -56,31 +56,31 @@ class Importer
     /**
      * @return ProductDataTransferObject[]
      */
-    public function mapCSVToDTO():?array
+    public function mapCSVToDTO(): ?array
     {
         $productList = array();
         $objects = $this->loadFromCSV();
 
-        $productMapper  = new ProductImportMapper();
+        $productMapper = new ProductImportMapper();
 
         foreach ($objects as $product) {
             $productEntity = new Product();
             $productEntity->setDescription($product['description.de_DE']);
             $productEntity->setName($product['name.de_DE']);
             $productEntity->setArticleNumber($product['sku']);
-            $productList[]=$productMapper->map($productEntity);
+            $productList[] = $productMapper->map($productEntity);
         }
         return $productList;
     }
-    private function checkForCreateOrUpdate(array $productList):?array
+    private function checkForCreateOrUpdate(array $productList): ?array
     {
         $updatedProductList = array();
         foreach ($productList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null && !$this->checkForSameValues($productFromRepository, $product)) {
-                $updatedProductList[]=$product;
+                $updatedProductList[] = $product;
             } elseif ($product !== null && $productFromRepository === null) {
-                $updatedProductList[]=$product;
+                $updatedProductList[] = $product;
             }
         }
         return $updatedProductList;
@@ -89,8 +89,8 @@ class Importer
     private function checkForSameValues(ProductDataTransferObject $productFromRepository, ProductDataTransferObject $product):bool
     {
         if (
-            $productFromRepository->getProductName()===$product->getProductName() &&
-            $productFromRepository->getProductDescription()=== $product->getProductDescription()) {
+            $productFromRepository->getProductName() === $product->getProductName() &&
+            $productFromRepository->getProductDescription() === $product->getProductDescription()) {
             return true;
         }
         return false;
