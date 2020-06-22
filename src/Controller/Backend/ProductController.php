@@ -46,11 +46,11 @@ class ProductController implements BackendController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
             case isset($_POST['delete']):
-                $this->deleteProduct((int)$_POST['delete']);
+                $this->deleteProduct((string)$_POST['delete']);
                 break;
             case isset($_POST['save']):
                 $this->saveProduct(
-                    (int)$_POST['save'],
+                    (string)$_POST['save'],
                     (string)$_POST['newpagedescription'],
                     (string)$_POST['newpagename']
                 );
@@ -58,7 +58,6 @@ class ProductController implements BackendController
             }
             $this->redirectToPage(self::ROUTE, '&page=list');
         }
-
     }
 
 
@@ -67,19 +66,19 @@ class ProductController implements BackendController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
             case !empty($_POST['delete']):
-                $this->deleteProduct((int)$_POST['delete']);
+                $this->deleteProduct((string)$_POST['delete']);
                 break;
             case !empty($_POST['save']):
 
                 $this->saveProduct(
-                    (int)$_POST['save'],
+                    (string)$_POST['save'],
                     (string)$_POST['newpagedescription'],
                     (string)$_POST['newpagename']
                 );
                 break;
             }
         }
-        $productDTO = $this->productRepository->getProduct((int)$_GET['id']);
+        $productDTO = $this->productRepository->getProduct($_GET['id']);
         if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTlpParam('product', $productDTO);
             $this->view->addTemplate('productEditPage.tpl');
@@ -88,19 +87,20 @@ class ProductController implements BackendController
         }
     }
 
-    private function deleteProduct(int $id): void
+    private function deleteProduct(string $articleNumber): void
     {
-        $productDTO = $this->productRepository->getProduct($id);
+        $productDTO = $this->productRepository->getProduct($articleNumber);
         if ($productDTO instanceof ProductDataTransferObject) {
             $this->productEntityManager->delete($productDTO);
         }
     }
 
-    private function saveProduct(int $id, string $description, string $name): void
+    private function saveProduct(string $articleNumber, string $description, string $name): void
     {
-        $productDTO = $this->productRepository->getProduct($id);
+        $productDTO = $this->productRepository->getProduct($articleNumber);
         if (!$productDTO instanceof ProductDataTransferObject) {
             $productDTO = new ProductDataTransferObject();
+            $productDTO->setArticleNumber($this->createArticleNumber());
         }
         $productDTO->setProductName($name);
         $productDTO->setProductDescription($description);
@@ -126,6 +126,12 @@ class ProductController implements BackendController
             }
         }
         return true;
+    }
+    private function createArticleNumber():string
+    {
+        $list = $this->productRepository->getProductList();
+        $idCounter = end($list)->getProductId()+1;
+        return (string) $idCounter;
     }
 
     private function displayPageDoesNotExists(): void

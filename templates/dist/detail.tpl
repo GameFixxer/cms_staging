@@ -26,7 +26,7 @@
                             /></a>
                         <div class="portfolio-caption">
                             <div class="portfolio-caption-heading">Name: {$page->getProductName()}</div>
-                            <div class="portfolio-caption-subheading text-muted">Id:{$page->getProductId()}</div>
+                            <div class="portfolio-caption-subheading text-muted">Id:{$page->getArticleNumber()}</div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             <div class="modal-body">
                                 <!-- Project Details Go Here-->
                                 <h2 class="text-uppercase">{$page->getProductName()}</h2>
-                                <p class="item-intro text-muted">ID: {$page->getProductId()}</p>
+                                <p class="item-intro text-muted">ID: {$page->getArticleNumber()}</p>
                                 <img class="img-fluid d-block mx-auto"
                                      src="assets/img/portfolio/01-full.jpg" alt=""/>
                                 <p>Description: {$page->getProductDescription()}!</p>

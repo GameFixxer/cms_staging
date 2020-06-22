@@ -15,11 +15,11 @@
             <div class="row">
                 {foreach name=aussen item=page from=$productlist}
                     <div class="col-lg-4 col-sm-6 mb-4">
-                        <object class="portfolio-item" id="{$page->getProductId()}" data-title={$page->getProductId()}>
+                        <object class="portfolio-item" id="{$page->getArticleNumber()}" data-title={$page->getArticleNumber()}>
                             <a class="portfolio-link"
-                               href=/Index.php?cl=detail&id={$page->getProductId()}>
+                               href=/Index.php?cl=detail&id={$page->getArticleNumber()}>
                                 <div class="portfolio-hover"
-                                     data-title={$page->getProductName()} id={$page->getProductId()}>
+                                     data-title={$page->getProductName()} id={$page->getArticleNumber()}>
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                 <img class="img-fluid" src="assets/img/portfolio/01-thumbnail.jpg" alt=""/></a>

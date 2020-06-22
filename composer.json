@@ -12,7 +12,10 @@
         "cycle/annotated": "^2.0",
         "symfony/finder": "^5.1",
         "ext-openssl": "*",
-        "symfony/mailer": "^5.1"
+        "symfony/mailer": "^5.1",
+        "league/csv": "^9.6",
+        "symfony/console": "^5.1",
+        "symfony/filesystem": "^5.1"
     },
     "autoload": {
         "psr-4": {
