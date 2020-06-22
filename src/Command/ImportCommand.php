@@ -19,6 +19,7 @@ class ImportCommand extends Command
 
     /**
      * ImportCommand constructor.
+     * @param Container $container
      */
     public function __construct(Container $container)
     {

@@ -6,7 +6,9 @@ namespace App\Tests\integration\Helper;
 use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
 use App\Service\Container;
+use App\Service\CsvImportLoader;
 use App\Service\DependencyProvider;
+use App\Service\ImportManager;
 
 class ContainerHelper
 {
@@ -49,5 +51,15 @@ class ContainerHelper
     public function getUserRepository():\App\Model\UserRepository
     {
         return $this->container->get(\App\Model\UserRepository::class);
+    }
+
+    public function getCsvImportLoader()
+    {
+        return $this->container->get(CsvImportLoader::class);
+    }
+
+    public function getImportManager()
+    {
+        return $this->container->get(ImportManager::class);
     }
 }

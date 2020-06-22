@@ -3,6 +3,7 @@ namespace App\Tests\integration\Service;
 
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
+use App\Service\CsvImportLoader;
 use App\Service\Importer;
 
 use App\Tests\integration\Helper\ContainerHelper;
@@ -20,14 +21,23 @@ class ImportTest extends \Codeception\Test\Unit
     protected ProductRepository $productRepository;
     protected ProductEntityManager $productEntityManager;
     protected Importer $importer;
+    protected CsvImportLoader $csvLoader;
+    protected String $path;
 
     protected function _before()
     {
         $this->container = new ContainerHelper();
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
-        $this->importer = new Importer($this->productEntityManager, $this->productRepository, dirname(__DIR__, 3).'/import/test/');
-        $rawProductList = $this->importer->mapCSVToDTO();
+        $this->csvLoader = $this->container->getCsvImportLoader();
+        $this->path = dirname(__DIR__, 3).'/import/test/';
+        $this->importer = new Importer(
+            $this->productEntityManager,
+            $this->csvLoader,
+            $this->container->getImportManager(),
+            $this->path
+        );
+        $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if ($rawProductList !== null) {
             $this->deleteTestArticleFromDB($rawProductList);
         }
@@ -39,7 +49,7 @@ class ImportTest extends \Codeception\Test\Unit
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
         $this->setBackFiles();
-        $rawProductList = $this->importer->mapCSVToDTO();
+        $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if ($rawProductList !== null) {
             $this->deleteTestArticleFromDB($rawProductList);
         }
@@ -49,7 +59,7 @@ class ImportTest extends \Codeception\Test\Unit
     // tests
     public function testProductImportNewProduct(): void
     {
-        $importList = $this->importer->mapCSVToDTO();
+        $importList = $this->csvLoader->mapCSVToDTO($this->path);
         $this->setBackFiles();
         $this->importer->import();
         foreach ($importList as $product) {
