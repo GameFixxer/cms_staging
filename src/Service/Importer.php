@@ -26,10 +26,13 @@ class Importer
 
     public function import():void
     {
-        $productList = $this->checkForCreateOrUpdate($this->mapCSVToDTO());
-        foreach ($productList as $product) {
-            if ($product instanceof ProductDataTransferObject) {
-                $this->productEntityManager->save($product);
+        $rawProductList = $this->mapCSVToDTO();
+        if ($rawProductList !== null) {
+            $productList = $this->checkForCreateOrUpdate($rawProductList);
+            foreach ($productList as $product) {
+                if ($product instanceof ProductDataTransferObject) {
+                    $this->productEntityManager->save($product);
+                }
             }
         }
     }

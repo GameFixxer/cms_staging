@@ -27,7 +27,10 @@ class ImportTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->importer= new Importer($this->productEntityManager, $this->productRepository, dirname(__DIR__, 3).'/import/test/');
-        $this->deleteTestArticleFromDB($this->importer->mapCSVToDTO());
+        $rawProductList = $this->importer->mapCSVToDTO();
+        if ($rawProductList !== null) {
+            $this->deleteTestArticleFromDB($rawProductList);
+        }
         $this->setBackFiles();
     }
 
@@ -36,7 +39,10 @@ class ImportTest extends \Codeception\Test\Unit
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
         $this->setBackFiles();
-        $this->deleteTestArticleFromDB($this->importer->mapCSVToDTO());
+        $rawProductList = $this->importer->mapCSVToDTO();
+        if ($rawProductList !== null) {
+            $this->deleteTestArticleFromDB($rawProductList);
+        }
         $this->setBackFiles();
     }
 
