@@ -38,7 +38,7 @@ class EditProductTest extends \Codeception\Test\Unit
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmpProductList = (array)$this->tester->getProductList();
         $singleProduct = (array)$this->tester->exchangeDtoToSmartyParam(end($tmpProductList), 'product');
-        $id = end($tmpProductList)->getProductId();
+        $id = end($tmpProductList)->getArticleNumber();
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_GET = [

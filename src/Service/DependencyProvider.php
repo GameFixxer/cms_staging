@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Service;
 
 use App\Model\Entity\EntityInterface;
@@ -45,6 +45,7 @@ class DependencyProvider
         $container->set(UserMapper::class, new UserMapper());
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
+
         // Repositorys
         $container->setFactory(ProductRepository::class, function(Container $container) {
             /** @var ORM $orm */
@@ -68,5 +69,8 @@ class DependencyProvider
             ProductEntityManager::class,
             new ProductEntityManager($container->get(DatabaseManager::class), $container->get(ProductRepository::class))
         );
+
+        //Import
+        $container->set(Importer::class, new Importer($container->get(ProductEntityManager::class), $container->get(ProductRepository::class), dirname(__DIR__, 2).'../import/'));
     }
 }

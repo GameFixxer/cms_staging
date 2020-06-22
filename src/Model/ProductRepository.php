@@ -41,9 +41,9 @@ class ProductRepository
         return $productList;
     }
 
-    public function getProduct(int $id): ?ProductDataTransferObject
+    public function getProduct(string $articleNumber): ?ProductDataTransferObject
     {
-        $productEntity = $this->ormProductRepository->findByPK($id);
+        $productEntity = $this->ormProductRepository->findOne(['article_number'=>$articleNumber]);
         if ($productEntity instanceof Product) {
             return $this->productMapper->map($productEntity);
         }

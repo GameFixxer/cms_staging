@@ -8,7 +8,6 @@ use App\Model\Dto\EmailDataTransferObject;
 use App\Model\Dto\UserDataTransferObject;
 use App\Model\UserEntityManager;
 use App\Service\Container;
-use App\Service\EmailManager;
 use App\Service\PasswordManager;
 use App\Service\View;
 use App\Model\UserRepository;

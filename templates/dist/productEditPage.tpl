@@ -11,7 +11,7 @@
 <section class="page-section bg-light" id="portfolio">
     <div class="container">
         <div class="text-center">
-            <h2 class="section-heading text-uppercase">ID: {$product->getProductId()}-{$product->getProductName()}</h2>
+            <h2 class="section-heading text-uppercase">ID: {$product->getArticleNumber()}-{$product->getProductName()}</h2>
             <h3 class="section-subheading text-muted"></h3>
                 <div class="text-center">
                     <h2 class="text-uppercase"></h2>
@@ -39,7 +39,7 @@
                                 <div class="text-center">
                                     <div id="submit">
                                         <button class="btn btn-primary btn-group-sm text-uppercase" id="save"
-                                                name="save" type="submit" value={$product->getProductId()}>
+                                                name="save" type="submit" value={$product->getArticleNumber()}>
                                             Update
                                     </div>
                                 </div>

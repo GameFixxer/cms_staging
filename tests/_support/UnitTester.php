@@ -47,10 +47,14 @@ class UnitTester extends \Codeception\Actor
     {
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
-    public function getProduct(int $id): ?ProductDataTransferObject
+    public function getProduct(string $articleNumber): ?ProductDataTransferObject
     {
         $productRepository = $this->getProductRepository();
-        return $productRepository->getProduct($id);
+        return $productRepository->getProduct($articleNumber);
+    }
+    public function getContainer():Container
+    {
+        return $this->container;
     }
     public function getProductList()
     {
@@ -73,6 +77,12 @@ class UnitTester extends \Codeception\Actor
         $tmp->loginUser('nina');
         $tmp->setUserRole('root');
     }
+    public function createArticleNumber():string
+    {
+        $list = $this->getProductRepository()->getProductList();
+        $idCounter = end($list)->getProductId() + 1;
+        return (string)$idCounter;
+    }
     public function logIntoBackend(): void
     {
         $containerProvider = new DependencyProvider();
@@ -86,4 +96,6 @@ class UnitTester extends \Codeception\Actor
     {
         return $this->container->get(\App\Model\ProductRepository::class);
     }
+
+
 }

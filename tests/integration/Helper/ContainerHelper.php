@@ -24,7 +24,16 @@ class ContainerHelper
         $containerProvider->providerDependency($this->container);
     }
 
-
+    public function getContainer():Container
+    {
+        return $this->container;
+    }
+    public function createArticleNumber():string
+    {
+        $list = $this->getProductRepository()->getProductList();
+        $idCounter = end($list)->getProductId() + 1;
+        return (string)$idCounter;
+    }
     public function getProductRepository():\App\Model\ProductRepository
     {
         return $this->container->get(\App\Model\ProductRepository::class);

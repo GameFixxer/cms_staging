@@ -24,7 +24,7 @@ class DetailControll implements Controller
 
     public function action(): void
     {
-        $pageId = (int)($_GET['id'] ?? '0');
+        $pageId = ($_GET['id'] ?? '0');
         $productDTO = $this->productRepository->getProduct($pageId);
         if ($pageId === 0 || !($this->checkForValidDTO($productDTO))) {
             $this->view->addTlpParam('error', '404 Page not found.');
