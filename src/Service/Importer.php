@@ -77,9 +77,9 @@ class Importer
         $updatedProductList = array();
         foreach ($productList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
-            if ($productFromRepository !== null && !$this->checkForSameValues($productFromRepository, $product)) {
+            if ($productFromRepository instanceof ProductDataTransferObject && !$this->checkForSameValues($productFromRepository, $product)) {
                 $updatedProductList[] = $product;
-            } elseif ($product !== null && $productFromRepository === null) {
+            } elseif ($product instanceof ProductDataTransferObject && $productFromRepository === null) {
                 $updatedProductList[] = $product;
             }
         }
