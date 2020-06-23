@@ -46,6 +46,7 @@ class DependencyProvider
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
 
+
         // Repositorys
         $container->setFactory(ProductRepository::class, function(Container $container) {
             /** @var ORM $orm */
@@ -71,6 +72,16 @@ class DependencyProvider
         );
 
         //Import
-        $container->set(Importer::class, new Importer($container->get(ProductEntityManager::class), $container->get(ProductRepository::class), dirname(__DIR__, 2).'../import/'));
+        $container->set(CsvImportLoader::class, new CsvImportLoader());
+        $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class)));
+        $container->set(
+            Importer::class,
+            new Importer(
+                $container->get(ProductEntityManager::class),
+                $container->get(CsvImportLoader::class),
+                $container->get(ImportManager::class),
+                dirname(__DIR__, 2).'../import/'
+            )
+        );
     }
 }
