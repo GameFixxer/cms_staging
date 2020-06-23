@@ -70,7 +70,7 @@ class ImportTest extends \Codeception\Test\Unit
     public function testProductImportUpdate():void
     {
         $this->importer->import();
-        $importList = $this->csvLoader->mapCSVToDTO(dirname(__DIR__, 3) . '/import/testUpdate/');
+        $importList = $this->csvLoader->mapCSVToDTO(dirname(__DIR__, 3).'/import/testUpdate/');
         $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/test/test_product_abstract2.csv');
         $this->importer->import();
 
