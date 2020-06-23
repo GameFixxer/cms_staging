@@ -10,7 +10,7 @@ class CsvImportLoader
 {
     public function mapCSVToDTO(string $path): array
     {
-        $productList  = [];
+        $productList = [];
         $objects = $this->loadFromCSV($path);
 
         $productMapper = new ProductImportMapper();
