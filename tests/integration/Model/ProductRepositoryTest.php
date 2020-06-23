@@ -47,7 +47,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $productRepository = $this->container->getProductRepository();
 
-        $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
+        $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticle_number());
 
         $this->assertSame($this->entity->getName(), $productDtoFromRepository->getProductName());
         $this->assertSame($this->entity->getDescription(), $productDtoFromRepository->getProductDescription());
@@ -87,7 +87,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $this->entity = new Product();
         $this->entity->setName('fucking neighour');
         $this->entity->setDescription('a very noisy neighbour');
-        $this->entity->setArticleNumber($this->container->createArticleNumber());
+        $this->entity->setArticle_Number($this->container->createArticleNumber());
+        $this->entity->setCategory('not set');
 
         return $this->entity;
     }

@@ -1,26 +1,29 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Service;
 
-use App\Model\Entity\Product;
-use App\Model\Mapper\ProductImportMapper;
 use League\Csv\Reader;
+use function PHPUnit\Framework\isEmpty;
 
 class CsvImportLoader
 {
+    private array $header;
+
     public function mapCSVToDTO(string $path): array
     {
         $productList = [];
+
         $objects = $this->loadFromCSV($path);
 
-        $productMapper = new ProductImportMapper();
+        $mappingAssistant = new MappingAssistant();
 
-        foreach ($objects as $product) {
-            $productEntity = new Product();
-            $productEntity->setDescription($product['description.de_DE']);
-            $productEntity->setName($product['name.de_DE']);
-            $productEntity->setArticleNumber($product['sku']);
-            $productList[] = $productMapper->map($productEntity);
+        $headerList = $mappingAssistant->createMappingList($this->header);
+
+        if (!isEmpty($headerList)) {
+            foreach ($objects as $product) {
+                $mappingAssistant->mapInputToDTO($headerList, $product);
+            }
         }
         return $productList;
     }
@@ -33,6 +36,7 @@ class CsvImportLoader
         foreach ($finder as $file) {
             $csv = Reader::createFromPath($file->getPathname());
             $csv->setHeaderOffset(0);
+            $this->header= $csv->getHeader();
             $productList = $csv->getRecords();
             $fileFinder->moveImportedFilesToDumper($file);
         }

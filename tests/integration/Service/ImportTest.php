@@ -1,7 +1,6 @@
 <?php
 namespace App\Tests\integration\Service;
 
-# EL53iVf54m6mzZV
 use App\Model\Entity\Product;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
@@ -102,5 +101,12 @@ class ImportTest extends \Codeception\Test\Unit
             dirname(__DIR__, 3).$target
         );
         $this->filesystem->remove(dirname(__DIR__, 3).$origin);
+    }
+    /**
+     * @group service
+     */
+    public function testDynamicMapping()
+    {
+        $importList = $this->csvLoader->mapCSVToDTO($this->path);
     }
 }

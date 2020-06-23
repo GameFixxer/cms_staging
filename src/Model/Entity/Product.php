@@ -35,6 +35,12 @@ class Product implements EntityInterface
      * @Column(type="string")
      * @var string
      */
+    protected $category;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
     protected $description;
 
     /**
@@ -48,7 +54,7 @@ class Product implements EntityInterface
     /**
      * @return string
      */
-    public function getArticleNumber(): string
+    public function getArticle_Number(): string
     {
         return $this->articleNumber;
     }
@@ -72,6 +78,22 @@ class Product implements EntityInterface
     /**
      * @return string
      */
+    public function getCategory(): string
+    {
+        return $this->name;
+    }
+    /**
+     * @param string $category
+     */
+
+    public function setCategory(string $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return $this->description;
@@ -87,7 +109,7 @@ class Product implements EntityInterface
     /**
      * @param string $articleNumber
      */
-    public function setArticleNumber(string $articleNumber)
+    public function setArticle_Number(string $articleNumber)
     {
         $this->articleNumber = $articleNumber;
     }

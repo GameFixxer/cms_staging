@@ -45,8 +45,9 @@ class ProductEntityManager
             $entity = new Product();
         }
         $entity->setName($product->getProductName());
+        $entity->setCategory($product->getCategory());
         $entity->setDescription($product->getProductDescription());
-        $entity->setArticleNumber($product->getArticleNumber());
+        $entity->setArticle_Number($product->getArticleNumber());
         $transaction->persist($entity);
         $transaction->run();
 

@@ -13,7 +13,8 @@ class ProductImportMapper implements ProductMapperInterface
         $productDataTransferObject = new ProductDataTransferObject();
         $productDataTransferObject->setProductName($product->getName());
         $productDataTransferObject->setProductDescription($product->getDescription());
-        $productDataTransferObject->setArticleNumber($product->getArticleNumber());
+        $productDataTransferObject->setArticleNumber($product->getArticle_number());
+        $productDataTransferObject->setCategory($product->getCategory());
 
         return $productDataTransferObject;
     }
