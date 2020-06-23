@@ -7,8 +7,6 @@ use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\CsvImportLoader;
 use App\Service\Importer;
-use Cycle\ORM\ORM;
-use Cycle\ORM\Select\SourceProviderInterface;
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
@@ -51,10 +49,7 @@ class ImportTest extends \Codeception\Test\Unit
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
-        $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
-        if ($rawProductList !== null) {
-            $this->deleteTestArticleFromDB();
-        }
+        $this->deleteTestArticleFromDB();
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
     }
 
@@ -98,7 +93,7 @@ class ImportTest extends \Codeception\Test\Unit
         $orm = $this->container->getOrmProductRepository();
         $source = $orm->getSource(Product::class);
         $db = $source->getDatabase();
-        $affected = $db->execute('DELETE FROM product WHERE article_number LIKE \'Unit%\' ');
+        $db->execute('DELETE FROM product WHERE article_number LIKE \'Unit%\' ');
     }
 
     private function setBackFiles(string $origin, string $target)
