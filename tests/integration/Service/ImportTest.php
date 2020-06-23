@@ -48,7 +48,6 @@ class ImportTest extends \Codeception\Test\Unit
     {
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
-        $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
         $this->deleteTestArticleFromDB();
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
     }
