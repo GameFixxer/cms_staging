@@ -7,8 +7,10 @@ use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
 use App\Service\Container;
 use App\Service\CsvImportLoader;
+use App\Service\DatabaseManager;
 use App\Service\DependencyProvider;
 use App\Service\ImportManager;
+use Cycle\ORM\ORM;
 
 class ContainerHelper
 {
@@ -53,13 +55,18 @@ class ContainerHelper
         return $this->container->get(\App\Model\UserRepository::class);
     }
 
-    public function getCsvImportLoader()
+    public function getCsvImportLoader():CsvImportLoader
     {
         return $this->container->get(CsvImportLoader::class);
     }
 
-    public function getImportManager()
+    public function getImportManager():ImportManager
     {
         return $this->container->get(ImportManager::class);
+    }
+
+    public function getOrmProductRepository()
+    {
+        return $this->container->get(DatabaseManager::class);
     }
 }

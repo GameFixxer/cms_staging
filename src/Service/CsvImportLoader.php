@@ -5,15 +5,12 @@ namespace App\Service;
 use App\Model\Entity\Product;
 use App\Model\Mapper\ProductImportMapper;
 use League\Csv\Reader;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 
 class CsvImportLoader
 {
-
-    public function mapCSVToDTO(string $path): ?array
+    public function mapCSVToDTO(string $path): array
     {
-        $productList = array();
+        $productList  = [];
         $objects = $this->loadFromCSV($path);
 
         $productMapper = new ProductImportMapper();
@@ -28,29 +25,17 @@ class CsvImportLoader
         return $productList;
     }
 
-    private function loadFromCSV(string $path) : ?object
+    private function loadFromCSV(string $path) : ?\Iterator
     {
-        $finder = new Finder();
-        $finder->files()->name('*.csv')->in($path);
+        $fileFinder = new  FileManager();
+        $finder = $fileFinder->getFiles($path);
         $productList = null;
-        if ($finder->hasResults()) {
-            foreach ($finder as $file) {
-                $csv = Reader::createFromPath($file->getPathname());
-                $csv->setHeaderOffset(0);
-                $productList = $csv->getRecords();
-                $this->moveImportedFilesToDumper($file);
-            }
+        foreach ($finder as $file) {
+            $csv = Reader::createFromPath($file->getPathname());
+            $csv->setHeaderOffset(0);
+            $productList = $csv->getRecords();
+            $fileFinder->moveImportedFilesToDumper($file);
         }
         return $productList;
-    }
-
-    private function moveImportedFilesToDumper(\SplFileInfo $file):void
-    {
-        $filesystem = new Filesystem();
-        $filesystem->copy(
-            '/../'.$file->getPath().'/'.$file->getFilename(),
-            $file->getPath().'/../dumper/'.$file->getFilename()
-        );
-        $filesystem->remove('/../'.$file->getPath().'/'.$file->getFilename());
     }
 }

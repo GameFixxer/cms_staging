@@ -1,11 +1,14 @@
 <?php
 namespace App\Tests\integration\Service;
 
+# EL53iVf54m6mzZV
+use App\Model\Entity\Product;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Service\CsvImportLoader;
 use App\Service\Importer;
-
+use Cycle\ORM\ORM;
+use Cycle\ORM\Select\SourceProviderInterface;
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
@@ -23,71 +26,87 @@ class ImportTest extends \Codeception\Test\Unit
     protected Importer $importer;
     protected CsvImportLoader $csvLoader;
     protected String $path;
+    protected Filesystem $filesystem;
 
     protected function _before()
     {
+        $this->filesystem = new Filesystem();
         $this->container = new ContainerHelper();
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->csvLoader = $this->container->getCsvImportLoader();
+
         $this->path = dirname(__DIR__, 3).'/import/test/';
+
         $this->importer = new Importer(
             $this->productEntityManager,
             $this->csvLoader,
             $this->container->getImportManager(),
             $this->path
         );
-        $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
-        if ($rawProductList !== null) {
-            $this->deleteTestArticleFromDB($rawProductList);
-        }
-        $this->setBackFiles();
     }
 
     protected function _after()
     {
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
-        $this->setBackFiles();
+        $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
         $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if ($rawProductList !== null) {
-            $this->deleteTestArticleFromDB($rawProductList);
+            $this->deleteTestArticleFromDB();
         }
-        $this->setBackFiles();
+        $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
     }
 
     // tests
     public function testProductImportNewProduct(): void
     {
         $importList = $this->csvLoader->mapCSVToDTO($this->path);
-        $this->setBackFiles();
+        $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
         $this->importer->import();
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertEquals($product->getProductName(), $productFromRepository->getProductName());
-                $this->assertEquals($product->getProductDescription(), $productFromRepository->getProductDescription());
+                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
+                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
             }
         }
     }
 
-
-    public function deleteTestArticleFromDB(array $testArticleList)
+    public function testProductImportUpdate():void
     {
-        foreach ($testArticleList as $product) {
-            if ($this->productRepository->getProduct($product->getArticleNumber()) !== null) {
-                $this->productEntityManager->delete($product);
+        $this->importer->import();
+        $importList = $this->csvLoader->mapCSVToDTO(dirname(__DIR__, 3) . '/import/testUpdate/');
+        $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/test/test_product_abstract2.csv');
+        $this->importer->import();
+
+        foreach ($importList as $product) {
+            $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
+            if ($productFromRepository !== null) {
+                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
+                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
             }
         }
+        $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/testUpdate/test_product_abstract2.csv');
     }
 
-    private function setBackFiles()
+
+
+
+    public function deleteTestArticleFromDB()
     {
-        $filesystem = new Filesystem();
-        $filesystem->copy(
-            dirname(__DIR__, 3).'/import/dumper/test_product_abstract.csv',
-            dirname(__DIR__, 3).'//import/test/test_product_abstract.csv'
+        $orm = $this->container->getOrmProductRepository();
+        $source = $orm->getSource(Product::class);
+        $db = $source->getDatabase();
+        $affected = $db->execute('DELETE FROM product WHERE article_number LIKE \'Unit%\' ');
+    }
+
+    private function setBackFiles(string $origin, string $target)
+    {
+        $this->filesystem->copy(
+            dirname(__DIR__, 3).$origin,
+            dirname(__DIR__, 3).$target
         );
-        $filesystem->remove(dirname(__DIR__, 3).'/import/dumper/test_product_abstract.csv');
+        $this->filesystem->remove(dirname(__DIR__, 3).$origin);
     }
 }
