@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductEntityManager;
+use function PHPUnit\Framework\isEmpty;
 
 class Importer
 {
@@ -23,7 +24,7 @@ class Importer
     public function import():void
     {
         $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
-        if ($rawProductList !== null) {
+        if (! isEmpty($rawProductList)) {
             $productList = $this->importManager->checkForCreateOrUpdate($rawProductList);
             foreach ($productList as $product) {
                 if ($product instanceof ProductDataTransferObject) {
