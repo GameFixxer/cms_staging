@@ -13,7 +13,7 @@ class ProductDataTransferObject
     private string $category = 'not set';
 
 
-    public function setProductName(string $name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -23,21 +23,21 @@ class ProductDataTransferObject
         $this->category = $category;
     }
 
-    public function setProductId(int $id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
-    public function setArticleNumber(string $articleNumber): void
+    public function setNumber(string $articleNumber): void
     {
         $this->articleNumber = $articleNumber;
     }
 
-    public function setProductDescription(string $desc): void
+    public function setDescription(string $desc): void
     {
         $this->desc = $desc;
     }
 
-    public function getProductId(): int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -45,7 +45,7 @@ class ProductDataTransferObject
     {
         return $this->articleNumber;
     }
-    public function getProductName(): string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -55,8 +55,13 @@ class ProductDataTransferObject
         return $this->category;
     }
 
-    public function getProductDescription(): string
+    public function getDescription(): string
     {
         return $this->desc;
+    }
+
+    public function setArticleNumber(string $articleNumber):void
+    {
+        $this->articleNumber = $articleNumber;
     }
 }

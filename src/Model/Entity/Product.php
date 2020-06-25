@@ -13,6 +13,7 @@ use Cycle\Annotated\Annotation\Column;
  */
 class Product implements EntityInterface
 {
+    public const TABLE = 'product';
     /**
      * @Column(type="primary")
      * @var int
@@ -54,7 +55,7 @@ class Product implements EntityInterface
     /**
      * @return string
      */
-    public function getArticle_Number(): string
+    public function getArticleNumber(): string
     {
         return $this->articleNumber;
     }
@@ -109,7 +110,7 @@ class Product implements EntityInterface
     /**
      * @param string $articleNumber
      */
-    public function setArticle_Number(string $articleNumber)
+    public function setArticleNumber(string $articleNumber)
     {
         $this->articleNumber = $articleNumber;
     }

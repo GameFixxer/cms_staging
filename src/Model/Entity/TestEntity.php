@@ -13,6 +13,7 @@ use Cycle\Annotated\Annotation\Column;
  */
 class TestEntity implements EntityInterface
 {
+    public const TABLE = 'test';
     /**
      * @Column(type="primary")
      * @var int

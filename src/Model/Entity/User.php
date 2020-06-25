@@ -14,6 +14,7 @@ use PhpParser\Node\Scalar\String_;
  */
 class User implements EntityInterface
 {
+    public const TABLE = 'user';
     /**
      * @Column(type="primary")
      * @var int

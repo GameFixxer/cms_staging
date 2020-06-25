@@ -1,11 +1,11 @@
 <?php
 namespace App\Tests\integration\Service;
 
+use App\Import\CsvImportLoader;
+use App\Import\Importer;
 use App\Model\Entity\Product;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
-use App\Service\CsvImportLoader;
-use App\Service\Importer;
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
@@ -60,8 +60,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
-                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
+                $this->assertSame($product->getName(), $productFromRepository->getName());
+                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
             }
         }
     }
@@ -76,8 +76,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
-                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
+                $this->assertSame($product->getName(), $productFromRepository->getName());
+                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
             }
         }
         $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/testUpdate/test_product_abstract2.csv');

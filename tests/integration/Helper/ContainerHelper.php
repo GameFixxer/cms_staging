@@ -3,13 +3,14 @@
 
 namespace App\Tests\integration\Helper;
 
+use App\Import\CsvImportLoader;
+use App\Import\ImportManager;
+use App\Model\CategoryEntityManager;
 use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
 use App\Service\Container;
-use App\Service\CsvImportLoader;
 use App\Service\DatabaseManager;
 use App\Service\DependencyProvider;
-use App\Service\ImportManager;
 use Cycle\ORM\ORM;
 
 class ContainerHelper
@@ -35,7 +36,7 @@ class ContainerHelper
     public function createArticleNumber():string
     {
         $list = $this->getProductRepository()->getProductList();
-        $idCounter = end($list)->getProductId() + 1;
+        $idCounter = end($list)->getId() + 1;
         return (string)$idCounter;
     }
     public function getProductRepository():\App\Model\ProductRepository
@@ -53,6 +54,15 @@ class ContainerHelper
     public function getUserRepository():\App\Model\UserRepository
     {
         return $this->container->get(\App\Model\UserRepository::class);
+    }
+
+    public function getCategoryEntityManager():\App\Model\CategoryEntityManager
+    {
+        return $this->container->get(CategoryEntityManager::class);
+    }
+    public function getCategoryRepository():\App\Model\CategoryRepository
+    {
+        return $this->container->get(\App\Model\CategoryRepository::class);
     }
 
     public function getCsvImportLoader():CsvImportLoader

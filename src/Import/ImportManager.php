@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Service;
+namespace App\Import;
 
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductRepository;
@@ -32,8 +32,8 @@ class ImportManager
     private function checkForSameValues(ProductDataTransferObject $productFromRepository, ProductDataTransferObject $product):bool
     {
         if (
-            $productFromRepository->getProductName() === $product->getProductName() &&
-            $productFromRepository->getProductDescription() === $product->getProductDescription()) {
+            $productFromRepository->getName() === $product->getName() &&
+            $productFromRepository->getDescription() === $product->getDescription()) {
             return true;
         }
         return false;

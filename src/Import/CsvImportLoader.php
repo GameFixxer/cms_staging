@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Import;
 
 use League\Csv\Reader;
 use function PHPUnit\Framework\isEmpty;
@@ -19,16 +19,15 @@ class CsvImportLoader
         $mappingAssistant = new MappingAssistant();
 
         $headerList = $mappingAssistant->createMappingList($this->header);
-
-        if (!isEmpty($headerList)) {
+        if (isset($headerList)) {
             foreach ($objects as $product) {
-                $mappingAssistant->mapInputToDTO($headerList, $product);
+                $productList[] = $mappingAssistant->mapInputToDTO($headerList, $product);
             }
         }
         return $productList;
     }
 
-    private function loadFromCSV(string $path) : ?\Iterator
+    public function loadFromCSV(string $path) : ?\Iterator
     {
         $fileFinder = new  FileManager();
         $finder = $fileFinder->getFiles($path);
@@ -41,5 +40,10 @@ class CsvImportLoader
             $fileFinder->moveImportedFilesToDumper($file);
         }
         return $productList;
+    }
+
+    public function getHeader()
+    {
+        return $this->header;
     }
 }

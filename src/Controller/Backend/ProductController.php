@@ -100,10 +100,10 @@ class ProductController implements BackendController
         $productDTO = $this->productRepository->getProduct($articleNumber);
         if (!$productDTO instanceof ProductDataTransferObject) {
             $productDTO = new ProductDataTransferObject();
-            $productDTO->setArticleNumber($this->createArticleNumber());
+            $productDTO->setArticleNumber((string)rand(1,2229));
         }
-        $productDTO->setProductName($name);
-        $productDTO->setProductDescription($description);
+        $productDTO->setName($name);
+        $productDTO->setDescription($description);
         $this->productEntityManager->save($productDTO);
     }
 
@@ -130,7 +130,7 @@ class ProductController implements BackendController
     private function createArticleNumber():string
     {
         $list = $this->productRepository->getProductList();
-        $idCounter = end($list)->getProductId() + 1;
+        $idCounter = end($list)->getId() + 1;
         return (string)$idCounter;
     }
 
