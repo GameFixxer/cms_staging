@@ -89,7 +89,6 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(EntityProvider::class, new EntityProvider());
         $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class), $container->get(CategoryRepository::class)));
         $container->set(
             Importer::class,
@@ -98,8 +97,7 @@ class DependencyProvider
                 $container->get(CategoryEntityManager::class),
                 $container->get(CsvImportLoader::class),
                 $container->get(ImportManager::class),
-                dirname(__DIR__, 2).'../import/',
-                $container->get(EntityProvider::class)
+                dirname(__DIR__, 2).'../import/'
             )
         );
     }

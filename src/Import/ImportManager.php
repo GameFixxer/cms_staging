@@ -61,17 +61,16 @@ class ImportManager
             if ($categoryFromRepository instanceof CategoryDataTransferObject && !$this->checkForCategoryChanges($categoryFromRepository, $column)) {
                 $updatedCategoryList[] = $column;
             } elseif ($column instanceof CategoryDataTransferObject && $categoryFromRepository === null) {
-
                 $updatedCategoryList[] = $column;
             }
         }
         return $updatedCategoryList;
     }
 
-    public function extractFromCsvDTO(EntityProvider $entityProvider, array $csvList):void
+    public function extractFromCsvDTO(array $csvList):void
     {
-        $productImport = new ImportProduct($entityProvider);
-        $categoryImport = new ImportCategory($entityProvider);
+        $productImport = new ImportProduct();
+        $categoryImport = new ImportCategory();
         foreach ($csvList as $column) {
             $category = $categoryImport->extractCategory($column);
             $product = $productImport->extractProduct($column);

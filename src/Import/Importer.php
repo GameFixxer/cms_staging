@@ -12,7 +12,6 @@ class Importer
     private ProductEntityManager $productEntityManager;
     private CsvImportLoader $csvLoader;
     private ImportManager $importManager;
-    private EntityProvider $entityProvider;
     private CategoryEntityManager $categoryEntityManager;
     private String $path;
 
@@ -21,15 +20,13 @@ class Importer
         CategoryEntityManager $categoryEntityManager,
         CsvImportLoader $csvLoader,
         ImportManager $importManager,
-        string $path,
-        EntityProvider $entityProvider
+        string $path
     )
     {
         $this->productEntityManager = $productEntityManager;
         $this->csvLoader = $csvLoader;
         $this->importManager = $importManager;
         $this->path = $path;
-        $this->entityProvider = $entityProvider;
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
@@ -49,7 +46,7 @@ class Importer
     {
         $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if (isset($rawProductList)) {
-            $this->importManager->extractFromCsvDTO($this->entityProvider, $rawProductList);
+            $this->importManager->extractFromCsvDTO($rawProductList);
             $productList = $this->importManager->checkForValidProductSave();
             foreach ($productList as $product) {
                 if ($product instanceof ProductDataTransferObject) {

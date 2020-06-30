@@ -7,6 +7,23 @@ class CategoryDataTransferObject
 {
     private int $categoryId = 0;
     private string $categoryKey = "";
+    private ?int $productId = null;
+
+    /**
+     * @return int|null
+     */
+    public function getProductId(): ?int
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param int|null $productId
+     */
+    public function setProductId(?int $productId): void
+    {
+        $this->productId = $productId;
+    }
 
     public function getCategoryId(): int
     {

@@ -89,7 +89,7 @@ class Product implements EntityInterface
      * @param string $category
      */
 
-    public function setCategory(string $category): void
+    public function setCategory(?string $category): void
     {
         $this->category = $category;
     }

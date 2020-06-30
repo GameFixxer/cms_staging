@@ -35,9 +35,7 @@ class ContainerHelper
     }
     public function createArticleNumber():string
     {
-        $list = $this->getProductRepository()->getProductList();
-        $idCounter = end($list)->getId() + 1;
-        return (string)$idCounter;
+        return rand(1, 1000). substr(rand(1, 1000), rand(1, 1000));
     }
     public function getProductRepository():\App\Model\ProductRepository
     {

@@ -28,6 +28,22 @@ class Category implements EntityInterface
     protected $product;
 
     /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product): void
+    {
+        $this->product = $product;
+    }
+
+    /**
      * @Column(type="string")
      * @var string
      */

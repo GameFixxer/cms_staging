@@ -26,8 +26,7 @@ class ImportTest extends \Codeception\Test\Unit
     protected ContainerHelper $container;
     protected ProductRepository $productRepository;
     protected ProductEntityManager $productEntityManager;
-    protected CategoryEntityManager $categoryEntityMananger;
-    protected EntityProvider $entityProvider;
+    protected CategoryEntityManager $categoryEntityManager;
     protected Importer $importer;
     protected CsvImportLoader $csvLoader;
     protected String $path;
@@ -40,18 +39,17 @@ class ImportTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->csvLoader = $this->container->getCsvImportLoader();
-        $this->categoryEntityMananger = $this->container->getCategoryEntityManager();
-        $this->entityProvider = new EntityProvider();
+        $this->categoryEntityManager = $this->container->getCategoryEntityManager();
 
         $this->path = dirname(__DIR__, 3).'/import/test/';
 
         $this->importer = new Importer(
             $this->productEntityManager,
-            $this->categoryEntityMananger,
+            $this->categoryEntityManager,
             $this->csvLoader,
             $this->container->getImportManager(),
             $this->path,
-            $this->entityProvider
+
         );
     }
 

@@ -22,11 +22,11 @@ class DetailPageControllerTest extends \Codeception\Test\Unit
         $this->tester->setSession();
         $_GET = [
                 'cl' => 'detail',
-                'id'=>'1136'
+                'id'=>'tester'
         ];
         $this->tester->setUpBootstrap();
         $product = $this->tester->getSmartyParams('page');
-        $secondProduct = $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct('1136'), 'page');
+        $secondProduct = $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct('tester'), 'page');
         $this->assertEquals($product, $secondProduct);
     }
 }

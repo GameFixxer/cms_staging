@@ -5,14 +5,30 @@ namespace App\Model\Dto;
 
 class CsvDataTransferObject
 {
-
     private string $name = '';
     private int $id = 0;
     private string $articleNumber = '';
     private string $desc = '';
-    private string $category = '';
+    private ?string $category = null;
     private int $categoryId = 0;
     private string $categoryKey = "";
+    private ?int $productId = null;
+
+    /**
+     * @return int|null
+     */
+    public function getProductId(): ?int
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param int|null $productId
+     */
+    public function setProductId(?int $productId): void
+    {
+        $this->productId = $productId;
+    }
 
     public function getCategoryId(): int
     {
@@ -79,7 +95,7 @@ class CsvDataTransferObject
         return $this->name;
     }
 
-    public function getCategory(): string
+    public function getCategory(): ?string
     {
         return $this->category;
     }
