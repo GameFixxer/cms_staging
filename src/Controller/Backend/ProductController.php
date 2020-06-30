@@ -100,7 +100,7 @@ class ProductController implements BackendController
         $productDTO = $this->productRepository->getProduct($articleNumber);
         if (!$productDTO instanceof ProductDataTransferObject) {
             $productDTO = new ProductDataTransferObject();
-            $productDTO->setArticleNumber((string)rand(1,2229));
+            $productDTO->setArticleNumber((string)rand(1, 2229));
         }
         $productDTO->setProductName($name);
         $productDTO->setProductDescription($description);

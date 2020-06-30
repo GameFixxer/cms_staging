@@ -22,7 +22,7 @@ class MappingAssistant
     {
         $csvDataTransferObject = new CsvDataTransferObject();
         foreach ($headerList as $column) {
-            $action = 'set' .$this->camelCaseToSnakeCase($column);
+            $action = 'set'.$this->camelCaseToSnakeCase($column);
             $csvDataTransferObject->$action($product[$column]);
         }
         return $csvDataTransferObject;
@@ -34,14 +34,14 @@ class MappingAssistant
         $csvDTO = new CsvDataTransferObject();
         foreach ($header as $value) {
             if (method_exists($csvDTO, 'set'.$this->camelCaseToSnakeCase($value))) {
-                $headerList[]=$value;
+                $headerList[] = $value;
             }
         }
         return $headerList;
     }
     private function camelCaseToSnakeCase(string $propertyName)
     {
-        $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function ($match) {
+        $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function($match) {
             return ('.' === $match[1] ? '_' : '').strtoupper($match[2]);
         }, $propertyName);
 

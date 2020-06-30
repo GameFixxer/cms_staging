@@ -38,7 +38,7 @@ class ImportManager
         return $updatedProductList;
     }*/
 
-    public function checkForValidProductSave():?array
+    public function checkForValidProductSave(): ?array
     {
         $updatedProductList = [];
         foreach ($this->productList as $column) {
@@ -52,7 +52,7 @@ class ImportManager
         return $updatedProductList;
     }
 
-    public function checkForValidCategorySave():?array
+    public function checkForValidCategorySave(): ?array
     {
         $updatedCategoryList = [];
         foreach ($this->categoryList as $column) {

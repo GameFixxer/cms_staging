@@ -10,7 +10,7 @@ class ImportCategory
 {
 
 
-    public function extractCategory(CsvDataTransferObject $csvDTO):?CategoryDataTransferObject
+    public function extractCategory(CsvDataTransferObject $csvDTO): ?CategoryDataTransferObject
     {
         $categoryDTO = new CategoryDataTransferObject();
         $listOfMethods = get_class_methods($categoryDTO);
@@ -21,7 +21,7 @@ class ImportCategory
                 $categoryDTO->$method($csvDTO->$stringWithSet());
             }
         }
-        if ($categoryDTO->getCategoryKey() !=='') {
+        if ($categoryDTO->getCategoryKey() !== '') {
             return $categoryDTO;
         }
         return null;

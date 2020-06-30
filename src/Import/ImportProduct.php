@@ -21,7 +21,7 @@ class ImportProduct
                 $productDTO->$method($csvDTO->$stringWithSet());
             }
         }
-        if ($productDTO->getProductName() !== '' && $productDTO->getProductDescription() !=='') {
+        if ($productDTO->getProductName() !== '' && $productDTO->getProductDescription() !== '') {
             return $productDTO;
         }
         return null;
