@@ -102,8 +102,8 @@ class ProductController implements BackendController
             $productDTO = new ProductDataTransferObject();
             $productDTO->setArticleNumber((string)rand(1,2229));
         }
-        $productDTO->setName($name);
-        $productDTO->setDescription($description);
+        $productDTO->setProductName($name);
+        $productDTO->setProductDescription($description);
         $this->productEntityManager->save($productDTO);
     }
 

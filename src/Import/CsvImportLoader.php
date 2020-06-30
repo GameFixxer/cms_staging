@@ -12,22 +12,21 @@ class CsvImportLoader
 
     public function mapCSVToDTO(string $path): array
     {
-        $productList = [];
+        $csvDTOList = [];
 
         $objects = $this->loadFromCSV($path);
-
         $mappingAssistant = new MappingAssistant();
 
         $headerList = $mappingAssistant->createMappingList($this->header);
         if (isset($headerList)) {
             foreach ($objects as $product) {
-                $productList[] = $mappingAssistant->mapInputToDTO($headerList, $product);
+                $csvDTOList[] = $mappingAssistant->mapInputToDTO($headerList, $product);
             }
         }
-        return $productList;
+        return $csvDTOList;
     }
 
-    public function loadFromCSV(string $path) : ?\Iterator
+    public function loadFromCSV(string $path): ?\Iterator
     {
         $fileFinder = new  FileManager();
         $finder = $fileFinder->getFiles($path);
@@ -35,7 +34,7 @@ class CsvImportLoader
         foreach ($finder as $file) {
             $csv = Reader::createFromPath($file->getPathname());
             $csv->setHeaderOffset(0);
-            $this->header= $csv->getHeader();
+            $this->header = $csv->getHeader();
             $productList = $csv->getRecords();
             $fileFinder->moveImportedFilesToDumper($file);
         }

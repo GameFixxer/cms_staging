@@ -44,9 +44,9 @@ class ProductEntityManager
         if (!$entity instanceof Product) {
             $entity = new Product();
         }
-        $entity->setName($product->getName());
+        $entity->setProductName($product->getProductName());
         $entity->setCategory($product->getCategory());
-        $entity->setDescription($product->getDescription());
+        $entity->setProductDescription($product->getProductDescription());
         $entity->setArticleNumber($product->getArticleNumber());
         $transaction->persist($entity);
         $transaction->run();

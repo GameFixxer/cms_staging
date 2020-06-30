@@ -10,10 +10,10 @@ class ProductDataTransferObject
     private int $id = 0;
     private string $articleNumber = '';
     private string $desc = '';
-    private string $category = 'not set';
+    private string $category = '';
 
 
-    public function setName(string $name): void
+    public function setProductName(string $name): void
     {
         $this->name = $name;
     }
@@ -27,12 +27,8 @@ class ProductDataTransferObject
     {
         $this->id = $id;
     }
-    public function setNumber(string $articleNumber): void
-    {
-        $this->articleNumber = $articleNumber;
-    }
 
-    public function setDescription(string $desc): void
+    public function setProductDescription(string $desc): void
     {
         $this->desc = $desc;
     }
@@ -45,7 +41,7 @@ class ProductDataTransferObject
     {
         return $this->articleNumber;
     }
-    public function getName(): string
+    public function getProductName(): string
     {
         return $this->name;
     }
@@ -55,7 +51,7 @@ class ProductDataTransferObject
         return $this->category;
     }
 
-    public function getDescription(): string
+    public function getProductDescription(): string
     {
         return $this->desc;
     }

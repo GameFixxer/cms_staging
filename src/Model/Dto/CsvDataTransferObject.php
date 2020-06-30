@@ -5,41 +5,92 @@ namespace App\Model\Dto;
 
 class CsvDataTransferObject
 {
-    private ProductDataTransferObject $productDTO;
-    private UserDataTransferObject $userDTO;
-    private CategoryDataTransferObject $categoryDTO;
 
-    public function getProduct():?ProductDataTransferObject
+    private string $name = '';
+    private int $id = 0;
+    private string $articleNumber = '';
+    private string $desc = '';
+    private string $category = '';
+    private int $categoryId = 0;
+    private string $categoryKey = "";
+
+    public function getCategoryId(): int
     {
-        if (isset($this->productDTO)) {
-            return $this->productDTO;
-        }
-        return null;
+        return $this->categoryId;
     }
-    public function setProduct(ProductDataTransferObject $product):void
+
+    public function setCategoryId(int $id):void
     {
-        $this->productDTO = $product;
+        $this->categoryId = $id;
     }
-    public function getUser():?UserDataTransferObject
+
+    /**
+     * @return string
+     */
+    public function getCategoryKey(): string
     {
-        if (isset($this->userDTO)) {
-            return $this->userDTO;
-        }
-        return null;
+        return $this->categoryKey;
     }
-    public function setUser(UserDataTransferObject $user):void
+
+    /**
+     * @param string $categoryKey
+     */
+
+    public function setCategoryKey(string $categoryKey): void
     {
-        $this->userDTO = $user;
+        $this->categoryKey = $categoryKey;
     }
-    public function getCategory():?CategoryDataTransferObject
+
+
+    public function setProductName(string $name): void
     {
-        if (isset($this->categoryDTO)) {
-            return $this->categoryDTO;
-        }
-        return null;
+        $this->name = $name;
     }
-    public function setCategory(CategoryDataTransferObject $category):void
+
+    public function setCategory(string $category): void
     {
-        $this->categoryDTO = $category;
+        $this->category = $category;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+    public function setNumber(string $articleNumber): void
+    {
+        $this->articleNumber = $articleNumber;
+    }
+
+    public function setProductDescription(string $desc): void
+    {
+        $this->desc = $desc;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+    public function getArticleNumber(): string
+    {
+        return $this->articleNumber;
+    }
+    public function getProductName(): string
+    {
+        return $this->name;
+    }
+
+    public function getCategory(): string
+    {
+        return $this->category;
+    }
+
+    public function getProductDescription(): string
+    {
+        return $this->desc;
+    }
+
+    public function setArticleNumber(string $articleNumber):void
+    {
+        $this->articleNumber = $articleNumber;
     }
 }

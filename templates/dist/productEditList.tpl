@@ -32,8 +32,8 @@
                     <tbody id={$page->getArticleNumber()}>
                     <tr>
                         <th scope="row" id={$page->getId()}>{$page->getArticleNumber()}</th>
-                        <td>{$page->getName()}</td>
-                        <td>{$page->getDescription()}<td>
+                        <td>{$page->getProductName()}</td>
+                        <td>{$page->getProductDescription()}<td>
                         <td>
                             <button class="btn btn-primary btn-sm text-uppercase" id="delete" data-title={$page->getArticleNumber()} name="delete"
                                     type="submit" value={$page->getArticleNumber()}>Delete

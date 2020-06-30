@@ -19,13 +19,13 @@
                             <a class="portfolio-link"
                                href=/Index.php?cl=detail&id={$page->getArticleNumber()}>
                                 <div class="portfolio-hover"
-                                     data-title={$page->getName()} id={$page->getArticleNumber()}>
+                                     data-title={$page->getProductName()} id={$page->getArticleNumber()}>
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                 <img class="img-fluid" src="assets/img/portfolio/01-thumbnail.jpg" alt=""/></a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">{$page->getName()}</div>
-                                <div class="portfolio-caption-subheading text-muted">{$page->getDescription()}</div>
+                                <div class="portfolio-caption-heading">{$page->getProductName()}</div>
+                                <div class="portfolio-caption-subheading text-muted">{$page->getProductDescription()}</div>
                             </div>
                         </object>
                     </div>

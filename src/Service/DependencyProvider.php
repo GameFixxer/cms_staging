@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Import\CsvImportLoader;
+use App\Import\EntityProvider;
 use App\Import\Importer;
 use App\Import\ImportManager;
 use App\Model\CategoryEntityManager;
@@ -88,14 +89,17 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class)));
+        $container->set(EntityProvider::class, new EntityProvider());
+        $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class), $container->get(CategoryRepository::class)));
         $container->set(
             Importer::class,
             new Importer(
                 $container->get(ProductEntityManager::class),
+                $container->get(CategoryEntityManager::class),
                 $container->get(CsvImportLoader::class),
                 $container->get(ImportManager::class),
-                dirname(__DIR__, 2).'../import/'
+                dirname(__DIR__, 2).'../import/',
+                $container->get(EntityProvider::class)
             )
         );
     }

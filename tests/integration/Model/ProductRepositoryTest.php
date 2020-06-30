@@ -49,8 +49,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
 
-        $this->assertSame($this->entity->getName(), $productDtoFromRepository->getName());
-        $this->assertSame($this->entity->getDescription(), $productDtoFromRepository->getDescription());
+        $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getProductName());
+        $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getProductDescription());
         $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
     }
 
@@ -69,8 +69,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $lastProductOfProductRepositoryList = end($productListFromProductRepository);
 
-        $this->assertSame($this->entity->getName(), $lastProductOfProductRepositoryList ->getName());
-        $this->assertSame($this->entity->getDescription(), $lastProductOfProductRepositoryList ->getDescription());
+        $this->assertSame($this->entity->getProductName(), $lastProductOfProductRepositoryList ->getProductName());
+        $this->assertSame($this->entity->getProductDescription(), $lastProductOfProductRepositoryList ->getProductDescription());
         $this->assertSame($this->entity->getId(), $lastProductOfProductRepositoryList ->getId());
     }
 
@@ -85,8 +85,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     private function createProductEntity() :Product
     {
         $this->entity = new Product();
-        $this->entity->setName('fucking neighour');
-        $this->entity->setDescription('a very noisy neighbour');
+        $this->entity->setProductName('fucking neighour');
+        $this->entity->setProductDescription('a very noisy neighbour');
         $this->entity->setArticleNumber($this->container->createArticleNumber());
         $this->entity->setCategory('not set');
 

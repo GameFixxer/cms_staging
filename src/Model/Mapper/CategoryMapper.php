@@ -11,8 +11,8 @@ class CategoryMapper implements CategoryMapperInterface
     public function map(Category $category): CategoryDataTransferObject
     {
         $categoryDataTransferObject= new CategoryDataTransferObject();
-        $categoryDataTransferObject->setCategoryId($category->getId());
-        $categoryDataTransferObject->setCategoryKey($category->getKey());
+        $categoryDataTransferObject->setCategoryId($category->getCategoryId());
+        $categoryDataTransferObject->setCategoryKey($category->getCategoryKey());
         return $categoryDataTransferObject;
     }
 }

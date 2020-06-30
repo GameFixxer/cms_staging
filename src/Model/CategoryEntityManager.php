@@ -45,11 +45,11 @@ class CategoryEntityManager
         if (!$entity instanceof Category) {
             $entity = new Category();
         }
-        $entity->setKey($category->getCategoryKey());
+        $entity->setCategoryKey($category->getCategoryKey());
         $transaction->persist($entity);
         $transaction->run();
 
-        $category->setCategoryId($entity->getId());
+        $category->setCategoryId($entity->getCategoryId());
 
         return $category;
     }

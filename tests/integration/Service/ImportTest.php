@@ -2,13 +2,19 @@
 namespace App\Tests\integration\Service;
 
 use App\Import\CsvImportLoader;
+use App\Import\EntityProvider;
 use App\Import\Importer;
+use App\Model\CategoryEntityManager;
 use App\Model\Entity\Product;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
+
+/**
+ * @group import
+ */
 
 class ImportTest extends \Codeception\Test\Unit
 {
@@ -20,6 +26,8 @@ class ImportTest extends \Codeception\Test\Unit
     protected ContainerHelper $container;
     protected ProductRepository $productRepository;
     protected ProductEntityManager $productEntityManager;
+    protected CategoryEntityManager $categoryEntityMananger;
+    protected EntityProvider $entityProvider;
     protected Importer $importer;
     protected CsvImportLoader $csvLoader;
     protected String $path;
@@ -32,14 +40,18 @@ class ImportTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->csvLoader = $this->container->getCsvImportLoader();
+        $this->categoryEntityMananger = $this->container->getCategoryEntityManager();
+        $this->entityProvider = new EntityProvider();
 
         $this->path = dirname(__DIR__, 3).'/import/test/';
 
         $this->importer = new Importer(
             $this->productEntityManager,
+            $this->categoryEntityMananger,
             $this->csvLoader,
             $this->container->getImportManager(),
-            $this->path
+            $this->path,
+            $this->entityProvider
         );
     }
 
@@ -60,8 +72,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getName(), $productFromRepository->getName());
-                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
+                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
+                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
             }
         }
     }
@@ -76,8 +88,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getName(), $productFromRepository->getName());
-                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
+                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
+                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
             }
         }
         $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/testUpdate/test_product_abstract2.csv');

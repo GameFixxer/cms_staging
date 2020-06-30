@@ -35,8 +35,8 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->ormCategoryRepository->findByPK($this->entity->getId()) instanceof Category) {
-            $this->transaction->delete($this->ormCategoryRepository->findByPK($this->entity->getId()));
+        if ($this->ormCategoryRepository->findByPK($this->entity->getCategoryId()) instanceof Category) {
+            $this->transaction->delete($this->ormCategoryRepository->findByPK($this->entity->getCategoryId()));
             $this->transaction->run();
         }
     }
@@ -45,9 +45,9 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
     {
         $categoryRepository = $this->container->getCategoryRepository();
 
-        $categoryDtoFromRepository = $categoryRepository->getCategory($this->entity->getId());
-        $this->assertSame($this->entity->getId(), $categoryDtoFromRepository->getCategoryId());
-        $this->assertSame($this->entity->getKey(), $categoryDtoFromRepository->getCategoryKey());
+        $categoryDtoFromRepository = $categoryRepository->getCategory($this->entity->getCategoryId());
+        $this->assertSame($this->entity->getCategoryId(), $categoryDtoFromRepository->getCategoryId());
+        $this->assertSame($this->entity->getCategoryKey(), $categoryDtoFromRepository->getCategoryKey());
     }
 
     public function testGetCategoryWithNonExistingCategory()
@@ -65,8 +65,8 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
 
         $lastCategoryOfCategoryRepositoryList = end($categoryListFromCategoryRepository);
 
-        $this->assertSame($this->entity->getId(), $lastCategoryOfCategoryRepositoryList->getCategoryId());
-        $this->assertSame($this->entity->getKey(), $lastCategoryOfCategoryRepositoryList->getCategoryKey());
+        $this->assertSame($this->entity->getCategoryId(), $lastCategoryOfCategoryRepositoryList->getCategoryId());
+        $this->assertSame($this->entity->getCategoryKey(), $lastCategoryOfCategoryRepositoryList->getCategoryKey());
     }
 
     public function testGetCategoryListWithEmptyDatabase()
@@ -80,7 +80,7 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
     private function createCategoryEntity() :Category
     {
         $this->entity = new Category();
-        $this->entity->setKey('tester');
+        $this->entity->setCategoryKey('tester');
 
         return $this->entity;
     }

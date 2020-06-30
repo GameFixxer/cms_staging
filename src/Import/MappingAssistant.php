@@ -3,13 +3,7 @@ declare(strict_types=1);
 namespace App\Import;
 
 use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\EntityInterface;
-use App\Model\Entity\Product;
 use App\Model\Mapper\CsvMapper;
-use App\Model\Mapper\ProductImportMapper;
-use App\Service\EntityProvider;
-use phpDocumentor\Reflection\Types\Iterable_;
 
 class MappingAssistant
 {
@@ -24,53 +18,22 @@ class MappingAssistant
         $this->attributes = null;
     }
 
-    public function mapInputToDTO(array $headerList, array $product): ProductDataTransferObject
+    public function mapInputToDTO(array $headerList, array $product): CsvDataTransferObject
     {
-        $productEntity = new Product();
+        $csvDataTransferObject = new CsvDataTransferObject();
         foreach ($headerList as $column) {
             $action = 'set' .$this->camelCaseToSnakeCase($column);
-            $productEntity->$action($product[$column]);
+            $csvDataTransferObject->$action($product[$column]);
         }
-        return $this->csvMapper->map($productEntity);
-    }
-
-    public function mapInputToDTO2(array $headerList, array $product): CsvDataTransferObject
-    {
-        foreach ($headerList as $column) {
-            $chosenEntity = $this->chooseEntity($column);
-            if (isset($chosenEntity)) {
-                $action = 'set' .$this->selectColumns($chosenEntity, $column);
-                $chosenEntity->$action($product[$column]);
-            }
-        }
-        return $this->csvMapper->map($chosenEntity);
-    }
-
-    public function createMappingList2(array $header)
-    {
-        $headerList = [];
-        $chosenEntity = null;
-        foreach ($header as $value) {
-            $chosenEntity = $this->chooseEntity($value);
-            if (isset($chosenEntity)) {
-                $cleanColumnName = $this->selectColumns($chosenEntity, $value);
-
-                if (method_exists($chosenEntity, 'set' . $cleanColumnName)) {
-                    dump($cleanColumnName);
-                    $headerList[] = $value;
-                }
-            }
-        }
-
-        return $headerList;
+        return $csvDataTransferObject;
     }
 
     public function createMappingList(array $header)
     {
         $headerList = [];
-        $productEntity = new Product();
+        $csvDTO = new CsvDataTransferObject();
         foreach ($header as $value) {
-            if (method_exists($productEntity, 'set'.$this->camelCaseToSnakeCase($value))) {
+            if (method_exists($csvDTO, 'set'.$this->camelCaseToSnakeCase($value))) {
                 $headerList[]=$value;
             }
         }
@@ -93,28 +56,7 @@ class MappingAssistant
         return $propertyName;
     }
 
-    private function chooseEntity($value):?EntityInterface
-    {
-        $entityProvider = new EntityProvider();
-        $list = $entityProvider->getEntityList();
-        foreach ($list as $entity) {
-            if (strpos($value, $entity::TABLE) !== false) {
-                return new $entity();
-            }
-        }
-        return null;
-    }
 
-    private function selectColumns(EntityInterface $chosenEntity, $value): ?string
-    {
-        $cleanedColumnName= strtolower($this->camelCaseToSnakeCase($value));
-        $testsString = (string)$chosenEntity::TABLE;
-        $counter = 0;
-        $cleanColumnName = str_replace($testsString, '', $cleanedColumnName, $counter);
 
-        if (method_exists($chosenEntity, 'set'.$cleanColumnName)) {
-            return $cleanColumnName;
-        }
-        return null;
-    }
+
 }

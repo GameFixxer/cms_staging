@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 
 /**
  * @Entity(
@@ -18,7 +19,13 @@ class Category implements EntityInterface
      * @Column(type="primary")
      * @var int
      */
-    protected $categoryId;
+    protected $category_id;
+
+
+    /**
+     * @HasMany(target = "Product" ,  nullable = true)
+     */
+    protected $product;
 
     /**
      * @Column(type="string")
@@ -27,24 +34,24 @@ class Category implements EntityInterface
     protected $categoryKey;
 
     /**
-     * @param int $categoryId
+     * @param int $category_id
      */
-    public function setId(int $categoryId):void
+    public function setCategoryId(int $category_id):void
     {
-        $this->categoryId = $categoryId;
+        $this->category_id = $category_id;
     }
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getCategoryId(): int
     {
-        return $this->categoryId;
+        return $this->category_id;
     }
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getCategoryKey(): string
     {
         return $this->categoryKey;
     }
@@ -53,7 +60,7 @@ class Category implements EntityInterface
      * @param string $categoryKey
      */
 
-    public function setKey(string $categoryKey): void
+    public function setCategoryKey(string $categoryKey): void
     {
         $this->categoryKey = $categoryKey;
     }

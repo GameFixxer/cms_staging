@@ -43,8 +43,8 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $productFromRepository = $this->container->getProductRepository()->getProduct($this->productDto->getArticleNumber());
 
-        $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
-        $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
+        $this->assertSame($this->productDto->getProductName(), $productFromRepository->getProductName());
+        $this->assertSame($this->productDto->getProductDescription(), $productFromRepository->getProductDescription());
         $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
 
         return $createdProduct;
@@ -54,13 +54,13 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     {
         $this->productDto = $this->testCreateProduct();
 
-        $this->productDto->setName('fabulous');
-        $this->productDto->setDescription('even more fabulous');
+        $this->productDto->setProductName('fabulous');
+        $this->productDto->setProductDescription('even more fabulous');
         $this->productDto = $this->productEntityManager->save($this->productDto);
         $productFromRepository = $this->container->getProductRepository()->getProduct($this->productDto->getArticleNumber());
 
-        $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
-        $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
+        $this->assertSame($this->productDto->getProductName(), $productFromRepository->getProductName());
+        $this->assertSame($this->productDto->getProductDescription(), $productFromRepository->getProductDescription());
         $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
     }
 
@@ -76,8 +76,8 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     private function createDto(String $name, String $description)
     {
         $this->productDto = new ProductDataTransferObject();
-        $this->productDto->setName($name);
-        $this->productDto->setDescription($description);
+        $this->productDto->setProductName($name);
+        $this->productDto->setProductDescription($description);
         $this->productDto->setArticleNumber($this->container->createArticleNumber());
     }
 }
