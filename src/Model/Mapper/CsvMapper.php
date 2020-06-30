@@ -15,17 +15,17 @@ class CsvMapper
 {
     public function map(EntityInterface $entity): CsvDataTransferObject
     {
-        $csvDataTransferObject= new CsvDataTransferObject();
+        $csvDataTransferObject = new CsvDataTransferObject();
         switch ($entity) {
-            case $entity instanceof Product:
-                $csvDataTransferObject->setProduct($entity);
-                break;
-            case $entity instanceof User:
-                $csvDataTransferObject->setUser($entity);
-                break;
-            case $entity instanceof Category:
-                $csvDataTransferObject->setCategory($entity);
-                break;
+        case $entity instanceof Product:
+            $csvDataTransferObject->setProduct($entity);
+            break;
+        case $entity instanceof User:
+            $csvDataTransferObject->setUser($entity);
+            break;
+        case $entity instanceof Category:
+            $csvDataTransferObject->setCategory($entity);
+            break;
         }
 
         return $csvDataTransferObject;
