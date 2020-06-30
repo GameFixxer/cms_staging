@@ -39,7 +39,6 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
 
     public function testCreateProduct()
     {
-        $createdDTO = $this->categoryEntityManager->save($this->categoryDTO);
 
         $productFromRepository = $this->container->getCategoryRepository()->getCategory($this->categoryDTO->getCategoryId());
         $this->assertSame($this->categoryDTO->getCategoryId(), $productFromRepository->getCategoryId());
@@ -60,7 +59,7 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
 
     public function TestDeleteProduct()
     {
-        $this->categoryDTO = $this->testCreateProduct();
+        $this->testCreateProduct();
 
         $this->categoryEntityManager->delete($this->categoryDTO);
 

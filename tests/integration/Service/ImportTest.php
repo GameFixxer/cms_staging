@@ -2,7 +2,6 @@
 namespace App\Tests\integration\Service;
 
 use App\Import\CsvImportLoader;
-use App\Import\EntityProvider;
 use App\Import\Importer;
 use App\Model\CategoryEntityManager;
 use App\Model\Entity\Product;
@@ -112,11 +111,5 @@ class ImportTest extends \Codeception\Test\Unit
         );
         $this->filesystem->remove(dirname(__DIR__, 3).$origin);
     }
-    /**
-     * @group service
-     */
-    public function testDynamicMapping()
-    {
-        $importList = $this->csvLoader->mapCSVToDTO($this->path);
-    }
+    
 }

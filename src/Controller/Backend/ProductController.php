@@ -127,12 +127,6 @@ class ProductController implements BackendController
         }
         return true;
     }
-    private function createArticleNumber():string
-    {
-        $list = $this->productRepository->getProductList();
-        $idCounter = end($list)->getId() + 1;
-        return (string)$idCounter;
-    }
 
     private function displayPageDoesNotExists(): void
     {

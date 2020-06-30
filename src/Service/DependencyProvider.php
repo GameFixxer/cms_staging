@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Import\CsvImportLoader;
-use App\Import\EntityProvider;
 use App\Import\Importer;
 use App\Import\ImportManager;
 use App\Model\CategoryEntityManager;
