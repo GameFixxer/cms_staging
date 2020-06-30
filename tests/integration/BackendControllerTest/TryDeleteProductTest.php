@@ -35,7 +35,7 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
         $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmp = (array)$this->tester->getProductList();
-        $id = end($tmp)->getProductId();
+        $id = end($tmp)->getId();
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_GET = [

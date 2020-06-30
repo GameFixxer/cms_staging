@@ -1,16 +1,61 @@
 <?php
 
-declare(strict_types=1);
 
 namespace App\Model\Dto;
 
-class ProductDataTransferObject
+class CsvDataTransferObject
 {
     private string $name = '';
     private int $id = 0;
     private string $articleNumber = '';
     private string $desc = '';
     private ?string $category = null;
+    private int $categoryId = 0;
+    private string $categoryKey = "";
+    private ?int $productId = null;
+
+    /**
+     * @return int|null
+     */
+    public function getProductId(): ?int
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param int|null $productId
+     */
+    public function setProductId(?int $productId): void
+    {
+        $this->productId = $productId;
+    }
+
+    public function getCategoryId(): int
+    {
+        return $this->categoryId;
+    }
+
+    public function setCategoryId(int $id):void
+    {
+        $this->categoryId = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryKey(): string
+    {
+        return $this->categoryKey;
+    }
+
+    /**
+     * @param string $categoryKey
+     */
+
+    public function setCategoryKey(string $categoryKey): void
+    {
+        $this->categoryKey = $categoryKey;
+    }
 
 
     public function setProductName(string $name): void
@@ -18,7 +63,7 @@ class ProductDataTransferObject
         $this->name = $name;
     }
 
-    public function setCategory(?string $category): void
+    public function setCategory(string $category): void
     {
         $this->category = $category;
     }
@@ -26,6 +71,10 @@ class ProductDataTransferObject
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+    public function setNumber(string $articleNumber): void
+    {
+        $this->articleNumber = $articleNumber;
     }
 
     public function setProductDescription(string $desc): void

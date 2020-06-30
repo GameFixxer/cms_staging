@@ -33,7 +33,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
         $orm = $orm->connect();
         $ormProductRepository = $orm->getRepository(Product::class);
         $transaction = new Transaction($orm);
-        $transaction->delete($ormProductRepository->findByPK($this->productDto->getProductId()));
+        $transaction->delete($ormProductRepository->findByPK($this->productDto->getId()));
         $transaction->run();
     }
 
@@ -45,7 +45,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->assertSame($this->productDto->getProductName(), $productFromRepository->getProductName());
         $this->assertSame($this->productDto->getProductDescription(), $productFromRepository->getProductDescription());
-        $this->assertSame($this->productDto->getProductId(), $productFromRepository->getProductId());
+        $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
 
         return $createdProduct;
     }
@@ -61,7 +61,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->assertSame($this->productDto->getProductName(), $productFromRepository->getProductName());
         $this->assertSame($this->productDto->getProductDescription(), $productFromRepository->getProductDescription());
-        $this->assertSame($this->productDto->getProductId(), $productFromRepository->getProductId());
+        $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
     }
 
     public function TestDeleteProduct()
@@ -70,7 +70,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->productEntityManager->delete($this->productDto);
 
-        $this->assertNull($this->container->getProductRepository()->getProduct($this->productDto->getProductId()));
+        $this->assertNull($this->container->getProductRepository()->getProduct($this->productDto->getId()));
     }
 
     private function createDto(String $name, String $description)

@@ -49,9 +49,9 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
 
-        $this->assertSame($this->entity->getName(), $productDtoFromRepository->getProductName());
-        $this->assertSame($this->entity->getDescription(), $productDtoFromRepository->getProductDescription());
-        $this->assertSame($this->entity->getId(), $productDtoFromRepository->getProductId());
+        $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getProductName());
+        $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getProductDescription());
+        $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
     }
 
     public function testGetProductWithNonExistingProduct()
@@ -69,9 +69,9 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $lastProductOfProductRepositoryList = end($productListFromProductRepository);
 
-        $this->assertSame($this->entity->getName(), $lastProductOfProductRepositoryList ->getProductName());
-        $this->assertSame($this->entity->getDescription(), $lastProductOfProductRepositoryList ->getProductDescription());
-        $this->assertSame($this->entity->getId(), $lastProductOfProductRepositoryList ->getProductId());
+        $this->assertSame($this->entity->getProductName(), $lastProductOfProductRepositoryList ->getProductName());
+        $this->assertSame($this->entity->getProductDescription(), $lastProductOfProductRepositoryList ->getProductDescription());
+        $this->assertSame($this->entity->getId(), $lastProductOfProductRepositoryList ->getId());
     }
 
     public function testGetProductListWithEmptyDatabase()
@@ -85,9 +85,10 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     private function createProductEntity() :Product
     {
         $this->entity = new Product();
-        $this->entity->setName('fucking neighour');
-        $this->entity->setDescription('a very noisy neighbour');
+        $this->entity->setProductName('fucking neighour');
+        $this->entity->setProductDescription('a very noisy neighbour');
         $this->entity->setArticleNumber($this->container->createArticleNumber());
+        $this->entity->setCategory(null);
 
         return $this->entity;
     }

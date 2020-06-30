@@ -29,7 +29,7 @@ class ProductEntityManager
     public function delete(ProductDataTransferObject $product):void
     {
         $transaction = new Transaction($this->orm);
-        $transaction->delete($this->ormProductRepository->findOne(['article_number'=>$product->getArticleNumber()]));
+        $transaction->delete($this->ormProductRepository->findOne(['article_Number'=>$product->getArticleNumber()]));
         $transaction->run();
 
         $this->productRepository->getProductList();
@@ -39,18 +39,19 @@ class ProductEntityManager
     {
         $transaction = new Transaction($this->orm);
 
-        $entity = $this->ormProductRepository->findOne(['article_number'=>$product->getArticleNumber()]);
 
+        $entity = $this->ormProductRepository->findOne(['article_Number'=>$product->getArticleNumber()]);
         if (!$entity instanceof Product) {
             $entity = new Product();
         }
-        $entity->setName($product->getProductName());
-        $entity->setDescription($product->getProductDescription());
+        $entity->setProductName($product->getProductName());
+        $entity->setCategory($product->getCategory());
+        $entity->setProductDescription($product->getProductDescription());
         $entity->setArticleNumber($product->getArticleNumber());
         $transaction->persist($entity);
         $transaction->run();
 
-        $product->setProductId($entity->getId());
+        $product->setId($entity->getId());
 
         return $product;
     }

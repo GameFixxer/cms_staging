@@ -1,15 +1,19 @@
 <?php
 namespace App\Tests\integration\Service;
 
-# EL53iVf54m6mzZV
+use App\Import\CsvImportLoader;
+use App\Import\Importer;
+use App\Model\CategoryEntityManager;
 use App\Model\Entity\Product;
 use App\Model\ProductEntityManager;
 use App\Model\ProductRepository;
-use App\Service\CsvImportLoader;
-use App\Service\Importer;
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
+
+/**
+ * @group import
+ */
 
 class ImportTest extends \Codeception\Test\Unit
 {
@@ -21,6 +25,7 @@ class ImportTest extends \Codeception\Test\Unit
     protected ContainerHelper $container;
     protected ProductRepository $productRepository;
     protected ProductEntityManager $productEntityManager;
+    protected CategoryEntityManager $categoryEntityManager;
     protected Importer $importer;
     protected CsvImportLoader $csvLoader;
     protected String $path;
@@ -33,14 +38,17 @@ class ImportTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->csvLoader = $this->container->getCsvImportLoader();
+        $this->categoryEntityManager = $this->container->getCategoryEntityManager();
 
         $this->path = dirname(__DIR__, 3).'/import/test/';
 
         $this->importer = new Importer(
             $this->productEntityManager,
+            $this->categoryEntityManager,
             $this->csvLoader,
             $this->container->getImportManager(),
-            $this->path
+            $this->path,
+
         );
     }
 
@@ -103,4 +111,5 @@ class ImportTest extends \Codeception\Test\Unit
         );
         $this->filesystem->remove(dirname(__DIR__, 3).$origin);
     }
+    
 }

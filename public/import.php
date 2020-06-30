@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Service\Container;
 use App\Service\DependencyProvider;
-use App\Service\Importer;
+use App\Import\Importer;
 use Symfony\Component\Console\Application;
 
 $application = new Application();

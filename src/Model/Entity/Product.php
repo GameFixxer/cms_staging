@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\HasOne;
 
 /**
  * @Entity(
@@ -13,11 +14,19 @@ use Cycle\Annotated\Annotation\Column;
  */
 class Product implements EntityInterface
 {
+    public const TABLE = 'product';
+
+
     /**
      * @Column(type="primary")
      * @var int
      */
     protected $id;
+
+    /**
+     * @HasOne(target = "Category",  nullable = true)
+     */
+    protected $category;
 
     /**
      * @Column(type="string")
@@ -56,7 +65,7 @@ class Product implements EntityInterface
     /**
      * @return string
      */
-    public function getName(): string
+    public function getProductName(): string
     {
         return $this->name;
     }
@@ -64,7 +73,7 @@ class Product implements EntityInterface
      * @param string $name
      */
 
-    public function setName(string $name): void
+    public function setProductName(string $name): void
     {
         $this->name = $name;
     }
@@ -72,7 +81,23 @@ class Product implements EntityInterface
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getCategory(): string
+    {
+        return $this->name;
+    }
+    /**
+     * @param string $category
+     */
+
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductDescription(): string
     {
         return $this->description;
     }
@@ -80,7 +105,7 @@ class Product implements EntityInterface
     /**
      * @param string $description
      */
-    public function setDescription(string $description): void
+    public function setProductDescription(string $description): void
     {
         $this->description = $description;
     }
