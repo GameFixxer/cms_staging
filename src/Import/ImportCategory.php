@@ -8,7 +8,7 @@ use App\Model\CategoryRepositoryInterface;
 use App\Model\Dto\CategoryDataTransferObject;
 use App\Model\Dto\CsvDataTransferObject;
 
-class ImportCategory
+class ImportCategory implements ImportCategoryInterface
 {
     private CategoryRepositoryInterface $categoryRepository;
     private CategoryEntityManagerInterface $categoryEntityManager;

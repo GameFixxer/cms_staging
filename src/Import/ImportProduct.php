@@ -8,7 +8,7 @@ use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductEntityManagerInterface;
 use App\Model\ProductRepositoryInterface;
 
-class ImportProduct
+class ImportProduct implements ImportProductInterface
 {
     private ProductRepositoryInterface $productRepository;
     private ProductEntityManagerInterface $productEntityManager;

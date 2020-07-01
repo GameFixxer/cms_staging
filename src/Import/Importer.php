@@ -4,15 +4,15 @@ namespace App\Import;
 
 class Importer
 {
-    private CsvImportLoader $csvLoader;
-    private ImportCategory $importCategory;
-    private ImportProduct $importProduct;
+    private CsvImportLoaderInterface $csvLoader;
+    private ImportCategoryInterface $importCategory;
+    private ImportProductInterface $importProduct;
     private String $path;
 
     public function __construct(
-        CsvImportLoader $csvLoader,
-        ImportCategory $importCategory,
-        ImportProduct $importProduct,
+        CsvImportLoaderInterface $csvLoader,
+        ImportCategoryInterface $importCategory,
+        ImportProductInterface $importProduct,
         string $path
     ) {
         $this->csvLoader = $csvLoader;
