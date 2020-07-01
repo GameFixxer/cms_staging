@@ -10,7 +10,7 @@ use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Mapper\ProductMapperInterface;
 use Cycle\ORM\ORM;
 
-class ProductRepository
+class ProductRepository implements ProductRepositoryInterface
 {
     private ProductMapperInterface $productMapper;
     private \Cycle\ORM\RepositoryInterface $ormProductRepository;

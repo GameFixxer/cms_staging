@@ -7,7 +7,7 @@ use App\Model\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
-class ProductEntityManager
+class ProductEntityManager implements ProductEntityManagerInterface
 {
     /**
      * @var ProductRepository

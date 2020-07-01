@@ -4,7 +4,9 @@
 namespace App\Tests\integration\Helper;
 
 use App\Import\CsvImportLoader;
+use App\Import\ImportCategory;
 use App\Import\ImportManager;
+use App\Import\ImportProduct;
 use App\Model\CategoryEntityManager;
 use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
@@ -76,5 +78,13 @@ class ContainerHelper
     public function getOrmProductRepository()
     {
         return $this->container->get(DatabaseManager::class);
+    }
+    public function getImportCategory():ImportCategory
+    {
+        return $this->container->get(ImportCategory::class);
+    }
+    public function getImportProduct():ImportProduct
+    {
+        return $this->container->get(ImportProduct::class);
     }
 }

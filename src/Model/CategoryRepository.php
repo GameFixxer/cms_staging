@@ -8,7 +8,7 @@ use App\Model\Entity\Category;
 use App\Model\Dto\CategoryDataTransferObject;
 use App\Model\Mapper\CategoryMapperInterface;
 
-class CategoryRepository
+class CategoryRepository implements CategoryRepositoryInterface
 {
     private CategoryMapperInterface $categoryMapper;
     private \Cycle\ORM\RepositoryInterface $ormCategoryRepository;

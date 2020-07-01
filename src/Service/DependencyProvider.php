@@ -3,8 +3,9 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Import\CsvImportLoader;
+use App\Import\ImportCategory;
 use App\Import\Importer;
-use App\Import\ImportManager;
+use App\Import\ImportProduct;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -88,14 +89,14 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class), $container->get(CategoryRepository::class)));
+        $container->set(ImportProduct::class, new ImportProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
+        $container->set(ImportCategory::class, new ImportCategory($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
         $container->set(
             Importer::class,
             new Importer(
-                $container->get(ProductEntityManager::class),
-                $container->get(CategoryEntityManager::class),
                 $container->get(CsvImportLoader::class),
-                $container->get(ImportManager::class),
+                $container->get(ImportCategory::class),
+                $container->get(ImportProduct::class),
                 dirname(__DIR__, 2).'../import/'
             )
         );
