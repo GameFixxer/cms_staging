@@ -28,7 +28,7 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
         $this->categoryRepository = $categoryRepository;
         $this->categoryEntityManager = $categoryEntityManager;
         $this->productEntityManager = $productEntityManager;
-        $this->categoryIntegrityManager= $categoryIntegrityManager;
+        $this->categoryIntegrityManager = $categoryIntegrityManager;
     }
 
     public function updateProductCategory(CsvDataTransferObject $csvDTO): CsvDataTransferObject

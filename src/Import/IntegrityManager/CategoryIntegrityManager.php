@@ -19,7 +19,7 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
 
     public function mapEntity(CsvDataTransferObject $csvDTO): ?object
     {
-        $categoryEntity  = $this->loadEntityFromRepository($csvDTO->getCategoryId());
+        $categoryEntity = $this->loadEntityFromRepository($csvDTO->getCategoryId());
         if ($categoryEntity instanceof Category) {
             $listOfMethods = get_class_methods($categoryEntity);
 
@@ -34,7 +34,7 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
     }
 
 
-    private function loadEntityFromRepository(int $id):?object
+    private function loadEntityFromRepository(int $id): ?object
     {
         return $this->ormCategoryRepository->findByPK($id);
     }

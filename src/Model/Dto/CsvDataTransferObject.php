@@ -66,7 +66,7 @@ class CsvDataTransferObject
         $this->name = $name;
     }
 
-    public function setCategory( $category): void
+    public function setCategory($category): void
     {
         $this->category = $category;
     }

@@ -63,7 +63,7 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 
     private function createProduct()
     {
-        $tmp =rand(1, 1000).substr('', rand(1, 1000));
+        $tmp = rand(1, 1000).substr('', rand(1, 1000));
         $this->createCSVDTO(''.$tmp, 'tester');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
         $this->csvDTO->setProductId($csvProduct->getProductId());

@@ -20,7 +20,7 @@ class CreateProduct implements CreateProductInterface
         $this->productEntityManager = $productEntityManager;
     }
 
-    public function createProduct(CsvDataTransferObject $csvDTO) :?CsvDataTransferObject
+    public function createProduct(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
     {
         if ($csvDTO->getArticleNumber() !== '') {
             $productFromRepo = $this->productRepository->getProduct($csvDTO->getArticleNumber());
