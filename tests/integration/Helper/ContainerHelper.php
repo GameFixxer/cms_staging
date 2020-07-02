@@ -3,9 +3,11 @@
 
 namespace App\Tests\integration\Helper;
 
+use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
 use App\Import\ImportCategory;
 use App\Import\ImportProduct;
+use App\Import\UpdateImport\UpdateProductCategory;
 use App\Model\CategoryEntityManager;
 use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
@@ -80,5 +82,12 @@ class ContainerHelper
     public function getImportProduct():ImportProduct
     {
         return $this->container->get(ImportProduct::class);
+    }
+
+    public function getCreateProduct(){
+        return$this->container->get(CreateProduct::class);
+    }
+    public function getUpdateProductCategory(){
+        return $this->container->get(UpdateProductCategory::class);
     }
 }

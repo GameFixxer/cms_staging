@@ -2,10 +2,14 @@
 declare(strict_types=1);
 namespace App\Service;
 
+use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
 use App\Import\ImportCategory;
 use App\Import\Importer;
 use App\Import\ImportProduct;
+use App\Import\IntegrityManager\CategoryIntegrityManager;
+use App\Import\UpdateImport\UpdateProduct;
+use App\Import\UpdateImport\UpdateProductCategory;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -37,12 +41,20 @@ class DependencyProvider
     private function persistenceDependency(Container $container): void
     {
         //Service
-        $container->setFactory(DatabaseManager::class, function() {
+        $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
         });
         $container->set(PasswordManager::class, new PasswordManager());
+
+        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
+            /** @var ORM $orm */
+            $orm = $container->get(DatabaseManager::class);
+            return new CategoryIntegrityManager(
+                $orm->getRepository(Category::class)
+            );
+        });
 
         // Mapper
         $container->set(ProductMapper::class, new ProductMapper());
@@ -53,19 +65,19 @@ class DependencyProvider
 
 
         // Repositorys
-        $container->setFactory(ProductRepository::class, function(Container $container) {
+        $container->setFactory(ProductRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function(Container $container) {
+        $container->setFactory(UserRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
         });
 
-        $container->setFactory(CategoryRepository::class, function(Container $container) {
+        $container->setFactory(CategoryRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
@@ -89,8 +101,17 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
+        $container->set(UpdateProductCategory::class, new UpdateProductCategory(
+            $container->get(CategoryRepository::class),
+            $container->get(CategoryEntityManager::class),
+            $container->get(ProductEntityManager::class),
+            $container->get(CategoryIntegrityManager::class)
+        ));
+
+
         $container->set(ImportProduct::class, new ImportProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
         $container->set(ImportCategory::class, new ImportCategory($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
+        $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
         $container->set(
             Importer::class,
             new Importer(

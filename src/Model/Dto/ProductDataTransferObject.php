@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Model\Dto;
 
+use App\Model\Entity\Category;
+
 class ProductDataTransferObject
 {
     private string $name = '';
     private int $id = 0;
     private string $articleNumber = '';
     private string $desc = '';
-    private ?string $category = null;
+    private ?object $category = null;
 
 
     public function setProductName(string $name): void
@@ -18,12 +20,17 @@ class ProductDataTransferObject
         $this->name = $name;
     }
 
-    public function setCategory(?string $category): void
+    public function getCategory():?Object
     {
-        $this->category = $category;
+        return $this->category;
     }
 
-    public function setId(int $id): void
+    public function setCategory(?Object $id):void
+    {
+        $this->category = $id;
+    }
+
+    public function setProductId(int $id): void
     {
         $this->id = $id;
     }
@@ -33,7 +40,7 @@ class ProductDataTransferObject
         $this->desc = $desc;
     }
 
-    public function getId(): int
+    public function getProductId(): int
     {
         return $this->id;
     }
@@ -44,11 +51,6 @@ class ProductDataTransferObject
     public function getProductName(): string
     {
         return $this->name;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
     }
 
     public function getProductDescription(): string

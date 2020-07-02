@@ -11,7 +11,7 @@ class ProductMapper implements ProductMapperInterface
     public function map(Product $product): ProductDataTransferObject
     {
         $productDataTransferObject = new ProductDataTransferObject();
-        $productDataTransferObject->setId((int)$product->getId());
+        $productDataTransferObject->setProductId((int)$product->getId());
         $productDataTransferObject->setProductName($product->getProductName());
         $productDataTransferObject->setProductDescription($product->getProductDescription());
         $productDataTransferObject->setArticleNumber($product->getArticleNumber());

@@ -9,9 +9,6 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
 
-/**
- * @group import
- */
 
 class ImportTest extends \Codeception\Test\Unit
 {

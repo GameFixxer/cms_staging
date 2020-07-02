@@ -3,26 +3,28 @@
 
 namespace App\Model\Dto;
 
+use App\Model\Entity\Product;
+
 class CategoryDataTransferObject
 {
     private int $categoryId = 0;
     private string $categoryKey = "";
-    private ?int $productId = null;
+    private ?Product $product = null;
 
     /**
-     * @return int|null
+     * @return Product|null
      */
-    public function getProductId(): ?int
+    public function getProduct(): ?Product
     {
-        return $this->productId;
+        return $this->product;
     }
 
     /**
-     * @param int|null $productId
+     * @param Product|null $product
      */
-    public function setProductId(?int $productId): void
+    public function setProduct(?Product $product): void
     {
-        $this->productId = $productId;
+        $this->product = $product;
     }
 
     public function getCategoryId(): int

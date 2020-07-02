@@ -54,6 +54,14 @@ class Product implements EntityInterface
         return $this->id;
     }
 
+
+    /**
+     * @param int
+     */
+    public function setId(int $id):void {
+        $this->id = $id;
+    }
+
     /**
      * @return string
      */
@@ -78,18 +86,15 @@ class Product implements EntityInterface
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getCategory(): string
+
+    public function getCategory()
     {
-        return $this->name;
+        return $this->category;
     }
     /**
-     * @param string $category
+     * @param  $category
      */
-
-    public function setCategory(?string $category): void
+    public function setCategory($category): void
     {
         $this->category = $category;
     }
