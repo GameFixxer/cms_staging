@@ -10,6 +10,7 @@ use App\Model\Dto\CategoryDataTransferObject;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductEntityManagerInterface;
+use function PHPUnit\Framework\isEmpty;
 
 class UpdateProductCategory implements UpdateProductCategoryInterface
 {
@@ -57,11 +58,13 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
     private function saveUpdatedProduct(CsvDataTransferObject $csvDTO)
     {
         $productDTO = new ProductDataTransferObject();
-        $productDTO->setProductId($csvDTO->getProductId());
+        if (!isEmpty($csvDTO->getProductId())) {
+            $productDTO->setProductId($csvDTO->getProductId());
+        }
+
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $productDTO->setCategory($csvDTO->getCategory());
         dump($productDTO);
         $this->productEntityManager->save($productDTO);
     }
-
 }

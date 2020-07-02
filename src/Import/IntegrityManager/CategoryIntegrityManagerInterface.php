@@ -8,6 +8,6 @@ use App\Model\Entity\Product;
 interface CategoryIntegrityManagerInterface
 {
     public function mapEntity(CsvDataTransferObject $csvDTO): ?object ;
-    public function updateProductInCategory(CsvDataTransferObject $csvDTO):Product;
-    public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): Product;
+    public function updateProductInCategory(CsvDataTransferObject $csvDTO):?Product;
+    public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): ?Product;
 }

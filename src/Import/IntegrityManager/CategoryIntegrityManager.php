@@ -6,6 +6,7 @@ namespace App\Import\IntegrityManager;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Entity\Category;
 use App\Model\Entity\Product;
+use function PHPUnit\Framework\isEmpty;
 
 class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
 {
@@ -32,16 +33,19 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
         return $categoryEntity;
     }
 
-    public function updateProductInCategory(CsvDataTransferObject $csvDTO):Product
+    public function updateProductInCategory(CsvDataTransferObject $csvDTO):?Product
     {
         $productCache = $csvDTO->getProduct();
-        $productCache->setId($csvDTO->getProductId());
+        if (!isEmpty($csvDTO->getProductId())) {
+            $productCache->setId($csvDTO->getProductId());
+        }
+
         $productCache->setArticleNumber($csvDTO->getArticleNumber());
 
         return $productCache;
     }
 
-    public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): Product
+    public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): ?Product
     {
         $product = $csvDTO->getProduct();
         $product->setCategory($csvDTO->getCategory());
