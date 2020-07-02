@@ -58,7 +58,7 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
     private function saveUpdatedProduct(CsvDataTransferObject $csvDTO)
     {
         $productDTO = new ProductDataTransferObject();
-        if (!isEmpty($csvDTO->getProductId())) {
+        if (!empty($csvDTO->getProductId())) {
             $productDTO->setProductId($csvDTO->getProductId());
         }
 
