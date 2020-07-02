@@ -41,16 +41,12 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
                 $csvDTO->setCategoryId($category->getCategoryId());
             } else {
                 $category = new CategoryDataTransferObject();
-                $category->setProduct($csvDTO->getProduct());
                 $category->setCategoryKey($csvDTO->getCategoryKey());
-
-                $category->setProduct($this->categoryIntegrityManager->updateProductInCategory($csvDTO));
-
                 $csvDTO->setCategoryId($this->categoryEntityManager->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
             }
             $this->saveUpdatedProduct($csvDTO);
-            $csvDTO->setProduct($this->categoryIntegrityManager->updateCategoryInProduct($csvDTO));
+            //$csvDTO->setProduct($this->categoryIntegrityManager->updateCategoryInProduct($csvDTO));
         }
         return $csvDTO;
     }

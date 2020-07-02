@@ -16,7 +16,6 @@ class CsvDataTransferObject
     private int $categoryId = 0;
     private string $categoryKey = "";
     private ?int $productId = null;
-    private ?Product $product = null;
 
     /**
      * @return int|null
@@ -104,20 +103,5 @@ class CsvDataTransferObject
     public function setArticleNumber(string $articleNumber):void
     {
         $this->articleNumber = $articleNumber;
-    }
-    /**
-    * @return mixed
-    */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param mixed $product
-     */
-    public function setProduct($product): void
-    {
-        $this->product = $product;
     }
 }

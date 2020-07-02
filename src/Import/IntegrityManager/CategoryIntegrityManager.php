@@ -33,17 +33,6 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
         return $categoryEntity;
     }
 
-    public function updateProductInCategory(CsvDataTransferObject $csvDTO):?Product
-    {
-        $productCache = $csvDTO->getProduct();
-        if (!empty($csvDTO->getProductId())) {
-            $productCache->setId($csvDTO->getProductId());
-        }
-
-        $productCache->setArticleNumber($csvDTO->getArticleNumber());
-
-        return $productCache;
-    }
 
     public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): ?Product
     {
