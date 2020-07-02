@@ -34,13 +34,6 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
     }
 
 
-    public function updateCategoryInProduct(CsvDataTransferObject $csvDTO): ?Product
-    {
-        $product = $csvDTO->getProduct();
-        $product->setCategory($csvDTO->getCategory());
-        return $product;
-    }
-
     private function loadEntityFromRepository(int $id):?object
     {
         return $this->ormCategoryRepository->findByPK($id);

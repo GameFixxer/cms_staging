@@ -7,7 +7,9 @@ use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
 use App\Import\ImportCategory;
 use App\Import\ImportProduct;
+use App\Import\UpdateImport\UpdateImport;
 use App\Import\UpdateImport\UpdateProductCategory;
+use App\Import\UpdateImport\UpdateProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\ProductEntityManager;
 use App\Model\UserEntityManager;
@@ -84,10 +86,22 @@ class ContainerHelper
         return $this->container->get(ImportProduct::class);
     }
 
-    public function getCreateProduct(){
+    public function getCreateProduct()
+    {
         return$this->container->get(CreateProduct::class);
     }
-    public function getUpdateProductCategory(){
+    public function getUpdateProductCategory()
+    {
         return $this->container->get(UpdateProductCategory::class);
+    }
+
+    public function getUpdateProductInformation()
+    {
+        return $this->container->get(UpdateProductInformation::class);
+    }
+
+    public function getUpdateImport()
+    {
+        return $this->container->get(UpdateImport::class);
     }
 }

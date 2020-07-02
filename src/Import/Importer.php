@@ -1,33 +1,37 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Import;
+
+use App\Import\CreateImport\CreateProductInterface;
+use App\Import\UpdateImport\UpdateImportInterface;
 
 class Importer
 {
     private CsvImportLoaderInterface $csvLoader;
-    private ImportCategoryInterface $importCategory;
-    private ImportProductInterface $importProduct;
-    private String $path;
+    private CreateProductInterface $createProduct;
+    private UpdateImportInterface $updateImport;
+    private string $path;
 
     public function __construct(
         CsvImportLoaderInterface $csvLoader,
-        ImportCategoryInterface $importCategory,
-        ImportProductInterface $importProduct,
+        CreateProductInterface $createProduct,
+        UpdateImportInterface $updateImport,
         string $path
     ) {
         $this->csvLoader = $csvLoader;
-        $this->importCategory = $importCategory;
-        $this->importProduct = $importProduct;
+        $this->createProduct = $createProduct;
+        $this->updateImport = $updateImport;
         $this->path = $path;
     }
 
-    public function import():void
+    public function import(): void
     {
         $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if (isset($rawProductList)) {
             foreach ($rawProductList as $object) {
-                $this->importCategory->importCategory($object);
-                $this->importProduct->importProduct($object);
+                $updatedDTO = $this->createProduct->createProduct($object);
+                $this->updateImport->updateProducts($updatedDTO);
             }
         }
     }

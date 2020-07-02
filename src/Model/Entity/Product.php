@@ -5,7 +5,7 @@ namespace App\Model\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\HasOne;
+use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 /**
  * @Entity(
@@ -24,7 +24,7 @@ class Product implements EntityInterface
     protected $id;
 
     /**
-     * @HasOne(target = "Category",  nullable = true)
+     * @BelongsTo(target = "Category",  nullable = true)
      */
     protected $category;
 

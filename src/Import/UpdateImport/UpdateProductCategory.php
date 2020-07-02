@@ -46,7 +46,6 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
             }
             $this->saveUpdatedProduct($csvDTO);
-            //$csvDTO->setProduct($this->categoryIntegrityManager->updateCategoryInProduct($csvDTO));
         }
         return $csvDTO;
     }
@@ -60,7 +59,6 @@ class UpdateProductCategory implements UpdateProductCategoryInterface
 
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $productDTO->setCategory($csvDTO->getCategory());
-        dump($productDTO);
         $this->productEntityManager->save($productDTO);
     }
 }

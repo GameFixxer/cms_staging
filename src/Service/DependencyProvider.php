@@ -8,8 +8,10 @@ use App\Import\ImportCategory;
 use App\Import\Importer;
 use App\Import\ImportProduct;
 use App\Import\IntegrityManager\CategoryIntegrityManager;
+use App\Import\UpdateImport\UpdateImport;
 use App\Import\UpdateImport\UpdateProduct;
 use App\Import\UpdateImport\UpdateProductCategory;
+use App\Import\UpdateImport\UpdateProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -107,19 +109,22 @@ class DependencyProvider
             $container->get(ProductEntityManager::class),
             $container->get(CategoryIntegrityManager::class)
         ));
+        $container->set(UpdateProductInformation::class, new UpdateProductInformation(
+            $container->get(ProductRepository::class),
+            $container->get(ProductEntityManager::class)
+        ));
 
-
-        $container->set(ImportProduct::class, new ImportProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
-        $container->set(ImportCategory::class, new ImportCategory($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
         $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
+        $container->set(UpdateImport::class, new UpdateImport($container->get(UpdateProductCategory::class), $container->get(UpdateProductInformation::class)));
         $container->set(
             Importer::class,
             new Importer(
                 $container->get(CsvImportLoader::class),
-                $container->get(ImportCategory::class),
-                $container->get(ImportProduct::class),
+                $container->get(CreateProduct::class),
+                $container->get(UpdateImport::class),
                 dirname(__DIR__, 2).'../import/'
             )
         );
+
     }
 }

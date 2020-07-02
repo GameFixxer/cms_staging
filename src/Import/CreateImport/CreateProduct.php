@@ -5,12 +5,11 @@ namespace App\Import\CreateImport;
 
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Category;
 use App\Model\Entity\Product;
 use App\Model\ProductEntityManagerInterface;
 use App\Model\ProductRepositoryInterface;
 
-class CreateProduct
+class CreateProduct implements CreateProductInterface
 {
     private ProductRepositoryInterface $productRepository;
     private ProductEntityManagerInterface $productEntityManager;
@@ -27,14 +26,11 @@ class CreateProduct
             $productFromRepo = $this->productRepository->getProduct($csvDTO->getArticleNumber());
             if ($productFromRepo instanceof ProductDataTransferObject) {
                 $csvDTO->setProductId($productFromRepo->getProductId());
-                //$csvDTO->setProduct($this->mapEntity($csvDTO));
                 return $csvDTO;
             }
             $productDTO = new ProductDataTransferObject();
             $productDTO->setArticleNumber($csvDTO->getArticleNumber());
             $csvDTO->setProductId($this->productEntityManager->save($productDTO)->getProductId());
-            //$csvDTO->setProduct($this->mapEntity($csvDTO));
-            //$this->productEntityManager->save($productDTO);
             return $csvDTO;
         }
         return null;

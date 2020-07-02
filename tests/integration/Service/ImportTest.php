@@ -9,6 +9,10 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
 
+/**
+ * @group Import4
+ */
+
 
 class ImportTest extends \Codeception\Test\Unit
 {
@@ -37,8 +41,8 @@ class ImportTest extends \Codeception\Test\Unit
 
         $this->importer = new Importer(
             $this->csvLoader,
-            $this->container->getImportCategory(),
-            $this->container->getImportProduct(),
+            $this->container->getCreateProduct(),
+            $this->container->getUpdateImport(),
             $this->path,
 
         );
