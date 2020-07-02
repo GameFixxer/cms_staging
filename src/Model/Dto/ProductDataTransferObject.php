@@ -20,7 +20,7 @@ class ProductDataTransferObject
         $this->name = $name;
     }
 
-    public function getCategory():?Object
+    public function getCategory(): ?Object
     {
         return $this->category;
     }

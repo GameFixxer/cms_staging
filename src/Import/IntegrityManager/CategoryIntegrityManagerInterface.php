@@ -7,5 +7,5 @@ use App\Model\Entity\Product;
 
 interface CategoryIntegrityManagerInterface
 {
-    public function mapEntity(CsvDataTransferObject $csvDTO): ?object ;
+    public function mapEntity(CsvDataTransferObject $csvDTO): ?object;
 }

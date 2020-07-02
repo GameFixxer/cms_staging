@@ -53,7 +53,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
         self::assertNotNull($updatedProduct);
         self::assertNotNull($productFromRepository);
-        if (!empty(($updatedProduct->getCategory())) &&!empty(($productFromRepository->getCategory()))) {
+        if (!empty(($updatedProduct->getCategory())) && !empty(($productFromRepository->getCategory()))) {
             self::assertSame($updatedProduct->getCategory()->getCategoryId(), $productFromRepository->getCategory()->getCategoryId());
             self::assertSame($updatedProduct->getCategoryKey(), $this->categoryRepository->getCategory($updatedProduct->getCategoryId())->getCategoryKey());
             self::assertSame('', $productFromRepository->getProductName());
@@ -62,7 +62,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
 
     private function createProduct()
     {
-        $tmp =rand(1, 1000).substr('', rand(1, 1000));
+        $tmp = rand(1, 1000).substr('', rand(1, 1000));
         $this->createCSVDTO(''.$tmp, 'tester');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
         $this->csvDTO->setProductId($csvProduct->getProductId());

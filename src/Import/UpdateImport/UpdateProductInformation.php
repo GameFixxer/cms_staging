@@ -21,10 +21,10 @@ class UpdateProductInformation implements UpdateProductInformationInterface
 
     public function updateProductInformation(CsvDataTransferObject $csvDTO):void
     {
-        if ($csvDTO->getProductName() === '' || $csvDTO->getProductDescription()==='') {
+        if ($csvDTO->getProductName() === '' || $csvDTO->getProductDescription() === '') {
             throw new \Exception('Name and Description must not be empty', 1);
         } else {
-            $productDTO=  $this->productRepository->getProduct($csvDTO->getArticleNumber());
+            $productDTO = $this->productRepository->getProduct($csvDTO->getArticleNumber());
             if ($productDTO instanceof ProductDataTransferObject) {
                 $productDTO->setProductName($csvDTO->getProductName());
                 $productDTO->setProductDescription($csvDTO->getProductDescription());

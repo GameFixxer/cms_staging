@@ -31,7 +31,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject){
+        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(Product::class);
@@ -55,7 +55,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
     public function testWithExistingCorrectProduct()
     {
         $this->createCSVDTO('abc123');
-        $csvProduct1 =$this->importCreateProduct->createProduct($this->csvDTO);
+        $csvProduct1 = $this->importCreateProduct->createProduct($this->csvDTO);
         $productFromRepository1 = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
         $csvProduct2 = $this->importCreateProduct->createProduct($this->csvDTO);
         $productFromRepository2 = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
