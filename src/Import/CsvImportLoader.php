@@ -6,7 +6,7 @@ namespace App\Import;
 use League\Csv\Reader;
 use function PHPUnit\Framework\isEmpty;
 
-class CsvImportLoader
+class CsvImportLoader implements CsvImportLoaderInterface
 {
     private array $header;
 

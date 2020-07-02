@@ -13,7 +13,6 @@ use Cycle\ORM\Transaction;
 /**
  * @group CategoryEntityManagerTest
  */
-
 class CategoryEntityManagerTest extends \Codeception\Test\Unit
 {
     private CategoryDataTransferObject $categoryDTO;
@@ -25,6 +24,7 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
         $this->container = new ContainerHelper();
         $this->categoryEntityManager = $this->container->getCategoryEntityManager();
         $this->createDto('testcategory');
+
     }
 
     public function _after()
@@ -37,18 +37,18 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
         $transaction->run();
     }
 
-    public function testCreateProduct()
+    public function testCreateCategory()
     {
-
+        $this->categoryEntityManager->save($this->categoryDTO);
         $productFromRepository = $this->container->getCategoryRepository()->getCategory($this->categoryDTO->getCategoryId());
         $this->assertSame($this->categoryDTO->getCategoryId(), $productFromRepository->getCategoryId());
         $this->assertSame($this->categoryDTO->getCategoryKey(), $productFromRepository->getCategoryKey());
 
     }
 
-    public function testUpdateProduct()
+    public function testUpdateCategory()
     {
-        $this->testCreateProduct();
+        $this->testCreateCategory();
         $this->categoryDTO->setCategoryKey('fabulous');
         $this->categoryDTO = $this->categoryEntityManager->save($this->categoryDTO);
         $productFromRepository = $this->container->getCategoryRepository()->getCategory($this->categoryDTO->getCategoryId());
@@ -57,16 +57,16 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
         $this->assertSame($this->categoryDTO->getCategoryId(), $productFromRepository->getCategoryId());
     }
 
-    public function TestDeleteProduct()
+    public function TestDeleteCategory()
     {
-        $this->testCreateProduct();
+        $this->testCreateCategory();
 
         $this->categoryEntityManager->delete($this->categoryDTO);
 
         $this->assertNull($this->container->getCategoryRepository()->getCategory($this->categoryDTO->getCategoryId()));
     }
 
-    private function createDto(String $categoryKey)
+    private function createDto(string $categoryKey)
     {
         $this->categoryDTO = new CategoryDataTransferObject();
         $this->categoryDTO->setCategoryKey($categoryKey);

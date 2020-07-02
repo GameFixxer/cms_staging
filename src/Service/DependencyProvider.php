@@ -2,9 +2,16 @@
 declare(strict_types=1);
 namespace App\Service;
 
+use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
+use App\Import\ImportCategory;
 use App\Import\Importer;
-use App\Import\ImportManager;
+use App\Import\ImportProduct;
+use App\Import\IntegrityManager\CategoryIntegrityManager;
+use App\Import\UpdateImport\UpdateImport;
+use App\Import\UpdateImport\UpdateProduct;
+use App\Import\UpdateImport\UpdateProductCategory;
+use App\Import\UpdateImport\UpdateProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -42,6 +49,14 @@ class DependencyProvider
             return $databaseManager->connect();
         });
         $container->set(PasswordManager::class, new PasswordManager());
+
+        $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
+            /** @var ORM $orm */
+            $orm = $container->get(DatabaseManager::class);
+            return new CategoryIntegrityManager(
+                $orm->getRepository(Category::class)
+            );
+        });
 
         // Mapper
         $container->set(ProductMapper::class, new ProductMapper());
@@ -88,16 +103,28 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(ImportManager::class, new ImportManager($container->get(ProductRepository::class), $container->get(CategoryRepository::class)));
+        $container->set(UpdateProductCategory::class, new UpdateProductCategory(
+            $container->get(CategoryRepository::class),
+            $container->get(CategoryEntityManager::class),
+            $container->get(ProductEntityManager::class),
+            $container->get(CategoryIntegrityManager::class)
+        ));
+        $container->set(UpdateProductInformation::class, new UpdateProductInformation(
+            $container->get(ProductRepository::class),
+            $container->get(ProductEntityManager::class)
+        ));
+
+        $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
+        $container->set(UpdateImport::class, new UpdateImport($container->get(UpdateProductCategory::class), $container->get(UpdateProductInformation::class)));
         $container->set(
             Importer::class,
             new Importer(
-                $container->get(ProductEntityManager::class),
-                $container->get(CategoryEntityManager::class),
                 $container->get(CsvImportLoader::class),
-                $container->get(ImportManager::class),
+                $container->get(CreateProduct::class),
+                $container->get(UpdateImport::class),
                 dirname(__DIR__, 2).'../import/'
             )
         );
+
     }
 }

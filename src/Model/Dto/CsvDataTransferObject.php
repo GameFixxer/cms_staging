@@ -3,13 +3,16 @@
 
 namespace App\Model\Dto;
 
+use App\Model\Entity\Category;
+use App\Model\Entity\Product;
+use PhpParser\Node\Expr\Cast\Object_;
+
 class CsvDataTransferObject
 {
     private string $name = '';
-    private int $id = 0;
     private string $articleNumber = '';
     private string $desc = '';
-    private ?string $category = null;
+    private ?Category $category = null;
     private int $categoryId = 0;
     private string $categoryKey = "";
     private ?int $productId = null;
@@ -63,15 +66,11 @@ class CsvDataTransferObject
         $this->name = $name;
     }
 
-    public function setCategory(string $category): void
+    public function setCategory($category): void
     {
         $this->category = $category;
     }
 
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
     public function setNumber(string $articleNumber): void
     {
         $this->articleNumber = $articleNumber;
@@ -82,10 +81,6 @@ class CsvDataTransferObject
         $this->desc = $desc;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
     public function getArticleNumber(): string
     {
         return $this->articleNumber;
@@ -95,7 +90,7 @@ class CsvDataTransferObject
         return $this->name;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): ?Object
     {
         return $this->category;
     }

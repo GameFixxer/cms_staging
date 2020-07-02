@@ -7,7 +7,7 @@ use App\Model\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
-class ProductEntityManager
+class ProductEntityManager implements ProductEntityManagerInterface
 {
     /**
      * @var ProductRepository
@@ -51,7 +51,7 @@ class ProductEntityManager
         $transaction->persist($entity);
         $transaction->run();
 
-        $product->setId($entity->getId());
+        $product->setProductId($entity->getId());
 
         return $product;
     }

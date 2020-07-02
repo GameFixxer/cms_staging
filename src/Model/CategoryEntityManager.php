@@ -8,7 +8,7 @@ use App\Model\Entity\Category;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
-class CategoryEntityManager
+class CategoryEntityManager implements CategoryEntityManagerInterface
 {
     /**
      * @var CategoryRepository

@@ -1,62 +1,39 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Import;
 
-use App\Model\CategoryEntityManager;
-use App\Model\Dto\CategoryDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\ProductEntityManager;
+use App\Import\CreateImport\CreateProductInterface;
+use App\Import\UpdateImport\UpdateImportInterface;
+use App\Model\Dto\CsvDataTransferObject;
 
 class Importer
 {
-    private ProductEntityManager $productEntityManager;
-    private CsvImportLoader $csvLoader;
-    private ImportManager $importManager;
-    private CategoryEntityManager $categoryEntityManager;
-    private String $path;
+    private CsvImportLoaderInterface $csvLoader;
+    private CreateProductInterface $createProduct;
+    private UpdateImportInterface $updateImport;
+    private string $path;
 
     public function __construct(
-        ProductEntityManager $productEntityManager,
-        CategoryEntityManager $categoryEntityManager,
-        CsvImportLoader $csvLoader,
-        ImportManager $importManager,
+        CsvImportLoaderInterface $csvLoader,
+        CreateProductInterface $createProduct,
+        UpdateImportInterface $updateImport,
         string $path
-    )
-    {
-        $this->productEntityManager = $productEntityManager;
+    ) {
         $this->csvLoader = $csvLoader;
-        $this->importManager = $importManager;
+        $this->createProduct = $createProduct;
+        $this->updateImport = $updateImport;
         $this->path = $path;
-        $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /*public function import():void
+    public function import(): void
     {
         $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
         if (isset($rawProductList)) {
-            $productList = $this->importManager->checkForCreateOrUpdate($rawProductList);
-            foreach ($productList as $product) {
-                if ($product instanceof ProductDataTransferObject) {
-                    $this->productEntityManager->save($product);
-                }
-            }
-        }
-    }*/
-    public function import():void
-    {
-        $rawProductList = $this->csvLoader->mapCSVToDTO($this->path);
-        if (isset($rawProductList)) {
-            $this->importManager->extractFromCsvDTO($rawProductList);
-            $productList = $this->importManager->checkForValidProductSave();
-            foreach ($productList as $product) {
-                if ($product instanceof ProductDataTransferObject) {
-                    $this->productEntityManager->save($product);
-                }
-            }
-            $categoryList = $this->importManager->checkForValidCategorySave();
-            foreach ($categoryList as $category) {
-                if ($category instanceof CategoryDataTransferObject) {
-                    $this->categoryEntityManager->save($category);
+            foreach ($rawProductList as $object) {
+                $updatedDTO = $this->createProduct->createProduct($object);
+                if ($updatedDTO instanceof CsvDataTransferObject) {
+                    $this->updateImport->updateProducts($updatedDTO);
                 }
             }
         }
