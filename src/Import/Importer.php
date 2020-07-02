@@ -5,6 +5,7 @@ namespace App\Import;
 
 use App\Import\CreateImport\CreateProductInterface;
 use App\Import\UpdateImport\UpdateImportInterface;
+use App\Model\Dto\CsvDataTransferObject;
 
 class Importer
 {
@@ -31,7 +32,9 @@ class Importer
         if (isset($rawProductList)) {
             foreach ($rawProductList as $object) {
                 $updatedDTO = $this->createProduct->createProduct($object);
-                $this->updateImport->updateProducts($updatedDTO);
+                if ($updatedDTO instanceof CsvDataTransferObject) {
+                    $this->updateImport->updateProducts($updatedDTO);
+                }
             }
         }
     }

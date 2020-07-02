@@ -48,7 +48,10 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
     {
         $this->createProduct();
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $this->updateProductInfo->updateProductInformation($csvProduct);
+        if ($csvProduct instanceof CsvDataTransferObject) {
+            $this->updateProductInfo->updateProductInformation($csvProduct);
+
+        }
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
         self::assertNotNull($csvProduct);
         self::assertNotNull($productFromRepository);

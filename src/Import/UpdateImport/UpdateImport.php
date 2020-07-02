@@ -18,14 +18,12 @@ class UpdateImport implements UpdateImportInterface
 
     public function updateProducts(CsvDataTransferObject $csvDTO)
     {
-        $updatedCsvDTO = new CsvDataTransferObject();
+
         try {
             $updatedCsvDTO = $this->updateProductCategory->updateProductCategory($csvDTO);
-        } catch (\Exception $e) {
-        }
-        try {
             $this->updateProductInformation->updateProductInformation($updatedCsvDTO);
         } catch (\Exception $e) {
+            //TODO
         }
     }
 }

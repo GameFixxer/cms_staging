@@ -36,12 +36,4 @@ class CreateProduct implements CreateProductInterface
         return null;
 
     }
-
-    private function mapEntity(CsvDataTransferObject $csvDTO)
-    {
-        $productEntity = new Product();
-        $productEntity->setCategory($csvDTO->getProductId());
-
-        return $productEntity;
-    }
 }
