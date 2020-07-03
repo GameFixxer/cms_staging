@@ -3,10 +3,12 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Import\CreateImport\CreateProduct;
-use App\Import\UpdateImport\UpdateProductCategory;
+
+use App\Import\Update\ProductCategory;
 use App\Model\CategoryRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
+use App\Model\Entity\Category;
 use App\Model\Entity\Product;
 use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
@@ -14,14 +16,14 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
 
 /**
- * @group Import2
+ * @group Import
  */
 class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
 {
     private CsvDataTransferObject $csvDTO;
     private CreateProduct $importCreateProduct;
     private ProductRepository $productRepository;
-    private UpdateProductCategory $updateCategory;
+    private ProductCategory $updateCategory;
     private CategoryRepository $categoryRepository;
     private ContainerHelper $container;
 
@@ -49,13 +51,17 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
     public function testUpdateCategory()
     {
         $this->createProduct();
-        $updatedProduct = $this->updateCategory->updateProductCategory($this->csvDTO);
+        $this->updateCategory->update($this->csvDTO);
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
-        self::assertNotNull($updatedProduct);
+
         self::assertNotNull($productFromRepository);
-        if (!empty(($updatedProduct->getCategory())) && !empty(($productFromRepository->getCategory()))) {
-            self::assertSame($updatedProduct->getCategory()->getCategoryId(), $productFromRepository->getCategory()->getCategoryId());
-            self::assertSame($updatedProduct->getCategoryKey(), $this->categoryRepository->getCategory($updatedProduct->getCategoryId())->getCategoryKey());
+        if (!empty(($productFromRepository->getCategory()))) {
+            self::assertNotSame('', $productFromRepository->getCategory()->getCategoryId());
+            $orm = new DatabaseManager();
+            $orm = $orm->connect();
+            $ormCategoryRepository = $orm->getRepository(Category::class);
+
+            self::assertSame($this->csvDTO->getCategoryKey(), $ormCategoryRepository->findOne(['category_key'=>$this->csvDTO->getCategoryKey()])->getCategoryKey());
             self::assertSame('', $productFromRepository->getProductName());
         }
     }

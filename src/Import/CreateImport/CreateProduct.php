@@ -22,18 +22,19 @@ class CreateProduct implements CreateProductInterface
 
     public function createProduct(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
     {
-        if ($csvDTO->getArticleNumber() !== '') {
-            $productFromRepo = $this->productRepository->getProduct($csvDTO->getArticleNumber());
-            if ($productFromRepo instanceof ProductDataTransferObject) {
-                $csvDTO->setProductId($productFromRepo->getProductId());
-                return $csvDTO;
-            }
-            $productDTO = new ProductDataTransferObject();
-            $productDTO->setArticleNumber($csvDTO->getArticleNumber());
-            $csvDTO->setProductId($this->productEntityManager->save($productDTO)->getProductId());
+        if ($csvDTO->getArticleNumber() === '') {
+            throw new \Exception('ArticleNumber must not be empty', 1);
+        }
+
+        $productFromRepo = $this->productRepository->getProduct($csvDTO->getArticleNumber());
+        if ($productFromRepo instanceof ProductDataTransferObject) {
+            $csvDTO->setProductId($productFromRepo->getProductId());
             return $csvDTO;
         }
-        return null;
+        $productDTO = new ProductDataTransferObject();
+        $productDTO->setArticleNumber($csvDTO->getArticleNumber());
+        $csvDTO->setProductId($this->productEntityManager->save($productDTO)->getProductId());
 
+        return $csvDTO;
     }
 }

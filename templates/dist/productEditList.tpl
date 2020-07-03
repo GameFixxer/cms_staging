@@ -31,7 +31,7 @@
                     </thead>
                     <tbody id={$page->getArticleNumber()}>
                     <tr>
-                        <th scope="row" id={$page->getId()}>{$page->getArticleNumber()}</th>
+                        <th scope="row" id={$page->getProductId()}>{$page->getArticleNumber()}</th>
                         <td>{$page->getProductName()}</td>
                         <td>{$page->getProductDescription()}<td>
                         <td>

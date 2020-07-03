@@ -1,11 +1,10 @@
 <?php
-
-
+declare(strict_types=1);
 namespace App\Import\IntegrityManager;
 
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Entity\Category;
-use App\Model\Entity\Product;
+
 use function PHPUnit\Framework\isEmpty;
 
 class CategoryIntegrityManager implements CategoryIntegrityManagerInterface

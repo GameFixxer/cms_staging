@@ -2,16 +2,15 @@
 declare(strict_types=1);
 namespace App\Service;
 
+use App\Import\ActionProvider;
 use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
-use App\Import\ImportCategory;
 use App\Import\Importer;
-use App\Import\ImportProduct;
 use App\Import\IntegrityManager\CategoryIntegrityManager;
-use App\Import\UpdateImport\UpdateImport;
-use App\Import\UpdateImport\UpdateProduct;
-use App\Import\UpdateImport\UpdateProductCategory;
-use App\Import\UpdateImport\UpdateProductInformation;
+use App\Import\IntegrityManager\ValueIntegrityManager;
+use App\Import\Update\ProductImporter;
+use App\Import\Update\ProductCategory;
+use App\Import\Update\ProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -43,14 +42,14 @@ class DependencyProvider
     private function persistenceDependency(Container $container): void
     {
         //Service
-        $container->setFactory(DatabaseManager::class, function() {
+        $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
         });
         $container->set(PasswordManager::class, new PasswordManager());
 
-        $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
+        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryIntegrityManager(
@@ -67,19 +66,19 @@ class DependencyProvider
 
 
         // Repositorys
-        $container->setFactory(ProductRepository::class, function(Container $container) {
+        $container->setFactory(ProductRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function(Container $container) {
+        $container->setFactory(UserRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
         });
 
-        $container->setFactory(CategoryRepository::class, function(Container $container) {
+        $container->setFactory(CategoryRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
@@ -103,28 +102,21 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(UpdateProductCategory::class, new UpdateProductCategory(
-            $container->get(CategoryRepository::class),
-            $container->get(CategoryEntityManager::class),
-            $container->get(ProductEntityManager::class),
-            $container->get(CategoryIntegrityManager::class)
-        ));
-        $container->set(UpdateProductInformation::class, new UpdateProductInformation(
-            $container->get(ProductRepository::class),
-            $container->get(ProductEntityManager::class)
-        ));
-
+        $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
-        $container->set(UpdateImport::class, new UpdateImport($container->get(UpdateProductCategory::class), $container->get(UpdateProductInformation::class)));
+        $container->set(ActionProvider::class, new ActionProvider());
+        $container->setFactory(ProductImporter::class, function (Container $container) {
+            $actionList = $container->get(ActionProvider::class);
+            return new ProductImporter($actionList->getActionList(), $container);
+        });
         $container->set(
             Importer::class,
             new Importer(
                 $container->get(CsvImportLoader::class),
                 $container->get(CreateProduct::class),
-                $container->get(UpdateImport::class),
+                $container->get(ProductImporter::class),
                 dirname(__DIR__, 2).'../import/'
             )
         );
-
     }
 }

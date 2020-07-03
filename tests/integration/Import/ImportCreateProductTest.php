@@ -70,15 +70,6 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         self::assertNotSame('test', $productFromRepository1->getProductName());
     }
 
-    public function testWithIncorrectProduct()
-    {
-
-        $this->createCSVDTO('');
-        $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
-        self::assertNull($csvProduct);
-        self::assertNull($productFromRepository);
-    }
     private function createCSVDTO(string $articleNumber)
     {
         $this->csvDTO = new CsvDataTransferObject();

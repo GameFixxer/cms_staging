@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Import\CreateImport\CreateProduct;
-use App\Import\UpdateImport\UpdateProductInformation;
+use App\Import\Update\ProductInformation;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Entity\Product;
@@ -14,7 +14,7 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
 
 /**
- * @group Import3
+ * @group Import
  */
 class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 {
@@ -22,7 +22,7 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
     private CreateProduct $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
-    private UpdateProductInformation $updateProductInfo;
+    private ProductInformation $updateProductInfo;
 
     public function _before()
     {
@@ -49,7 +49,7 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
         $this->createProduct();
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
         if ($csvProduct instanceof CsvDataTransferObject) {
-            $this->updateProductInfo->updateProductInformation($csvProduct);
+            $this->updateProductInfo->update($csvProduct);
 
         }
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
