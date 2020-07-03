@@ -9,7 +9,7 @@ use App\Service\Container;
 class ProductImporter implements UpdateInterface
 {
     /**
-     * @var ProductInterface
+     * @var array ProductInterface
      */
 
     private array $importArrayList;
