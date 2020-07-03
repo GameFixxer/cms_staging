@@ -24,7 +24,7 @@ class ProductCategory implements ProductInterface
     public function __construct(
         Container $container
     ) {
-        $this->categoryRepository =$container->get(CategoryRepository::class);
+        $this->categoryRepository = $container->get(CategoryRepository::class);
         $this->categoryEntityManager = $container->get(CategoryEntityManager::class);
         $this->productEntityManager = $container->get(ProductEntityManager::class);
         $this->categoryIntegrityManager = $container->get(CategoryIntegrityManager::class);
