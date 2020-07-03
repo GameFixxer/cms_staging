@@ -26,8 +26,8 @@ class ProductImporter implements UpdateInterface
         foreach ($this->importArrayList as $action) {
 
             if (
-                ["App\Import\Update\ProductInterface" => "App\Import\Update\ProductInterface"]!== class_implements($action)) {
-                throw new \Exception('Filter or Updatefunction'.$action .'Broken', 1);
+                ["App\Import\Update\ProductInterface" => "App\Import\Update\ProductInterface"] !== class_implements($action)) {
+                throw new \Exception('Filter or Updatefunction'.$action.'Broken', 1);
             }
             try {
                 $actionclass = new $action($this->container);
