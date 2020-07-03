@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
 
 /**
- * @group Import4
+ * @group Import
  */
 
 

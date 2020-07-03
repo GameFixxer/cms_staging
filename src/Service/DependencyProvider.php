@@ -2,16 +2,15 @@
 declare(strict_types=1);
 namespace App\Service;
 
+use App\Import\ActionProvider;
 use App\Import\CreateImport\CreateProduct;
 use App\Import\CsvImportLoader;
-use App\Import\ImportCategory;
 use App\Import\Importer;
-use App\Import\ImportProduct;
 use App\Import\IntegrityManager\CategoryIntegrityManager;
-use App\Import\UpdateImport\UpdateImport;
-use App\Import\UpdateImport\UpdateProduct;
-use App\Import\UpdateImport\UpdateProductCategory;
-use App\Import\UpdateImport\UpdateProductInformation;
+use App\Import\IntegrityManager\ValueIntegrityManager;
+use App\Import\Update\ProductImporter;
+use App\Import\Update\ProductCategory;
+use App\Import\Update\ProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -103,28 +102,21 @@ class DependencyProvider
 
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
-        $container->set(UpdateProductCategory::class, new UpdateProductCategory(
-            $container->get(CategoryRepository::class),
-            $container->get(CategoryEntityManager::class),
-            $container->get(ProductEntityManager::class),
-            $container->get(CategoryIntegrityManager::class)
-        ));
-        $container->set(UpdateProductInformation::class, new UpdateProductInformation(
-            $container->get(ProductRepository::class),
-            $container->get(ProductEntityManager::class)
-        ));
-
+        $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
-        $container->set(UpdateImport::class, new UpdateImport($container->get(UpdateProductCategory::class), $container->get(UpdateProductInformation::class)));
+        $container->set(ActionProvider::class, new ActionProvider());
+        $container->setFactory(ProductImporter::class, function(Container $container) {
+            $actionList = $container->get(ActionProvider::class);
+            return new ProductImporter($actionList->getActionList(), $container);
+        });
         $container->set(
             Importer::class,
             new Importer(
                 $container->get(CsvImportLoader::class),
                 $container->get(CreateProduct::class),
-                $container->get(UpdateImport::class),
+                $container->get(ProductImporter::class),
                 dirname(__DIR__, 2).'../import/'
             )
         );
-
     }
 }

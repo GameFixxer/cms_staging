@@ -6,7 +6,7 @@ namespace App\Model\Dto;
 
 use App\Model\Entity\Category;
 
-class ProductDataTransferObject
+class ProductDataTransferObject implements DataTransferObjectInterface
 {
     private string $name = '';
     private int $id = 0;
