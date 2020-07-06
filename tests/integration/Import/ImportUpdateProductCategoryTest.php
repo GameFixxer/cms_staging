@@ -67,6 +67,13 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         }
     }
 
+    public function testUpdateCategoryWithNonChangingEntry(){
+
+        $this->testUpdateCategory();
+
+
+}
+
     private function createProduct()
     {
         $tmp = rand(1, 1000).substr('', rand(1, 1000));

@@ -8,11 +8,18 @@ use App\Import\Update\ProductInformation;
 
 class ActionProvider
 {
-    public function getActionList()
+    public function getProductActionList()
     {
         return [
             ProductCategory::class,
             ProductInformation::class
+
+        ];
+    }
+
+    public function getCategoryActionList()
+    {
+        return [
 
         ];
     }

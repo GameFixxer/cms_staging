@@ -3,14 +3,15 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Import\ActionProvider;
+use App\Import\Category\Update\CategoryImporter;
 use App\Import\Create\Product as ProductImport;
+use App\Import\Category\Create\Category as CategoryImport;
+use App\Import\Category\Importer as ImporterCategory;
 use App\Import\CsvImportLoader;
 use App\Import\Importer;
 use App\Import\IntegrityManager\CategoryIntegrityManager;
 use App\Import\IntegrityManager\ValueIntegrityManager;
 use App\Import\Update\ProductImporter;
-use App\Import\Update\ProductCategory;
-use App\Import\Update\ProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -104,11 +105,25 @@ class DependencyProvider
         $container->set(CsvImportLoader::class, new CsvImportLoader());
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
+        $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
         $container->set(ActionProvider::class, new ActionProvider());
         $container->setFactory(ProductImporter::class, function(Container $container) {
             $actionList = $container->get(ActionProvider::class);
-            return new ProductImporter($actionList->getActionList(), $container);
+            return new ProductImporter($actionList->getProductActionList(), $container);
         });
+        $container->setFactory(CategoryImporter::class, function(Container $container) {
+            $actionList = $container->get(ActionProvider::class);
+            return new CategoryImporter($actionList->getCategoryActionList(), $container);
+        });
+        $container->set(
+            ImporterCategory::class,
+            new ImporterCategory(
+                $container->get(CsvImportLoader::class),
+                $container->get(CategoryImport::class),
+                $container->get(CategoryImporter::class),
+                dirname(__DIR__, 2).'../import/'
+            )
+        );
         $container->set(
             Importer::class,
             new Importer(

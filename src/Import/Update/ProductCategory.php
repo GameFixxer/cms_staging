@@ -37,18 +37,17 @@ class ProductCategory implements ProductInterface
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
             $category = $this->categoryRepository->getCategoryByKey($csvDTO->getCategoryKey());
-            if ($category instanceof CategoryDataTransferObject && $this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
-                $csvDTO->setCategoryId($category->getCategoryId());
-                $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
-                $this->saveUpdatedProduct($csvDTO);
-            } else {
+            if (! $category instanceof CategoryDataTransferObject) {
                 $category = new CategoryDataTransferObject();
                 $category->setCategoryKey($csvDTO->getCategoryKey());
                 $csvDTO->setCategoryId($this->categoryEntityManager->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
+            } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
+                $csvDTO->setCategoryId($category->getCategoryId());
+                $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
+                $this->saveUpdatedProduct($csvDTO);
             }
-
         }
     }
 
