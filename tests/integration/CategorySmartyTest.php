@@ -1,31 +1,26 @@
 <?php
-declare(strict_types=1);
-namespace App\Tests\integration\Import;
+namespace App\Tests\integration;
 
 use App\Import\Create\Product;
-
 use App\Import\Update\ProductCategory;
-use App\Model\CategoryRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Category;
-use App\Model\Entity\Product as ProductEntity;
 use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
-use App\Import\Create\Product as ProductImport;
+use App\Model\Entity\Product as ProductEntity;
 
 /**
- * @group Import
+ * @group Import2
  */
-class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
+
+class CategorySmartyTest extends \Codeception\Test\Unit
 {
     private CsvDataTransferObject $csvDTO;
-    private ProductImport $importCreateProduct;
+    private Product $importCreateProduct;
     private ProductRepository $productRepository;
     private ProductCategory $updateCategory;
-    private CategoryRepository $categoryRepository;
     private ContainerHelper $container;
 
     public function _before()
@@ -34,11 +29,10 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->importCreateProduct = $this->container->getCreateProduct();
         $this->updateCategory = $this->container->getUpdateProductCategory();
-        $this->categoryRepository = $this->container->getCategoryRepository();
     }
 
     public function _after()
-    {/*
+    {
         if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
@@ -46,25 +40,15 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number'=>$this->csvDTO->getArticleNumber()]));
             $transaction->run();
-        }*/
+        }
     }
 
-    public function testUpdateCategory()
+    public function testgetCategoryFromProduct()
     {
         $this->createProduct();
         $this->updateCategory->update($this->csvDTO);
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
-
-        self::assertNotNull($productFromRepository);
-        if (!empty(($productFromRepository->getCategory()))) {
-            self::assertNotSame('', $productFromRepository->getCategory()->getCategoryId());
-            $orm = new DatabaseManager();
-            $orm = $orm->connect();
-            $ormCategoryRepository = $orm->getRepository(Category::class);
-
-            self::assertSame($this->csvDTO->getCategoryKey(), $ormCategoryRepository->findOne(['category_key'=>$this->csvDTO->getCategoryKey()])->getCategoryKey());
-            self::assertSame('', $productFromRepository->getProductName());
-        }
+        self::assertSame($productFromRepository->getCategory()->getCategoryKey(), $this->csvDTO->getCategoryKey());
     }
 
     private function createProduct()

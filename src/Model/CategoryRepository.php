@@ -47,4 +47,13 @@ class CategoryRepository implements CategoryRepositoryInterface
         }
         return null;
     }
+
+    public function getCategoryByKey(string $key): ?CategoryDataTransferObject
+    {
+        $categoryEntity = $this->ormCategoryRepository->findOne(['category_key'=>$key]);
+        if ($categoryEntity instanceof Category) {
+            return $this->categoryMapper->map($categoryEntity);
+        }
+        return null;
+    }
 }

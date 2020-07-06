@@ -33,12 +33,13 @@ class ProductCategory implements ProductInterface
 
     public function update(CsvDataTransferObject $csvDTO):void
     {
-        if ($csvDTO->getCategoryKey() === '') {
+        if (empty($csvDTO->getCategoryKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
-            $category = $this->categoryRepository->getCategory($csvDTO->getCategoryId());
+            $category = $this->categoryRepository->getCategoryByKey($csvDTO->getCategoryKey());
             if ($category instanceof CategoryDataTransferObject && $this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
                 $csvDTO->setCategoryId($category->getCategoryId());
+                $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
                 $this->saveUpdatedProduct($csvDTO);
             } else {
                 $category = new CategoryDataTransferObject();

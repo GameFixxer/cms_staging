@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Import\CreateImport;
+namespace App\Import\Create;
 
 use App\Model\Dto\CsvDataTransferObject;
 
-interface CreateProductInterface
+interface ProductInterface
 {
     public function createProduct(CsvDataTransferObject $csvDTO): ?CsvDataTransferObject;
 }

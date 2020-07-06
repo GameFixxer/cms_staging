@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 namespace App\Import;
 
-use App\Import\CreateImport\CreateProductInterface;
-use App\Import\Update\ProductInterface;
+use App\Import\Create\ProductInterface;
 use App\Import\Update\UpdateInterface;
 use App\Model\Dto\CsvDataTransferObject;
 
 class Importer
 {
     private CsvImportLoaderInterface $csvLoader;
-    private CreateProductInterface $createProduct;
+    private ProductInterface $createProduct;
     private UpdateInterface $updateImport;
     private string $path;
 
     public function __construct(
         CsvImportLoaderInterface $csvLoader,
-        CreateProductInterface $createProduct,
+        ProductInterface $createProduct,
         UpdateInterface $updateImport,
         string $path
     ) {

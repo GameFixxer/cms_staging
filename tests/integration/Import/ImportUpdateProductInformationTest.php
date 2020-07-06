@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Import;
 
-use App\Import\CreateImport\CreateProduct;
+use App\Import\Create\Product as ProductImport;
 use App\Import\Update\ProductInformation;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
+use App\Model\Entity\Product as ProductEntity;
 use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -19,7 +19,7 @@ use Cycle\ORM\Transaction;
 class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 {
     private CsvDataTransferObject $csvDTO;
-    private CreateProduct $importCreateProduct;
+    private ProductImport $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
     private ProductInformation $updateProductInfo;
@@ -37,7 +37,7 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
         if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
-            $ormProductRepository = $orm->getRepository(Product::class);
+            $ormProductRepository = $orm->getRepository(ProductEntity::class);
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number' => $this->csvDTO->getArticleNumber()]));
             $transaction->run();

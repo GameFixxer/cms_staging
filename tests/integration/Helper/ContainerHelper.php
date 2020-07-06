@@ -3,7 +3,7 @@
 
 namespace App\Tests\integration\Helper;
 
-use App\Import\CreateImport\CreateProduct;
+use App\Import\Create\Product;
 use App\Import\CsvImportLoader;
 use App\Import\Update\ProductImporter;
 use App\Import\Update\ProductCategory;
@@ -78,7 +78,7 @@ class ContainerHelper
 
     public function getCreateProduct()
     {
-        return$this->container->get(CreateProduct::class);
+        return$this->container->get(Product::class);
     }
     public function getUpdateProductCategory()
     {

@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Import\ActionProvider;
-use App\Import\CreateImport\CreateProduct;
+use App\Import\Create\Product as ProductImport;
 use App\Import\CsvImportLoader;
 use App\Import\Importer;
 use App\Import\IntegrityManager\CategoryIntegrityManager;
@@ -103,7 +103,7 @@ class DependencyProvider
         //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
-        $container->set(CreateProduct::class, new CreateProduct($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
+        $container->set(ProductImport::class, new ProductImport($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
         $container->set(ActionProvider::class, new ActionProvider());
         $container->setFactory(ProductImporter::class, function(Container $container) {
             $actionList = $container->get(ActionProvider::class);
@@ -113,7 +113,7 @@ class DependencyProvider
             Importer::class,
             new Importer(
                 $container->get(CsvImportLoader::class),
-                $container->get(CreateProduct::class),
+                $container->get(ProductImport::class),
                 $container->get(ProductImporter::class),
                 dirname(__DIR__, 2).'../import/'
             )
