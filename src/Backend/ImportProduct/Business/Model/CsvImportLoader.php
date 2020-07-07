@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Import;
+namespace App\Backend\ImportProduct\Business\Model;
 
 use League\Csv\Reader;
 

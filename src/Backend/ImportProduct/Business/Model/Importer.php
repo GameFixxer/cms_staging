@@ -1,23 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Import;
+namespace App\Backend\ImportProduct\Business\Model;
 
-use App\Import\CreateImport\CreateProductInterface;
-use App\Import\Update\ProductInterface;
-use App\Import\Update\UpdateInterface;
+use App\Backend\ImportProduct\Business\Model\Create\ProductInterface;
+use App\Backend\ImportProduct\Business\Model\Update\UpdateInterface;
 use App\Model\Dto\CsvDataTransferObject;
 
 class Importer
 {
     private CsvImportLoaderInterface $csvLoader;
-    private CreateProductInterface $createProduct;
+    private ProductInterface $createProduct;
     private UpdateInterface $updateImport;
     private string $path;
 
     public function __construct(
         CsvImportLoaderInterface $csvLoader,
-        CreateProductInterface $createProduct,
+        ProductInterface $createProduct,
         UpdateInterface $updateImport,
         string $path
     ) {

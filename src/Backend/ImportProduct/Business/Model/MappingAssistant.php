@@ -1,19 +1,16 @@
 <?php
 declare(strict_types=1);
-namespace App\Import;
+namespace App\Backend\ImportProduct\Business\Model;
 
 use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Mapper\CsvMapper;
 
 class MappingAssistant
 {
-    private CsvMapper $csvMapper;
     private $attributes;
     private bool $lowerCamelCase;
 
     public function __construct()
     {
-        $this->csvMapper = new CsvMapper();
         $this->lowerCamelCase = true;
         $this->attributes = null;
     }

@@ -22,7 +22,7 @@ class Category implements EntityInterface
     protected $category_id;
 
     /**
-     * @Column(type="string")
+     * @Column( unique = "true", type="string")
      * @var string
      */
     protected $categoryKey;

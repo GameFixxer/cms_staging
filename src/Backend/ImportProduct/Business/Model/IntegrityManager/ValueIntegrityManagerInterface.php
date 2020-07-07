@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Import\IntegrityManager;
+namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\DataTransferObjectInterface;

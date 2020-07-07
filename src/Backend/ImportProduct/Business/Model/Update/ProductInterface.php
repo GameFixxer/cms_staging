@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Import\Update;
+namespace App\Backend\ImportProduct\Business\Model\Update;
 
 use App\Model\Dto\CsvDataTransferObject;
 

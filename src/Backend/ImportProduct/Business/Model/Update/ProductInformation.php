@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Import\Update;
+namespace App\Backend\ImportProduct\Business\Model\Update;
 
-use App\Import\IntegrityManager\ValueIntegrityManager;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductEntityManager;
@@ -16,11 +16,14 @@ class ProductInformation implements ProductInterface
     private ProductEntityManager $productEntityManager;
     private ValueIntegrityManager $valueIntegrityManager;
 
-    public function __construct(Container $container)
-    {
-        $this->productRepository = $container->get(ProductRepository::class);
-        $this->productEntityManager = $container->get(ProductEntityManager::class);
-        $this->valueIntegrityManager = $container->get(ValueIntegrityManager::class);
+    public function __construct(
+        ProductRepository $productRepository,
+        ProductEntityManager $productEntityManager,
+        ValueIntegrityManager $valueIntegrityManager
+    ) {
+        $this->productRepository = $productRepository;
+        $this->productEntityManager = $productEntityManager;
+        $this->valueIntegrityManager = $valueIntegrityManager;
     }
 
     public function update(CsvDataTransferObject $csvDTO):void

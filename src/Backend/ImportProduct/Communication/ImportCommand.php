@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace App\Command;
+namespace App\Backend\ImportProduct\Communication;
 
+use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Service\Container;
-use App\Import\Importer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

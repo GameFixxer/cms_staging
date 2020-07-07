@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Import;
 
-use App\Import\CreateImport\CreateProduct;
+
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Entity\Product;
 use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
+use App\Backend\ImportProduct\Business\Model\Create\Product as CreateProduct;
 use Cycle\ORM\Transaction;
 
 /**

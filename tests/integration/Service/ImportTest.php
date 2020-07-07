@@ -1,8 +1,8 @@
 <?php
 namespace App\Tests\integration\Service;
 
-use App\Import\CsvImportLoader;
-use App\Import\Importer;
+use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
+use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Model\Entity\Product;
 use App\Model\ProductRepository;
 use App\Tests\integration\Helper\ContainerHelper;

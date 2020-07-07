@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Import\Update;
+namespace App\Backend\ImportProduct\Business\Model\Update;
 
-use App\Import\IntegrityManager\CategoryIntegrityManager;
-use App\Import\IntegrityManager\ValueIntegrityManager;
+
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Dto\CategoryDataTransferObject;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductEntityManager;
-use App\Service\Container;
 
 class ProductCategory implements ProductInterface
 {
@@ -22,32 +22,36 @@ class ProductCategory implements ProductInterface
     private ValueIntegrityManager $valueIntegrityManager;
 
     public function __construct(
-        Container $container
+        CategoryRepository $categoryRepository,
+        CategoryEntityManager $categoryEntityManager,
+        ProductEntityManager $productEntityManager,
+        CategoryIntegrityManager $categoryIntegrityManager,
+        ValueIntegrityManager $integrityManager
     ) {
-        $this->categoryRepository = $container->get(CategoryRepository::class);
-        $this->categoryEntityManager = $container->get(CategoryEntityManager::class);
-        $this->productEntityManager = $container->get(ProductEntityManager::class);
-        $this->categoryIntegrityManager = $container->get(CategoryIntegrityManager::class);
-        $this->valueIntegrityManager = $container->get(ValueIntegrityManager::class);
+        $this->categoryRepository = $categoryRepository;
+        $this->categoryEntityManager = $categoryEntityManager;
+        $this->productEntityManager = $productEntityManager;
+        $this->categoryIntegrityManager = $categoryIntegrityManager;
+        $this->valueIntegrityManager = $integrityManager;
     }
 
     public function update(CsvDataTransferObject $csvDTO):void
     {
-        if ($csvDTO->getCategoryKey() === '') {
+        if (empty($csvDTO->getCategoryKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
-            $category = $this->categoryRepository->getCategory($csvDTO->getCategoryId());
-            if ($category instanceof CategoryDataTransferObject && $this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
-                $csvDTO->setCategoryId($category->getCategoryId());
-                $this->saveUpdatedProduct($csvDTO);
-            } else {
+            $category = $this->categoryRepository->getCategoryByKey($csvDTO->getCategoryKey());
+            if (!$category instanceof CategoryDataTransferObject) {
                 $category = new CategoryDataTransferObject();
                 $category->setCategoryKey($csvDTO->getCategoryKey());
                 $csvDTO->setCategoryId($this->categoryEntityManager->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
+            } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
+                $csvDTO->setCategoryId($category->getCategoryId());
+                $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
+                $this->saveUpdatedProduct($csvDTO);
             }
-
         }
     }
 

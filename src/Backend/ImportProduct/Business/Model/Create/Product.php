@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Import\CreateImport;
+namespace App\Backend\ImportProduct\Business\Model\Create;
 
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
+use App\Model\Entity\Product as ProductEntity;
 use App\Model\ProductEntityManagerInterface;
 use App\Model\ProductRepositoryInterface;
 
-class CreateProduct implements CreateProductInterface
+class Product implements ProductInterface
 {
     private ProductRepositoryInterface $productRepository;
     private ProductEntityManagerInterface $productEntityManager;
