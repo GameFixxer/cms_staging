@@ -22,12 +22,12 @@ class ProductImporter implements UpdateInterface
     {
         foreach ($this->importArrayList as $action) {
             if (!$action instanceof ProductInterface) {
-                throw new \Exception('Filter or Updatefunction'.$action.'Broken', 1);
+                throw new \Exception('Filter or Updatefunction'.get_class($action).'Broken', 1);
             }
             try {
                 $action->update($csvDTO);
             } catch (\Exception $e) {
-                throw new \Exception($action.'Crashed', 1);
+                throw new \Exception(get_class($action).'Crashed', 1);
             }
         }
     }

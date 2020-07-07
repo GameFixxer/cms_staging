@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Backend\ImportCategory\Business\Model\Update;
 
 use App\Model\Dto\CsvDataTransferObject;
-use App\Service\Container;
 
 class CategoryImporter implements CategoryUpdateInterface
 {
@@ -13,7 +12,6 @@ class CategoryImporter implements CategoryUpdateInterface
      */
 
     private array $importArrayList;
-    private Container $container;
 
     public function __construct(array $importActionLIst)
     {
@@ -23,14 +21,13 @@ class CategoryImporter implements CategoryUpdateInterface
     public function performUpdateActions(CsvDataTransferObject $csvDTO):void
     {
         foreach ($this->importArrayList as $action) {
-
-            if (! $action instanceof  CategoryUpdateInterface) {
-                throw new \Exception('Filter or Updatefunction'.$action.'Broken', 1);
+            if ($action === null) {
+                throw new \Exception('Filter or Updatefunction'.get_class($action).'Broken', 1);
             }
             try {
                 $action->update($csvDTO);
             } catch (\Exception $e) {
-                throw new \Exception($action.'Crashed', 1);
+                throw new \Exception(get_class($action).'Crashed', 1);
             }
         }
     }
