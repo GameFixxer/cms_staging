@@ -13,5 +13,5 @@ interface CategoryRepositoryInterface
 
     public function getCategory(int $categoryId): ?CategoryDataTransferObject;
 
-    public function getCategoryByKey(string $key):?CategoryDataTransferObject;
+    public function getCategoryByKey(string $key): ?CategoryDataTransferObject;
 }
