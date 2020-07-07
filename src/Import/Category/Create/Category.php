@@ -22,8 +22,8 @@ class Category implements CategoryInterface
 
     public function createCategory(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
     {
-        if ($csvDTO->getArticleNumber() === '') {
-            throw new \Exception('ArticleNumber must not be empty', 1);
+        if ($csvDTO->getCategoryKey() === '') {
+            throw new \Exception('CategoryKey must not be empty', 1);
         }
 
         $categoryFromRepository = $this->categoryRepository->getCategoryByKey($csvDTO->getCategoryKey());

@@ -35,7 +35,6 @@ class DependencyProvider
         $container->set(View::class, new View());
         $container->set(SessionUser::class, new SessionUser());
     }
-
     /**
      * @param Container $container
      * @throws \Exception
@@ -43,14 +42,14 @@ class DependencyProvider
     private function persistenceDependency(Container $container): void
     {
         //Service
-        $container->setFactory(DatabaseManager::class, function() {
+        $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
         });
         $container->set(PasswordManager::class, new PasswordManager());
 
-        $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
+        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryIntegrityManager(
@@ -64,22 +63,20 @@ class DependencyProvider
         $container->set(CategoryMapper::class, new CategoryMapper());
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
-
-
         // Repositorys
-        $container->setFactory(ProductRepository::class, function(Container $container) {
+        $container->setFactory(ProductRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function(Container $container) {
+        $container->setFactory(UserRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
         });
 
-        $container->setFactory(CategoryRepository::class, function(Container $container) {
+        $container->setFactory(CategoryRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
@@ -107,11 +104,11 @@ class DependencyProvider
         $container->set(ProductImport::class, new ProductImport($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
         $container->set(ActionProvider::class, new ActionProvider());
-        $container->setFactory(ProductImporter::class, function(Container $container) {
+        $container->setFactory(ProductImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new ProductImporter($actionList->getProductActionList(), $container);
         });
-        $container->setFactory(CategoryImporter::class, function(Container $container) {
+        $container->setFactory(CategoryImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new CategoryImporter($actionList->getCategoryActionList(), $container);
         });

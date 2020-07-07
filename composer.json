@@ -15,7 +15,8 @@
         "symfony/mailer": "^5.1",
         "league/csv": "^9.6",
         "symfony/console": "^5.1",
-        "symfony/filesystem": "^5.1"
+        "symfony/filesystem": "^5.1",
+        "symfony/dependency-injection": "^5.1"
     },
     "autoload": {
         "psr-4": {
