@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Import;
 
-use App\Import\Create\Product as ProductImport;
-use App\Import\Update\ProductInformation;
+use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
+use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\Entity\Product as ProductEntity;

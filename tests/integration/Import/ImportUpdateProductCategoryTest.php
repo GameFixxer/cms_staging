@@ -2,9 +2,7 @@
 declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
-use App\Import\Create\Product;
-
-use App\Import\Update\ProductCategory;
+use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Model\CategoryRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
@@ -14,7 +12,7 @@ use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
-use App\Import\Create\Product as ProductImport;
+use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
 
 /**
  * @group Import
@@ -67,12 +65,10 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testUpdateCategoryWithNonChangingEntry(){
-
+    public function testUpdateCategoryWithNonChangingEntry()
+    {
         $this->testUpdateCategory();
-
-
-}
+    }
 
     private function createProduct()
     {

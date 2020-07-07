@@ -2,16 +2,18 @@
 declare(strict_types=1);
 namespace App\Service;
 
-use App\Import\ActionProvider;
-use App\Import\Category\Update\CategoryImporter;
-use App\Import\Create\Product as ProductImport;
-use App\Import\Category\Create\Category as CategoryImport;
-use App\Import\Category\Importer as ImporterCategory;
-use App\Import\CsvImportLoader;
-use App\Import\Importer;
-use App\Import\IntegrityManager\CategoryIntegrityManager;
-use App\Import\IntegrityManager\ValueIntegrityManager;
-use App\Import\Update\ProductImporter;
+use App\Backend\ImportCategory\Business\Model\Update\CategoryImporter;
+use App\Backend\ImportProduct\Business\Model\ActionProvider;
+use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
+use App\Backend\ImportProduct\Business\Model\Importer;
+use App\Backend\ImportCategory\Business\Model\Importer as ImporterCategory;
+use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
+use App\Backend\ImportCategory\Business\Model\Create\Category as CategoryImport;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
+use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
+use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
+use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 use App\Model\CategoryEntityManager;
 use App\Model\CategoryRepository;
 use App\Model\Entity\Category;
@@ -103,14 +105,33 @@ class DependencyProvider
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
-        $container->set(ActionProvider::class, new ActionProvider());
+        $container->set(
+            ProductCategory::class,
+            new ProductCategory(
+                $container->get(CategoryRepository::class),
+                $container->get(CategoryEntityManager::class),
+                $container->get(ProductEntityManager::class),
+                $container->get(CategoryIntegrityManager::class),
+                $container->get(ValueIntegrityManager::class)
+            )
+        );
+        $container->set(
+            ProductInformation::class,
+            new ProductInformation(
+                $container->get(ProductRepository::class),
+                $container->get(ProductEntityManager::class),
+                $container->get(ValueIntegrityManager::class)
+            )
+        );
+        $container->set(ActionProvider::class, new ActionProvider($container));
+
         $container->setFactory(ProductImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
-            return new ProductImporter($actionList->getProductActionList(), $container);
+            return new ProductImporter($actionList->getProductActionList());
         });
         $container->setFactory(CategoryImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
-            return new CategoryImporter($actionList->getCategoryActionList(), $container);
+            return new CategoryImporter($actionList->getCategoryActionList());
         });
         $container->set(
             ImporterCategory::class,

@@ -1,8 +1,8 @@
 <?php
 namespace App\Tests\integration;
 
-use App\Import\Create\Product;
-use App\Import\Update\ProductCategory;
+use App\Backend\ImportProduct\Business\Model\Create\Product;
+use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
 use App\Model\ProductRepository;

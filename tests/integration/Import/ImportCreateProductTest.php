@@ -10,7 +10,7 @@ use App\Model\Entity\Product;
 use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
-use App\Import\Create\Product as CreateProduct;
+use App\Backend\ImportProduct\Business\Model\Create\Product as CreateProduct;
 use Cycle\ORM\Transaction;
 
 /**
