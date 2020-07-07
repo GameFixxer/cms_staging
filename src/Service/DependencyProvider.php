@@ -32,6 +32,9 @@ class DependencyProvider
 {
     public function providerDependency(Container $container): void
     {
+        $this->persistDatabaseDependency($container);
+        $this->persistMapperDependency($container);
+        $this->persistRepositoryDependency($container);
         $this->persistenceDependency($container);
 
         $container->set(View::class, new View());
@@ -41,30 +44,25 @@ class DependencyProvider
      * @param Container $container
      * @throws \Exception
      */
-    private function persistenceDependency(Container $container): void
+
+    private function persistDatabaseDependency(Container $container):void
     {
-        //Service
         $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
         });
-        $container->set(PasswordManager::class, new PasswordManager());
-
-        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
-            /** @var ORM $orm */
-            $orm = $container->get(DatabaseManager::class);
-            return new CategoryIntegrityManager(
-                $orm->getRepository(Category::class)
-            );
-        });
-
+    }
+    private function persistMapperDependency(Container $container):void
+    {
         // Mapper
         $container->set(ProductMapper::class, new ProductMapper());
         $container->set(UserMapper::class, new UserMapper());
         $container->set(CategoryMapper::class, new CategoryMapper());
-        $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
+    }
 
+    private function persistRepositoryDependency(Container $container):void
+    {
         // Repositorys
         $container->setFactory(ProductRepository::class, function (Container $container) {
             /** @var ORM $orm */
@@ -83,6 +81,23 @@ class DependencyProvider
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
         });
+    }
+
+    private function persistenceDependency(Container $container): void
+    {
+        //Service
+
+        $container->set(PasswordManager::class, new PasswordManager());
+
+        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
+            /** @var ORM $orm */
+            $orm = $container->get(DatabaseManager::class);
+            return new CategoryIntegrityManager(
+                $orm->getRepository(Category::class)
+            );
+        });
+        $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
+
 
         //Entitymanager
         $container->set(
