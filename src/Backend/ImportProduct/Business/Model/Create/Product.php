@@ -3,21 +3,18 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model\Create;
 
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product as ProductEntity;
-use App\Model\ProductEntityManagerInterface;
-use App\Model\ProductRepositoryInterface;
+use App\Client\Product\Business\ProductBusinessFacadeInterface;
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
+
 
 class Product implements ProductInterface
 {
-    private ProductRepositoryInterface $productRepository;
-    private ProductEntityManagerInterface $productEntityManager;
+    private ProductBusinessFacadeInterface $productBusinessFacade;
 
-    public function __construct(ProductRepositoryInterface $productRepository, ProductEntityManagerInterface $productEntityManager)
+    public function __construct(ProductBusinessFacadeInterface $productBusinessFacade)
     {
-        $this->productRepository = $productRepository;
-        $this->productEntityManager = $productEntityManager;
+        $this->productBusinessFacade = $productBusinessFacade;
     }
 
     public function createProduct(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
@@ -26,14 +23,14 @@ class Product implements ProductInterface
             throw new \Exception('ArticleNumber must not be empty', 1);
         }
 
-        $productFromRepo = $this->productRepository->getProduct($csvDTO->getArticleNumber());
+        $productFromRepo = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
         if ($productFromRepo instanceof ProductDataTransferObject) {
             $csvDTO->setProductId($productFromRepo->getProductId());
             return $csvDTO;
         }
         $productDTO = new ProductDataTransferObject();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
-        $csvDTO->setProductId($this->productEntityManager->save($productDTO)->getProductId());
+        $csvDTO->setProductId($this->productBusinessFacade->save($productDTO)->getProductId());
 
         return $csvDTO;
     }

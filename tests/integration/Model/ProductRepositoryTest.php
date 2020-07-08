@@ -3,11 +3,10 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
-use App\Model\Entity\TestEntity;
-use App\Model\Mapper\ProductMapper;
-use App\Model\ProductRepository;
+use App\Client\Product\Persistence\Entity\TestEntity;
+use App\Client\Product\Persistence\Mapper\ProductMapper;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Client\Product\Persistence\Entity\Product;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\ORM;

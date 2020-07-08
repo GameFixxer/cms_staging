@@ -2,9 +2,10 @@
 declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Entity\Category;
 
+
+use App\Client\Category\Persistence\Entity\Category;
+use App\Generated\Dto\CsvDataTransferObject;
 use function PHPUnit\Framework\isEmpty;
 
 class CategoryIntegrityManager implements CategoryIntegrityManagerInterface

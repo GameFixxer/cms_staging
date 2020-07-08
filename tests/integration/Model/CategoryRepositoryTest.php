@@ -3,10 +3,11 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\CategoryRepository;
-use App\Model\Entity\Category;
-use App\Model\Entity\TestEntity;
-use App\Model\Mapper\CategoryMapper;
+
+use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Category\Persistence\Entity\Category;
+use App\Client\Category\Persistence\Mapper\CategoryMapper;
+use App\Client\Product\Persistence\Entity\TestEntity;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;

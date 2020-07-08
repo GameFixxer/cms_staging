@@ -17,8 +17,9 @@
  * @SuppressWarnings(PHPMD)
 */
 
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Generated\Dto\ProductDataTransferObject;
+use App\Client\Product\Persistence\Entity\Product;
 use App\Service\Container;
 use App\Service\DependencyProvider;
 use App\Service\View;
@@ -92,9 +93,9 @@ class UnitTester extends \Codeception\Actor
     {
         $this->view->addTlpParam($name, $value);
     }
-    private function getProductRepository():\App\Model\ProductRepository
+    private function getProductRepository():ProductRepository
     {
-        return $this->container->get(\App\Model\ProductRepository::class);
+        return $this->container->get(ProductRepository::class);
     }
 
 

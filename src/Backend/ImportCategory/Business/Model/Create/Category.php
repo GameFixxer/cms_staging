@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportCategory\Business\Model\Create;
 
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\CategoryDataTransferObject;
-use App\Model\Entity\Category as CategoryEntity;
-use App\Model\CategoryEntityManagerInterface;
-use App\Model\CategoryRepositoryInterface;
+use App\Client\Category\Business\CategoryBusinessFacadeInterface;
+use App\Client\Category\Persistence\Entity\Category as CategoryEntity;
+use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
 
 class Category implements CategoryInterface
 {
-    private CategoryRepositoryInterface $categoryRepository;
-    private CategoryEntityManagerInterface $categoryEntityManager;
+    private CategoryBusinessFacadeInterface $categoryBusinessFacade;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository, CategoryEntityManagerInterface $categoryEntityManager)
+    public function __construct(CategoryBusinessFacadeInterface $categoryBusinessFacade)
     {
-        $this->categoryRepository = $categoryRepository;
-        $this->categoryEntityManager = $categoryEntityManager;
+        $this->categoryBusinessFacade = $categoryBusinessFacade;
     }
 
     public function createCategory(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
@@ -27,14 +24,14 @@ class Category implements CategoryInterface
             throw new \Exception('CategoryKey must not be empty', 1);
         }
 
-        $categoryFromRepository = $this->categoryRepository->getCategoryByKey($csvDTO->getCategoryKey());
+        $categoryFromRepository = $this->categoryBusinessFacade->getByKey($csvDTO->getCategoryKey());
         if ($categoryFromRepository instanceof CategoryEntity) {
             $csvDTO->setCategoryId($categoryFromRepository->getCategoryId());
             return $csvDTO;
         }
         $categoryDTO = new CategoryDataTransferObject();
         $categoryDTO->setCategoryKey($csvDTO->getCategoryKey());
-        $csvDTO->setCategoryId($this->categoryEntityManager->save($categoryDTO)->getCategoryId());
+        $csvDTO->setCategoryId($this->categoryBusinessFacade->save($categoryDTO)->getCategoryId());
 
         return $csvDTO;
     }

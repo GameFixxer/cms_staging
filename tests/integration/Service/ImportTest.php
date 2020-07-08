@@ -3,8 +3,9 @@ namespace App\Tests\integration\Service;
 
 use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Importer;
-use App\Model\Entity\Product;
-use App\Model\ProductRepository;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Client\Product\Persistence\Entity\Product;
+
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
@@ -37,7 +38,7 @@ class ImportTest extends \Codeception\Test\Unit
         $this->csvLoader = $this->container->getCsvImportLoader();
 
 
-        $this->path = dirname(__DIR__, 3).'/import/test/';
+        $this->path = dirname(__DIR__, 4).'/MVC/import/test';
 
         $this->importer = new Importer(
             $this->csvLoader,

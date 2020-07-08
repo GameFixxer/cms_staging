@@ -8,9 +8,12 @@ use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
-use App\Model\CategoryEntityManager;
-use App\Model\ProductEntityManager;
-use App\Model\UserEntityManager;
+use App\Client\Category\Persistence\CategoryEntityManager;
+use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Product\Persistence\ProductEntityManager;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Client\User\Persistence\UserEntityManager;
+use App\Client\User\Persistence\UserRepository;
 use App\Service\Container;
 use App\Service\DatabaseManager;
 use App\Service\DependencyProvider;
@@ -40,30 +43,30 @@ class ContainerHelper
     {
         return rand(1, 1000).substr(rand(1, 1000), rand(1, 1000));
     }
-    public function getProductRepository():\App\Model\ProductRepository
+    public function getProductRepository():ProductRepository
     {
-        return $this->container->get(\App\Model\ProductRepository::class);
+        return $this->container->get(ProductRepository::class);
     }
-    public function getProductEntityManager():\App\Model\ProductEntityManager
+    public function getProductEntityManager():ProductEntityManager
     {
         return $this->container->get(ProductEntityManager::class);
     }
-    public function getUserEntityManager():\App\Model\UserEntityManager
+    public function getUserEntityManager():UserEntityManager
     {
         return $this->container->get(UserEntityManager::class);
     }
-    public function getUserRepository():\App\Model\UserRepository
+    public function getUserRepository():UserRepository
     {
-        return $this->container->get(\App\Model\UserRepository::class);
+        return $this->container->get(UserRepository::class);
     }
 
-    public function getCategoryEntityManager():\App\Model\CategoryEntityManager
+    public function getCategoryEntityManager():CategoryEntityManager
     {
         return $this->container->get(CategoryEntityManager::class);
     }
-    public function getCategoryRepository():\App\Model\CategoryRepository
+    public function getCategoryRepository():CategoryRepository
     {
-        return $this->container->get(\App\Model\CategoryRepository::class);
+        return $this->container->get(CategoryRepository::class);
     }
 
     public function getCsvImportLoader():CsvImportLoader

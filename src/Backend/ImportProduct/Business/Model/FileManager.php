@@ -8,6 +8,7 @@ use Symfony\Component\Finder\Finder;
 
 class FileManager
 {
+
     public function getFiles(string $path):Finder
     {
         $finder = new Finder();

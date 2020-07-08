@@ -3,7 +3,7 @@
 
 namespace App\Backend\ImportCategory\Business\Model\Create;
 
-use App\Model\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
 
 interface CategoryInterface
 {

@@ -3,12 +3,14 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
-use App\Model\CategoryRepository;
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Category;
-use App\Model\Entity\Product as ProductEntity;
-use App\Model\ProductRepository;
+
+use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Client\Category\Persistence\Entity\Category;
+use App\Client\Product\Persistence\Entity\Product as ProductEntity;
+
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
@@ -36,7 +38,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
     }
 
     public function _after()
-    {/*
+    {
         if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
@@ -44,7 +46,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number'=>$this->csvDTO->getArticleNumber()]));
             $transaction->run();
-        }*/
+        }
     }
 
     public function testUpdateCategory()
