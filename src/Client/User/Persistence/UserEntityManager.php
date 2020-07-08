@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Client\User\Persistence;
 
+use App\Client\User\Persistence\Entity\User;
 use App\Model\Dto\UserDataTransferObject;
-use App\Model\Entity\User;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
-class UserEntityManager
+class UserEntityManager implements UserEntityManagerInterface
 {
     /**
      * @var UserRepository

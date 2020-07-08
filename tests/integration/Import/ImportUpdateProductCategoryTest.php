@@ -3,12 +3,14 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
-use App\Model\CategoryRepository;
+
+use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Product\Persistence\ProductRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Category;
-use App\Model\Entity\Product as ProductEntity;
-use App\Model\ProductRepository;
+use App\Client\Category\Persistence\Entity\Category;
+use App\Client\Product\Persistence\Entity\Product as ProductEntity;
+
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;

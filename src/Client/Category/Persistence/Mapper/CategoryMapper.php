@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Mapper;
+namespace App\Client\Category\Persistence\Mapper;
 
 use App\Model\Dto\CategoryDataTransferObject;
-use App\Model\Entity\Category;
+use App\Client\Category\Persistence\Entity\Category;
 
 class CategoryMapper implements CategoryMapperInterface
 {

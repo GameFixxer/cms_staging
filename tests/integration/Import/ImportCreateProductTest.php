@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 
+use App\Client\Product\Persistence\ProductRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
-use App\Model\ProductRepository;
+use App\Client\Product\Persistence\Entity\Product;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use App\Backend\ImportProduct\Business\Model\Create\Product as CreateProduct;

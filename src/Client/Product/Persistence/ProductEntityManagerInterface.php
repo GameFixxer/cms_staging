@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Client\Product\Persistence;
 
 use App\Model\Dto\ProductDataTransferObject;
 

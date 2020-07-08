@@ -3,13 +3,13 @@ namespace App\Tests\integration;
 
 use App\Backend\ImportProduct\Business\Model\Create\Product;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
+use App\Client\Product\Persistence\ProductRepository;
 use App\Model\Dto\CsvDataTransferObject;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\ProductRepository;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
-use App\Model\Entity\Product as ProductEntity;
+use App\Client\Product\Persistence\Entity\Product as ProductEntity;
 
 /**
  * @group Import2

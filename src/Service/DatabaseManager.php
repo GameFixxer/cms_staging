@@ -37,7 +37,8 @@ class DatabaseManager
     }
     public function connect()
     {
-        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Model/Entity/']); // __DIR__ here is folder with entities
+        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
+        dump((new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']));
         $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 
         $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($this->dbal), [

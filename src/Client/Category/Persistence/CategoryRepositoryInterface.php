@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Client\Category\Persistence;
 
 use App\Model\Dto\CategoryDataTransferObject;
 

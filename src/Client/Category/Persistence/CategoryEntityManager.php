@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Client\Category\Persistence;
 
+use App\Client\Category\Persistence\Entity\Category;
 use App\Model\Dto\CategoryDataTransferObject;
-use App\Model\Entity\Category;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 

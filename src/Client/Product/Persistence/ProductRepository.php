@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Client\Product\Persistence;
 
-use App\Model\Entity\Product;
-use App\Model\Mapper\ProductMapper;
+
+use App\Client\Product\Persistence\Entity\Product;
+use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Mapper\ProductMapperInterface;
 use Cycle\ORM\ORM;
 
 class ProductRepository implements ProductRepositoryInterface

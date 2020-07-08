@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Client\User\Persistence;
 
-use App\Model\Entity\User;
+
+use App\Client\User\Persistence\Entity\User;
+use App\Client\User\Persistence\Mapper\UserMapperInterface;
 use App\Model\Dto\UserDataTransferObject;
-use App\Model\Mapper\UserMapperInterface;
 use Cycle\ORM\ORM;
 
-class UserRepository
+class UserRepository implements UserRepositoryInterface
 {
     private UserMapperInterface $userMapper;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;

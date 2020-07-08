@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Frontend;
 
+use App\Client\Product\Persistence\ProductRepository;
 use App\Controller\Controller;
 use App\Model\Dto\ProductDataTransferObject;
-use \App\Model\ProductRepository;
 use App\Service\View;
 use App\Service\Container;
 

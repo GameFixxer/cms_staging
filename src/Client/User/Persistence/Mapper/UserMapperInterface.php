@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Model\Mapper;
+namespace App\Client\User\Persistence\Mapper;
 
+use App\Client\User\Persistence\Entity\User;
 use App\Model\Dto\UserDataTransferObject;
-use App\Model\Entity\User;
 
 interface UserMapperInterface
 {

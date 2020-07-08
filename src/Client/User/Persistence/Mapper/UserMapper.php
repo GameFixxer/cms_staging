@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Mapper;
+namespace App\Client\User\Persistence\Mapper;
 
 use App\Model\Dto\UserDataTransferObject;
-use App\Model\Entity\User;
+use App\Client\User\Persistence\Entity\User;
 
 class UserMapper implements UserMapperInterface
 {

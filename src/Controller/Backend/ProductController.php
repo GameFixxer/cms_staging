@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Backend;
 
+use App\Client\Product\Persistence\ProductEntityManager;
+use App\Client\Product\Persistence\ProductRepository;
 use App\Controller\BackendController;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\ProductEntityManager;
-use App\Model\ProductRepository;
 use App\Service\Container;
 use App\Service\SessionUser;
 use App\Service\View;

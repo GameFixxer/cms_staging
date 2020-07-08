@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace App\Model;
+namespace App\Client\Product\Persistence;
 
+use App\Client\Product\Persistence\Entity\Product;
 use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 

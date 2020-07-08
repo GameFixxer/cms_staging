@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Backend;
 
+use App\Client\User\Persistence\UserEntityManager;
+use App\Client\User\Persistence\UserRepository;
 use App\Controller\BackendController;
 use App\Model\Dto\EmailDataTransferObject;
 use App\Model\Dto\UserDataTransferObject;
-use App\Model\UserEntityManager;
 use App\Service\Container;
 use App\Service\PasswordManager;
 use App\Service\View;
-use App\Model\UserRepository;
 use App\Service\SessionUser;
 use function PHPUnit\Framework\isEmpty;
 

@@ -14,18 +14,21 @@ use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityMana
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
-use App\Model\CategoryEntityManager;
-use App\Model\CategoryRepository;
-use App\Model\Entity\Category;
-use App\Model\Entity\Product;
-use App\Model\Entity\User;
-use App\Model\Mapper\CategoryMapper;
-use App\Model\Mapper\ProductMapper;
-use App\Model\Mapper\UserMapper;
-use App\Model\ProductEntityManager;
-use App\Model\ProductRepository;
-use App\Model\UserEntityManager;
-use App\Model\UserRepository;
+use App\Client\Category\Business\CategoryBusinessFacade;
+use App\Client\Category\Persistence\CategoryEntityManager;
+use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Category\Persistence\Entity\Category;
+use App\Client\Category\Persistence\Mapper\CategoryMapper;
+use App\Client\Product\Business\ProductBusinessFacade;
+use App\Client\Product\Persistence\Entity\Product;
+use App\Client\Product\Persistence\Mapper\ProductMapper;
+use App\Client\Product\Persistence\ProductEntityManager;
+use App\Client\Product\Persistence\ProductRepository;
+use App\Client\User\Business\UserBusinessFacade;
+use App\Client\User\Persistence\Entity\User;
+use App\Client\User\Persistence\Mapper\UserMapper;
+use App\Client\User\Persistence\UserEntityManager;
+use App\Client\User\Persistence\UserRepository;
 use Cycle\ORM\ORM;
 
 class DependencyProvider
@@ -35,6 +38,7 @@ class DependencyProvider
         $this->persistDatabaseDependency($container);
         $this->persistMapperDependency($container);
         $this->persistRepositoryDependency($container);
+        $this->persistsBusinessFacadeDependency($container);
         $this->persistenceDependency($container);
 
         $container->set(View::class, new View());
@@ -53,6 +57,7 @@ class DependencyProvider
             return $databaseManager->connect();
         });
     }
+
     private function persistMapperDependency(Container $container):void
     {
         // Mapper
@@ -83,11 +88,44 @@ class DependencyProvider
         });
     }
 
+    private function persistsBusinessFacadeDependency(Container $container): void
+    {
+        $container->set(
+            ProductBusinessFacade::class,
+            new ProductBusinessFacade(
+                $container->get(ProductRepository::class),
+                $container->get(
+                    ProductEntityManager::class
+                )
+            )
+        );
+
+        $container->set(
+            CategoryBusinessFacade::class,
+            new CategoryBusinessFacade(
+                $container->get(CategoryRepository::class),
+                $container->get(CategoryEntityManager::class)
+            )
+        );
+
+        $container->set(
+            UserBusinessFacade::class,
+            new UserBusinessFacade(
+                $container->get(UserRepository::class),
+                $container->get(UserEntityManager::class)
+            )
+
+        );
+    }
+
     private function persistenceDependency(Container $container): void
     {
         //Service
 
         $container->set(PasswordManager::class, new PasswordManager());
+        $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
+
+        //Import
 
         $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
             /** @var ORM $orm */
@@ -96,36 +134,17 @@ class DependencyProvider
                 $orm->getRepository(Category::class)
             );
         });
-        $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
 
 
-        //Entitymanager
-        $container->set(
-            UserEntityManager::class,
-            new UserEntityManager($container->get(DatabaseManager::class), $container->get(UserRepository::class))
-        );
-
-        $container->set(
-            ProductEntityManager::class,
-            new ProductEntityManager($container->get(DatabaseManager::class), $container->get(ProductRepository::class))
-        );
-
-        $container->set(
-            CategoryEntityManager::class,
-            new CategoryEntityManager($container->get(DatabaseManager::class), $container->get(CategoryRepository::class))
-        );
-
-        //Import
         $container->set(CsvImportLoader::class, new CsvImportLoader());
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
-        $container->set(ProductImport::class, new ProductImport($container->get(ProductRepository::class), $container->get(ProductEntityManager::class)));
-        $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryRepository::class), $container->get(CategoryEntityManager::class)));
+        $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
+        $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryBusinessFacade::class)));
         $container->set(
             ProductCategory::class,
             new ProductCategory(
-                $container->get(CategoryRepository::class),
-                $container->get(CategoryEntityManager::class),
-                $container->get(ProductEntityManager::class),
+                $container->get(CategoryBusinessFacade::class),
+                $container->get(ProductBusinessFacade::class),
                 $container->get(CategoryIntegrityManager::class),
                 $container->get(ValueIntegrityManager::class)
             )
@@ -133,11 +152,11 @@ class DependencyProvider
         $container->set(
             ProductInformation::class,
             new ProductInformation(
-                $container->get(ProductRepository::class),
-                $container->get(ProductEntityManager::class),
+                $container->get(ProductBusinessFacade::class),
                 $container->get(ValueIntegrityManager::class)
             )
         );
+
         $container->set(ActionProvider::class, new ActionProvider($container));
 
         $container->setFactory(ProductImporter::class, function (Container $container) {
@@ -154,7 +173,7 @@ class DependencyProvider
                 $container->get(CsvImportLoader::class),
                 $container->get(CategoryImport::class),
                 $container->get(CategoryImporter::class),
-                dirname(__DIR__, 2).'../import/'
+                dirname(__DIR__, 2) . '../import/'
             )
         );
         $container->set(
@@ -163,7 +182,7 @@ class DependencyProvider
                 $container->get(CsvImportLoader::class),
                 $container->get(ProductImport::class),
                 $container->get(ProductImporter::class),
-                dirname(__DIR__, 2).'../import/'
+                dirname(__DIR__, 2) . '../import/'
             )
         );
     }

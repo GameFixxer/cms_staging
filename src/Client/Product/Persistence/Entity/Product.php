@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Entity;
+namespace App\Client\Product\Persistence\Entity;
 
+use App\Model\Entity\EntityInterface;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
