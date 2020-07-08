@@ -25,7 +25,7 @@ class ProductCategory implements ProductInterface
         CategoryIntegrityManager $categoryIntegrityManager,
         ValueIntegrityManager $integrityManager
     ) {
-        $this->categoryBusinessFacade =$categoryBusinessFacade;
+        $this->categoryBusinessFacade = $categoryBusinessFacade;
         $this->productBusinessFacade = $productBusinessFacade;
         $this->categoryIntegrityManager = $categoryIntegrityManager;
         $this->valueIntegrityManager = $integrityManager;
@@ -38,7 +38,7 @@ class ProductCategory implements ProductInterface
         } else {
 
             $category = $this->categoryBusinessFacade->getByKey($csvDTO->getCategoryKey());
-            if (! $category instanceof CategoryDataTransferObject) {
+            if (!$category instanceof CategoryDataTransferObject) {
                 $category = new CategoryDataTransferObject();
                 $category->setCategoryKey($csvDTO->getCategoryKey());
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
