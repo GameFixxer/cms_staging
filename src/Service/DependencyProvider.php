@@ -29,7 +29,12 @@ use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapper;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
+use App\Service\File\FileServiceClient;
+use App\Service\File\Model\Get;
+use App\Service\File\Model\Move;
 use Cycle\ORM\ORM;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 class DependencyProvider
 {
@@ -52,7 +57,7 @@ class DependencyProvider
 
     private function persistDatabaseDependency(Container $container):void
     {
-        $container->setFactory(DatabaseManager::class, function() {
+        $container->setFactory(DatabaseManager::class, function () {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
@@ -70,19 +75,19 @@ class DependencyProvider
     private function persistRepositoryDependency(Container $container):void
     {
         // Repositorys
-        $container->setFactory(ProductRepository::class, function(Container $container) {
+        $container->setFactory(ProductRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function(Container $container) {
+        $container->setFactory(UserRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
         });
 
-        $container->setFactory(CategoryRepository::class, function(Container $container) {
+        $container->setFactory(CategoryRepository::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
@@ -142,10 +147,14 @@ class DependencyProvider
 
         $container->set(PasswordManager::class, new PasswordManager());
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
-
+        $container->set(Finder::class, new Finder());
+        $container->set(Filesystem::class, new Filesystem());
+        $container->set(Get::class, new Get($container->get(Finder::class)));
+        $container->set(Move::class, new Move($container->get(Filesystem::class)));
+        $container->set(FileServiceClient::class, new FileServiceClient($container->get(Get::class), $container->get(Move::class)));
         //Import
 
-        $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
+        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryIntegrityManager(
@@ -154,7 +163,7 @@ class DependencyProvider
         });
 
 
-        $container->set(CsvImportLoader::class, new CsvImportLoader());
+        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class)));
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryBusinessFacade::class)));
@@ -177,11 +186,11 @@ class DependencyProvider
 
         $container->set(ActionProvider::class, new ActionProvider($container));
 
-        $container->setFactory(ProductImporter::class, function(Container $container) {
+        $container->setFactory(ProductImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new ProductImporter($actionList->getProductActionList());
         });
-        $container->setFactory(CategoryImporter::class, function(Container $container) {
+        $container->setFactory(CategoryImporter::class, function (Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new CategoryImporter($actionList->getCategoryActionList());
         });
