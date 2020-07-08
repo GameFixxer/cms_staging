@@ -1,5 +1,5 @@
 <?php
-use App\Controller\Frontend\ErrorControll;
+use App\Frontend\Controller\Frontend\ErrorControll;
 use App\Service\ControllerProvider;
 use App\Service\View;
 use App\Service\DependencyProvider;

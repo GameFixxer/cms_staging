@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Backend;
+namespace  App\Frontend\Controller\Backend;
 
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
-use App\Controller\BackendController;
+
+use App\Frontend\Controller\BackendController;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\Container;
 use App\Service\SessionUser;
