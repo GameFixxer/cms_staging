@@ -51,7 +51,7 @@ class DependencyProvider
 
     private function persistDatabaseDependency(Container $container):void
     {
-        $container->setFactory(DatabaseManager::class, function () {
+        $container->setFactory(DatabaseManager::class, function() {
             $databaseManager = new DatabaseManager();
 
             return $databaseManager->connect();
@@ -69,19 +69,19 @@ class DependencyProvider
     private function persistRepositoryDependency(Container $container):void
     {
         // Repositorys
-        $container->setFactory(ProductRepository::class, function (Container $container) {
+        $container->setFactory(ProductRepository::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new ProductRepository($container->get(ProductMapper::class), $orm->getRepository(Product::class));
         });
 
-        $container->setFactory(UserRepository::class, function (Container $container) {
+        $container->setFactory(UserRepository::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new UserRepository($container->get(UserMapper::class), $orm->getRepository(User::class));
         });
 
-        $container->setFactory(CategoryRepository::class, function (Container $container) {
+        $container->setFactory(CategoryRepository::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryRepository($container->get(CategoryMapper::class), $orm->getRepository(Category::class));
@@ -127,7 +127,7 @@ class DependencyProvider
 
         //Import
 
-        $container->setFactory(CategoryIntegrityManager::class, function (Container $container) {
+        $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
             /** @var ORM $orm */
             $orm = $container->get(DatabaseManager::class);
             return new CategoryIntegrityManager(
@@ -159,11 +159,11 @@ class DependencyProvider
 
         $container->set(ActionProvider::class, new ActionProvider($container));
 
-        $container->setFactory(ProductImporter::class, function (Container $container) {
+        $container->setFactory(ProductImporter::class, function(Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new ProductImporter($actionList->getProductActionList());
         });
-        $container->setFactory(CategoryImporter::class, function (Container $container) {
+        $container->setFactory(CategoryImporter::class, function(Container $container) {
             $actionList = $container->get(ActionProvider::class);
             return new CategoryImporter($actionList->getCategoryActionList());
         });
