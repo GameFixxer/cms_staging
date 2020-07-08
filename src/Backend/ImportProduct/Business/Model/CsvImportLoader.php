@@ -3,11 +3,19 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model;
 
+use App\Service\Container;
+use App\Service\File\FileServiceClientInterface;
 use League\Csv\Reader;
 
 class CsvImportLoader implements CsvImportLoaderInterface
 {
     private array $header;
+    private FileServiceClientInterface $fileServiceClient;
+
+    public function __construct(FileServiceClientInterface $fileServiceClient)
+    {
+        $this->fileServiceClient = $fileServiceClient;
+    }
 
     public function mapCSVToDTO(string $path): array
     {
@@ -27,15 +35,14 @@ class CsvImportLoader implements CsvImportLoaderInterface
 
     public function loadFromCSV(string $path): ?\Iterator
     {
-        $fileFinder = new  FileManager();
-        $finder = $fileFinder->getFiles($path);
+        $finder = $this->fileServiceClient->get($path);
         $productList = null;
         foreach ($finder as $file) {
             $csv = Reader::createFromPath($file->getPathname());
             $csv->setHeaderOffset(0);
             $this->header = $csv->getHeader();
             $productList = $csv->getRecords();
-            $fileFinder->moveImportedFilesToDumper($file);
+            $this->fileServiceClient->move($file);
         }
         return $productList;
     }

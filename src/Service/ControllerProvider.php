@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-
-use App\Controller\Backend\DashboardController;
-use App\Controller\Backend\PasswordController;
-use App\Controller\Backend\ProductController;
-use App\Controller\Backend\UserController;
-use App\Controller\Frontend\DetailControll;
-use App\Controller\Frontend\ErrorControll;
-use App\Controller\Frontend\HomeControll;
-use App\Controller\Frontend\ListControll;
-use App\Controller\Backend\LoginController;
+use App\Frontend\Controller\Backend\DashboardController;
+use App\Frontend\Controller\Backend\LoginController;
+use App\Frontend\Controller\Backend\PasswordController;
+use App\Frontend\Controller\Backend\ProductController;
+use App\Frontend\Controller\Backend\UserController;
+use App\Frontend\Controller\Frontend\DetailControll;
+use App\Frontend\Controller\Frontend\ErrorControll;
+use App\Frontend\Controller\Frontend\HomeControll;
+use App\Frontend\Controller\Frontend\ListControll;
 
 class ControllerProvider
 {

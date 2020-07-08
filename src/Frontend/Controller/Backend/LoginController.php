@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Backend;
+namespace  App\Frontend\Controller\Backend;
 
 
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
-use App\Controller\BackendController;
 
+use App\Frontend\Controller\BackendController;
 use App\Generated\Dto\EmailDataTransferObject;
 use App\Generated\Dto\UserDataTransferObject;
 use App\Service\Container;

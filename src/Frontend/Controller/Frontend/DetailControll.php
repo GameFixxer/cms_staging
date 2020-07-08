@@ -1,17 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Frontend;
+namespace App\Frontend\Controller\Frontend;
 
 use App\Client\Product\Persistence\ProductRepository;
-use App\Controller\Controller;
-use App\Generated\Dto\ProductDataTransferObject;
-use App\Service\View;
-use App\Service\Container;
 
-class ListControll implements Controller
+use App\Frontend\Controller\Controller;
+use App\Generated\Dto\ProductDataTransferObject;
+use App\Service\Container;
+use App\Service\View;
+
+class DetailControll implements Controller
 {
-    public const ROUTE = 'list';
+    public const ROUTE = 'detail';
     private View $view;
     private ProductRepository $productRepository;
 
@@ -21,28 +22,21 @@ class ListControll implements Controller
         $this->productRepository = $container->get(ProductRepository::class);
     }
 
+
     public function action(): void
     {
-        $productDTO = $this->productRepository->getProductList();
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTemplate('index.tpl');
-            $this->view->addTlpParam('productlist', $productDTO);
-        } else {
+        $pageId = ($_GET['id'] ?? '0');
+        $productDTO = $this->productRepository->getProduct($pageId);
+        if ($pageId === 0 || !($this->checkForValidDTO($productDTO))) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
+        } else {
+            $this->view->addTemplate('detail.tpl');
+            $this->view->addTlpParam('page', $productDTO);
         }
     }
-
     private function checkForValidDTO($productDTO) :bool
     {
-        if (is_array($productDTO)) {
-            foreach ($productDTO as $key) {
-                if (!($key instanceof ProductDataTransferObject)) {
-                    return false;
-                }
-            }
-            return true;
-        }
         return $productDTO instanceof ProductDataTransferObject;
     }
 }

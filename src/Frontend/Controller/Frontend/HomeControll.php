@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Frontend;
+namespace App\Frontend\Controller\Frontend;
 
-use App\Controller\Controller;
+
+use App\Frontend\Controller\Controller;
 use App\Service\Container;
 use App\Service\View;
 
