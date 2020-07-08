@@ -7,7 +7,7 @@ namespace App\Client\Product\Persistence;
 
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 use Cycle\ORM\ORM;
 
 class ProductRepository implements ProductRepositoryInterface

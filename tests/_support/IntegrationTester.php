@@ -17,7 +17,7 @@
  * @SuppressWarnings(PHPMD)
  */
 
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\Container;
 use App\Service\DependencyProvider;
 use App\Service\View;

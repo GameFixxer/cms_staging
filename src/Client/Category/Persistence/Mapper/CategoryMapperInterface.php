@@ -3,7 +3,8 @@
 namespace App\Client\Category\Persistence\Mapper;
 
 use App\Client\Category\Persistence\Entity\Category;
-use App\Model\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CategoryDataTransferObject;
+
 
 interface CategoryMapperInterface
 {

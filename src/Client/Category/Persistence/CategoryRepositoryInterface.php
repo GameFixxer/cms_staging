@@ -2,7 +2,7 @@
 
 namespace App\Client\Category\Persistence;
 
-use App\Model\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CategoryDataTransferObject;
 
 interface CategoryRepositoryInterface
 {

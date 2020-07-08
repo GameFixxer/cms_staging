@@ -3,10 +3,9 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\Dto\ProductDataTransferObject;
-use App\Model\Dto\UserDataTransferObject;
-use App\Model\Entity\User;
-use App\Model\UserEntityManager;
+use App\Client\User\Persistence\UserEntityManager;
+use App\Client\User\Persistence\Entity\User;
+use App\Generated\Dto\UserDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;

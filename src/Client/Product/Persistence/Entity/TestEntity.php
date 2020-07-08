@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Entity;
+namespace App\Client\Product\Persistence\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
@@ -11,7 +11,7 @@ use Cycle\Annotated\Annotation\Column;
  *     table = "tests"
  * )
  */
-class TestEntity implements EntityInterface
+class TestEntity
 {
     public const TABLE = 'test';
     /**

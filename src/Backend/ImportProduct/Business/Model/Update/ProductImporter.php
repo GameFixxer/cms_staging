@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
-use App\Model\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
 
 class ProductImporter implements UpdateInterface
 {

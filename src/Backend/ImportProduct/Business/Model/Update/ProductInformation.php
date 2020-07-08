@@ -5,8 +5,8 @@ namespace App\Backend\ImportProduct\Business\Model\Update;
 
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 
 
 class ProductInformation implements ProductInterface

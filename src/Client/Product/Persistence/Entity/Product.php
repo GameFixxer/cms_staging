@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Client\Product\Persistence\Entity;
 
-use App\Model\Entity\EntityInterface;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
@@ -13,7 +12,7 @@ use Cycle\Annotated\Annotation\Relation\BelongsTo;
  *     table = "product"
  * )
  */
-class Product implements EntityInterface
+class Product
 {
     public const TABLE = 'product';
 
@@ -25,7 +24,7 @@ class Product implements EntityInterface
     protected $id;
 
     /**
-     * @BelongsTo(target = "Category",  nullable = true)
+     * @BelongsTo(target = "category",  nullable = true)
      */
     protected $category;
 

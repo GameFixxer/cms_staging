@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Client\User\Business;
 
-use App\Model\Dto\UserDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
 
 interface UserBusinessFacadeInterface
 {

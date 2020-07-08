@@ -7,8 +7,9 @@ namespace App\Controller\Backend;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
 use App\Controller\BackendController;
-use App\Model\Dto\EmailDataTransferObject;
-use App\Model\Dto\UserDataTransferObject;
+
+use App\Generated\Dto\EmailDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
 use App\Service\Container;
 use App\Service\PasswordManager;
 use App\Service\SymfonyMailerManager;

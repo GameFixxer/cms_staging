@@ -5,7 +5,8 @@ namespace App\Backend\ImportProduct\Business\Model;
 
 use App\Backend\ImportProduct\Business\Model\Create\ProductInterface;
 use App\Backend\ImportProduct\Business\Model\Update\UpdateInterface;
-use App\Model\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
+
 
 class Importer
 {

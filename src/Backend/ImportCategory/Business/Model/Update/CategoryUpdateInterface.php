@@ -3,7 +3,9 @@
 
 namespace App\Backend\ImportCategory\Business\Model\Update;
 
-use App\Model\Dto\CsvDataTransferObject;
+
+
+use App\Generated\Dto\CsvDataTransferObject;
 
 interface CategoryUpdateInterface
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Dto;
+namespace App\Generated\Dto;
 
 class EmailDataTransferObject
 {

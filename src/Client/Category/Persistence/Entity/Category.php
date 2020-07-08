@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Client\Category\Persistence\Entity;
 
-use App\Model\Entity\EntityInterface;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\HasMany;
@@ -13,7 +12,7 @@ use Cycle\Annotated\Annotation\Relation\HasMany;
  *     table = "category"
  * )
  */
-class Category implements EntityInterface
+class Category
 {
     public const TABLE = 'category';
     /**

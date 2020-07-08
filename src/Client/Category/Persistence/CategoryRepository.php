@@ -7,7 +7,7 @@ namespace App\Client\Category\Persistence;
 
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Category\Persistence\Mapper\CategoryMapperInterface;
-use App\Model\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CategoryDataTransferObject;
 
 
 class CategoryRepository implements CategoryRepositoryInterface

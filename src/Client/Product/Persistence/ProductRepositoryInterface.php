@@ -2,7 +2,7 @@
 
 namespace App\Client\Product\Persistence;
 
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 
 interface ProductRepositoryInterface
 {

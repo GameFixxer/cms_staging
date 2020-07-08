@@ -5,7 +5,7 @@ namespace App\Client\Category\Business;
 
 use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Category\Persistence\CategoryRepositoryInterface;
-use App\Model\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CategoryDataTransferObject;
 
 class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
 {

@@ -1,10 +1,9 @@
 <?php
 
 
-namespace App\Model\Dto;
+namespace App\Generated\Dto;
 
-use App\Model\Entity\Category;
-use App\Model\Entity\Product;
+use App\Client\Category\Persistence\Entity\Category;
 use PhpParser\Node\Expr\Cast\Object_;
 
 class CsvDataTransferObject

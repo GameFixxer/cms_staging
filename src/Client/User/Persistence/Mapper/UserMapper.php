@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Client\User\Persistence\Mapper;
 
-use App\Model\Dto\UserDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
 use App\Client\User\Persistence\Entity\User;
 
 class UserMapper implements UserMapperInterface

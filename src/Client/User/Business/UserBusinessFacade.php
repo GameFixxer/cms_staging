@@ -5,7 +5,8 @@ namespace App\Client\User\Business;
 
 use App\Client\User\Persistence\UserEntityManagerInterface;
 use App\Client\User\Persistence\UserRepositoryInterface;
-use App\Model\Dto\UserDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
+
 
 class UserBusinessFacade implements UserBusinessFacadeInterface
 {

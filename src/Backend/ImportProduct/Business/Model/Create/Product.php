@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\Create;
 
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 
 
 class Product implements ProductInterface

@@ -2,7 +2,7 @@
 
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
-use App\Model\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvDataTransferObject;
 
 interface ProductInterface
 {

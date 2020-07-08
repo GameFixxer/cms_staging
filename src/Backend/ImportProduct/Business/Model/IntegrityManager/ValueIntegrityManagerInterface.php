@@ -2,8 +2,8 @@
 
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\DataTransferObjectInterface;
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\DataTransferObjectInterface;
 
 interface ValueIntegrityManagerInterface
 {

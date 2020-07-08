@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Client\Category\Persistence;
 
 use App\Client\Category\Persistence\Entity\Category;
-use App\Model\Dto\CategoryDataTransferObject;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
+use App\Generated\Dto\CategoryDataTransferObject;
 
 class CategoryEntityManager implements CategoryEntityManagerInterface
 {

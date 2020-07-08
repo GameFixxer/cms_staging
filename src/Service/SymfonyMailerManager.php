@@ -3,7 +3,8 @@
 declare(strict_types=1);
 namespace App\Service;
 
-use App\Model\Dto\EmailDataTransferObject;
+
+use App\Generated\Dto\EmailDataTransferObject;
 use App\Service\Mailer;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Mime\RawMessage;

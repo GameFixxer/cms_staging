@@ -2,7 +2,7 @@
 
 namespace App\Client\User\Persistence;
 
-use App\Model\Dto\UserDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
 
 interface UserEntityManagerInterface
 {

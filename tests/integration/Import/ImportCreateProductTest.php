@@ -5,9 +5,10 @@ namespace App\Tests\integration\Import;
 
 
 use App\Client\Product\Persistence\ProductRepository;
-use App\Model\Dto\CsvDataTransferObject;
-use App\Model\Dto\ProductDataTransferObject;
+
 use App\Client\Product\Persistence\Entity\Product;
+use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use App\Backend\ImportProduct\Business\Model\Create\Product as CreateProduct;

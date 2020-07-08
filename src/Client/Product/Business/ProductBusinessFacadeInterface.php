@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Client\Product\Business;
 
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 
 interface ProductBusinessFacadeInterface
 {

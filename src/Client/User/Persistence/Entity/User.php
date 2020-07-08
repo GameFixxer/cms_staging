@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Client\User\Persistence\Entity;
 
-use App\Model\Entity\EntityInterface;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use PhpParser\Node\Scalar\String_;
@@ -13,7 +12,7 @@ use PhpParser\Node\Scalar\String_;
  *     table = "user"
  *     )
  */
-class User implements EntityInterface
+class User
 {
     public const TABLE = 'user';
     /**

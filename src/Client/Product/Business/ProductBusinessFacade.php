@@ -5,7 +5,7 @@ namespace App\Client\Product\Business;
 
 use App\Client\Product\Persistence\ProductEntityManagerInterface;
 use App\Client\Product\Persistence\ProductRepositoryInterface;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 
 class ProductBusinessFacade implements ProductBusinessFacadeInterface
 {

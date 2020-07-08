@@ -5,7 +5,7 @@ namespace App\Controller\Frontend;
 
 use App\Client\Product\Persistence\ProductRepository;
 use App\Controller\Controller;
-use App\Model\Dto\ProductDataTransferObject;
+use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\View;
 use App\Service\Container;
 

@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\Model\Dto;
+namespace App\Generated\Dto;
 
-use App\Model\Entity\Product;
+use App\Client\Product\Persistence\Entity\Product;
 
 class CategoryDataTransferObject implements DataTransferObjectInterface
 {

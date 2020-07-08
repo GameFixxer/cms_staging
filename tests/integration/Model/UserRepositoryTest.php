@@ -3,10 +3,10 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\Entity\User;
-use App\Model\Entity\TestEntity;
-use App\Model\Mapper\UserMapper;
-use App\Model\UserRepository;
+use App\Client\Product\Persistence\Entity\TestEntity;
+use App\Client\User\Persistence\Entity\User;
+use App\Client\User\Persistence\Mapper\UserMapper;
+use App\Client\User\Persistence\UserRepository;
 use App\Service\DatabaseManager;
 use App\Service\PasswordManager;
 use App\Tests\integration\Helper\ContainerHelper;

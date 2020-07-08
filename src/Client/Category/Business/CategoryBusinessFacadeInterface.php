@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Client\Category\Business;
 
-use App\Model\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CategoryDataTransferObject;
 
 interface CategoryBusinessFacadeInterface
 {

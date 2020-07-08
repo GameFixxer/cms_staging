@@ -7,7 +7,7 @@ namespace App\Client\User\Persistence;
 
 use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapperInterface;
-use App\Model\Dto\UserDataTransferObject;
+use App\Generated\Dto\UserDataTransferObject;
 use Cycle\ORM\ORM;
 
 class UserRepository implements UserRepositoryInterface

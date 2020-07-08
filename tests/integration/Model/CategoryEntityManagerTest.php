@@ -3,9 +3,10 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Model\CategoryEntityManager;
-use App\Model\Dto\CategoryDataTransferObject;
-use App\Model\Entity\Category;
+
+use App\Client\Category\Persistence\CategoryEntityManager;
+use App\Client\Category\Persistence\Entity\Category;
+use App\Generated\Dto\CategoryDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
