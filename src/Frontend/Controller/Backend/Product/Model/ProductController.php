@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Model;
+namespace App\Frontend\Controller\Backend\Product\Model;
 
 use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
+use App\Frontend\Controller\Backend\BackendController;
+use App\Frontend\Controller\Backend\Login\Model\LoginController;
+use App\Frontend\Controller\Backend\Product\Persistence\ProductManager;
+use App\Frontend\Controller\Backend\Product\Persistence\ProductManagerInterface;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\SessionUser;
 
@@ -16,6 +20,7 @@ class ProductController implements BackendController
     public const ROUTE = 'product';
     private ProductBusinessFacadeInterface $productBusinessFacade;
     private SessionUser $userSession;
+    private ProductManagerInterface $productManager;
     private View $view;
 
     public function __construct(Container $container)
@@ -23,6 +28,7 @@ class ProductController implements BackendController
         $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
         $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
+        $this->productManager = $container->get(ProductManager::class);
     }
 
     public function init(): void
@@ -57,7 +63,6 @@ class ProductController implements BackendController
         }
     }
 
-
     public function detailAction(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -86,22 +91,19 @@ class ProductController implements BackendController
 
     private function deleteProduct(string $articleNumber): void
     {
-        $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if ($productDTO instanceof ProductDataTransferObject) {
-            $this->productBusinessFacade->delete($productDTO);
-        }
+        $productDTO = new ProductDataTransferObject();
+        $productDTO->setArticleNumber($articleNumber);
+        $this->productManager->delete($productDTO);
+
     }
 
     private function saveProduct(string $articleNumber, string $description, string $name): void
     {
-        $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if (!$productDTO instanceof ProductDataTransferObject) {
-            $productDTO = new ProductDataTransferObject();
-            $productDTO->setArticleNumber((string)rand(1, 2229));
-        }
+        $productDTO = new ProductDataTransferObject();
+        $productDTO->setArticleNumber($articleNumber);
         $productDTO->setProductName($name);
         $productDTO->setProductDescription($description);
-        $this->productBusinessFacade->save($productDTO);
+        $this->productManager->save($productDTO);
     }
 
     private function checkForValidDTO($productDTO): bool
@@ -130,7 +132,6 @@ class ProductController implements BackendController
         $this->view->addTlpParam('error', '404 Page not found.');
         $this->view->addTemplate('404.tpl');
     }
-
 
     private function redirectToPage(string $route, string $page): void
     {

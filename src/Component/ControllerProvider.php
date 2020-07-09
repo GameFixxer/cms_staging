@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Component;
 
-use App\Frontend\Controller\Backend\Model\DashboardController;
-use App\Frontend\Controller\Backend\Model\LoginController;
-use App\Frontend\Controller\Backend\Model\PasswordController;
-use App\Frontend\Controller\Backend\Model\ProductController;
-use App\Frontend\Controller\Backend\Model\UserController;
+use App\Frontend\Controller\Backend\Login\Model\LoginController;
+use App\Frontend\Controller\Backend\Login\Model\PasswordController;
+use App\Frontend\Controller\Backend\Product\Model\ProductController;
+use App\Frontend\Controller\Backend\User\Model\DashboardController;
+use App\Frontend\Controller\Backend\User\Model\UserController;
 use App\Frontend\Controller\Frontend\Model\DetailController;
 use App\Frontend\Controller\Frontend\Model\ErrorController;
 use App\Frontend\Controller\Frontend\Model\HomeController;

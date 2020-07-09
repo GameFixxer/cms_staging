@@ -30,6 +30,8 @@ use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapper;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
+use App\Frontend\Controller\Backend\Product\Persistence\ProductManager;
+use App\Frontend\Controller\Backend\User\Persistence\UserManager;
 use App\Service\DatabaseManager;
 use App\Service\File\FileServiceClient;
 use App\Service\File\Model\Get;
@@ -217,5 +219,7 @@ class DependencyProvider
                 dirname(__DIR__, 2).'../import/'
             )
         );
+        $container->set(ProductManager::class, new ProductManager($container->get(ProductBusinessFacade::class)));
+        $container->set(UserManager::class, new UserManager($container->get(UserBusinessFacade::class)));
     }
 }

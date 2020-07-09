@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Model;
+namespace App\Frontend\Controller\Backend\User\Model;
 
 use App\Component\Container;
 use App\Component\View;
+use App\Frontend\Controller\Backend\BackendController;
+use App\Frontend\Controller\Backend\Login\Model\LoginController;
 use App\Service\SessionUser;
 
 class DashboardController implements BackendController
