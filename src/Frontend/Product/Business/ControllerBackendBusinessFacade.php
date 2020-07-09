@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Frontend\Controller\Backend\Product\Business;
+namespace App\Frontend\Product\Business;
 
 class ControllerBackendBusinessFacade
 {

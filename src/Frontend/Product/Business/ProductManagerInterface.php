@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Controller\Backend\Product\Persistence;
+namespace App\Frontend\Product\Business;
 
 use App\Generated\Dto\ProductDataTransferObject;
 

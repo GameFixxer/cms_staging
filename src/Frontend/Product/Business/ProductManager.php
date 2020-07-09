@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Product\Persistence;
+namespace App\Frontend\Product\Business;
 
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Generated\Dto\ProductDataTransferObject;

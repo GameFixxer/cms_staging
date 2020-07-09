@@ -1,48 +1,42 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Frontend\Model;
+namespace App\Frontend\Model;
 
 use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
+use App\Frontend\Controller;
 use App\Generated\Dto\ProductDataTransferObject;
 
-class ListController implements Controller
+class DetailController implements Controller
 {
-    public const ROUTE = 'list';
+    public const ROUTE = 'detail';
     private View $view;
     private ProductBusinessFacadeInterface $productBusinessFacade;
 
     public function __construct(Container $container)
     {
-        $this->view = $container->get(View::class);
         $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
+        $this->view = $container->get(View::class);
     }
+
 
     public function action(): void
     {
-        $productDTO = $this->productBusinessFacade->getList();
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTemplate('index.tpl');
-            $this->view->addTlpParam('productlist', $productDTO);
-        } else {
+        $articleNumber = ($_GET['id'] ?? '0');
+        $productDTO = $this->productBusinessFacade->get($articleNumber);
+        if ($articleNumber === 0 || !($this->checkForValidDTO($productDTO))) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
+        } else {
+            $this->view->addTemplate('detail.tpl');
+            $this->view->addTlpParam('page', $productDTO);
         }
     }
-
     private function checkForValidDTO($productDTO) :bool
     {
-        if (is_array($productDTO)) {
-            foreach ($productDTO as $key) {
-                if (!($key instanceof ProductDataTransferObject)) {
-                    return false;
-                }
-            }
-            return true;
-        }
         return $productDTO instanceof ProductDataTransferObject;
     }
 }

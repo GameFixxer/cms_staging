@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Frontend\Controller\Backend\User\Persistence;
+namespace App\Frontend\User\Business;
 
 use App\Generated\Dto\UserDataTransferObject;
 

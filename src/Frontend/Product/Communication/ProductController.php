@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Product\Model;
+namespace App\Frontend\Product\Communication;
 
 use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
-use App\Frontend\Controller\Backend\BackendController;
+use App\Frontend\BackendController;
 use App\Frontend\Controller\Backend\Login\Model\LoginController;
-use App\Frontend\Controller\Backend\Product\Persistence\ProductManager;
-use App\Frontend\Controller\Backend\Product\Persistence\ProductManagerInterface;
+use App\Frontend\Product\Business\ProductManager;
+use App\Frontend\Product\Business\ProductManagerInterface;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\SessionUser;
 

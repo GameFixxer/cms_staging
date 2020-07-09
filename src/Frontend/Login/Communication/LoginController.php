@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Login\Model;
-
+namespace App\Frontend\Login\Communication;
 
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
-use App\Frontend\Controller\Backend\BackendController;
-use App\Frontend\Controller\Backend\User\Model\DashboardController;
+use App\Frontend\BackendController;
+use App\Frontend\Controller\Backend\Login\Model\PasswordController;
+use App\Frontend\User\Communication\DashboardController;
 use App\Generated\Dto\EmailDataTransferObject;
 use App\Generated\Dto\UserDataTransferObject;
 use App\Service\PasswordManager;

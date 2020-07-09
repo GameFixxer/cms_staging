@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\User\Persistence;
+namespace App\Frontend\User\Business;
 
 use App\Client\User\Business\UserBusinessFacadeInterface;
+use App\Frontend\User\Business\UserManagerInterface;
 use App\Generated\Dto\UserDataTransferObject;
 
 class UserManager implements UserManagerInterface
