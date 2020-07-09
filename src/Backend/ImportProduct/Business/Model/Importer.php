@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model;
 
+use App\Backend\ImportComponent\Loader\CsvImportLoaderInterface;
 use App\Backend\ImportProduct\Business\Model\Create\ProductInterface;
 use App\Backend\ImportProduct\Business\Model\Update\UpdateInterface;
 use App\Generated\Dto\CsvDataTransferObject;

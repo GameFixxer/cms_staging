@@ -5,7 +5,8 @@ namespace App\Backend\ImportProduct\Business\Model;
 
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
-use App\Service\Container;
+use App\Component\Container;
+
 
 class ActionProvider
 {

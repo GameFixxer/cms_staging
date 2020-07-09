@@ -1,9 +1,12 @@
 <?php
-use App\Frontend\Controller\Frontend\ErrorControll;
-use App\Service\ControllerProvider;
-use App\Service\View;
-use App\Service\DependencyProvider;
-use App\Service\Container;
+
+use App\Component\Container;
+use App\Component\ControllerProvider;
+use App\Component\DependencyProvider;
+use App\Component\View;
+use App\Frontend\Controller\Frontend\Model\ErrorController;
+
+
 $container = new Container();
 $containerProvider = new DependencyProvider();
 $containerProvider->providerDependency($container);
@@ -38,7 +41,7 @@ foreach ($controllerList as $controller) {
     }
 }
 if (!$isFind) {
-    $class = new ErrorControll($container);
+    $class = new ErrorController($container);
     $class->action();
 }
 

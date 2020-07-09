@@ -1,30 +1,29 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Frontend;
+namespace App\Frontend\Controller\Frontend\Model;
 
-use App\Client\Product\Persistence\ProductRepository;
-
-use App\Frontend\Controller\Controller;
+use App\Client\Product\Business\ProductBusinessFacade;
+use App\Client\Product\Business\ProductBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\ProductDataTransferObject;
-use App\Service\View;
-use App\Service\Container;
 
-class ListControll implements Controller
+class ListController implements Controller
 {
     public const ROUTE = 'list';
     private View $view;
-    private ProductRepository $productRepository;
+    private ProductBusinessFacadeInterface $productBusinessFacade;
 
     public function __construct(Container $container)
     {
         $this->view = $container->get(View::class);
-        $this->productRepository = $container->get(ProductRepository::class);
+        $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
     }
 
     public function action(): void
     {
-        $productDTO = $this->productRepository->getProductList();
+        $productDTO = $this->productBusinessFacade->getList();
         if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTemplate('index.tpl');
             $this->view->addTlpParam('productlist', $productDTO);

@@ -18,11 +18,10 @@
 */
 
 use App\Client\Product\Persistence\ProductRepository;
+use App\Component\Container;
+use App\Component\DependencyProvider;
+use App\Component\View;
 use App\Generated\Dto\ProductDataTransferObject;
-use App\Client\Product\Persistence\Entity\Product;
-use App\Service\Container;
-use App\Service\DependencyProvider;
-use App\Service\View;
 use App\Service\SessionUser;
 
 class UnitTester extends \Codeception\Actor

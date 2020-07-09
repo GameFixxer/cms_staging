@@ -3,8 +3,8 @@
 
 namespace App\Tests\integration\Helper;
 
+use App\Backend\ImportComponent\Loader\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Create\Product;
-use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
@@ -14,9 +14,9 @@ use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
-use App\Service\Container;
+use App\Component\Container;
+use App\Component\DependencyProvider;
 use App\Service\DatabaseManager;
-use App\Service\DependencyProvider;
 use Cycle\ORM\ORM;
 
 class ContainerHelper

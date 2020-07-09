@@ -2,29 +2,25 @@
 
 declare(strict_types=1);
 
-namespace  App\Frontend\Controller\Backend;
+namespace App\Frontend\Controller\Backend\Model;
 
-use App\Client\Product\Persistence\ProductEntityManager;
-use App\Client\Product\Persistence\ProductRepository;
-
-use App\Frontend\Controller\BackendController;
+use App\Client\Product\Business\ProductBusinessFacade;
+use App\Client\Product\Business\ProductBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\ProductDataTransferObject;
-use App\Service\Container;
 use App\Service\SessionUser;
-use App\Service\View;
 
 class ProductController implements BackendController
 {
     public const ROUTE = 'product';
-    private ProductRepository $productRepository;
-    private ProductEntityManager $productEntityManager;
+    private ProductBusinessFacadeInterface $productBusinessFacade;
     private SessionUser $userSession;
     private View $view;
 
     public function __construct(Container $container)
     {
-        $this->productRepository = $container->get(ProductRepository::class);
-        $this->productEntityManager = $container->get(ProductEntityManager::class);
+        $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
         $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
     }
@@ -41,7 +37,7 @@ class ProductController implements BackendController
 
     public function listAction()
     {
-        $productDTO = $this->productRepository->getProductList();
+        $productDTO = $this->productBusinessFacade->getList();
         $this->view->addTlpParam('productlist', $productDTO);
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -79,7 +75,7 @@ class ProductController implements BackendController
                 break;
             }
         }
-        $productDTO = $this->productRepository->getProduct($_GET['id']);
+        $productDTO = $this->productBusinessFacade->get($_GET['id']);
         if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTlpParam('product', $productDTO);
             $this->view->addTemplate('productEditPage.tpl');
@@ -90,22 +86,22 @@ class ProductController implements BackendController
 
     private function deleteProduct(string $articleNumber): void
     {
-        $productDTO = $this->productRepository->getProduct($articleNumber);
+        $productDTO = $this->productBusinessFacade->get($articleNumber);
         if ($productDTO instanceof ProductDataTransferObject) {
-            $this->productEntityManager->delete($productDTO);
+            $this->productBusinessFacade->delete($productDTO);
         }
     }
 
     private function saveProduct(string $articleNumber, string $description, string $name): void
     {
-        $productDTO = $this->productRepository->getProduct($articleNumber);
+        $productDTO = $this->productBusinessFacade->get($articleNumber);
         if (!$productDTO instanceof ProductDataTransferObject) {
             $productDTO = new ProductDataTransferObject();
             $productDTO->setArticleNumber((string)rand(1, 2229));
         }
         $productDTO->setProductName($name);
         $productDTO->setProductDescription($description);
-        $this->productEntityManager->save($productDTO);
+        $this->productBusinessFacade->save($productDTO);
     }
 
     private function checkForValidDTO($productDTO): bool

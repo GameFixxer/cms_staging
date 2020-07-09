@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace App\Backend\ImportProduct\Business\Model;
+namespace App\Backend\ImportComponent\Mapper;
 
 use App\Generated\Dto\CsvDataTransferObject;
 
-class MappingAssistant
+class MappingAssistant implements MappingAssistantInterface
 {
     private $attributes;
     private bool $lowerCamelCase;

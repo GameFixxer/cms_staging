@@ -1,32 +1,31 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Frontend;
+namespace App\Frontend\Controller\Frontend\Model;
 
-use App\Client\Product\Persistence\ProductRepository;
-
-use App\Frontend\Controller\Controller;
+use App\Client\Product\Business\ProductBusinessFacade;
+use App\Client\Product\Business\ProductBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\ProductDataTransferObject;
-use App\Service\Container;
-use App\Service\View;
 
-class DetailControll implements Controller
+class DetailController implements Controller
 {
     public const ROUTE = 'detail';
     private View $view;
-    private ProductRepository $productRepository;
+    private ProductBusinessFacadeInterface $productBusinessFacade;
 
     public function __construct(Container $container)
     {
+        $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
         $this->view = $container->get(View::class);
-        $this->productRepository = $container->get(ProductRepository::class);
     }
 
 
     public function action(): void
     {
         $pageId = ($_GET['id'] ?? '0');
-        $productDTO = $this->productRepository->getProduct($pageId);
+        $productDTO = $this->productBusinessFacade->get($pageId);
         if ($pageId === 0 || !($this->checkForValidDTO($productDTO))) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
