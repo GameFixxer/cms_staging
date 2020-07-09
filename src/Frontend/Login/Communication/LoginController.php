@@ -8,7 +8,6 @@ use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
-use App\Frontend\Controller\Backend\Login\Model\PasswordController;
 use App\Frontend\User\Communication\DashboardController;
 use App\Generated\Dto\EmailDataTransferObject;
 use App\Generated\Dto\UserDataTransferObject;

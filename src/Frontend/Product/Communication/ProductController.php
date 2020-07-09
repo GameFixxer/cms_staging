@@ -9,7 +9,7 @@ use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
-use App\Frontend\Controller\Backend\Login\Model\LoginController;
+use App\Frontend\Login\Communication\LoginController;
 use App\Frontend\Product\Business\ProductManager;
 use App\Frontend\Product\Business\ProductManagerInterface;
 use App\Generated\Dto\ProductDataTransferObject;
