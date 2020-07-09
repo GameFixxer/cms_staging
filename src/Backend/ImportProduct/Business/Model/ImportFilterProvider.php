@@ -22,7 +22,7 @@ class ImportFilterProvider
     {
 
         return [
-           'category_key' => 'getCategoryKey',
+            'category_key' => 'getCategoryKey',
             'category_id' => 'getCategoryId'
 
         ];

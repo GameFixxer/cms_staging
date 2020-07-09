@@ -30,17 +30,17 @@ class DashboardController implements BackendController
     {
         $userRole = $this->userSession->getUserRole();
         switch ($userRole) {
-            case $userRole === 'user':
-                $this->view->addTemplate('userDashboard.tpl');
-                break;
-            case $userRole === 'admin':
-                $this->view->addTemplate('adminDashboard.tpl');
-                break;
+        case $userRole === 'user':
+            $this->view->addTemplate('userDashboard.tpl');
+            break;
+        case $userRole === 'admin':
+            $this->view->addTemplate('adminDashboard.tpl');
+            break;
 
-            case $userRole === 'root':
+        case $userRole === 'root':
 
-                $this->view->addTemplate('rootDashboard.tpl');
-                break;
+            $this->view->addTemplate('rootDashboard.tpl');
+            break;
 
         }
         $this->view->addTlpParam('user', $this->userSession->getUser());

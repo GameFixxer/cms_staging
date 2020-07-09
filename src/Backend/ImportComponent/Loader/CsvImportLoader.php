@@ -25,10 +25,10 @@ class CsvImportLoader implements CsvImportLoaderInterface
 
         $objects = $this->loadFromCSV($path);
 
-        $headerList =  $this->mappingAssistant->createMappingList($this->header);
+        $headerList = $this->mappingAssistant->createMappingList($this->header);
         if (isset($headerList)) {
             foreach ($objects as $product) {
-                $csvDTOList[] =  $this->mappingAssistant->mapInputToDTO($headerList, $product);
+                $csvDTOList[] = $this->mappingAssistant->mapInputToDTO($headerList, $product);
             }
         }
         return $csvDTOList;
