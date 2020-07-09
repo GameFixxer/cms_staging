@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Component;
 
-use App\Frontend\Controller\Backend\Model\DashboardController;
-use App\Frontend\Controller\Backend\Model\LoginController;
-use App\Frontend\Controller\Backend\Model\PasswordController;
-use App\Frontend\Controller\Backend\Model\ProductController;
-use App\Frontend\Controller\Backend\Model\UserController;
-use App\Frontend\Controller\Frontend\Model\DetailController;
-use App\Frontend\Controller\Frontend\Model\ErrorController;
-use App\Frontend\Controller\Frontend\Model\HomeController;
-use App\Frontend\Controller\Frontend\Model\ListController;
+
+use App\Frontend\Login\Communication\LoginController;
+use App\Frontend\Login\Communication\PasswordController;
+use App\Frontend\Model\DetailController;
+use App\Frontend\Model\ErrorController;
+use App\Frontend\Model\HomeController;
+use App\Frontend\Model\ListController;
+use App\Frontend\Product\Communication\ProductController;
+use App\Frontend\User\Communication\DashboardController;
+use App\Frontend\User\Communication\UserController;
 
 class ControllerProvider
 {

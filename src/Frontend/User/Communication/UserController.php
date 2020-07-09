@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Model;
+namespace App\Frontend\User\Communication;
 
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\Container;
 use App\Component\View;
+use App\Frontend\BackendController;
+use App\Frontend\Login\Communication\LoginController;
+use App\Frontend\User\Business\UserManager;
+use App\Frontend\User\Business\UserManagerInterface;
 use App\Generated\Dto\UserDataTransferObject;
 use App\Service\PasswordManager;
 use App\Service\SessionUser;
@@ -19,6 +23,7 @@ class UserController implements BackendController
     private SessionUser $userSession;
     private View $view;
     private PasswordManager $passwordManager;
+    private UserManagerInterface $userManager;
 
     public function __construct(Container $container)
     {
@@ -26,6 +31,7 @@ class UserController implements BackendController
         $this->userSession = $container->get(SessionUser::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->view = $container->get(View::class);
+        $this->userManager = $container->get(UserManager::class);
     }
 
     public function init(): void
@@ -89,22 +95,18 @@ class UserController implements BackendController
 
     private function deleteUser(String $username): void
     {
-        $userDTO = $this->userBusinessFacade->get($username);
-        if ($userDTO instanceof UserDataTransferObject) {
-            $this->userBusinessFacade->delete($userDTO);
-        }
+        $userDTO = new UserDataTransferObject();
+        $userDTO->setUsername($username);
+        $this->userManager->delete($userDTO);
     }
 
     private function saveUser(String $password, String $username, String $role): void
     {
-        $userDTO = $this->userBusinessFacade->get($username);
-        if (!$userDTO instanceof UserDataTransferObject) {
-            $userDTO = new UserDataTransferObject();
-        }
+        $userDTO = new UserDataTransferObject();
         $userDTO->setUsername($username);
         $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
         $userDTO->setUserRole($role);
-        $this->userBusinessFacade->save($userDTO);
+        $this->userManager->save($userDTO);
     }
 
     private function checkForValidDTO($userDTO): bool

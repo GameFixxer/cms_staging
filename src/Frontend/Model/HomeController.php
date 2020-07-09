@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Frontend\Model;
+namespace App\Frontend\Model;
 
 
 use App\Component\Container;
 use App\Component\View;
+use App\Frontend\Controller;
 
 class HomeController implements Controller
 {

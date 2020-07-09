@@ -4,7 +4,7 @@ use App\Component\Container;
 use App\Component\ControllerProvider;
 use App\Component\DependencyProvider;
 use App\Component\View;
-use App\Frontend\Controller\Frontend\Model\ErrorController;
+use App\Frontend\Model\ErrorController;
 
 
 $container = new Container();

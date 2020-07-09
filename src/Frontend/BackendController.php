@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Backend\Model;
-use App\Frontend\Controller\Frontend\Model\Controller;
+namespace App\Frontend;
+use App\Frontend\Controller;
 
 interface BackendController extends Controller
 {

@@ -18,9 +18,6 @@
  */
 
 use App\Generated\Dto\ProductDataTransferObject;
-use App\Service\Container;
-use App\Service\DependencyProvider;
-use App\Service\View;
 
 class IntegrationTester extends \Codeception\Actor
 {
