@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Frontend\Controller\Frontend;
+namespace App\Frontend\Controller\Frontend\Model;
 
 
-use App\Frontend\Controller\Controller;
-use App\Service\Container;
-use App\Service\View;
+use App\Component\Container;
+use App\Component\View;
 
-class HomeControll implements Controller
+class HomeController implements Controller
 {
     private View $view;
 

@@ -2,30 +2,27 @@
 
 declare(strict_types=1);
 
-namespace  App\Frontend\Controller\Backend;
+namespace App\Frontend\Controller\Backend\Model;
 
-use App\Client\User\Persistence\UserEntityManager;
-use App\Client\User\Persistence\UserRepository;
-use App\Frontend\Controller\BackendController;
+use App\Client\User\Business\UserBusinessFacade;
+use App\Client\User\Business\UserBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\UserDataTransferObject;
-use App\Service\Container;
 use App\Service\PasswordManager;
 use App\Service\SessionUser;
-use App\Service\View;
 
 class UserController implements BackendController
 {
     public const ROUTE = 'user';
-    private UserRepository $userRepository;
-    private UserEntityManager $userEntityManager;
+    private UserBusinessFacadeInterface $userBusinessFacade;
     private SessionUser $userSession;
     private View $view;
     private PasswordManager $passwordManager;
 
     public function __construct(Container $container)
     {
-        $this->userRepository = $container->get(UserRepository::class);
-        $this->userEntityManager = $container->get(UserEntityManager::class);
+        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
         $this->userSession = $container->get(SessionUser::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->view = $container->get(View::class);
@@ -43,7 +40,7 @@ class UserController implements BackendController
 
     public function listAction()
     {
-        $userDataTransferObjects = $this->userRepository->getUserList();
+        $userDataTransferObjects = $this->userBusinessFacade->getList();
         $this->view->addTlpParam('userList', $userDataTransferObjects);
         $this->view->addTemplate('userList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -81,7 +78,7 @@ class UserController implements BackendController
                 break;
             }
         }
-        $userDTO = $this->userRepository->getUser($_GET['id']);
+        $userDTO = $this->userBusinessFacade->get($_GET['id']);
         if ($this->checkForValidDTO($userDTO)) {
             $this->view->addTlpParam('product', $userDTO);
             $this->view->addTemplate('productEditPage.tpl');
@@ -92,22 +89,22 @@ class UserController implements BackendController
 
     private function deleteUser(String $username): void
     {
-        $userDTO = $this->userRepository->getUser($username);
+        $userDTO = $this->userBusinessFacade->get($username);
         if ($userDTO instanceof UserDataTransferObject) {
-            $this->userEntityManager->delete($userDTO);
+            $this->userBusinessFacade->delete($userDTO);
         }
     }
 
     private function saveUser(String $password, String $username, String $role): void
     {
-        $userDTO = $this->userRepository->getUser($username);
+        $userDTO = $this->userBusinessFacade->get($username);
         if (!$userDTO instanceof UserDataTransferObject) {
             $userDTO = new UserDataTransferObject();
         }
         $userDTO->setUsername($username);
         $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
         $userDTO->setUserRole($role);
-        $this->userEntityManager->save($userDTO);
+        $this->userBusinessFacade->save($userDTO);
     }
 
     private function checkForValidDTO($userDTO): bool

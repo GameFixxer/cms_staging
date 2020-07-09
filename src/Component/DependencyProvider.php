@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
-namespace App\Service;
+namespace App\Component;
 
 use App\Backend\ImportCategory\Business\Model\Update\CategoryImporter;
+use App\Backend\ImportComponent\Loader\CsvImportLoader;
+use App\Backend\ImportComponent\Mapper\MappingAssistant;
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
-use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Backend\ImportCategory\Business\Model\Importer as ImporterCategory;
 use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
@@ -29,9 +30,13 @@ use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapper;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
+use App\Service\DatabaseManager;
 use App\Service\File\FileServiceClient;
 use App\Service\File\Model\Get;
 use App\Service\File\Model\Move;
+use App\Service\PasswordManager;
+use App\Service\SessionUser;
+use App\Service\SymfonyMailerManager;
 use Cycle\ORM\ORM;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -162,8 +167,8 @@ class DependencyProvider
             );
         });
 
-
-        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class)));
+        $container->set(MappingAssistant::class, new MappingAssistant());
+        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(MappingAssistant::class)));
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryBusinessFacade::class)));

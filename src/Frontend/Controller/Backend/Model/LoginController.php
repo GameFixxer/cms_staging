@@ -1,27 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace  App\Frontend\Controller\Backend;
+namespace App\Frontend\Controller\Backend\Model;
 
 
-use App\Client\User\Persistence\UserEntityManager;
-use App\Client\User\Persistence\UserRepository;
-
-use App\Frontend\Controller\BackendController;
+use App\Client\User\Business\UserBusinessFacade;
+use App\Client\User\Business\UserBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\EmailDataTransferObject;
 use App\Generated\Dto\UserDataTransferObject;
-use App\Service\Container;
 use App\Service\PasswordManager;
 use App\Service\SymfonyMailerManager;
-use App\Service\View;
 use App\Service\SessionUser;
 
 class LoginController implements BackendController
 {
     public const ROUTE = 'login';
     private View $view;
-    private UserRepository $userRepository;
-    private UserEntityManager $userEntityManager;
+    private UserBusinessFacadeInterface $userBusinessFacade;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
     private SymfonyMailerManager $mailManager;
@@ -31,8 +28,7 @@ class LoginController implements BackendController
     {
         $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
-        $this->userRepository = $container->get(UserRepository::class);
-        $this->userEntityManager = $container->get(UserEntityManager::class);
+        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->mailManager = $container->get(SymfonyMailerManager::class);
     }
@@ -50,7 +46,7 @@ class LoginController implements BackendController
         if (isset($_POST['login']) && !empty(trim($_POST['username'])) && !empty(trim($_POST['password']))) {
             $username = (string)trim($_POST['username']);
             $password = (string)trim($_POST['password']);
-            $userDTO = $this->userRepository->getUser($username);
+            $userDTO = $this->userBusinessFacade->get($username);
             if ($userDTO instanceof UserDataTransferObject) {
                 $this->loginUser($userDTO, $password, $username);
             }
@@ -64,7 +60,7 @@ class LoginController implements BackendController
         $this->view->addTemplate('passwordReset.tpl');
         if (isset($_POST['resetpassword']) && !empty(trim($_POST['email']))) {
             $username = (string)trim($_POST['email']);
-            $userDTO = $this->userRepository->getUser($username);
+            $userDTO = $this->userBusinessFacade->get($username);
             if ($userDTO instanceof UserDataTransferObject) {
                 $resetCode = $this->passwordManager->createResetPassword();
                 $emailDTO = new EmailDataTransferObject();
@@ -122,6 +118,6 @@ class LoginController implements BackendController
     {
         $userDTO->setSessionId($sessionId);
         $userDTO->setResetPassword($resetCode);
-        $this->userEntityManager->save($userDTO);
+        $this->userBusinessFacade->save($userDTO);
     }
 }

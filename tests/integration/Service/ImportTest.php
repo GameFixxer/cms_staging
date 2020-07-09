@@ -1,11 +1,11 @@
 <?php
 namespace App\Tests\integration\Service;
 
-use App\Backend\ImportProduct\Business\Model\CsvImportLoader;
+
+use App\Backend\ImportComponent\Loader\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\Product\Persistence\Entity\Product;
-
 use App\Tests\integration\Helper\ContainerHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;

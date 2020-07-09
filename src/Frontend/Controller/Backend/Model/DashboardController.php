@@ -1,27 +1,22 @@
 <?php
 declare(strict_types=1);
-namespace  App\Frontend\Controller\Backend;
 
-use App\Client\Product\Persistence\ProductRepository;
+namespace App\Frontend\Controller\Backend\Model;
 
-use App\Frontend\Controller\BackendController;
-use App\Service\Container;
+use App\Component\Container;
+use App\Component\View;
 use App\Service\SessionUser;
-use App\Service\View;
 
 class DashboardController implements BackendController
 {
     public const ROUTE = 'dashboard';
-    private ProductRepository $productRepository;
     private View $view;
     private SessionUser $userSession;
-    private String $userRole;
 
     public function __construct(Container $container)
     {
         $this->userSession = $container->get(SessionUser::class);
         $this->view = $container->get(View::class);
-        $this->productRepository = $container->get(ProductRepository::class);
     }
 
     public function init(): void
@@ -29,26 +24,26 @@ class DashboardController implements BackendController
         if (!$this->userSession->isLoggedIn()) {
             $this->redirectToPage(LoginController::ROUTE);
         }
-        $this->userRole = $this->userSession->getUserRole();
-        switch ($this->userRole) {
-        case $this->userRole === 'user':
-            $this->view->addTlpParam('user', $this->userSession->getUser());
+
+    }
+    public function action(): void
+    {
+        $userRole = $this->userSession->getUserRole();
+        switch ($userRole) {
+        case $userRole === 'user':
             $this->view->addTemplate('userDashboard.tpl');
             break;
-        case $this->userRole === 'admin':
-            $this->view->addTlpParam('user', $this->userSession->getUser());
+        case $userRole === 'admin':
             $this->view->addTemplate('adminDashboard.tpl');
             break;
 
-        case $this->userRole === 'root':
-            $this->view->addTlpParam('user', $this->userSession->getUser());
+        case $userRole === 'root':
+
             $this->view->addTemplate('rootDashboard.tpl');
             break;
 
         }
-    }
-    public function action(): void
-    {
+        $this->view->addTlpParam('user', $this->userSession->getUser());
     }
 
     private function redirectToPage(string $route):void

@@ -1,9 +1,8 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Service\File;
 
-use App\Service\Container;
 use App\Service\File\Model\GetInterface;
 use App\Service\File\Model\MoveInterface;
 use Symfony\Component\Finder\Finder;

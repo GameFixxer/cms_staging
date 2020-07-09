@@ -31,8 +31,7 @@ class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
     /**
      * @return CategoryDataTransferObject[]
      */
-
-    public function getList()
+    public function getList():array
     {
         return $this->categoryRepository->getCategoryList();
     }
@@ -42,7 +41,7 @@ class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
         return $this->categoryEntityManager->save($category);
     }
 
-    public function delete(CategoryDataTransferObject $category)
+    public function delete(CategoryDataTransferObject $category):void
     {
         $this->categoryEntityManager->delete($category);
     }

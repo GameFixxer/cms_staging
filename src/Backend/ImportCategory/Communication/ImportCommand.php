@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace App\Backend\ImportProduct\Communication;
 
-use App\Backend\ImportProduct\Business\Model\Importer;
+namespace App\Backend\ImportCategory\Communication;
+
+use App\Backend\ImportCategory\Business\Model\Importer as ImporterCategory;
 use App\Component\Container;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ImportCommand extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'app:importProduct';
+    protected static $defaultName = 'app:importCategory';
     /**
      * @var Container
      */
@@ -35,7 +36,7 @@ class ImportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $import = $this->container->get(Importer::class);
+        $import = $this->container->get(ImporterCategory::class);
         $import->import();
 
 

@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 use App\Backend\ImportProduct\Business\Model\Importer;
-use App\Service\Container;
-use App\Service\DependencyProvider;
+use App\Component\Container;
+use App\Component\DependencyProvider;
+
 
 use Symfony\Component\Console\Application;
 

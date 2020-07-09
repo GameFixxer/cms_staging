@@ -1,25 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace  App\Frontend\Controller\Backend;
+namespace App\Frontend\Controller\Backend\Model;
 
-use App\Client\User\Persistence\UserEntityManager;
-use App\Client\User\Persistence\UserRepository;
-
-use App\Frontend\Controller\BackendController;
+use App\Client\User\Business\UserBusinessFacade;
+use App\Client\User\Business\UserBusinessFacadeInterface;
+use App\Component\Container;
+use App\Component\View;
 use App\Generated\Dto\UserDataTransferObject;
-use App\Service\Container;
 use App\Service\PasswordManager;
-use App\Service\View;
 use App\Service\SessionUser;
-use function PHPUnit\Framework\isEmpty;
 
 class PasswordController implements BackendController
 {
     public const ROUTE = 'password';
     private View $view;
-    private UserRepository $userRepository;
-    private UserEntityManager $userEntityManager;
+    private UserBusinessFacadeInterface $userBusinessFacade;
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
 
@@ -27,8 +23,7 @@ class PasswordController implements BackendController
     public function __construct(Container $container)
     {
         $this->view = $container->get(View::class);
-        $this->userRepository = $container->get(UserRepository::class);
-        $this->userEntityManager = $container->get(UserEntityManager::class);
+        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
         $this->passwordManager = $container->get(PasswordManager::class);
         $this->userSession = $container->get(SessionUser::class);
     }
@@ -46,7 +41,7 @@ class PasswordController implements BackendController
         $this->view->addTemplate('mailCode.tpl');
         if (isset($_POST['resetpassword']) && !empty(trim($_POST['resetcode']))) {
             $resetCode = (string)trim($_POST['resetcode']);
-            $userDTO = $this->userRepository->getUser($_SESSION['username']);
+            $userDTO = $this->userBusinessFacade->get($_SESSION['username']);
             if ($userDTO->getSessionId() === $_SESSION['ID'] && $userDTO->getResetPassword() === $resetCode) {
                 $this->view->addTemplate('setNewPassword.tpl');
                 $this->redirect(self::ROUTE, 'page=setnewpassword');
@@ -68,12 +63,12 @@ class PasswordController implements BackendController
 
     private function safePassword(string $password):bool
     {
-        $userDTO = $this->userRepository->getUser($_SESSION['username']);
+        $userDTO = $this->userBusinessFacade->get($_SESSION['username']);
         if ($userDTO instanceof UserDataTransferObject) {
             $userDTO->setUserPassword($password);
             $userDTO->setResetPassword('0');
             $userDTO->setSessionId('0');
-            $this->userEntityManager->save($userDTO);
+            $this->userBusinessFacade->save($userDTO);
             return true;
         }
         return false;

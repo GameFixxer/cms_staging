@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Backend\ImportProduct\Business\Model;
+declare(strict_types=1);
+namespace App\Backend\ImportComponent\Loader;
 
 interface CsvImportLoaderInterface
 {

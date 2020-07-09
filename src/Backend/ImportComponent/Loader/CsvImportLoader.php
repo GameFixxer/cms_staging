@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Backend\ImportProduct\Business\Model;
-
-use App\Service\Container;
+namespace App\Backend\ImportComponent\Loader;
+use App\Backend\ImportComponent\Mapper\MappingAssistant;
+use App\Backend\ImportComponent\Mapper\MappingAssistantInterface;
 use App\Service\File\FileServiceClientInterface;
 use League\Csv\Reader;
 
@@ -11,10 +11,12 @@ class CsvImportLoader implements CsvImportLoaderInterface
 {
     private array $header;
     private FileServiceClientInterface $fileServiceClient;
+    private  MappingAssistantInterface $mappingAssistant;
 
-    public function __construct(FileServiceClientInterface $fileServiceClient)
+    public function __construct(FileServiceClientInterface $fileServiceClient, MappingAssistantInterface $mappingAssistant)
     {
         $this->fileServiceClient = $fileServiceClient;
+        $this->mappingAssistant = $mappingAssistant;
     }
 
     public function mapCSVToDTO(string $path): array
@@ -22,12 +24,11 @@ class CsvImportLoader implements CsvImportLoaderInterface
         $csvDTOList = [];
 
         $objects = $this->loadFromCSV($path);
-        $mappingAssistant = new MappingAssistant();
 
-        $headerList = $mappingAssistant->createMappingList($this->header);
+        $headerList = $this->mappingAssistant->createMappingList($this->header);
         if (isset($headerList)) {
             foreach ($objects as $product) {
-                $csvDTOList[] = $mappingAssistant->mapInputToDTO($headerList, $product);
+                $csvDTOList[] = $this->mappingAssistant->mapInputToDTO($headerList, $product);
             }
         }
         return $csvDTOList;
