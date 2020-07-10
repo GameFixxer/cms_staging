@@ -34,10 +34,12 @@ class ProductController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=login');
+            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=login&admin=true');
+            $this->view->redirect();
         }
         if (($this->userSession->getUserRole() === 'user')) {
-            $this->redirectToPage(LoginCOntroller::ROUTE, '&page=logout');
+            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=logout&admin=true');
+            $this->view->redirect();
         }
     }
 
@@ -59,7 +61,8 @@ class ProductController implements BackendController
                 );
                 break;
             }
-            $this->redirectToPage(self::ROUTE, '&page=list');
+            $this->view->setRedirect(self::ROUTE.'&page=list&admin=true');
+            $this->view->redirect();
         }
     }
 
@@ -133,14 +136,4 @@ class ProductController implements BackendController
         $this->view->addTemplate('404.tpl');
     }
 
-    private function redirectToPage(string $route, string $page): void
-    {
-        //$host =$_SERVER['HTTP_HOST'];
-        $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.$route;
-        $extra2 = $page;
-        $extra3 = '&admin=true';
-        //header("Location: http://$host$uri/$extra$extra2$extra3");
-        header("Location:http://localhost:8080$uri/$extra$extra2$extra3");
-    }
 }

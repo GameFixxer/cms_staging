@@ -10,6 +10,8 @@ class View
 
     private string $template;
 
+    private string $redirection;
+
     public function __construct()
     {
         $this->smarty = new \Smarty();
@@ -46,6 +48,19 @@ class View
     public function addTlpParam(string $name, $value): void
     {
         $this->smarty->assign($name, $value);
+    }
+
+    public function setRedirect(String $redirection):void
+    {
+        $this->redirection = $redirection;
+    }
+    public function getRedirect(): ?string
+    {
+        return $this->redirection;
+    }
+    public function redirect():void
+    {
+        header("Location: http://localhost:8080/Index.php?cl=".$this->redirection);
     }
 
     public function display(): void

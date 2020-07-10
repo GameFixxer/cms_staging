@@ -37,7 +37,8 @@ class LoginController implements BackendController
     public function init(): void
     {
         if ($this->userSession->isLoggedIn() && !($_GET['page'] === 'logout')) {
-            $this->redirect(DashboardController::ROUTE, 'page=list');
+            $this->view->setRedirect(DashboardController::ROUTE.'&page=list&admin=true');
+            $this->view->redirect();
         }
         $this->view->addTlpParam('login', 'LOGIN AREA');
     }
@@ -72,7 +73,9 @@ class LoginController implements BackendController
                 if ($this->mailManager->sendMail($emailDTO)) {
                     $sessionId = $this->setEmergencySession($username);
                     $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
-                    $this->redirect(PasswordController::ROUTE, 'page=reset');
+                    $this->view->setRedirect(PasswordController::ROUTE.'&page=reset&admin=true');
+                    //dump($this->view->getRedirect());
+                    $this->view->redirect();
                 } else {
                     throw new \Exception('Email could not be send.', 1);
                 }
@@ -82,29 +85,20 @@ class LoginController implements BackendController
         }
     }
 
-
     public function logoutAction()
     {
         $this->userSession->logoutUser();
-        $this->redirect(LoginController::ROUTE, 'page=login');
+        $this->view->setRedirect(LoginController::ROUTE.'&page=login&admin=true');
+        $this->view->redirect();
     }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
             $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
-            $this->redirect(DashboardController::ROUTE, 'page=list');
+            $this->view->setRedirect(DashboardController::ROUTE.'&page=list&admin=true');
+            $this->view->redirect();
         }
-    }
-    private function redirect(String $cl, String $page): void
-    {
-        //$host = $_SERVER['HTTP_HOST'];
-        $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.$cl;
-        $extra2 = '&'.$page;
-        $extra3 = '&admin=true';
-        //header("Location: http://$host$uri/$extra$extra2$extra3");
-        header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
     }
     private function setEmergencySession(string $username):String
     {
