@@ -35,11 +35,9 @@ class ProductController implements BackendController
     {
         if (!$this->userSession->isLoggedIn()) {
             $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=login&admin=true');
-            $this->view->redirect();
         }
         if (($this->userSession->getUserRole() === 'user')) {
             $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=logout&admin=true');
-            $this->view->redirect();
         }
     }
 
@@ -62,7 +60,6 @@ class ProductController implements BackendController
                 break;
             }
             $this->view->setRedirect(self::ROUTE.'&page=list&admin=true');
-            $this->view->redirect();
         }
     }
 

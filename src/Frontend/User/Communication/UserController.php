@@ -38,11 +38,9 @@ class UserController implements BackendController
     {
         if (!$this->userSession->isLoggedIn()) {
             $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=list&admin=true');
-            $this->view->redirect();
         }
         if (!($this->userSession->getUserRole() === 'root')) {
             $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=logout&admin=true');
-            $this->view->redirect();
         }
     }
 
@@ -65,7 +63,6 @@ class UserController implements BackendController
                 break;
             }
             $this->view->setRedirect(self::ROUTE.'&page=list&admin=true');
-            $this->view->redirect();
         }
     }
 

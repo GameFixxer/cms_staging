@@ -10,7 +10,7 @@ class View
 
     private string $template;
 
-    private string $redirection;
+    private ?string $redirection;
 
     public function __construct()
     {
@@ -21,6 +21,7 @@ class View
         $this->smarty->setCacheDir($path.'/cache');
         $this->smarty->setConfigDir($path.'/configs');
         $this->template = '';
+        $this->redirection = null;
     }
 
     public function addTemplate(string $template): void
