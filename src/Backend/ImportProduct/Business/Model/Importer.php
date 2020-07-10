@@ -6,7 +6,7 @@ namespace App\Backend\ImportProduct\Business\Model;
 use App\Backend\ImportComponent\Loader\CsvImportLoaderInterface;
 use App\Backend\ImportProduct\Business\Model\Create\ProductInterface;
 use App\Backend\ImportProduct\Business\Model\Update\UpdateInterface;
-use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 
 
 class Importer
@@ -34,7 +34,7 @@ class Importer
         if (isset($rawProductList)) {
             foreach ($rawProductList as $object) {
                 $updatedDTO = $this->createProduct->createProduct($object);
-                if ($updatedDTO instanceof CsvDataTransferObject) {
+                if ($updatedDTO instanceof CsvProductDataTransferObject) {
                     $this->updateImport->performUpdateActions($updatedDTO);
                 }
             }

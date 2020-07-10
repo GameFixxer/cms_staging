@@ -33,7 +33,7 @@ class PasswordController implements BackendController
     public function init(): void
     {
         if ($this->userSession->isLoggedIn()) {
-            $this->view->setRedirect(DashboardController::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
         }
     }
 
@@ -46,7 +46,7 @@ class PasswordController implements BackendController
             $userDTO = $this->userBusinessFacade->get($_SESSION['username']);
             if ($userDTO->getSessionId() === $_SESSION['ID'] && $userDTO->getResetPassword() === $resetCode) {
                 $this->view->addTemplate('setNewPassword.tpl');
-                $this->view->setRedirect(self::ROUTE.'&page=setnewpassword&admin=true');
+                $this->view->setRedirect(self::ROUTE, '&page=setnewpassword', ['admin=true']);
             }
         }
     }
@@ -56,7 +56,7 @@ class PasswordController implements BackendController
         if (isset($_POST['password'])) {
             $newUserPassword = $this->passwordManager->encryptPassword(trim($_POST['password']));
             if ($this->safePassword($newUserPassword)) {
-                $this->view->setRedirect(LoginController::ROUTE.'&page=login&admin=true');
+                $this->view->setRedirect(LoginController::ROUTE, '&page=login', ['admin=true']);
             }
             $this->view->addTlpParam('errorMessage', 'This user does not exist');
         }

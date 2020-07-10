@@ -2,7 +2,8 @@
 declare(strict_types=1);
 
 namespace App\Backend\ImportComponent\Loader;
-use App\Backend\ImportComponent\Mapper\MappingAssistant;
+
+
 use App\Backend\ImportComponent\Mapper\MappingAssistantInterface;
 use App\Service\File\FileServiceClientInterface;
 use League\Csv\Reader;
@@ -11,7 +12,7 @@ class CsvImportLoader implements CsvImportLoaderInterface
 {
     private array $header;
     private FileServiceClientInterface $fileServiceClient;
-    private  MappingAssistantInterface $mappingAssistant;
+    private MappingAssistantInterface $mappingAssistant;
 
     public function __construct(FileServiceClientInterface $fileServiceClient, MappingAssistantInterface $mappingAssistant)
     {

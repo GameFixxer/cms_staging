@@ -8,6 +8,7 @@ use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Generated\Dto\CsvDataTransferObject;
 use App\Client\Product\Persistence\Entity\Product as ProductEntity;
+use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -18,7 +19,7 @@ use Cycle\ORM\Transaction;
  */
 class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 {
-    private CsvDataTransferObject $csvDTO;
+    private CsvProductDataTransferObject $csvDTO;
     private ProductImport $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
@@ -54,9 +55,9 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
         self::assertNotNull($csvProduct);
         self::assertNotNull($productFromRepository);
         self::assertSame($csvProduct->getArticleNumber(), $productFromRepository->getArticleNumber());
-        self::assertSame($csvProduct->getProductId(), $productFromRepository->getProductId());
-        self::assertSame($csvProduct->getProductName(), $productFromRepository->getProductName());
-        self::assertSame($csvProduct->getProductDescription(), $productFromRepository->getProductDescription());
+        self::assertSame($csvProduct->getId(), $productFromRepository->getId());
+        self::assertSame($csvProduct->getName(), $productFromRepository->getName());
+        self::assertSame($csvProduct->getDescription(), $productFromRepository->getDescription());
     }
 
     private function createProduct()
@@ -64,15 +65,15 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
         $tmp = rand(1, 1000).substr('', rand(1, 1000));
         $this->createCSVDTO(''.$tmp, 'tester');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $this->csvDTO->setProductId($csvProduct->getProductId());
+        $this->csvDTO->setId($csvProduct->getId());
     }
 
     private function createCSVDTO(string $articleNumber, string $categoryKey)
     {
-        $this->csvDTO = new CsvDataTransferObject();
-        $this->csvDTO->setCategoryKey($categoryKey);
+        $this->csvDTO = new CsvProductDataTransferObject();
+        $this->csvDTO->setKey($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
-        $this->csvDTO->setProductName('test');
-        $this->csvDTO->setProductDescription('descriptiontest');
+        $this->csvDTO->setName('test');
+        $this->csvDTO->setDescription('descriptiontest');
     }
 }

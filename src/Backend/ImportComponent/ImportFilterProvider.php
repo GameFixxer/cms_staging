@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Backend\ImportProduct\Business\Model;
+namespace App\Backend\ImportComponent;
 
 use App\Component\Container;
+use App\Generated\Dto\DataTransferObjectInterface;
 
 class ImportFilterProvider
 {
@@ -15,23 +16,21 @@ class ImportFilterProvider
 
     public function getAllFilterList()
     {
-
     }
 
-    public function getProductFilterList()
+    public function getProductFilterList(DataTransferObjectInterface $importDTO)
     {
-
-        return [
-            'category_key' => 'getCategoryKey',
-            'category_id' => 'getCategoryId'
-
-        ];
+       return[
+           'Key',
+           'articleNumber',
+           'description'
+       ];
     }
 
     public function getCategoryFilterList()
     {
         return [
-
+            'Key'
         ];
     }
 }

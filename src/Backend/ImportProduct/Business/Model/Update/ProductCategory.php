@@ -11,6 +11,7 @@ use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Generated\Dto\CategoryDataTransferObject;
 use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 
 class ProductCategory implements ProductInterface
 {
@@ -31,16 +32,16 @@ class ProductCategory implements ProductInterface
         $this->valueIntegrityManager = $integrityManager;
     }
 
-    public function update(CsvDataTransferObject $csvDTO):void
+    public function update(CsvProductDataTransferObject $csvDTO):void
     {
-        if (empty($csvDTO->getCategoryKey())) {
+        if (empty($csvDTO->getKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
 
-            $category = $this->categoryBusinessFacade->getByKey($csvDTO->getCategoryKey());
+            $category = $this->categoryBusinessFacade->getByKey($csvDTO->getKey());
             if (!$category instanceof CategoryDataTransferObject) {
                 $category = new CategoryDataTransferObject();
-                $category->setCategoryKey($csvDTO->getCategoryKey());
+                $category->setCategoryKey($csvDTO->getKey());
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
@@ -52,11 +53,11 @@ class ProductCategory implements ProductInterface
         }
     }
 
-    private function saveUpdatedProduct(CsvDataTransferObject $csvDTO)
+    private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
     {
         $productDTO = new ProductDataTransferObject();
-        if (!empty($csvDTO->getProductId())) {
-            $productDTO->setProductId($csvDTO->getProductId());
+        if (!empty($csvDTO->getId())) {
+            $productDTO->setId($csvDTO->getId());
         }
 
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Component;
 
+use App\Frontend\Controller;
+
 class View
 {
     private \Smarty $smarty;
@@ -51,9 +53,14 @@ class View
         $this->smarty->assign($name, $value);
     }
 
-    public function setRedirect(String $redirection):void
+    public function setRedirect(string $controllerRoute, string $action, array $params):void // string $redirection):void
     {
-        $this->redirection = $redirection;
+        $this->redirection = $controllerRoute.$action;
+        if (!empty($params)) {
+            foreach ($params as $singleParam) {
+                $this->redirection = $this->redirection.'&'.$singleParam;
+            }
+        }
     }
     public function getRedirect(): ?string
     {

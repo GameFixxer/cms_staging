@@ -6,7 +6,7 @@ use App\Generated\Dto\CsvDataTransferObject;
 
 interface MappingAssistantInterface
 {
-    public function mapInputToDTO(array $headerList, array $product): CsvDataTransferObject;
+    public function mapInputToDTO(array $headerList, array $product);
 
     public function createMappingList(array $header);
 }

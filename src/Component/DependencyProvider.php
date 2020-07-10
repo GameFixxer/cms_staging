@@ -4,7 +4,9 @@ namespace App\Component;
 
 use App\Backend\ImportCategory\Business\Model\Update\CategoryImporter;
 use App\Backend\ImportComponent\Loader\CsvImportLoader;
-use App\Backend\ImportComponent\Mapper\MappingAssistant;
+use App\Backend\ImportComponent\Mapper\CategoryMappingAssistant;
+use App\Backend\ImportComponent\Mapper\ProductMappingAssistant;
+use App\Backend\ImportComponent\StringConverter\StringConverter;
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Backend\ImportCategory\Business\Model\Importer as ImporterCategory;
@@ -168,9 +170,10 @@ class DependencyProvider
                 $orm->getRepository(Category::class)
             );
         });
-
-        $container->set(MappingAssistant::class, new MappingAssistant());
-        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(MappingAssistant::class)));
+        $container->set(StringConverter::class, new StringConverter());
+        $container->set(ProductMappingAssistant::class, new ProductMappingAssistant($container->get(StringConverter::class)));
+        $container->set(CategoryMappingAssistant::class, new CategoryMappingAssistant($container->get(StringConverter::class)));
+        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(ProductMappingAssistant::class)));
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryBusinessFacade::class)));

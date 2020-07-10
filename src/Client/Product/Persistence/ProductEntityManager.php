@@ -44,14 +44,14 @@ class ProductEntityManager implements ProductEntityManagerInterface
         if (!$entity instanceof Product) {
             $entity = new Product();
         }
-        $entity->setProductName($product->getProductName());
+        $entity->setProductName($product->getName());
         $entity->setCategory($product->getCategory());
-        $entity->setProductDescription($product->getProductDescription());
+        $entity->setProductDescription($product->getDescription());
         $entity->setArticleNumber($product->getArticleNumber());
         $transaction->persist($entity);
         $transaction->run();
 
-        $product->setProductId($entity->getId());
+        $product->setId($entity->getId());
 
         return $product;
     }

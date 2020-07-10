@@ -48,9 +48,9 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
 
-        $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getProductName());
-        $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getProductDescription());
-        $this->assertSame($this->entity->getId(), $productDtoFromRepository->getProductId());
+        $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getName());
+        $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getDescription());
+        $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
     }
 
     public function testGetProductWithNonExistingProduct()
@@ -68,9 +68,9 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
         $lastProductOfProductRepositoryList = end($productListFromProductRepository);
 
-        $this->assertSame($this->entity->getProductName(), $lastProductOfProductRepositoryList ->getProductName());
-        $this->assertSame($this->entity->getProductDescription(), $lastProductOfProductRepositoryList ->getProductDescription());
-        $this->assertSame($this->entity->getId(), $lastProductOfProductRepositoryList ->getProductId());
+        $this->assertSame($this->entity->getProductName(), $lastProductOfProductRepositoryList ->getName());
+        $this->assertSame($this->entity->getProductDescription(), $lastProductOfProductRepositoryList ->getDescription());
+        $this->assertSame($this->entity->getId(), $lastProductOfProductRepositoryList ->getId());
     }
 
     public function testGetProductListWithEmptyDatabase()
