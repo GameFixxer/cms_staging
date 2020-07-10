@@ -25,7 +25,7 @@ class DashboardController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->redirectToPage(LoginController::ROUTE);
+            $this->view->setRedirect(LoginController::ROUTE.'&page=list&admin=true');
         }
 
     }
@@ -47,16 +47,5 @@ class DashboardController implements BackendController
 
         }
         $this->view->addTlpParam('user', $this->userSession->getUser());
-    }
-
-    private function redirectToPage(string $route):void
-    {
-        // $host = $_SERVER['HTTP_HOST'];
-        $uri = trim(dirname($_SERVER['PHP_SELF']), '/\\');
-        $extra = 'Index.php?cl='.$route;
-        $extra2 = '&admin=true';
-        $extra3 = '&page=list';
-        header("Location: http://localhost:8080$uri/$extra$extra2$extra3");
-        exit;
     }
 }
