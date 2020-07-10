@@ -16,7 +16,7 @@ define('MY_APP_STARTED', true);
 define('template_path', $path.'/templates/dist');
 
 $view = require __DIR__.'/../Bootstrap.php';
-if(!empty($view->getRedirect())){
+if (!empty($view->getRedirect())) {
     $view->redirect();
 }
 $view->display();
