@@ -3,7 +3,7 @@
 
 namespace App\Backend\ImportComponent\StringConverter;
 
-class StringConverter
+class StringConverter implements StringConverterInterface
 {
     private $attributes;
     private $lowerCamelCase;

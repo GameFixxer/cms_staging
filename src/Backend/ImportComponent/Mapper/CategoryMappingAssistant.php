@@ -15,15 +15,12 @@ class CategoryMappingAssistant implements MappingAssistantInterface
     private StringConverter $stringConverter;
 
 
-    public function __construct(StringConverter $stringConverter)
+    public function __construct(StringConverter $stringConverter, array $attributes)
     {
         $this->lowerCamelCase = true;
         $this->attributes = null;
         $this->stringConverter = $stringConverter;
-    }
-
-    public function setColumnAttributes()
-    {
+        $this->columnAttributes = $attributes;
     }
 
     public function mapInputToDTO(array $headerList, array $product): CsvCategoryDataTransferObject
@@ -39,9 +36,10 @@ class CategoryMappingAssistant implements MappingAssistantInterface
     public function createMappingList(array $header)
     {
         $headerList = [];
-        $csvDTO = new CsvDataTransferObject();
         foreach ($header as $value) {
-            if (method_exists($csvDTO, 'set'.$this->stringConverter->camelCaseToSnakeCase($value))) {
+            $snakeCase = 'set'.$this->stringConverter->camelCaseToSnakeCase($value);
+            $isolateCategory = str_replace('Category', '', $snakeCase);
+            if (in_array($isolateCategory, $this->columnAttributes)) {
                 $headerList[] = $value;
             }
         }

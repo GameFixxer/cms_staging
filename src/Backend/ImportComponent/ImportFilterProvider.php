@@ -3,34 +3,26 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportComponent;
 
-use App\Component\Container;
-use App\Generated\Dto\DataTransferObjectInterface;
-
 class ImportFilterProvider
 {
-    private Container $container;
-    public function __construct(Container $container)
-    {
-        $this->container = $container;
-    }
-
-    public function getAllFilterList()
+    public function __construct()
     {
     }
 
-    public function getProductFilterList(DataTransferObjectInterface $importDTO)
+    public function getProductFilterList()
     {
        return[
-           'Key',
-           'articleNumber',
-           'description'
+           'setKey',
+           'setArticleNumber',
+           'setDescription',
+           'setName'
        ];
     }
 
     public function getCategoryFilterList()
     {
         return [
-            'Key'
+            'setKey'
         ];
     }
 }

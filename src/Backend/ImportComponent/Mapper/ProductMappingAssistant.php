@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Backend\ImportComponent\Mapper;
 
 use App\Backend\ImportComponent\StringConverter\StringConverter;
+use App\Backend\ImportComponent\StringConverter\StringConverterInterface;
 use App\Generated\Dto\CsvProductDataTransferObject;
 
 class ProductMappingAssistant implements MappingAssistantInterface
@@ -10,13 +11,14 @@ class ProductMappingAssistant implements MappingAssistantInterface
     private $attributes;
     private bool $lowerCamelCase;
     private array $columnAttributes;
-    private StringConverter $stringConverter;
+    private StringConverterInterface $stringConverter;
 
-    public function __construct(StringConverter $stringConverter)
+    public function __construct(StringConverterInterface $stringConverter, array $attributes)
     {
         $this->lowerCamelCase = true;
         $this->attributes = null;
         $this->stringConverter = $stringConverter;
+        $this->columnAttributes = $attributes;
     }
 
     public function mapInputToDTO(array $headerList, array $product): CsvProductDataTransferObject
@@ -39,7 +41,7 @@ class ProductMappingAssistant implements MappingAssistantInterface
             $snakeCase = 'set'.$this->stringConverter->camelCaseToSnakeCase($value);
             $isolateProduct = str_replace('Product', '', $snakeCase);
             $isolateCategory = str_replace('Category', '', $isolateProduct);
-            if (method_exists($csvDTO,($isolateCategory))) {
+            if (in_array($isolateCategory, $this->columnAttributes)) {
                 $headerList[] = $value;
             }
         }

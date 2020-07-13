@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Component;
 
 use App\Backend\ImportCategory\Business\Model\Update\CategoryImporter;
+use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\Loader\CsvImportLoader;
 use App\Backend\ImportComponent\Mapper\CategoryMappingAssistant;
 use App\Backend\ImportComponent\Mapper\ProductMappingAssistant;
@@ -171,8 +172,15 @@ class DependencyProvider
             );
         });
         $container->set(StringConverter::class, new StringConverter());
-        $container->set(ProductMappingAssistant::class, new ProductMappingAssistant($container->get(StringConverter::class)));
-        $container->set(CategoryMappingAssistant::class, new CategoryMappingAssistant($container->get(StringConverter::class)));
+        $container->set(ImportFilterProvider::class, new ImportFilterProvider());
+        $container->setFactory(ProductMappingAssistant::class, function (Container $container) {
+            $array = $container->get(ImportFilterProvider::class);
+            return new ProductMappingAssistant($container->get(StringConverter::class), $array->getProductFilterList());
+        });
+        $container->setFactory(CategoryMappingAssistant::class, function (Container $container) {
+            $array = $container->get(ImportFilterProvider::class);
+            return new CategoryMappingAssistant($container->get(StringConverter::class), $array->getCategoryFilterList());
+        });
         $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(ProductMappingAssistant::class)));
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
