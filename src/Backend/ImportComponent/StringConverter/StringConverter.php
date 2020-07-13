@@ -10,7 +10,7 @@ class StringConverter implements StringConverterInterface
 
     public function camelCaseToSnakeCase(string $propertyName)
     {
-        $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function ($match) {
+        $camelCasedName = preg_replace_callback('/(^|_|\.)+(.)/', function($match) {
             return ('.' === $match[1] ? '_' : '').strtoupper($match[2]);
         }, $propertyName);
 

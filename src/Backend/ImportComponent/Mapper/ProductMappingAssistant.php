@@ -26,7 +26,7 @@ class ProductMappingAssistant implements MappingAssistantInterface
         $csvDataTransferObject = new CsvProductDataTransferObject();
         foreach ($headerList as $column) {
             $action = 'set'.$this->stringConverter->camelCaseToSnakeCase($column);
-            $isolateProduct= str_replace('Product', '', $action);
+            $isolateProduct = str_replace('Product', '', $action);
             $isolateCategory = str_replace('Category', '', $isolateProduct);
             $csvDataTransferObject->$isolateCategory($product[$column]);
         }
