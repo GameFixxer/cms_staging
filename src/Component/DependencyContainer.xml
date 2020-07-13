@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- ... -->
+        <parameter key="databaseManager.orm%">connect</parameter>
+    </parameters>
+
+    <services>
+        <service id="databaseManager" class="DatabaseManager">
+            <call method="connect">
+                <argument type="service" id="orm"/>
+            </call>
+        </service>
+        <!-- Mapper -->
+        <service id="productMapper" class="ProductMapper">
+        </service>
+        <service id="userMapper" class="userMapper">
+        </service>
+        <service id="categoryMapper" class="categoryMapper">
+        </service>
+        <!--Repository-->
+        <service id="productRepository" class="ProductRepository">
+            <call method="databaseManager.get">
+                <argument type="service" id="databaseManager"/>
+            </call>
+        </service>
+        <service id="userRepository" class="userRepository">
+            <call method="databaseManager.get">
+                <argument type="service" id="databaseManager"/>
+            </call>
+        </service>
+        <service id="categoryRepository" class="categoryRepository">
+            <call method="databaseManager.get">
+                <argument type="service" id="databaseManager"/>
+            </call>
+        </service>
+        <!--Entity Manager-->
+        <service id="productEntityManager" class="ProductEntityManager">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="userEntityManager" class="userEntityManager">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="categoryEntityManager" class="categoryEntityManager">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <!--Business Facade-->
+        <service id="productBusinessFacade" class="ProductBusinessFacade">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="userBusinessFacade" class="userBusinessFacade">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="categoryBusinessFacade" class="categoryBusinessFacade">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <!--Service-->
+        <service id="passwordManader" class="PasswordManager">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="symfonyMailerManager" class="SymfonyMailerManager">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="finder" class="Finder">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="filesystem" class="Filesystem">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="get" class="Get">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="move" class="Move">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+        <service id="fileServiceClient" class="FileServiceClient">
+            <call method="setMailer">
+                <argument type="service" id="mailer"/>
+            </call>
+        </service>
+    </services>
+
+</container>
