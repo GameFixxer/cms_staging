@@ -1,29 +1,16 @@
 <?php
-
 declare(strict_types=1);
+
 namespace App\Generated\Dto;
 
-use App\Client\Product\Persistence\Entity\Product;
-
-class CategoryDataTransferObject implements DataTransferObjectInterface
+class CsvCategoryDataTransferObject
 {
-    private int $categoryId = 0;
     private string $categoryKey = "";
-
-
-    public function getCategoryId(): int
-    {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId(int $id):void
-    {
-        $this->categoryId = $id;
-    }
 
     /**
      * @return string
      */
+    
     public function getCategoryKey(): string
     {
         return $this->categoryKey;

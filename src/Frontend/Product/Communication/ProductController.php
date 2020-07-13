@@ -34,10 +34,10 @@ class ProductController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=login&admin=true');
+            $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=login', ['admin=true']);
         }
         if (($this->userSession->getUserRole() === 'user')) {
-            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=logout&admin=true');
+            $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=logout', ['admin=true']);
         }
     }
 
@@ -59,7 +59,7 @@ class ProductController implements BackendController
                 );
                 break;
             }
-            $this->view->setRedirect(self::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
     }
 
@@ -94,15 +94,14 @@ class ProductController implements BackendController
         $productDTO = new ProductDataTransferObject();
         $productDTO->setArticleNumber($articleNumber);
         $this->productManager->delete($productDTO);
-
     }
 
     private function saveProduct(string $articleNumber, string $description, string $name): void
     {
         $productDTO = new ProductDataTransferObject();
         $productDTO->setArticleNumber($articleNumber);
-        $productDTO->setProductName($name);
-        $productDTO->setProductDescription($description);
+        $productDTO->setName($name);
+        $productDTO->setDescription($description);
         $this->productManager->save($productDTO);
     }
 
@@ -132,5 +131,4 @@ class ProductController implements BackendController
         $this->view->addTlpParam('error', '404 Page not found.');
         $this->view->addTemplate('404.tpl');
     }
-
 }

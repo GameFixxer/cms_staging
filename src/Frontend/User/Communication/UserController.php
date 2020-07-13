@@ -37,10 +37,10 @@ class UserController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=list', ['admin=true']);
         }
         if (!($this->userSession->getUserRole() === 'root')) {
-            $this->view->setRedirect(LoginCOntroller::ROUTE.'&page=logout&admin=true');
+            $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=logout', ['admin=true']);
         }
     }
 
@@ -62,7 +62,7 @@ class UserController implements BackendController
                 );
                 break;
             }
-            $this->view->setRedirect(self::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
     }
 

@@ -6,6 +6,7 @@ namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Category\Persistence\Entity\Category;
 use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 use function PHPUnit\Framework\isEmpty;
 
 class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
@@ -17,7 +18,7 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
         $this->ormCategoryRepository = $ormCategoryRepository;
     }
 
-    public function mapEntity(CsvDataTransferObject $csvDTO): ?object
+    public function mapEntity(CsvProductDataTransferObject $csvDTO): ?object
     {
         $categoryEntity = $this->loadEntityFromRepository($csvDTO->getCategoryId());
         if ($categoryEntity instanceof Category) {
@@ -26,7 +27,8 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
             foreach ($listOfMethods as $method) {
                 if (str_starts_with($method, 'set')) {
                     $stringWithSet = str_replace('set', 'get', $method);
-                    $categoryEntity ->$method($csvDTO->$stringWithSet());
+                    $strRplCategory = str_replace('Category', '', $stringWithSet);
+                    $categoryEntity ->$method($csvDTO->$strRplCategory());
                 }
             }
         }

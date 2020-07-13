@@ -8,6 +8,7 @@ use App\Client\Product\Persistence\ProductRepository;
 
 use App\Client\Product\Persistence\Entity\Product;
 use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -19,7 +20,7 @@ use Cycle\ORM\Transaction;
  */
 class ImportCreateProductTest extends \Codeception\Test\Unit
 {
-    private CsvDataTransferObject $csvDTO;
+    private CsvProductDataTransferObject $csvDTO;
     private CreateProduct $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
@@ -51,7 +52,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         self::assertNotNull($csvProduct);
         self::assertNotNull($productFromRepository);
         self::assertSame($csvProduct->getArticleNumber(), $productFromRepository->getArticleNumber());
-        self::assertSame($csvProduct->getProductId(), $productFromRepository->getProductId());
+        self::assertSame($csvProduct->getId(), $productFromRepository->getId());
     }
 
     public function testWithExistingCorrectProduct()
@@ -64,18 +65,18 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         self::assertNotNull($csvProduct1);
         self::assertNotNull($productFromRepository1);
         self::assertSame($csvProduct1->getArticleNumber(), $productFromRepository1->getArticleNumber());
-        self::assertSame($csvProduct1->getProductId(), $productFromRepository1->getProductId());
+        self::assertSame($csvProduct1->getId(), $productFromRepository1->getId());
         self::assertSame($csvProduct1->getArticleNumber(), $csvProduct2->getArticleNumber());
         self::assertSame($productFromRepository1->getArticleNumber(), $productFromRepository2->getArticleNumber());
-        self::assertSame($csvProduct1->getProductId(), $csvProduct2->getProductId());
-        self::assertSame($productFromRepository1->getProductId(), $productFromRepository2->getProductId());
-        self::assertNotSame('test', $productFromRepository1->getProductName());
+        self::assertSame($csvProduct1->getId(), $csvProduct2->getId());
+        self::assertSame($productFromRepository1->getId(), $productFromRepository2->getId());
+        self::assertNotSame('test', $productFromRepository1->getName());
     }
 
     private function createCSVDTO(string $articleNumber)
     {
-        $this->csvDTO = new CsvDataTransferObject();
+        $this->csvDTO = new CsvProductDataTransferObject();
         $this->csvDTO->setArticleNumber($articleNumber);
-        $this->csvDTO->setProductName('test');
+        $this->csvDTO->setName('test');
     }
 }

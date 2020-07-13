@@ -5,6 +5,7 @@ namespace App\Backend\ImportProduct\Business\Model\Create;
 
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 
 
@@ -17,7 +18,7 @@ class Product implements ProductInterface
         $this->productBusinessFacade = $productBusinessFacade;
     }
 
-    public function createProduct(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
+    public function createProduct(CsvProductDataTransferObject $csvDTO) : ?CsvProductDataTransferObject
     {
         if ($csvDTO->getArticleNumber() === '') {
             throw new \Exception('ArticleNumber must not be empty', 1);
@@ -25,12 +26,12 @@ class Product implements ProductInterface
 
         $productFromRepo = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
         if ($productFromRepo instanceof ProductDataTransferObject) {
-            $csvDTO->setProductId($productFromRepo->getProductId());
+            $csvDTO->setId($productFromRepo->getId());
             return $csvDTO;
         }
         $productDTO = new ProductDataTransferObject();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
-        $csvDTO->setProductId($this->productBusinessFacade->save($productDTO)->getProductId());
+        $csvDTO->setId($this->productBusinessFacade->save($productDTO)->getId());
 
         return $csvDTO;
     }

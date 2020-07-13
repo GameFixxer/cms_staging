@@ -8,8 +8,7 @@ use App\Client\Category\Persistence\CategoryRepository;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Product\Persistence\Entity\Product as ProductEntity;
-
-use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -21,7 +20,7 @@ use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
  */
 class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
 {
-    private CsvDataTransferObject $csvDTO;
+    private CsvProductDataTransferObject $csvDTO;
     private ProductImport $importCreateProduct;
     private ProductRepository $productRepository;
     private ProductCategory $updateCategory;
@@ -62,8 +61,8 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
             $orm = $orm->connect();
             $ormCategoryRepository = $orm->getRepository(Category::class);
 
-            self::assertSame($this->csvDTO->getCategoryKey(), $ormCategoryRepository->findOne(['category_key'=>$this->csvDTO->getCategoryKey()])->getCategoryKey());
-            self::assertSame('', $productFromRepository->getProductName());
+            self::assertSame($this->csvDTO->getKey(), $ormCategoryRepository->findOne(['category_key'=>$this->csvDTO->getKey()])->getCategoryKey());
+            self::assertSame('', $productFromRepository->getName());
         }
     }
 
@@ -77,14 +76,14 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $tmp = rand(1, 1000).substr('', rand(1, 1000));
         $this->createCSVDTO(''.$tmp, 'tester');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $this->csvDTO->setProductId($csvProduct->getProductId());
+        $this->csvDTO->setId($csvProduct->getId());
     }
 
     private function createCSVDTO(string $articleNumber, string $categoryKey)
     {
-        $this->csvDTO = new CsvDataTransferObject();
-        $this->csvDTO->setCategoryKey($categoryKey);
+        $this->csvDTO = new CsvProductDataTransferObject();
+        $this->csvDTO->setKey($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
-        $this->csvDTO->setProductName('test');
+        $this->csvDTO->setName('test');
     }
 }

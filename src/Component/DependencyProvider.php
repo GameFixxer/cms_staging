@@ -3,8 +3,11 @@ declare(strict_types=1);
 namespace App\Component;
 
 use App\Backend\ImportCategory\Business\Model\Update\CategoryImporter;
+use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\Loader\CsvImportLoader;
-use App\Backend\ImportComponent\Mapper\MappingAssistant;
+use App\Backend\ImportComponent\Mapper\CategoryMappingAssistant;
+use App\Backend\ImportComponent\Mapper\ProductMappingAssistant;
+use App\Backend\ImportComponent\StringConverter\StringConverter;
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Backend\ImportCategory\Business\Model\Importer as ImporterCategory;
@@ -52,6 +55,7 @@ class DependencyProvider
         $this->persistRepositoryDependency($container);
         $this->persistEntityManagerDependency($container);
         $this->persistsBusinessFacadeDependency($container);
+        $this->persistServiceDependency($container);
         $this->persistenceDependency($container);
 
         $container->set(View::class, new View());
@@ -148,10 +152,9 @@ class DependencyProvider
         );
     }
 
-    private function persistenceDependency(Container $container): void
+    private function persistServiceDependency(Container $container):void
     {
         //Service
-
         $container->set(PasswordManager::class, new PasswordManager());
         $container->set(SymfonyMailerManager::class, new SymfonyMailerManager());
         $container->set(Finder::class, new Finder());
@@ -159,6 +162,11 @@ class DependencyProvider
         $container->set(Get::class, new Get($container->get(Finder::class)));
         $container->set(Move::class, new Move($container->get(Filesystem::class)));
         $container->set(FileServiceClient::class, new FileServiceClient($container->get(Get::class), $container->get(Move::class)));
+    }
+
+    private function persistenceDependency(Container $container): void
+    {
+
         //Import
 
         $container->setFactory(CategoryIntegrityManager::class, function(Container $container) {
@@ -168,9 +176,17 @@ class DependencyProvider
                 $orm->getRepository(Category::class)
             );
         });
-
-        $container->set(MappingAssistant::class, new MappingAssistant());
-        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(MappingAssistant::class)));
+        $container->set(StringConverter::class, new StringConverter());
+        $container->set(ImportFilterProvider::class, new ImportFilterProvider());
+        $container->setFactory(ProductMappingAssistant::class, function(Container $container) {
+            $array = $container->get(ImportFilterProvider::class);
+            return new ProductMappingAssistant($container->get(StringConverter::class), $array->getProductFilterList());
+        });
+        $container->setFactory(CategoryMappingAssistant::class, function(Container $container) {
+            $array = $container->get(ImportFilterProvider::class);
+            return new CategoryMappingAssistant($container->get(StringConverter::class), $array->getCategoryFilterList());
+        });
+        $container->set(CsvImportLoader::class, new CsvImportLoader($container->get(FileServiceClient::class), $container->get(ProductMappingAssistant::class)));
         $container->set(ValueIntegrityManager::class, new ValueIntegrityManager());
         $container->set(ProductImport::class, new ProductImport($container->get(ProductBusinessFacade::class)));
         $container->set(CategoryImport::class, new CategoryImport($container->get(CategoryBusinessFacade::class)));

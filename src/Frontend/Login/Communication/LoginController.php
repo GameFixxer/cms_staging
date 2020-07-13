@@ -37,7 +37,7 @@ class LoginController implements BackendController
     public function init(): void
     {
         if ($this->userSession->isLoggedIn() && !($_GET['page'] === 'logout')) {
-            $this->view->setRedirect(DashboardController::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
         }
         $this->view->addTlpParam('login', 'LOGIN AREA');
     }
@@ -72,7 +72,7 @@ class LoginController implements BackendController
                 if ($this->mailManager->sendMail($emailDTO)) {
                     $sessionId = $this->setEmergencySession($username);
                     $this->setEmergencyUserData($sessionId, $resetCode, $userDTO);
-                    $this->view->setRedirect(PasswordController::ROUTE.'&page=reset&admin=true');
+                    $this->view->setRedirect(PasswordController::ROUTE, '&page=reset', ['admin=true']);
                 } else {
                     throw new \Exception('Email could not be send.', 1);
                 }
@@ -85,14 +85,14 @@ class LoginController implements BackendController
     public function logoutAction()
     {
         $this->userSession->logoutUser();
-        $this->view->setRedirect(LoginController::ROUTE.'&page=login&admin=true');
+        $this->view->setRedirect(LoginController::ROUTE, '&page=login', ['admin=true']);
     }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
             $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
-            $this->view->setRedirect(DashboardController::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
         }
     }
     private function setEmergencySession(string $username):String

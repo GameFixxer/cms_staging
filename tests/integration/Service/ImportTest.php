@@ -1,7 +1,6 @@
 <?php
 namespace App\Tests\integration\Service;
 
-
 use App\Backend\ImportComponent\Loader\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Client\Product\Persistence\ProductRepository;
@@ -11,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use UnitTester;
 
 /**
- * @group Import
+ * @group Import3
  */
 
 
@@ -45,7 +44,6 @@ class ImportTest extends \Codeception\Test\Unit
             $this->container->getCreateProduct(),
             $this->container->getUpdateImport(),
             $this->path,
-
         );
     }
 
@@ -54,6 +52,7 @@ class ImportTest extends \Codeception\Test\Unit
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
         $this->deleteTestArticleFromDB();
+        $this->deleteTestCategoryFromDB();
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
     }
 
@@ -66,8 +65,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
-                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
+                $this->assertSame($product->getName(), $productFromRepository->getName());
+                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
             }
         }
     }
@@ -82,8 +81,8 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
             if ($productFromRepository !== null) {
-                $this->assertSame($product->getProductName(), $productFromRepository->getProductName());
-                $this->assertSame($product->getProductDescription(), $productFromRepository->getProductDescription());
+                $this->assertSame($product->getName(), $productFromRepository->getName());
+                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
             }
         }
         $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/testUpdate/test_product_abstract2.csv');
@@ -97,7 +96,15 @@ class ImportTest extends \Codeception\Test\Unit
         $orm = $this->container->getOrmProductRepository();
         $source = $orm->getSource(Product::class);
         $db = $source->getDatabase();
-        $db->execute('DELETE FROM product WHERE article_number LIKE \'Unit%\' ');
+        $db->execute('DELETE FROM product WHERE id > 0 ');
+    }
+
+    public function deleteTestCategoryFromDB()
+    {
+        $orm = $this->container->getOrmProductRepository();
+        $source = $orm->getSource(Product::class);
+        $db = $source->getDatabase();
+        $db->execute('DELETE FROM category WHERE category_id > 0 ');
     }
 
     private function setBackFiles(string $origin, string $target)
@@ -108,5 +115,4 @@ class ImportTest extends \Codeception\Test\Unit
         );
         $this->filesystem->remove(dirname(__DIR__, 3).$origin);
     }
-    
 }

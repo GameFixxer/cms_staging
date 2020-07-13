@@ -25,7 +25,7 @@ class DashboardController implements BackendController
     public function init(): void
     {
         if (!$this->userSession->isLoggedIn()) {
-            $this->view->setRedirect(LoginController::ROUTE.'&page=list&admin=true');
+            $this->view->setRedirect(LoginController::ROUTE, '&page=list', ['admin=true']);
         }
 
     }
