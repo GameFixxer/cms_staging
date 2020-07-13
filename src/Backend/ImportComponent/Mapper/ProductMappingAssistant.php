@@ -36,7 +36,6 @@ class ProductMappingAssistant implements MappingAssistantInterface
     public function createMappingList(array $header)
     {
         $headerList = [];
-        $csvDTO = new CsvProductDataTransferObject();
         foreach ($header as $value) {
             $snakeCase = 'set'.$this->stringConverter->camelCaseToSnakeCase($value);
             $isolateProduct = str_replace('Product', '', $snakeCase);
