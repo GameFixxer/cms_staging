@@ -11,12 +11,12 @@ class ImportFilterProvider
 
     public function getProductFilterList()
     {
-       return[
-           'setKey',
-           'setArticleNumber',
-           'setDescription',
-           'setName'
-       ];
+        return[
+            'setKey',
+            'setArticleNumber',
+            'setDescription',
+            'setName'
+        ];
     }
 
     public function getCategoryFilterList()
