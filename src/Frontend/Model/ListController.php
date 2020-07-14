@@ -5,7 +5,6 @@ namespace App\Frontend\Model;
 
 use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\Controller;
 use App\Generated\Dto\ProductDataTransferObject;
@@ -16,10 +15,10 @@ class ListController implements Controller
     private View $view;
     private ProductBusinessFacadeInterface $productBusinessFacade;
 
-    public function __construct(Container $container)
+    public function __construct(View $view,ProductBusinessFacadeInterface $productBusinessFacade )
     {
-        $this->view = $container->get(View::class);
-        $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
+        $this->view = $view;
+        $this->productBusinessFacade = $productBusinessFacade;
     }
 
     public function action(): void

@@ -75,9 +75,13 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
 
     public function testGetProductListWithEmptyDatabase()
     {
+        $orm = $this->container->getOrmProductRepository();
+        $source = $orm->getSource(Product::class);
+        $db = $source->getDatabase();
+        $db->execute('DELETE FROM product WHERE id > 0 ');
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $mock = $this->construct(ProductRepository::class, [new ProductMapper(), $orm->getRepository(TestEntity::class)]);
+        $mock = $this->construct(ProductRepository::class, [new ProductMapper(), $orm]);
         $this->assertEmpty($mock->getProductList());
     }
 

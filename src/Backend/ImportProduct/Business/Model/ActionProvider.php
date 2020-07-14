@@ -7,20 +7,21 @@ use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 use App\Component\Container;
 
-
 class ActionProvider
 {
-    private Container $container;
-    public function __construct(Container $container)
+    private ProductCategory $productCategory;
+    private ProductInformation $productInformation;
+    public function __construct(ProductCategory $productCategory,ProductInformation $productInformation )
     {
-        $this->container = $container;
+        $this->productInformation = $productInformation;
+        $this->productCategory =$productCategory;
     }
 
     public function getProductActionList()
     {
         return [
-            $this->container->get(ProductCategory::class),
-            $this->container->get(ProductInformation::class)
+            $this->productCategory,
+            $this->productInformation
 
         ];
     }

@@ -6,7 +6,6 @@ namespace App\Frontend\Product\Communication;
 
 use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Login\Communication\LoginController;
@@ -23,12 +22,17 @@ class ProductController implements BackendController
     private ProductManagerInterface $productManager;
     private View $view;
 
-    public function __construct(Container $container)
+    public function __construct(
+        ProductBusinessFacadeInterface $productBusinessFacade,
+        SessionUser $userSession,
+        ProductManagerInterface $productManager,
+        View $view
+    )
     {
-        $this->productBusinessFacade = $container->get(ProductBusinessFacade::class);
-        $this->userSession = $container->get(SessionUser::class);
-        $this->view = $container->get(View::class);
-        $this->productManager = $container->get(ProductManager::class);
+        $this->productBusinessFacade = $productBusinessFacade;
+        $this->userSession = $userSession;
+        $this->view = $view;
+        $this->productManager = $productManager;
     }
 
     public function init(): void

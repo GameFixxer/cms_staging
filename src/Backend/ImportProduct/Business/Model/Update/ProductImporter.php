@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
+use App\Backend\ImportComponent\ImportFilterProvider;
+use App\Backend\ImportProduct\Business\Model\ActionProvider;
 use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 
@@ -14,9 +16,9 @@ class ProductImporter implements UpdateInterface
 
     private array $importArrayList;
 
-    public function __construct(array $importActionLIst)
+    public function __construct(ActionProvider $filterProvider)
     {
-        $this->importArrayList = $importActionLIst;
+        $this->importArrayList = $filterProvider->getProductActionList();
     }
 
     public function performUpdateActions(CsvProductDataTransferObject $csvDTO):void

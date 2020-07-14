@@ -32,7 +32,6 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
                 'admin' => 'true',
         ];
         $this->tester->setUpBootstrap();
-        $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmp = (array)$this->tester->getProductList();
         $id = end($tmp)->getId();

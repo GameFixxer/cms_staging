@@ -18,8 +18,7 @@
 */
 
 use App\Client\Product\Persistence\ProductRepository;
-use App\Component\Container;
-use App\Component\DependencyProvider;
+
 use App\Component\View;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\SessionUser;
@@ -35,13 +34,11 @@ class UnitTester extends \Codeception\Actor
      */
     /** @var  View $view */
     private View $view;
-    private Container $container;
+    private $container;
 
     public function arrange()
     {
-        $this->container = new Container();
-        $containerProvider = new DependencyProvider();
-        $containerProvider->providerDependency($this->container);
+        $this->container = (new \App\Component\SymfonyContainer())->getContainer();
     }
     public function setUpBootstrap()
     {
@@ -52,7 +49,7 @@ class UnitTester extends \Codeception\Actor
         $productRepository = $this->getProductRepository();
         return $productRepository->getProduct($articleNumber);
     }
-    public function getContainer():Container
+    public function getContainer()
     {
         return $this->container;
     }
@@ -83,11 +80,7 @@ class UnitTester extends \Codeception\Actor
         $idCounter = end($list)->getId() + 1;
         return (string)$idCounter;
     }
-    public function logIntoBackend(): void
-    {
-        $containerProvider = new DependencyProvider();
-        $containerProvider->providerDependency($this->container);
-    }
+
     private function makeSmarty($value, string $name):void
     {
         $this->view->addTlpParam($name, $value);

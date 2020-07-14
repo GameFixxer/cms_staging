@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Backend\ImportComponent\Mapper;
 
+use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\StringConverter\StringConverter;
 use App\Backend\ImportComponent\StringConverter\StringConverterInterface;
 use App\Generated\Dto\CsvProductDataTransferObject;
@@ -13,12 +14,12 @@ class ProductMappingAssistant implements MappingAssistantInterface
     private array $columnAttributes;
     private StringConverterInterface $stringConverter;
 
-    public function __construct(StringConverterInterface $stringConverter, array $attributes)
+    public function __construct(StringConverterInterface $stringConverter, ImportFilterProvider $importFilter)
     {
         $this->lowerCamelCase = true;
         $this->attributes = null;
         $this->stringConverter = $stringConverter;
-        $this->columnAttributes = $attributes;
+        $this->columnAttributes = $importFilter->getProductFilterList();
     }
 
     public function mapInputToDTO(array $headerList, array $product): CsvProductDataTransferObject

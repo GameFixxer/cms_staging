@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Frontend\User\Communication;
 
-use App\Component\Container;
 use App\Component\View;
 
 use App\Frontend\BackendController;
@@ -16,10 +15,10 @@ class DashboardController implements BackendController
     private View $view;
     private SessionUser $userSession;
 
-    public function __construct(Container $container)
+    public function __construct(View $view, SessionUser $userSession)
     {
-        $this->userSession = $container->get(SessionUser::class);
-        $this->view = $container->get(View::class);
+        $this->userSession =$userSession;
+        $this->view = $view;
     }
 
     public function init(): void

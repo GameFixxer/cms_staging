@@ -4,6 +4,7 @@ namespace App\Backend\ImportProduct\Communication;
 
 use App\Backend\ImportProduct\Business\Model\Importer;
 use App\Component\Container;
+use App\Component\SymfonyContainer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,18 +14,18 @@ class ImportCommand extends Command
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'app:importProduct';
     /**
-     * @var Container
+     * @var
      */
-    private Container $container;
+    private  $container;
 
     /**
      * ImportCommand constructor.
-     * @param Container $container
+     * @param $container
      */
-    public function __construct(Container $container)
+    public function __construct(SymfonyContainer $container)
     {
         parent::__construct();
-        $this->container = $container;
+        $this->container = $container->getContainer();
     }
 
 

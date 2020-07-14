@@ -3,6 +3,7 @@
 
 namespace App\Backend\ImportComponent\Mapper;
 
+use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\StringConverter\StringConverter;
 use App\Generated\Dto\CsvCategoryDataTransferObject;
 use App\Generated\Dto\CsvDataTransferObject;
@@ -15,12 +16,12 @@ class CategoryMappingAssistant implements MappingAssistantInterface
     private StringConverter $stringConverter;
 
 
-    public function __construct(StringConverter $stringConverter, array $attributes)
+    public function __construct(StringConverter $stringConverter, ImportFilterProvider $importFilter)
     {
         $this->lowerCamelCase = true;
         $this->attributes = null;
         $this->stringConverter = $stringConverter;
-        $this->columnAttributes = $attributes;
+        $this->columnAttributes = $importFilter->getCategoryFilterList();
     }
 
     public function mapInputToDTO(array $headerList, array $product): CsvCategoryDataTransferObject

@@ -23,6 +23,9 @@ filter:
     - '/configs'
     - '*/_generated/*'
     - 'c3.php'
+    - 'src/Component/cache-container.php'
+    - 'src/Component/cache-container.php.meta'
+
 
 checks:
   php: true
