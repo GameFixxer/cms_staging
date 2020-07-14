@@ -17,5 +17,6 @@ class DiyContainerTest extends \Codeception\Test\Unit
         $container =  new SymfonyContainer();
         $container = $container->getContainer();
         $repository = $container->get(ProductRepository::class);
+        self::assertNotNull($repository);
     }
 }

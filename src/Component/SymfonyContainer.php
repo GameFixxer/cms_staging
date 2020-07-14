@@ -14,15 +14,16 @@ class SymfonyContainer
     {
         $isDebug =true;
         $file = __DIR__.'/cache-container.php';
-        $containerConfigCache = new ConfigCache ($file, $isDebug);
+        $containerConfigCache = new ConfigCache($file, $isDebug);
 
-        if (!$containerConfigCache->isFresh()){
+        if (!$containerConfigCache->isFresh()) {
             $containerBuilder = new ContainerBuilder();
             $loader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__));
             $loader->load('/home/rene/PhpstormProjects/MVC/src/Component/DependencyContainer.xml');
             $containerBuilder->compile();
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(
+                (string)
                 $dumper->dump(['class'=>'MyCachedContainer']),
                 $containerBuilder->getResources()
             );
@@ -30,6 +31,6 @@ class SymfonyContainer
         require_once $file;
         $container = new \MyCachedContainer();
 
-       return $container;
+        return $container;
     }
 }

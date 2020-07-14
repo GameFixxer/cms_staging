@@ -14,7 +14,6 @@ use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
-use App\Component\DependencyProvider;
 use App\Component\SymfonyContainer;
 use App\Service\DatabaseManager;
 use Cycle\ORM\ORM;

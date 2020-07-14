@@ -1,8 +1,6 @@
 <?php
 
-use App\Component\Container;
 use App\Component\ControllerProvider;
-use App\Component\DependencyProvider;
 use App\Component\View;
 use App\Frontend\Model\ErrorController;
 use App\Component\SymfonyContainer;
