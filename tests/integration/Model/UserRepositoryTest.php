@@ -77,18 +77,6 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->assertSame($this->entity->getId(), $lastUserOfUserList ->getUserId());
     }
 
-    public function testGetProductListWithEmptyDatabase()
-    {
-        $orm = $this->container->getOrmProductRepository();
-        $source = $orm->getSource(Product::class);
-        $db = $source->getDatabase();
-        $db->execute('DELETE FROM user WHERE username IS NOT NULL');
-        $databaseManager = new DatabaseManager();
-        $orm = $databaseManager->connect();
-        $mock = $this->construct(UserRepository::class, [new UserMapper(), $orm]);
-        $this->assertEmpty($mock->getUserList());
-    }
-
     private function createProductEntity() :User
     {
         $this->entity = new User();
