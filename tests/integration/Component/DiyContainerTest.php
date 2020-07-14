@@ -14,7 +14,7 @@ class DiyContainerTest extends \Codeception\Test\Unit
 {
     public function testGetMapperFromContainer()
     {
-        $container =  new SymfonyContainer();
+        $container = new SymfonyContainer();
         $container = $container->getContainer();
         $repository = $container->get(ProductRepository::class);
         self::assertNotNull($repository);
