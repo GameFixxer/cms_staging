@@ -6,6 +6,12 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-$containerBuilder = new ContainerBuilder();
-$loader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__));
-$loader->load('App\Component\DependencyContainer.xml');
+class SymfonyContainer
+{
+    public function __construct()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $loader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__));
+        $loader->load('/home/rene/PhpstormProjects/MVC/src/Component/DependencyContainer.xml');
+    }
+}
