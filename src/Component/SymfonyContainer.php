@@ -12,7 +12,7 @@ class SymfonyContainer
 {
     public function getContainer()
     {
-        $isDebug =true;
+        $isDebug = true;
         $file = __DIR__.'/cache-container.php';
         $containerConfigCache = new ConfigCache($file, $isDebug);
 
