@@ -71,18 +71,6 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
         $this->assertSame($this->entity->getCategoryKey(), $lastCategoryOfCategoryRepositoryList->getCategoryKey());
     }
 
-    public function testGetCategoryListWithEmptyDatabase()
-    {
-        $orm = $this->container->getOrmProductRepository();
-        $source = $orm->getSource(Product::class);
-        $db = $source->getDatabase();
-        $db->execute('DELETE FROM category WHERE category_id > 0 ');
-        $databaseManager = new DatabaseManager();
-        $orm = $databaseManager->connect();
-        $mock = $this->construct(CategoryRepository::class, [new CategoryMapper(), $orm]);
-        $this->assertTrue(empty($mock->getCategoryList()));
-    }
-
     private function createCategoryEntity() :Category
     {
         $this->entity = new Category();

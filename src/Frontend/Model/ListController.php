@@ -15,7 +15,7 @@ class ListController implements Controller
     private View $view;
     private ProductBusinessFacadeInterface $productBusinessFacade;
 
-    public function __construct(View $view,ProductBusinessFacadeInterface $productBusinessFacade )
+    public function __construct(View $view, ProductBusinessFacadeInterface $productBusinessFacade)
     {
         $this->view = $view;
         $this->productBusinessFacade = $productBusinessFacade;

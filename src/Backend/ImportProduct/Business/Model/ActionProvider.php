@@ -11,10 +11,10 @@ class ActionProvider
 {
     private ProductCategory $productCategory;
     private ProductInformation $productInformation;
-    public function __construct(ProductCategory $productCategory,ProductInformation $productInformation )
+    public function __construct(ProductCategory $productCategory, ProductInformation $productInformation)
     {
         $this->productInformation = $productInformation;
-        $this->productCategory =$productCategory;
+        $this->productCategory = $productCategory;
     }
 
     public function getProductActionList()
