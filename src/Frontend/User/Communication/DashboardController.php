@@ -17,7 +17,7 @@ class DashboardController implements BackendController
 
     public function __construct(View $view, SessionUser $userSession)
     {
-        $this->userSession =$userSession;
+        $this->userSession = $userSession;
         $this->view = $view;
     }
 
