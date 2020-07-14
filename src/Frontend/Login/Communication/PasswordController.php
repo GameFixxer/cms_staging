@@ -5,7 +5,6 @@ namespace App\Frontend\Login\Communication;
 
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\User\Communication\DashboardController;
@@ -22,12 +21,17 @@ class PasswordController implements BackendController
     private SessionUser $userSession;
 
 
-    public function __construct(Container $container)
+    public function __construct(
+        View $view,
+        UserBusinessFacadeInterface $userBusinessFacade,
+        PasswordManager $passwordManager,
+        SessionUser $userSession
+)
     {
-        $this->view = $container->get(View::class);
-        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
-        $this->passwordManager = $container->get(PasswordManager::class);
-        $this->userSession = $container->get(SessionUser::class);
+        $this->view = $view;
+        $this->userBusinessFacade = $userBusinessFacade;
+        $this->passwordManager = $passwordManager;
+        $this->userSession = $userSession;
     }
 
     public function init(): void

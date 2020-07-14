@@ -3,6 +3,7 @@
 
 namespace App\Tests\integration\Model;
 
+use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Entity\TestEntity;
 use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapper;
@@ -78,9 +79,13 @@ class UserRepositoryTest extends \Codeception\Test\Unit
 
     public function testGetProductListWithEmptyDatabase()
     {
+        $orm = $this->container->getOrmProductRepository();
+        $source = $orm->getSource(Product::class);
+        $db = $source->getDatabase();
+        $db->execute('DELETE FROM user WHERE username IS NOT NULL');
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $mock = $this->construct(UserRepository::class, [new UserMapper(), $orm->getRepository(TestEntity::class)]);
+        $mock = $this->construct(UserRepository::class, [new UserMapper(), $orm]);
         $this->assertEmpty($mock->getUserList());
     }
 

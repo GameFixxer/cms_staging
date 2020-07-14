@@ -15,10 +15,10 @@ class UserRepository implements UserRepositoryInterface
     private UserMapperInterface $userMapper;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
 
-    public function __construct(UserMapperInterface $userMapper, \Cycle\ORM\RepositoryInterface $ormUserRepository)
+    public function __construct(UserMapperInterface $userMapper, \Cycle\ORM\ORM $ormUserRepository)
     {
         $this->userMapper = $userMapper;
-        $this->ormUserRepository = $ormUserRepository;
+        $this->ormUserRepository = $ormUserRepository->getRepository(User::class);
     }
 
     /**

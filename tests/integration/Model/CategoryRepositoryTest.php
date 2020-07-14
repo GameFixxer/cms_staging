@@ -7,6 +7,7 @@ namespace App\Tests\integration\Model;
 use App\Client\Category\Persistence\CategoryRepository;
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Category\Persistence\Mapper\CategoryMapper;
+use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Entity\TestEntity;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -72,10 +73,14 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
 
     public function testGetCategoryListWithEmptyDatabase()
     {
+        $orm = $this->container->getOrmProductRepository();
+        $source = $orm->getSource(Product::class);
+        $db = $source->getDatabase();
+        $db->execute('DELETE FROM category WHERE category_id > 0 ');
         $databaseManager = new DatabaseManager();
         $orm = $databaseManager->connect();
-        $mock = $this->construct(CategoryRepository::class, [new CategoryMapper(), $orm->getRepository(TestEntity::class)]);
-        $this->assertEmpty($mock->getCategoryList());
+        $mock = $this->construct(CategoryRepository::class, [new CategoryMapper(), $orm]);
+        $this->assertTrue(empty($mock->getCategoryList()));
     }
 
     private function createCategoryEntity() :Category

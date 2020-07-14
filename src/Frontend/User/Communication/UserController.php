@@ -6,7 +6,6 @@ namespace App\Frontend\User\Communication;
 
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Login\Communication\LoginController;
@@ -25,13 +24,18 @@ class UserController implements BackendController
     private PasswordManager $passwordManager;
     private UserManagerInterface $userManager;
 
-    public function __construct(Container $container)
-    {
-        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
-        $this->userSession = $container->get(SessionUser::class);
-        $this->passwordManager = $container->get(PasswordManager::class);
-        $this->view = $container->get(View::class);
-        $this->userManager = $container->get(UserManager::class);
+    public function __construct(
+        UserBusinessFacadeInterface $userBusinessFacade,
+        SessionUser $userSession,
+        View $view,
+        PasswordManager $passwordManager,
+        UserManagerInterface $userManager
+    ) {
+        $this->userBusinessFacade = $userBusinessFacade;
+        $this->userSession = $userSession;
+        $this->passwordManager = $passwordManager;
+        $this->view = $view;
+        $this->userManager = $userManager;
     }
 
     public function init(): void

@@ -7,18 +7,13 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Move implements MoveInterface
 {
-    private Filesystem $fileSystem;
-
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->fileSystem = $filesystem;
-    }
     public function move(\SplFileInfo $file):void
     {
-        $this->fileSystem->copy(
+        $fileSystem = new Filesystem();
+        $fileSystem->copy(
             '/../'.$file->getPath().'/'.$file->getFilename(),
             $file->getPath().'/../dumper/'.$file->getFilename()
         );
-        $this->fileSystem->remove('/../'.$file->getPath().'/'.$file->getFilename());
+        $fileSystem->remove('/../'.$file->getPath().'/'.$file->getFilename());
     }
 }

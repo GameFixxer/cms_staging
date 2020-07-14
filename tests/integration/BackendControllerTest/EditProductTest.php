@@ -34,7 +34,6 @@ class EditProductTest extends \Codeception\Test\Unit
             'admin' => 'true',
         ];
         $this->tester->setUpBootstrap();
-        $this->tester->logIntoBackend();
         $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmpProductList = (array)$this->tester->getProductList();
         $singleProduct = (array)$this->tester->exchangeDtoToSmartyParam(end($tmpProductList), 'product');
@@ -52,7 +51,6 @@ class EditProductTest extends \Codeception\Test\Unit
             'newpagename' => 'T-Shirt',
     ];
         $this->tester->arrange();
-        $this->tester->logIntoBackend();
         //$productList = (array)$this->tester->getSmartyParams('productlist');
         $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(
             $this->tester->getProductList(),
@@ -70,7 +68,6 @@ class EditProductTest extends \Codeception\Test\Unit
                 'admin' => 'true',
         ];
         $this->tester->arrange();
-        $this->tester->logIntoBackend();
         $detailProduct = (array)$this->tester->exchangeDtoToSmartyParam($this->tester->getProduct($id), 'product');
         //Is product at Detail Page changed?
         $this->assertEquals($singleProduct, $detailProduct);

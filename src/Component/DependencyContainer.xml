@@ -4,72 +4,201 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services
         https://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="path" type="string">dirname(__DIR__, 2).'../import/</parameter>
+    </parameters>
+
+
     <services>
 
-        <service id="databaseManager" class="App\Service\DatabaseManager">
-            <call method="connect">
-                <argument type="service" id="orm"/>
-            </call>
+
+
+        <service id="Cycle\ORM\ORM">
+            <factory class="App\Service\DatabaseManager" method="connect"/>
         </service>
 
         <!-- Mapper -->
-
-        <service id="productMapper" class="App\Client\Product\Persistence\Mapper\ProductMapper">
-        </service>
-        <service id="userMapper" class="App\Client\User\Persistence\Mapper\userMapper">
-        </service>
-        <service id="categoryMapper" class="App\Client\Category\Persistence\Mapper\categoryMapper">
-        </service>
+        <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
+        <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
+        <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
 
         <!--Repository-->
-
-
-        <service id="productRepository" class="App\Client\Product\Persistence\ProductRepository">
-            <argument type="service" id="productMapper"/>
-            <argument type="service" id="orm"/>
+        <service id="App\Client\Product\Persistence\ProductRepository" public="true">
+            <argument type="service" id="App\Client\Product\Persistence\Mapper\ProductMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
         </service>
-<!--
-
-        <service id="userRepository" class="App\Client\User\Persistence\userRepository">
-            <call method="databaseManager.get">
-                <argument type="service" id="databaseManager"/>
-            </call>
+        <service id="App\Client\User\Persistence\UserRepository" public="true">
+            <argument type="service" id="App\Client\User\Persistence\Mapper\UserMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
         </service>
-        <service id="categoryRepository" class="App\Client\Category\Persistence\categoryRepository">
-            <call method="databaseManager.get">
-                <argument type="service" id="databaseManager"/>
-            </call>
+        <service id="App\Client\Category\Persistence\CategoryRepository" public="true">
+            <argument type="service" id="App\Client\Category\Persistence\Mapper\CategoryMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
         </service>
 
-        &lt;!&ndash;Entity Manager&ndash;&gt;
-        <service id="productEntityManager" class="App\Client\Product\Persistence\ProductEntityManager">
+        <!--EntityManager-->
+        <service id="App\Client\Product\Persistence\ProductEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\Product\Persistence\ProductRepository"/>
         </service>
-        <service id="userEntityManager" class="App\Client\User\Persistence\userEntityManager">
+        <service id="App\Client\User\Persistence\UserEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\User\Persistence\UserRepository"/>
         </service>
-        <service id="categoryEntityManager" class="App\Client\Category\Persistence\categoryEntityManager">
+        <service id="App\Client\Category\Persistence\CategoryEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\Category\Persistence\CategoryRepository"/>
         </service>
-        &lt;!&ndash;Business Facade&ndash;&gt;
-        <service id="productBusinessFacade" class="App\Client\Product\Business\ProductBusinessFacade">
+        <!--BusinessFacade-->
+        <service id="App\Client\Product\Business\ProductBusinessFacade" public ="true">
+            <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
+            <argument id="App\Client\Product\Persistence\ProductEntityManager" type="service"/>
         </service>
-        <service id="userBusinessFacade" class="App\Client\User\Business\userBusinessFacade">
+        <service id="App\Client\User\Business\UserBusinessFacade" public ="true">
+            <argument id="App\Client\User\Persistence\UserRepository" type="service"/>
+            <argument id="App\Client\User\Persistence\UserEntityManager" type="service"/>
         </service>
-        <service id="categoryBusinessFacade" class="App\Client\Category\Business\categoryBusinessFacade">
+        <service id="App\Client\Category\Business\CategoryBusinessFacade" public ="true">
+            <argument id="App\Client\Category\Persistence\CategoryRepository" type="service"/>
+            <argument id="App\Client\Category\Persistence\CategoryEntityManager" type="service"/>
         </service>
-        &lt;!&ndash;Service&ndash;&gt;
-        <service id="passwordManager" class="App\Service\PasswordManager">
+        <!--Service-->
+        <service id="App\Service\SymfonyMailerManager" public ="true"/>
+        <service id="App\Service\PasswordManager" public ="true"/>
+        <service id="Symfony\Component\Finder\Finder" public ="true"/>
+        <service id="App\Service\File\Model\Get" public ="true">
+            <argument type="service" id="Symfony\Component\Finder\Finder" />
         </service>
-        <service id="symfonyMailerManager" class="App\Service\SymfonyMailerManager">
+        <service id="App\Service\File\Model\Move" public ="true"/>
+        <service id="App\Service\File\FileServiceClient" public ="true">
+            <argument id="App\Service\File\Model\Get" type="service"/>
+            <argument id="App\Service\File\Model\Move" type="service"/>
         </service>
-        <service id="finder" class="Finder">
+        <!--ImportComponents-->
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager" public ="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
         </service>
-        <service id="filesystem" class="Filesystem">
+        <service id="App\Backend\ImportComponent\StringConverter\StringConverter" public ="true"/>
+        <service id="App\Backend\ImportComponent\ImportFilterProvider" public ="true"/>
+        <service id="App\Backend\ImportComponent\Mapper\ProductMappingAssistant">
+            <argument id="App\Backend\ImportComponent\StringConverter\StringConverter" type="service"/>
+            <argument type="service" id="App\Backend\ImportComponent\ImportFilterProvider"/>
+
         </service>
-        <service id="get" class="App\Service\File\Model\Get">
+        <service id="App\Backend\ImportComponent\Mapper\CategoryMappingAssistant" public ="true">
+            <argument id="App\Backend\ImportComponent\StringConverter\StringConverter" type="service"/>
+            <argument type="service" id="App\Backend\ImportComponent\ImportFilterProvider"/>
+
         </service>
-        <service id="move" class="App\Service\File\Model\Move">
+        <service id="App\Backend\ImportComponent\Loader\CsvImportLoader" public ="true">
+            <argument type="service" id="App\Service\File\FileServiceClient"/>
+            <argument type="service" id="App\Backend\ImportComponent\Mapper\ProductMappingAssistant"/>
         </service>
-        <service id="fileServiceClient" class="App\Service\File\FileServiceClient">
-        </service>-->
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager" public ="true"/>
+
+        <!--ImportProduct-->
+        <service id="App\Backend\ImportProduct\Business\Model\Create\Product" public ="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\ActionProvider">
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductCategory" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductInformation" type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductCategory" public="true">
+            <argument id="App\Client\Category\Business\CategoryBusinessFacade" type="service"/>
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager"
+                      type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager"
+                      type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductInformation" public="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager"
+                      type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductImporter" public="true">
+            <argument type="service" id="App\Backend\ImportProduct\Business\Model\ActionProvider"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Importer" public="true">
+            <argument id="App\Backend\ImportComponent\Loader\CsvImportLoader" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Create\Product" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductImporter" type="service"/>
+            <argument>%path%</argument>
+        </service>
+        <!--ImportCategory-->
+        <service id="App\Backend\ImportCategory\Business\Model\Create\Category" public ="true">
+            <argument id="App\Client\Category\Business\CategoryBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Backend\ImportCategory\Business\Model\Update\CategoryImporter" public="true">
+            <argument type="service" id="App\Backend\ImportProduct\Business\Model\ActionProvider"/>
+        </service>
+
+        <service id="App\Backend\ImportCategory\Business\Model\Importer" public="true">
+            <argument id="App\Backend\ImportComponent\Loader\CsvImportLoader" type="service"/>
+            <argument id="App\Backend\ImportCategory\Business\Model\Create\Category" type="service"/>
+            <argument id="App\Backend\ImportCategory\Business\Model\Update\CategoryImporter" type="service"/>
+            <argument>%path%</argument>
+        </service>
+        <!--Client-->
+        <service id="App\Frontend\User\Business\UserManager" public="true">
+            <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Frontend\Product\Business\ProductManager" public="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Component\View" public="true"/>
+        <service id="App\Service\SessionUser" public="true"/>
+
+
+        <!--Client-->
+        <service id="App\Frontend\Login\Communication\LoginController"  public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Service\SymfonyMailerManager"/>
+        </service>
+        <service id="App\Frontend\Login\Communication\PasswordController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+        </service>
+        <service id="App\Frontend\Model\DetailController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+        </service>
+        <service id="App\Frontend\Model\ErrorController" public="true">
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\Model\HomeController" public="true">
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\Model\ListController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+        </service>
+        <service id="App\Frontend\Product\Communication\ProductController" public="true">
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Frontend\Product\Business\ProductManager"/>
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\User\Communication\DashboardController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+        </service>
+        <service id="App\Frontend\User\Communication\UserController" public="true">
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Frontend\User\Business\UserManager"/>
+        </service>
+        <service id="App\Service\DatabaseManager" public="true"/>
+
+
     </services>
 
 </container>

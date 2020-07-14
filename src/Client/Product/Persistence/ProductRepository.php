@@ -18,12 +18,12 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * ProductRepository constructor.
      * @param ProductMapperInterface $productMapper
-     * @param \Cycle\ORM\RepositoryInterface $ormProductRepository
+     * @param \Cycle\ORM\ORM $ormProductRepository
      */
-    public function __construct(ProductMapperInterface $productMapper, \Cycle\ORM\RepositoryInterface $ormProductRepository)
+    public function __construct(ProductMapperInterface $productMapper, \Cycle\ORM\ORM $ormProductRepository)
     {
         $this->productMapper = $productMapper;
-        $this->ormProductRepository = $ormProductRepository;
+        $this->ormProductRepository = $ormProductRepository->getRepository(Product::class);
     }
 
 

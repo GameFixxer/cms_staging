@@ -5,11 +5,9 @@ use App\Component\ControllerProvider;
 use App\Component\DependencyProvider;
 use App\Component\View;
 use App\Frontend\Model\ErrorController;
+use App\Component\SymfonyContainer;
 
-
-$container = new Container();
-$containerProvider = new DependencyProvider();
-$containerProvider->providerDependency($container);
+$container = (new SymfonyContainer())->getContainer();
 
 
 $controller = new ControllerProvider();
@@ -27,9 +25,9 @@ $isFind = false;
 foreach ($controllerList as $controller) {
     if (strtolower($controller::ROUTE) === $route) {
         $isFind = true;
-        $controller = new $controller($container);
+        $controller = $container->get($controller);
         $actionName = $action.'Action';
-        $controller = new $controller($container);
+        //$controller = new $controller($container);
         if ($isAdmin) {
             $controller->init();
         }
@@ -41,7 +39,7 @@ foreach ($controllerList as $controller) {
     }
 }
 if (!$isFind) {
-    $class = new ErrorController($container);
+    $class = $container->get(ErrorController::class);
     $class->action();
 }
 

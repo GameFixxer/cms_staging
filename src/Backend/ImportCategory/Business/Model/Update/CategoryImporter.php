@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportCategory\Business\Model\Update;
 
+use App\Backend\ImportComponent\ImportFilterProvider;
+use App\Backend\ImportProduct\Business\Model\ActionProvider;
 use App\Generated\Dto\CsvCategoryDataTransferObject;
 
 class CategoryImporter implements CategoryUpdateInterface
@@ -13,9 +15,9 @@ class CategoryImporter implements CategoryUpdateInterface
 
     private array $importArrayList;
 
-    public function __construct(array $importActionLIst)
+    public function __construct(ActionProvider $filterProvider)
     {
-        $this->importArrayList = $importActionLIst;
+        $this->importArrayList = $filterProvider->getCategoryActionList();
     }
 
     public function performUpdateActions(CsvCategoryDataTransferObject $csvDTO):void

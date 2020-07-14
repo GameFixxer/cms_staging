@@ -18,12 +18,12 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * ProductRepository constructor.
      * @param CategoryMapperInterface $categoryMapper
-     * @param \Cycle\ORM\RepositoryInterface $ormCategoryRepository
+     * @param \Cycle\ORM\ORM $ormCategoryRepository
      */
-    public function __construct(CategoryMapperInterface $categoryMapper, \Cycle\ORM\RepositoryInterface $ormCategoryRepository)
+    public function __construct(CategoryMapperInterface $categoryMapper, \Cycle\ORM\ORM $ormCategoryRepository)
     {
         $this->categoryMapper = $categoryMapper;
-        $this->ormCategoryRepository = $ormCategoryRepository;
+        $this->ormCategoryRepository = $ormCategoryRepository->getRepository(Category::class);
     }
 
 

@@ -5,7 +5,6 @@ namespace App\Frontend\Login\Communication;
 
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\User\Communication\DashboardController;
@@ -25,13 +24,18 @@ class LoginController implements BackendController
     private SymfonyMailerManager $mailManager;
 
 
-    public function __construct(Container $container)
-    {
-        $this->userSession = $container->get(SessionUser::class);
-        $this->view = $container->get(View::class);
-        $this->userBusinessFacade = $container->get(UserBusinessFacade::class);
-        $this->passwordManager = $container->get(PasswordManager::class);
-        $this->mailManager = $container->get(SymfonyMailerManager::class);
+    public function __construct(
+        View $view,
+        UserBusinessFacadeInterface $userBusinessFacade,
+        PasswordManager $passwordManager,
+        SessionUser $userSession,
+        SymfonyMailerManager $mailManager
+    ) {
+        $this->userSession = $userSession;
+        $this->view = $view;
+        $this->userBusinessFacade = $userBusinessFacade;
+        $this->passwordManager = $passwordManager;
+        $this->mailManager = $mailManager;
     }
 
     public function init(): void

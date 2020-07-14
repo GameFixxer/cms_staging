@@ -14,8 +14,8 @@ use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
-use App\Component\Container;
 use App\Component\DependencyProvider;
+use App\Component\SymfonyContainer;
 use App\Service\DatabaseManager;
 use Cycle\ORM\ORM;
 
@@ -26,16 +26,14 @@ class ContainerHelper
      * @param int $id
      * @throws Exception
      */
-    private Container $container;
+    private $container;
 
     public function __construct()
     {
-        $this->container = new Container();
-        $containerProvider = new DependencyProvider();
-        $containerProvider->providerDependency($this->container);
+        $this->container = (new SymfonyContainer())->getContainer();
     }
 
-    public function getContainer():Container
+    public function getContainer()
     {
         return $this->container;
     }
@@ -76,7 +74,7 @@ class ContainerHelper
 
     public function getOrmProductRepository()
     {
-        return $this->container->get(DatabaseManager::class);
+        return ($this->container->get(DatabaseManager::class))->connect();
     }
 
     public function getCreateProduct()

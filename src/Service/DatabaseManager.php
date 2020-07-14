@@ -9,12 +9,11 @@ use Cycle\Schema as CycleSchema;
 
 class DatabaseManager
 {
-    private ORM\ORM $orm;
-    private Database\DatabaseManager $dbal;
 
-    public function __construct()
+    public static function connect()
     {
-        $this->dbal = new Database\DatabaseManager(
+
+        $dbal = new Database\DatabaseManager(
             new \Spiral\Database\Config\DatabaseConfig([
                 'default' => 'default',
                 'databases' => [
@@ -34,13 +33,11 @@ class DatabaseManager
                 ],
             ])
         );
-    }
-    public function connect()
-    {
+
         $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
         $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 
-        $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($this->dbal), [
+        $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($dbal), [
             new CycleSchema\Generator\ResetTables(), // re-declared table schemas (remove columns)
             new Annotated\Embeddings($classLocator), // register embeddable entities
             new Annotated\Entities($classLocator), // register annotated entities
@@ -55,8 +52,8 @@ class DatabaseManager
         ]);
 
 
-        $this->orm = new ORM\ORM(new ORM\Factory($this->dbal));
-        return  $this->orm->withSchema(new ORM\Schema($schema));
+        $orm = new ORM\ORM(new ORM\Factory($dbal));
+        return  $orm->withSchema(new ORM\Schema($schema));
 
     }
 }

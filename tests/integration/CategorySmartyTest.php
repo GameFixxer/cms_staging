@@ -19,9 +19,9 @@ use App\Client\Product\Persistence\Entity\Product as ProductEntity;
 class CategorySmartyTest extends \Codeception\Test\Unit
 {
     private CsvProductDataTransferObject $csvDTO;
-    private Product $importCreateProduct;
+    private $importCreateProduct;
     private ProductRepository $productRepository;
-    private ProductCategory $updateCategory;
+    private  $updateCategory;
     private ContainerHelper $container;
 
     public function _before()

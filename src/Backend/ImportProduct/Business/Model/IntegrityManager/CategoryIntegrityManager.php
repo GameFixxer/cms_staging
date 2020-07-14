@@ -13,9 +13,9 @@ class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
 {
     private \Cycle\ORM\RepositoryInterface $ormCategoryRepository;
 
-    public function __construct(\Cycle\ORM\RepositoryInterface $ormCategoryRepository)
+    public function __construct(\Cycle\ORM\ORM $ormCategoryRepository)
     {
-        $this->ormCategoryRepository = $ormCategoryRepository;
+        $this->ormCategoryRepository = $ormCategoryRepository->getRepository(Category::class);
     }
 
     public function mapEntity(CsvProductDataTransferObject $csvDTO): ?object

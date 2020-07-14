@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace App\Frontend\Model;
 
-
-use App\Component\Container;
 use App\Component\View;
 use App\Frontend\Controller;
 
@@ -14,9 +12,9 @@ class HomeController implements Controller
 
     public const ROUTE = 'home';
 
-    public function __construct(Container $container)//View $view)
+    public function __construct(View $view)//View $view)
     {
-        $this->view = $container->get(View::class);
+        $this->view = $view;
     }
 
 
