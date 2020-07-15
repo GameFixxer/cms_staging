@@ -48,16 +48,13 @@ class MyCachedContainer extends Container
             'App\\Client\\User\\Persistence\\Mapper\\UserMapper' => 'getUserMapperService',
             'App\\Client\\User\\Persistence\\UserEntityManager' => 'getUserEntityManagerService',
             'App\\Client\\User\\Persistence\\UserRepository' => 'getUserRepositoryService',
-            'App\\Component\\View' => 'getViewService',
             'App\\Frontend\\Login\\Communication\\LoginController' => 'getLoginControllerService',
             'App\\Frontend\\Login\\Communication\\PasswordController' => 'getPasswordControllerService',
             'App\\Frontend\\Model\\DetailController' => 'getDetailControllerService',
             'App\\Frontend\\Model\\ErrorController' => 'getErrorControllerService',
             'App\\Frontend\\Model\\HomeController' => 'getHomeControllerService',
             'App\\Frontend\\Model\\ListController' => 'getListControllerService',
-            'App\\Frontend\\Product\\Business\\ProductManager' => 'getProductManagerService',
             'App\\Frontend\\Product\\Communication\\ProductController' => 'getProductControllerService',
-            'App\\Frontend\\User\\Business\\UserManager' => 'getUserManagerService',
             'App\\Frontend\\User\\Communication\\DashboardController' => 'getDashboardControllerService',
             'App\\Frontend\\User\\Communication\\UserController' => 'getUserControllerService',
             'App\\Service\\DatabaseManager' => 'getDatabaseManagerService',
@@ -65,7 +62,6 @@ class MyCachedContainer extends Container
             'App\\Service\\File\\Model\\Get' => 'getGetService',
             'App\\Service\\File\\Model\\Move' => 'getMoveService',
             'App\\Service\\PasswordManager' => 'getPasswordManagerService',
-            'App\\Service\\SessionUser' => 'getSessionUserService',
             'App\\Service\\SymfonyMailerManager' => 'getSymfonyMailerManagerService',
             'Symfony\\Component\\Finder\\Finder' => 'getFinderService',
         ];
@@ -88,6 +84,10 @@ class MyCachedContainer extends Container
         return [
             'App\\Backend\\ImportComponent\\Mapper\\ProductMappingAssistant' => true,
             'App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider' => true,
+            'App\\Component\\View' => true,
+            'App\\Frontend\\Product\\Business\\ProductManager' => true,
+            'App\\Frontend\\User\\Business\\UserManager' => true,
+            'App\\Service\\SessionUser' => true,
             'Cycle\\ORM\\ORM' => true,
             'Psr\\Container\\ContainerInterface' => true,
             'Symfony\\Component\\DependencyInjection\\ContainerInterface' => true,
@@ -355,23 +355,13 @@ class MyCachedContainer extends Container
     }
 
     /**
-     * Gets the public 'App\Component\View' shared service.
-     *
-     * @return \App\Component\View
-     */
-    protected function getViewService()
-    {
-        return $this->services['App\\Component\\View'] = new \App\Component\View();
-    }
-
-    /**
      * Gets the public 'App\Frontend\Login\Communication\LoginController' shared service.
      *
      * @return \App\Frontend\Login\Communication\LoginController
      */
     protected function getLoginControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())));
+        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())));
     }
 
     /**
@@ -381,7 +371,7 @@ class MyCachedContainer extends Container
      */
     protected function getPasswordControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\PasswordController'] = new \App\Frontend\Login\Communication\PasswordController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
+        return $this->services['App\\Frontend\\Login\\Communication\\PasswordController'] = new \App\Frontend\Login\Communication\PasswordController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
     }
 
     /**
@@ -391,7 +381,7 @@ class MyCachedContainer extends Container
      */
     protected function getDetailControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\DetailController'] = new \App\Frontend\Model\DetailController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Model\\DetailController'] = new \App\Frontend\Model\DetailController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
     }
 
     /**
@@ -401,7 +391,7 @@ class MyCachedContainer extends Container
      */
     protected function getErrorControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\ErrorController'] = new \App\Frontend\Model\ErrorController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+        return $this->services['App\\Frontend\\Model\\ErrorController'] = new \App\Frontend\Model\ErrorController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
     }
 
     /**
@@ -411,7 +401,7 @@ class MyCachedContainer extends Container
      */
     protected function getHomeControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\HomeController'] = new \App\Frontend\Model\HomeController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+        return $this->services['App\\Frontend\\Model\\HomeController'] = new \App\Frontend\Model\HomeController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
     }
 
     /**
@@ -421,17 +411,7 @@ class MyCachedContainer extends Container
      */
     protected function getListControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\ListController'] = new \App\Frontend\Model\ListController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
-    }
-
-    /**
-     * Gets the public 'App\Frontend\Product\Business\ProductManager' shared service.
-     *
-     * @return \App\Frontend\Product\Business\ProductManager
-     */
-    protected function getProductManagerService()
-    {
-        return $this->services['App\\Frontend\\Product\\Business\\ProductManager'] = new \App\Frontend\Product\Business\ProductManager(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Model\\ListController'] = new \App\Frontend\Model\ListController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
     }
 
     /**
@@ -441,17 +421,9 @@ class MyCachedContainer extends Container
      */
     protected function getProductControllerService()
     {
-        return $this->services['App\\Frontend\\Product\\Communication\\ProductController'] = new \App\Frontend\Product\Communication\ProductController(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Product\\Business\\ProductManager'] ?? $this->getProductManagerService()), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
-    }
+        $a = ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService());
 
-    /**
-     * Gets the public 'App\Frontend\User\Business\UserManager' shared service.
-     *
-     * @return \App\Frontend\User\Business\UserManager
-     */
-    protected function getUserManagerService()
-    {
-        return $this->services['App\\Frontend\\User\\Business\\UserManager'] = new \App\Frontend\User\Business\UserManager(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Product\\Communication\\ProductController'] = new \App\Frontend\Product\Communication\ProductController($a, ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), new \App\Frontend\Product\Business\ProductManager($a), ($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
     }
 
     /**
@@ -461,7 +433,7 @@ class MyCachedContainer extends Container
      */
     protected function getDashboardControllerService()
     {
-        return $this->services['App\\Frontend\\User\\Communication\\DashboardController'] = new \App\Frontend\User\Communication\DashboardController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
+        return $this->services['App\\Frontend\\User\\Communication\\DashboardController'] = new \App\Frontend\User\Communication\DashboardController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
     }
 
     /**
@@ -471,7 +443,9 @@ class MyCachedContainer extends Container
      */
     protected function getUserControllerService()
     {
-        return $this->services['App\\Frontend\\User\\Communication\\UserController'] = new \App\Frontend\User\Communication\UserController(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Frontend\\User\\Business\\UserManager'] ?? $this->getUserManagerService()));
+        $a = ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService());
+
+        return $this->services['App\\Frontend\\User\\Communication\\UserController'] = new \App\Frontend\User\Communication\UserController($a, ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), new \App\Frontend\User\Business\UserManager($a));
     }
 
     /**
@@ -522,16 +496,6 @@ class MyCachedContainer extends Container
     protected function getPasswordManagerService()
     {
         return $this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager();
-    }
-
-    /**
-     * Gets the public 'App\Service\SessionUser' shared service.
-     *
-     * @return \App\Service\SessionUser
-     */
-    protected function getSessionUserService()
-    {
-        return $this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser();
     }
 
     /**

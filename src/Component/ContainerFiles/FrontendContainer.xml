@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <imports>
+        <import resource="0InitContainer.xml"/>
+    </imports>
+
+    <services>
+        <!--Client-->
+
+        <service id="App\Frontend\Login\Communication\LoginController"  public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Service\SymfonyMailerManager"/>
+        </service>
+        <service id="App\Frontend\Login\Communication\PasswordController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+        </service>
+        <service id="App\Frontend\Model\DetailController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+        </service>
+        <service id="App\Frontend\Model\ErrorController" public="true">
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\Model\HomeController" public="true">
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\Model\ListController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+        </service>
+        <service id="App\Frontend\Product\Communication\ProductController" public="true">
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Frontend\Product\Business\ProductManager"/>
+            <argument type="service" id="App\Component\View"/>
+        </service>
+        <service id="App\Frontend\User\Communication\DashboardController" public="true">
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+        </service>
+        <service id="App\Frontend\User\Communication\UserController" public="true">
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Service\PasswordManager"/>
+            <argument type="service" id="App\Frontend\User\Business\UserManager"/>
+        </service>
+
+
+
+    </services>
+
+</container>
