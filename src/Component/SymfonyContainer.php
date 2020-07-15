@@ -33,6 +33,7 @@ class SymfonyContainer
                 $dumper->dump(['class'=>'MyCachedContainer']),
                 $containerBuilder->getResources()
             );
+            return $containerBuilder;
         }
         require_once $file;
         $container = new \MyCachedContainer();
