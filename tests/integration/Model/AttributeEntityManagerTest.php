@@ -50,7 +50,7 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
 
     public function testCreateAttribute()
     {
-        $this->attributeDto->setId( ($this->attributeEntityManager->save($this->attributeDto))->getId());
+        $this->attributeDto->setId(($this->attributeEntityManager->save($this->attributeDto))->getId());
 
         $attributeFromRepository = $this->container->getAttributeRepository()->getAttribute($this->attributeDto->getKey());
 

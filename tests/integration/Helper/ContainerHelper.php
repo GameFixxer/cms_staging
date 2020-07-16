@@ -98,14 +98,14 @@ class ContainerHelper
         return $this->container->get(ProductImporter::class);
     }
 
-    public function getAttributeRepository(){
+    public function getAttributeRepository() {
         return$this->container->get(AttributeRepository::class);
     }
 
-    public function getUpdateAttribute(){
+    public function getUpdateAttribute() {
         return $this->container->get(ProductAttribute::class);
     }
-    public function getAttributeEntityManager(){
+    public function getAttributeEntityManager() {
         return$this->container->get(AttributeEntityManager::class);
     }
 }

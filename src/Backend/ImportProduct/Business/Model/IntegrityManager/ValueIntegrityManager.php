@@ -13,7 +13,7 @@ class ValueIntegrityManager implements ValueIntegrityManagerInterface
 {
     private ProductBusinessFacadeInterface $productBusinessFacade;
 
-    public function __construct( ProductBusinessFacadeInterface $productBusinessFacade)
+    public function __construct(ProductBusinessFacadeInterface $productBusinessFacade)
     {
         $this->productBusinessFacade = $productBusinessFacade;
     }
