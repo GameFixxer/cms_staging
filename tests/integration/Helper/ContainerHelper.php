@@ -5,9 +5,12 @@ namespace App\Tests\integration\Helper;
 
 use App\Backend\ImportComponent\Loader\CsvImportLoader;
 use App\Backend\ImportProduct\Business\Model\Create\Product;
+use App\Backend\ImportProduct\Business\Model\Update\ProductAttribute;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
+use App\Client\Attribute\Persistence\AttributeEntityManager;
+use App\Client\Attribute\Persistence\AttributeRepository;
 use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\CategoryRepository;
 use App\Client\Product\Persistence\ProductEntityManager;
@@ -93,5 +96,16 @@ class ContainerHelper
     public function getUpdateImport()
     {
         return $this->container->get(ProductImporter::class);
+    }
+
+    public function getAttributeRepository(){
+        return$this->container->get(AttributeRepository::class);
+    }
+
+    public function getUpdateAttribute(){
+        return $this->container->get(ProductAttribute::class);
+    }
+    public function getAttributeEntityManager(){
+        return$this->container->get(AttributeEntityManager::class);
     }
 }

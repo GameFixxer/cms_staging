@@ -10,16 +10,23 @@
         <service id="Cycle\ORM\ORM">
             <factory class="App\Service\DatabaseManager" method="connect"/>
         </service>
-        <service id="App\Component\View"/>
+        <service id="App\Component\View" public="true"/>
         <service id="App\Service\DatabaseManager" public="true"/>
-        <service id="App\Service\SessionUser"/>
+        <service id="App\Service\SessionUser" public="true"/>
 
         <!-- Mapper -->
+
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
         <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
+        <service id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" public ="true"/>
 
         <!--Repository-->
+        <service id="App\Client\Attribute\Persistence\AttributeRepository" public ="true">
+            <argument id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" type="service"/>
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
+
         <service id="App\Client\Product\Persistence\ProductRepository" public="true">
             <argument type="service" id="App\Client\Product\Persistence\Mapper\ProductMapper"/>
             <argument type="service" id="Cycle\ORM\ORM"/>
@@ -34,6 +41,12 @@
         </service>
 
         <!--EntityManager-->
+
+        <service id="App\Client\Attribute\Persistence\AttributeEntityManager" public ="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
+        </service>
+
         <service id="App\Client\Product\Persistence\ProductEntityManager" public="true">
             <argument type="service" id="Cycle\ORM\ORM"/>
             <argument type="service" id="App\Client\Product\Persistence\ProductRepository"/>
@@ -47,6 +60,12 @@
             <argument type="service" id="App\Client\Category\Persistence\CategoryRepository"/>
         </service>
         <!--BusinessFacade-->
+
+        <service id="App\Client\Attribute\Business\AttributeBusinessFacade" public ="true">
+            <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
+            <argument id="App\Client\Attribute\Persistence\AttributeEntityManager" type="service"/>
+        </service>
+
         <service id="App\Client\Product\Business\ProductBusinessFacade" public ="true">
             <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
             <argument id="App\Client\Product\Persistence\ProductEntityManager" type="service"/>
@@ -72,12 +91,13 @@
             <argument id="App\Service\File\Model\Move" type="service"/>
         </service>
         <!--ImportComponents-->
-        <service id="App\Frontend\Product\Business\ProductManager">
+        <service id="App\Frontend\Product\Business\ProductManager" public ="true">
             <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
         </service>
-        <service id="App\Frontend\User\Business\UserManager">
+        <service id="App\Frontend\User\Business\UserManager" public ="true">
             <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
         </service>
+
 
 
     </services>

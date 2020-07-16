@@ -22,20 +22,31 @@ class MyCachedContainer extends Container
 
         $this->services = $this->privates = [];
         $this->methodMap = [
+            'App\\Backend\\ImportAttribute\\Business\\Model\\Create\\Attribute' => 'getAttributeService',
+            'App\\Backend\\ImportAttribute\\Business\\Model\\Importer' => 'getImporterService',
+            'App\\Backend\\ImportAttribute\\Business\\Model\\Update\\AttributeImporter' => 'getAttributeImporterService',
             'App\\Backend\\ImportCategory\\Business\\Model\\Create\\Category' => 'getCategoryService',
-            'App\\Backend\\ImportCategory\\Business\\Model\\Importer' => 'getImporterService',
+            'App\\Backend\\ImportCategory\\Business\\Model\\Importer' => 'getImporter2Service',
             'App\\Backend\\ImportCategory\\Business\\Model\\Update\\CategoryImporter' => 'getCategoryImporterService',
             'App\\Backend\\ImportComponent\\ImportFilterProvider' => 'getImportFilterProviderService',
             'App\\Backend\\ImportComponent\\Loader\\CsvImportLoader' => 'getCsvImportLoaderService',
             'App\\Backend\\ImportComponent\\Mapper\\CategoryMappingAssistant' => 'getCategoryMappingAssistantService',
             'App\\Backend\\ImportComponent\\StringConverter\\StringConverter' => 'getStringConverterService',
+            'App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider' => 'getActionProviderService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Create\\Product' => 'getProductService',
-            'App\\Backend\\ImportProduct\\Business\\Model\\Importer' => 'getImporter2Service',
+            'App\\Backend\\ImportProduct\\Business\\Model\\Importer' => 'getImporter3Service',
+            'App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\AttributeIntegrityManager' => 'getAttributeIntegrityManagerService',
             'App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\CategoryIntegrityManager' => 'getCategoryIntegrityManagerService',
+            'App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ProductIntegrityManager' => 'getProductIntegrityManagerService',
             'App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager' => 'getValueIntegrityManagerService',
+            'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductAttribute' => 'getProductAttributeService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory' => 'getProductCategoryService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductImporter' => 'getProductImporterService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation' => 'getProductInformationService',
+            'App\\Client\\Attribute\\Business\\AttributeBusinessFacade' => 'getAttributeBusinessFacadeService',
+            'App\\Client\\Attribute\\Persistence\\AttributeEntityManager' => 'getAttributeEntityManagerService',
+            'App\\Client\\Attribute\\Persistence\\AttributeRepository' => 'getAttributeRepositoryService',
+            'App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper' => 'getAttributeMapperService',
             'App\\Client\\Category\\Business\\CategoryBusinessFacade' => 'getCategoryBusinessFacadeService',
             'App\\Client\\Category\\Persistence\\CategoryEntityManager' => 'getCategoryEntityManagerService',
             'App\\Client\\Category\\Persistence\\CategoryRepository' => 'getCategoryRepositoryService',
@@ -48,13 +59,16 @@ class MyCachedContainer extends Container
             'App\\Client\\User\\Persistence\\Mapper\\UserMapper' => 'getUserMapperService',
             'App\\Client\\User\\Persistence\\UserEntityManager' => 'getUserEntityManagerService',
             'App\\Client\\User\\Persistence\\UserRepository' => 'getUserRepositoryService',
+            'App\\Component\\View' => 'getViewService',
             'App\\Frontend\\Login\\Communication\\LoginController' => 'getLoginControllerService',
             'App\\Frontend\\Login\\Communication\\PasswordController' => 'getPasswordControllerService',
             'App\\Frontend\\Model\\DetailController' => 'getDetailControllerService',
             'App\\Frontend\\Model\\ErrorController' => 'getErrorControllerService',
             'App\\Frontend\\Model\\HomeController' => 'getHomeControllerService',
             'App\\Frontend\\Model\\ListController' => 'getListControllerService',
+            'App\\Frontend\\Product\\Business\\ProductManager' => 'getProductManagerService',
             'App\\Frontend\\Product\\Communication\\ProductController' => 'getProductControllerService',
+            'App\\Frontend\\User\\Business\\UserManager' => 'getUserManagerService',
             'App\\Frontend\\User\\Communication\\DashboardController' => 'getDashboardControllerService',
             'App\\Frontend\\User\\Communication\\UserController' => 'getUserControllerService',
             'App\\Service\\DatabaseManager' => 'getDatabaseManagerService',
@@ -62,6 +76,7 @@ class MyCachedContainer extends Container
             'App\\Service\\File\\Model\\Get' => 'getGetService',
             'App\\Service\\File\\Model\\Move' => 'getMoveService',
             'App\\Service\\PasswordManager' => 'getPasswordManagerService',
+            'App\\Service\\SessionUser' => 'getSessionUserService',
             'App\\Service\\SymfonyMailerManager' => 'getSymfonyMailerManagerService',
             'Symfony\\Component\\Finder\\Finder' => 'getFinderService',
         ];
@@ -83,15 +98,40 @@ class MyCachedContainer extends Container
     {
         return [
             'App\\Backend\\ImportComponent\\Mapper\\ProductMappingAssistant' => true,
-            'App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider' => true,
-            'App\\Component\\View' => true,
-            'App\\Frontend\\Product\\Business\\ProductManager' => true,
-            'App\\Frontend\\User\\Business\\UserManager' => true,
-            'App\\Service\\SessionUser' => true,
             'Cycle\\ORM\\ORM' => true,
             'Psr\\Container\\ContainerInterface' => true,
             'Symfony\\Component\\DependencyInjection\\ContainerInterface' => true,
         ];
+    }
+
+    /**
+     * Gets the public 'App\Backend\ImportAttribute\Business\Model\Create\Attribute' shared service.
+     *
+     * @return \App\Backend\ImportAttribute\Business\Model\Create\Attribute
+     */
+    protected function getAttributeService()
+    {
+        return $this->services['App\\Backend\\ImportAttribute\\Business\\Model\\Create\\Attribute'] = new \App\Backend\ImportAttribute\Business\Model\Create\Attribute(($this->services['App\\Client\\Attribute\\Business\\AttributeBusinessFacade'] ?? $this->getAttributeBusinessFacadeService()));
+    }
+
+    /**
+     * Gets the public 'App\Backend\ImportAttribute\Business\Model\Importer' shared service.
+     *
+     * @return \App\Backend\ImportAttribute\Business\Model\Importer
+     */
+    protected function getImporterService()
+    {
+        return $this->services['App\\Backend\\ImportAttribute\\Business\\Model\\Importer'] = new \App\Backend\ImportAttribute\Business\Model\Importer(($this->services['App\\Backend\\ImportComponent\\Loader\\CsvImportLoader'] ?? $this->getCsvImportLoaderService()), ($this->services['App\\Backend\\ImportAttribute\\Business\\Model\\Create\\Attribute'] ?? $this->getAttributeService()), ($this->services['App\\Backend\\ImportAttribute\\Business\\Model\\Update\\AttributeImporter'] ?? $this->getAttributeImporterService()), 'dirname(__DIR__, 2).\'../import/');
+    }
+
+    /**
+     * Gets the public 'App\Backend\ImportAttribute\Business\Model\Update\AttributeImporter' shared service.
+     *
+     * @return \App\Backend\ImportAttribute\Business\Model\Update\AttributeImporter
+     */
+    protected function getAttributeImporterService()
+    {
+        return $this->services['App\\Backend\\ImportAttribute\\Business\\Model\\Update\\AttributeImporter'] = new \App\Backend\ImportAttribute\Business\Model\Update\AttributeImporter(($this->services['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] ?? $this->getActionProviderService()));
     }
 
     /**
@@ -109,7 +149,7 @@ class MyCachedContainer extends Container
      *
      * @return \App\Backend\ImportCategory\Business\Model\Importer
      */
-    protected function getImporterService()
+    protected function getImporter2Service()
     {
         return $this->services['App\\Backend\\ImportCategory\\Business\\Model\\Importer'] = new \App\Backend\ImportCategory\Business\Model\Importer(($this->services['App\\Backend\\ImportComponent\\Loader\\CsvImportLoader'] ?? $this->getCsvImportLoaderService()), ($this->services['App\\Backend\\ImportCategory\\Business\\Model\\Create\\Category'] ?? $this->getCategoryService()), ($this->services['App\\Backend\\ImportCategory\\Business\\Model\\Update\\CategoryImporter'] ?? $this->getCategoryImporterService()), 'dirname(__DIR__, 2).\'../import/');
     }
@@ -121,7 +161,7 @@ class MyCachedContainer extends Container
      */
     protected function getCategoryImporterService()
     {
-        return $this->services['App\\Backend\\ImportCategory\\Business\\Model\\Update\\CategoryImporter'] = new \App\Backend\ImportCategory\Business\Model\Update\CategoryImporter(($this->privates['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] ?? $this->getActionProviderService()));
+        return $this->services['App\\Backend\\ImportCategory\\Business\\Model\\Update\\CategoryImporter'] = new \App\Backend\ImportCategory\Business\Model\Update\CategoryImporter(($this->services['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] ?? $this->getActionProviderService()));
     }
 
     /**
@@ -165,13 +205,23 @@ class MyCachedContainer extends Container
     }
 
     /**
+     * Gets the public 'App\Backend\ImportProduct\Business\Model\ActionProvider' shared service.
+     *
+     * @return \App\Backend\ImportProduct\Business\Model\ActionProvider
+     */
+    protected function getActionProviderService()
+    {
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] = new \App\Backend\ImportProduct\Business\Model\ActionProvider(($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory'] ?? $this->getProductCategoryService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation'] ?? $this->getProductInformationService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductAttribute'] ?? $this->getProductAttributeService()));
+    }
+
+    /**
      * Gets the public 'App\Backend\ImportProduct\Business\Model\Create\Product' shared service.
      *
      * @return \App\Backend\ImportProduct\Business\Model\Create\Product
      */
     protected function getProductService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Create\\Product'] = new \App\Backend\ImportProduct\Business\Model\Create\Product(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Create\\Product'] = new \App\Backend\ImportProduct\Business\Model\Create\Product(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ProductIntegrityManager'] ?? $this->getProductIntegrityManagerService()));
     }
 
     /**
@@ -179,9 +229,19 @@ class MyCachedContainer extends Container
      *
      * @return \App\Backend\ImportProduct\Business\Model\Importer
      */
-    protected function getImporter2Service()
+    protected function getImporter3Service()
     {
         return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Importer'] = new \App\Backend\ImportProduct\Business\Model\Importer(($this->services['App\\Backend\\ImportComponent\\Loader\\CsvImportLoader'] ?? $this->getCsvImportLoaderService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Create\\Product'] ?? $this->getProductService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductImporter'] ?? $this->getProductImporterService()), 'dirname(__DIR__, 2).\'../import/');
+    }
+
+    /**
+     * Gets the public 'App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager' shared service.
+     *
+     * @return \App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager
+     */
+    protected function getAttributeIntegrityManagerService()
+    {
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\AttributeIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
     }
 
     /**
@@ -195,13 +255,33 @@ class MyCachedContainer extends Container
     }
 
     /**
+     * Gets the public 'App\Backend\ImportProduct\Business\Model\IntegrityManager\ProductIntegrityManager' shared service.
+     *
+     * @return \App\Backend\ImportProduct\Business\Model\IntegrityManager\ProductIntegrityManager
+     */
+    protected function getProductIntegrityManagerService()
+    {
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ProductIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\ProductIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+    }
+
+    /**
      * Gets the public 'App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager' shared service.
      *
      * @return \App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager
      */
     protected function getValueIntegrityManagerService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager();
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+    }
+
+    /**
+     * Gets the public 'App\Backend\ImportProduct\Business\Model\Update\ProductAttribute' shared service.
+     *
+     * @return \App\Backend\ImportProduct\Business\Model\Update\ProductAttribute
+     */
+    protected function getProductAttributeService()
+    {
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductAttribute'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductAttribute(($this->services['App\\Client\\Attribute\\Business\\AttributeBusinessFacade'] ?? $this->getAttributeBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? $this->getValueIntegrityManagerService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\AttributeIntegrityManager'] ?? $this->getAttributeIntegrityManagerService()));
     }
 
     /**
@@ -211,7 +291,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductCategoryService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductCategory(($this->services['App\\Client\\Category\\Business\\CategoryBusinessFacade'] ?? $this->getCategoryBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\CategoryIntegrityManager'] ?? $this->getCategoryIntegrityManagerService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager())));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductCategory(($this->services['App\\Client\\Category\\Business\\CategoryBusinessFacade'] ?? $this->getCategoryBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\CategoryIntegrityManager'] ?? $this->getCategoryIntegrityManagerService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? $this->getValueIntegrityManagerService()));
     }
 
     /**
@@ -221,7 +301,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductImporterService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductImporter'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductImporter(($this->privates['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] ?? $this->getActionProviderService()));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductImporter'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductImporter(($this->services['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] ?? $this->getActionProviderService()));
     }
 
     /**
@@ -231,7 +311,47 @@ class MyCachedContainer extends Container
      */
     protected function getProductInformationService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductInformation(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager())));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductInformation(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? $this->getValueIntegrityManagerService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Attribute\Business\AttributeBusinessFacade' shared service.
+     *
+     * @return \App\Client\Attribute\Business\AttributeBusinessFacade
+     */
+    protected function getAttributeBusinessFacadeService()
+    {
+        return $this->services['App\\Client\\Attribute\\Business\\AttributeBusinessFacade'] = new \App\Client\Attribute\Business\AttributeBusinessFacade(($this->services['App\\Client\\Attribute\\Persistence\\AttributeRepository'] ?? $this->getAttributeRepositoryService()), ($this->services['App\\Client\\Attribute\\Persistence\\AttributeEntityManager'] ?? $this->getAttributeEntityManagerService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Attribute\Persistence\AttributeEntityManager' shared service.
+     *
+     * @return \App\Client\Attribute\Persistence\AttributeEntityManager
+     */
+    protected function getAttributeEntityManagerService()
+    {
+        return $this->services['App\\Client\\Attribute\\Persistence\\AttributeEntityManager'] = new \App\Client\Attribute\Persistence\AttributeEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Attribute\\Persistence\\AttributeRepository'] ?? $this->getAttributeRepositoryService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Attribute\Persistence\AttributeRepository' shared service.
+     *
+     * @return \App\Client\Attribute\Persistence\AttributeRepository
+     */
+    protected function getAttributeRepositoryService()
+    {
+        return $this->services['App\\Client\\Attribute\\Persistence\\AttributeRepository'] = new \App\Client\Attribute\Persistence\AttributeRepository(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Attribute\Persistence\Mapper\AttributeMapper' shared service.
+     *
+     * @return \App\Client\Attribute\Persistence\Mapper\AttributeMapper
+     */
+    protected function getAttributeMapperService()
+    {
+        return $this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper();
     }
 
     /**
@@ -355,13 +475,23 @@ class MyCachedContainer extends Container
     }
 
     /**
+     * Gets the public 'App\Component\View' shared service.
+     *
+     * @return \App\Component\View
+     */
+    protected function getViewService()
+    {
+        return $this->services['App\\Component\\View'] = new \App\Component\View();
+    }
+
+    /**
      * Gets the public 'App\Frontend\Login\Communication\LoginController' shared service.
      *
      * @return \App\Frontend\Login\Communication\LoginController
      */
     protected function getLoginControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())));
+        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())));
     }
 
     /**
@@ -371,7 +501,7 @@ class MyCachedContainer extends Container
      */
     protected function getPasswordControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\PasswordController'] = new \App\Frontend\Login\Communication\PasswordController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
+        return $this->services['App\\Frontend\\Login\\Communication\\PasswordController'] = new \App\Frontend\Login\Communication\PasswordController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
     }
 
     /**
@@ -381,7 +511,7 @@ class MyCachedContainer extends Container
      */
     protected function getDetailControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\DetailController'] = new \App\Frontend\Model\DetailController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Model\\DetailController'] = new \App\Frontend\Model\DetailController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
     }
 
     /**
@@ -391,7 +521,7 @@ class MyCachedContainer extends Container
      */
     protected function getErrorControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\ErrorController'] = new \App\Frontend\Model\ErrorController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
+        return $this->services['App\\Frontend\\Model\\ErrorController'] = new \App\Frontend\Model\ErrorController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
     }
 
     /**
@@ -401,7 +531,7 @@ class MyCachedContainer extends Container
      */
     protected function getHomeControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\HomeController'] = new \App\Frontend\Model\HomeController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
+        return $this->services['App\\Frontend\\Model\\HomeController'] = new \App\Frontend\Model\HomeController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
     }
 
     /**
@@ -411,7 +541,17 @@ class MyCachedContainer extends Container
      */
     protected function getListControllerService()
     {
-        return $this->services['App\\Frontend\\Model\\ListController'] = new \App\Frontend\Model\ListController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Model\\ListController'] = new \App\Frontend\Model\ListController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+    }
+
+    /**
+     * Gets the public 'App\Frontend\Product\Business\ProductManager' shared service.
+     *
+     * @return \App\Frontend\Product\Business\ProductManager
+     */
+    protected function getProductManagerService()
+    {
+        return $this->services['App\\Frontend\\Product\\Business\\ProductManager'] = new \App\Frontend\Product\Business\ProductManager(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
     }
 
     /**
@@ -421,9 +561,17 @@ class MyCachedContainer extends Container
      */
     protected function getProductControllerService()
     {
-        $a = ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService());
+        return $this->services['App\\Frontend\\Product\\Communication\\ProductController'] = new \App\Frontend\Product\Communication\ProductController(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Product\\Business\\ProductManager'] ?? $this->getProductManagerService()), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+    }
 
-        return $this->services['App\\Frontend\\Product\\Communication\\ProductController'] = new \App\Frontend\Product\Communication\ProductController($a, ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), new \App\Frontend\Product\Business\ProductManager($a), ($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())));
+    /**
+     * Gets the public 'App\Frontend\User\Business\UserManager' shared service.
+     *
+     * @return \App\Frontend\User\Business\UserManager
+     */
+    protected function getUserManagerService()
+    {
+        return $this->services['App\\Frontend\\User\\Business\\UserManager'] = new \App\Frontend\User\Business\UserManager(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()));
     }
 
     /**
@@ -433,7 +581,7 @@ class MyCachedContainer extends Container
      */
     protected function getDashboardControllerService()
     {
-        return $this->services['App\\Frontend\\User\\Communication\\DashboardController'] = new \App\Frontend\User\Communication\DashboardController(($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
+        return $this->services['App\\Frontend\\User\\Communication\\DashboardController'] = new \App\Frontend\User\Communication\DashboardController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
     }
 
     /**
@@ -443,9 +591,7 @@ class MyCachedContainer extends Container
      */
     protected function getUserControllerService()
     {
-        $a = ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService());
-
-        return $this->services['App\\Frontend\\User\\Communication\\UserController'] = new \App\Frontend\User\Communication\UserController($a, ($this->privates['App\\Service\\SessionUser'] ?? ($this->privates['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->privates['App\\Component\\View'] ?? ($this->privates['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), new \App\Frontend\User\Business\UserManager($a));
+        return $this->services['App\\Frontend\\User\\Communication\\UserController'] = new \App\Frontend\User\Communication\UserController(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Frontend\\User\\Business\\UserManager'] ?? $this->getUserManagerService()));
     }
 
     /**
@@ -499,6 +645,16 @@ class MyCachedContainer extends Container
     }
 
     /**
+     * Gets the public 'App\Service\SessionUser' shared service.
+     *
+     * @return \App\Service\SessionUser
+     */
+    protected function getSessionUserService()
+    {
+        return $this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser();
+    }
+
+    /**
      * Gets the public 'App\Service\SymfonyMailerManager' shared service.
      *
      * @return \App\Service\SymfonyMailerManager
@@ -516,16 +672,6 @@ class MyCachedContainer extends Container
     protected function getFinderService()
     {
         return $this->services['Symfony\\Component\\Finder\\Finder'] = new \Symfony\Component\Finder\Finder();
-    }
-
-    /**
-     * Gets the private 'App\Backend\ImportProduct\Business\Model\ActionProvider' shared service.
-     *
-     * @return \App\Backend\ImportProduct\Business\Model\ActionProvider
-     */
-    protected function getActionProviderService()
-    {
-        return $this->privates['App\\Backend\\ImportProduct\\Business\\Model\\ActionProvider'] = new \App\Backend\ImportProduct\Business\Model\ActionProvider(($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory'] ?? $this->getProductCategoryService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation'] ?? $this->getProductInformationService()));
     }
 
     /**

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportCategory\Business\Model\Create;
 
-use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvCategoryDataTransferObject;
 
 interface CategoryInterface
 {
-    public function createCategory(CsvDataTransferObject $csvDTO): ?CsvDataTransferObject;
+    public function createCategory(CsvCategoryDataTransferObject $csvDTO): ?CsvCategoryDataTransferObject;
 }

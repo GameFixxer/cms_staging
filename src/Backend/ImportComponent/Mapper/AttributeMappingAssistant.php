@@ -3,12 +3,12 @@
 
 namespace App\Backend\ImportComponent\Mapper;
 
+
 use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\StringConverter\StringConverter;
-use App\Generated\Dto\CsvCategoryDataTransferObject;
-use App\Generated\Dto\CsvDataTransferObject;
+use App\Generated\Dto\CsvAttributeDataTransferObject;
 
-class CategoryMappingAssistant implements MappingAssistantInterface
+class AttributeMappingAssistant implements MappingAssistantInterface
 {
     private bool $lowerCamelCase;
     private array $columnAttributes;
@@ -19,12 +19,12 @@ class CategoryMappingAssistant implements MappingAssistantInterface
     {
         $this->lowerCamelCase = true;
         $this->stringConverter = $stringConverter;
-        $this->columnAttributes = $importFilter->getCategoryFilterList();
+        $this->columnAttributes = $importFilter->getAttributeFilterList();
     }
 
-    public function mapInputToDTO(array $headerList, array $product): CsvCategoryDataTransferObject
+    public function mapInputToDTO(array $headerList, array $product): CsvAttributeDataTransferObject
     {
-        $csvDataTransferObject = new CsvCategoryDataTransferObject();
+        $csvDataTransferObject = new  CsvAttributeDataTransferObject();
         foreach ($headerList as $column) {
             $action = 'set'.$this->stringConverter->camelCaseToSnakeCase($column);
             $csvDataTransferObject->$action($product[$column]);
@@ -37,7 +37,7 @@ class CategoryMappingAssistant implements MappingAssistantInterface
         $headerList = [];
         foreach ($header as $value) {
             $snakeCase = 'set'.$this->stringConverter->camelCaseToSnakeCase($value);
-            $isolateCategory = str_replace('Category', '', $snakeCase);
+            $isolateCategory = str_replace('Attribute', '', $snakeCase);
             if (in_array($isolateCategory, $this->columnAttributes)) {
                 $headerList[] = $value;
             }
