@@ -24,7 +24,7 @@ class Attribute implements AttributeInterface
 
         $attributeFromRepository = $this->attributeBusinessFacade->get($csvDTO->getAttributeKey());
         if ($attributeFromRepository instanceof \App\Client\Attribute\Persistence\Entity\Attribute) {
-            $csvDTO->setAttributeId($attributeFromRepository->getId());
+            $csvDTO->setAttributeId($attributeFromRepository->getAttributeId());
             return $csvDTO;
         }
         $attribute = new AttributeDataTransferObject();
