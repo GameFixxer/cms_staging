@@ -7,6 +7,8 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
+use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 /**
  * @Entity(
  *     table = "product"
@@ -24,9 +26,30 @@ class Product
     protected $id;
 
     /**
-     * @BelongsTo(target = "category",  nullable = true)
+     * @BelongsTo(target = "category",   nullable = true)
      */
     protected $category;
+
+    /**
+     * @ManyToMany(target = "attribute", though="attribute_key", nullable = true)
+     */
+    protected $attribute;
+
+    /**
+     * @return mixed
+     */
+    public function getAttribute()
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * @param mixed $attribute
+     */
+    public function setAttribute($attribute): void
+    {
+        $this->attribute = $attribute;
+    }
 
     /**
      * @Column(type="string")

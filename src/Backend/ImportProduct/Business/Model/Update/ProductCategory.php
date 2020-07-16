@@ -3,28 +3,26 @@ declare(strict_types=1);
 
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
-
-use App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager;
-use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface;
+use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManagerInterface;
 use App\Client\Category\Business\CategoryBusinessFacadeInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Generated\Dto\CategoryDataTransferObject;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 
 class ProductCategory implements ProductInterface
 {
-    private CategoryIntegrityManager $categoryIntegrityManager;
-    private ValueIntegrityManager $valueIntegrityManager;
+    private IntegrityManagerInterface $categoryIntegrityManager;
+    private ValueIntegrityManagerInterface $valueIntegrityManager;
     private CategoryBusinessFacadeInterface $categoryBusinessFacade;
     private ProductBusinessFacadeInterface $productBusinessFacade;
 
     public function __construct(
         CategoryBusinessFacadeInterface $categoryBusinessFacade,
         ProductBusinessFacadeInterface $productBusinessFacade,
-        CategoryIntegrityManager $categoryIntegrityManager,
-        ValueIntegrityManager $integrityManager
+        IntegrityManagerInterface $categoryIntegrityManager,
+        ValueIntegrityManagerInterface $integrityManager
     ) {
         $this->categoryBusinessFacade = $categoryBusinessFacade;
         $this->productBusinessFacade = $productBusinessFacade;
@@ -37,7 +35,6 @@ class ProductCategory implements ProductInterface
         if (empty($csvDTO->getKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
-
             $category = $this->categoryBusinessFacade->getByKey($csvDTO->getKey());
             if (!$category instanceof CategoryDataTransferObject) {
                 $category = new CategoryDataTransferObject();
@@ -45,7 +42,9 @@ class ProductCategory implements ProductInterface
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
-            } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category)) {
+            } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category) ||
+                $this->valueIntegrityManager->checkObjectValueChanged($csvDTO, $category)
+            ) {
                 $csvDTO->setCategoryId($category->getCategoryId());
                 $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
                 $this->saveUpdatedProduct($csvDTO);

@@ -9,7 +9,7 @@ use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use function PHPUnit\Framework\isEmpty;
 
-class CategoryIntegrityManager implements CategoryIntegrityManagerInterface
+class CategoryIntegrityManager implements IntegrityManagerInterface
 {
     private \Cycle\ORM\RepositoryInterface $ormCategoryRepository;
 

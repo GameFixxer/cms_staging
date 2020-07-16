@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace App\Backend\ImportProduct\Communication;
 
 use App\Backend\ImportProduct\Business\Model\Importer;
-use App\Component\Container;
 use App\Component\SymfonyContainer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

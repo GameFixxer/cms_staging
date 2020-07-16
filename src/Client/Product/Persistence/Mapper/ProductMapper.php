@@ -16,6 +16,7 @@ class ProductMapper implements ProductMapperInterface
         $productDataTransferObject->setDescription($product->getProductDescription());
         $productDataTransferObject->setArticleNumber($product->getArticleNumber());
         $productDataTransferObject->setCategory($product->getCategory());
+        $productDataTransferObject->setAttribute($product->getAttribute());
 
         return $productDataTransferObject;
     }

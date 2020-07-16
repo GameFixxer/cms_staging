@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+
+        <service id="Cycle\ORM\ORM">
+            <factory class="App\Service\DatabaseManager" method="connect"/>
+        </service>
+        <service id="App\Component\View" public="true"/>
+        <service id="App\Service\DatabaseManager" public="true"/>
+        <service id="App\Service\SessionUser" public="true"/>
+
+        <!-- Mapper -->
+
+        <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
+        <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
+        <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
+        <service id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" public ="true"/>
+
+        <!--Repository-->
+        <service id="App\Client\Attribute\Persistence\AttributeRepository" public ="true">
+            <argument id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" type="service"/>
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
+
+        <service id="App\Client\Product\Persistence\ProductRepository" public="true">
+            <argument type="service" id="App\Client\Product\Persistence\Mapper\ProductMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
+        </service>
+        <service id="App\Client\User\Persistence\UserRepository" public="true">
+            <argument type="service" id="App\Client\User\Persistence\Mapper\UserMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
+        </service>
+        <service id="App\Client\Category\Persistence\CategoryRepository" public="true">
+            <argument type="service" id="App\Client\Category\Persistence\Mapper\CategoryMapper"/>
+            <argument type="service" id="Cycle\ORM\ORM"/>
+        </service>
+
+        <!--EntityManager-->
+
+        <service id="App\Client\Attribute\Persistence\AttributeEntityManager" public ="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
+        </service>
+
+        <service id="App\Client\Product\Persistence\ProductEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\Product\Persistence\ProductRepository"/>
+        </service>
+        <service id="App\Client\User\Persistence\UserEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\User\Persistence\UserRepository"/>
+        </service>
+        <service id="App\Client\Category\Persistence\CategoryEntityManager" public="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\Category\Persistence\CategoryRepository"/>
+        </service>
+        <!--BusinessFacade-->
+
+        <service id="App\Client\Attribute\Business\AttributeBusinessFacade" public ="true">
+            <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
+            <argument id="App\Client\Attribute\Persistence\AttributeEntityManager" type="service"/>
+        </service>
+
+        <service id="App\Client\Product\Business\ProductBusinessFacade" public ="true">
+            <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
+            <argument id="App\Client\Product\Persistence\ProductEntityManager" type="service"/>
+        </service>
+        <service id="App\Client\User\Business\UserBusinessFacade" public ="true">
+            <argument id="App\Client\User\Persistence\UserRepository" type="service"/>
+            <argument id="App\Client\User\Persistence\UserEntityManager" type="service"/>
+        </service>
+        <service id="App\Client\Category\Business\CategoryBusinessFacade" public ="true">
+            <argument id="App\Client\Category\Persistence\CategoryRepository" type="service"/>
+            <argument id="App\Client\Category\Persistence\CategoryEntityManager" type="service"/>
+        </service>
+        <!--Service-->
+        <service id="App\Service\SymfonyMailerManager" public ="true"/>
+        <service id="App\Service\PasswordManager" public ="true"/>
+        <service id="Symfony\Component\Finder\Finder" public ="true"/>
+        <service id="App\Service\File\Model\Get" public ="true">
+            <argument type="service" id="Symfony\Component\Finder\Finder" />
+        </service>
+        <service id="App\Service\File\Model\Move" public ="true"/>
+        <service id="App\Service\File\FileServiceClient" public ="true">
+            <argument id="App\Service\File\Model\Get" type="service"/>
+            <argument id="App\Service\File\Model\Move" type="service"/>
+        </service>
+        <!--ImportComponents-->
+        <service id="App\Frontend\Product\Business\ProductManager" public ="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Frontend\User\Business\UserManager" public ="true">
+            <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
+        </service>
+
+
+
+    </services>
+
+</container>

@@ -7,6 +7,7 @@ namespace App\Backend\ImportCategory\Business\Model\Create;
 use App\Client\Category\Business\CategoryBusinessFacadeInterface;
 use App\Client\Category\Persistence\Entity\Category as CategoryEntity;
 use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\Dto\CsvCategoryDataTransferObject;
 use App\Generated\Dto\CsvDataTransferObject;
 
 class Category implements CategoryInterface
@@ -18,7 +19,7 @@ class Category implements CategoryInterface
         $this->categoryBusinessFacade = $categoryBusinessFacade;
     }
 
-    public function createCategory(CsvDataTransferObject $csvDTO) : ?CsvDataTransferObject
+    public function createCategory(CsvCategoryDataTransferObject $csvDTO) : ?CsvCategoryDataTransferObject
     {
         if ($csvDTO->getCategoryKey() === '') {
             throw new \Exception('CategoryKey must not be empty', 1);
@@ -26,12 +27,12 @@ class Category implements CategoryInterface
 
         $categoryFromRepository = $this->categoryBusinessFacade->getByKey($csvDTO->getCategoryKey());
         if ($categoryFromRepository instanceof CategoryEntity) {
-            $csvDTO->setCategoryId($categoryFromRepository->getCategoryId());
+            $csvDTO->setId($categoryFromRepository->getCategoryId());
             return $csvDTO;
         }
         $categoryDTO = new CategoryDataTransferObject();
         $categoryDTO->setCategoryKey($csvDTO->getCategoryKey());
-        $csvDTO->setCategoryId($this->categoryBusinessFacade->save($categoryDTO)->getCategoryId());
+        $csvDTO->setId($this->categoryBusinessFacade->save($categoryDTO)->getCategoryId());
 
         return $csvDTO;
     }

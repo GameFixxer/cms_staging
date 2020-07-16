@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="path" type="string">dirname(__DIR__, 2).'../import/</parameter>
+    </parameters>
+
+
+    <services>
+        <!--ImportComponents-->
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager" public ="true">
+            <argument type="service" id="Cycle\ORM\ORM"/>
+        </service>
+        <service id="App\Backend\ImportComponent\StringConverter\StringConverter" public ="true"/>
+        <service id="App\Backend\ImportComponent\ImportFilterProvider" public ="true"/>
+        <service id="App\Backend\ImportComponent\Mapper\ProductMappingAssistant">
+            <argument id="App\Backend\ImportComponent\StringConverter\StringConverter" type="service"/>
+            <argument type="service" id="App\Backend\ImportComponent\ImportFilterProvider"/>
+
+        </service>
+        <service id="App\Backend\ImportComponent\Mapper\CategoryMappingAssistant" public ="true">
+            <argument id="App\Backend\ImportComponent\StringConverter\StringConverter" type="service"/>
+            <argument type="service" id="App\Backend\ImportComponent\ImportFilterProvider"/>
+
+        </service>
+        <service id="App\Backend\ImportComponent\Loader\CsvImportLoader" public ="true">
+            <argument type="service" id="App\Service\File\FileServiceClient"/>
+            <argument type="service" id="App\Backend\ImportComponent\Mapper\ProductMappingAssistant"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager" public ="true">
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+        </service>
+
+        <!--ImportProduct-->
+        <service id="App\Backend\ImportProduct\Business\Model\Create\Product" public ="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument type="service"
+                      id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ProductIntegrityManager"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\ActionProvider" public="true">
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductCategory" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductInformation" type="service"/>
+            <argument type="service" id="App\Backend\ImportProduct\Business\Model\Update\ProductAttribute"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductCategory" public="true">
+            <argument id="App\Client\Category\Business\CategoryBusinessFacade" type="service"/>
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager"
+                      type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager"
+                      type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductInformation" public="true">
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager"
+                      type="service"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductImporter" public="true">
+            <argument type="service" id="App\Backend\ImportProduct\Business\Model\ActionProvider"/>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\Importer" public="true">
+            <argument id="App\Backend\ImportComponent\Loader\CsvImportLoader" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Create\Product" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\Update\ProductImporter" type="service"/>
+            <argument>%path%</argument>
+        </service>
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager" public="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
+
+        <service id="App\Backend\ImportProduct\Business\Model\Update\ProductAttribute" public="true">
+            <argument id="App\Client\Attribute\Business\AttributeBusinessFacade" type="service"/>
+            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
+            <argument id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager"
+                      type="service"/>
+            <argument type="service"
+                      id="App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager"/>
+        </service>
+
+        <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\ProductIntegrityManager" public="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
+
+        <!--ImportCategory-->
+        <service id="App\Backend\ImportCategory\Business\Model\Create\Category" public ="true">
+            <argument id="App\Client\Category\Business\CategoryBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Backend\ImportCategory\Business\Model\Update\CategoryImporter" public="true">
+            <argument type="service" id="App\Backend\ImportProduct\Business\Model\ActionProvider"/>
+        </service>
+
+        <service id="App\Backend\ImportCategory\Business\Model\Importer" public="true">
+            <argument id="App\Backend\ImportComponent\Loader\CsvImportLoader" type="service"/>
+            <argument id="App\Backend\ImportCategory\Business\Model\Create\Category" type="service"/>
+            <argument id="App\Backend\ImportCategory\Business\Model\Update\CategoryImporter" type="service"/>
+            <argument>%path%</argument>
+        </service>
+
+
+        <!--ImportAttributes-->
+        <service id="App\Backend\ImportAttribute\Business\Model\Importer" public ="true">
+            <argument type="service" id="App\Backend\ImportComponent\Loader\CsvImportLoader"/>
+            <argument type="service" id="App\Backend\ImportAttribute\Business\Model\Create\Attribute"/>
+            <argument type="service" id="App\Backend\ImportAttribute\Business\Model\Update\AttributeImporter"/>
+            <argument>%path%</argument>
+        </service>
+        <service id="App\Backend\ImportAttribute\Business\Model\Update\AttributeImporter" public ="true">
+            <argument id="App\Backend\ImportProduct\Business\Model\ActionProvider" type="service"/>
+        </service>
+        <service id="App\Backend\ImportAttribute\Business\Model\Create\Attribute" public ="true">
+            <argument id="App\Client\Attribute\Business\AttributeBusinessFacade" type="service"/>
+        </service>
+
+
+
+    </services>
+
+</container>

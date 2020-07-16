@@ -9,20 +9,30 @@ class ImportFilterProvider
     {
     }
 
-    public function getProductFilterList()
+    public function getProductFilterList():array
     {
         return[
             'setKey',
             'setArticleNumber',
             'setDescription',
-            'setName'
+            'setName',
+            'setAttributeKey',
+            'setAttributeValue'
         ];
     }
 
-    public function getCategoryFilterList()
+    public function getCategoryFilterList():array
     {
         return [
             'setKey'
+        ];
+    }
+
+    public function getAttributeFilterList():array
+    {
+        return [
+            'setKey',
+            'setValue'
         ];
     }
 }

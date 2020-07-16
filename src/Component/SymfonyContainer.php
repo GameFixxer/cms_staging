@@ -7,6 +7,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Finder\Finder;
 
 class SymfonyContainer
 {
@@ -19,7 +20,12 @@ class SymfonyContainer
         if (!$containerConfigCache->isFresh()) {
             $containerBuilder = new ContainerBuilder();
             $loader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__));
-            $loader->load('/home/rene/PhpstormProjects/MVC/src/Component/DependencyContainer.xml');
+            $finder = (new Finder())->files()->name('*.xml')->in(__DIR__.'/ContainerFiles/');
+            foreach ($finder as $file) {
+                $loader->load($file);
+
+
+            }
             $containerBuilder->compile();
             $dumper = new PhpDumper($containerBuilder);
             $containerConfigCache->write(
@@ -27,6 +33,7 @@ class SymfonyContainer
                 $dumper->dump(['class'=>'MyCachedContainer']),
                 $containerBuilder->getResources()
             );
+            return $containerBuilder;
         }
         require_once $file;
         $container = new \MyCachedContainer();

@@ -12,7 +12,92 @@ class CsvProductDataTransferObject
     private ?object $category = null;
     private ?string $categoryKey = null;
     private int $categoryId = 0;
+    private string $attributeValue = '';
+    private string $attributeKey = '';
+    private ?object $attribute = null;
+    private ?object $product = null;
+    private int $attributeId = 0;
 
+    /**
+     * @return int
+     */
+    public function getAttributeId(): int
+    {
+        return $this->attributeId;
+    }
+
+    /**
+     * @param int $attributeId
+     */
+    public function setAttributeId(int $attributeId): void
+    {
+        $this->attributeId = $attributeId;
+    }
+
+    /**
+     * @return object|null
+     */
+    public function getProduct(): ?object
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param object|null $product
+     */
+    public function setProduct(?object $product): void
+    {
+        $this->product = $product;
+    }
+
+    /**
+     * @return object|null
+     */
+    public function getAttribute(): ?object
+    {
+        return $this->attribute;
+    }
+
+    /**
+     * @param object|null $attribute
+     */
+    public function setAttribute(?object $attribute): void
+    {
+        $this->attribute = $attribute;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAttributeValue(): string
+    {
+        return $this->attributeValue;
+    }
+
+    /**
+     * @param string $attributeValue
+     */
+    public function setAttributeValue(string $attributeValue): void
+    {
+        $this->attributeValue = $attributeValue;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttributeKey(): string
+    {
+        return $this->attributeKey;
+    }
+
+    /**
+     * @param string $attributeKey
+     */
+    public function setAttributeKey(string $attributeKey): void
+    {
+        $this->attributeKey = $attributeKey;
+    }
 
     public function setName(string $name): void
     {

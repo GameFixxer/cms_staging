@@ -10,7 +10,6 @@ use App\Generated\Dto\CsvDataTransferObject;
 
 class CategoryMappingAssistant implements MappingAssistantInterface
 {
-    private $attributes;
     private bool $lowerCamelCase;
     private array $columnAttributes;
     private StringConverter $stringConverter;
@@ -19,7 +18,6 @@ class CategoryMappingAssistant implements MappingAssistantInterface
     public function __construct(StringConverter $stringConverter, ImportFilterProvider $importFilter)
     {
         $this->lowerCamelCase = true;
-        $this->attributes = null;
         $this->stringConverter = $stringConverter;
         $this->columnAttributes = $importFilter->getCategoryFilterList();
     }
