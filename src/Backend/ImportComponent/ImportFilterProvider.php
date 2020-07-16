@@ -30,9 +30,9 @@ class ImportFilterProvider
 
     public function getAttributeFilterList():array
     {
-     return [
-         'setKey',
-         'setValue'
-     ];
+        return [
+            'setKey',
+            'setValue'
+        ];
     }
 }

@@ -11,7 +11,7 @@ class CsvCategoryDataTransferObject
      * @return string
      */
 
-    private int $id =0;
+    private int $id = 0;
 
     /**
      * @return int
