@@ -37,7 +37,7 @@ class ValueIntegrityManager implements ValueIntegrityManagerInterface
         if (!$productCategory instanceof Category) {
             return true;
         }
-        if ($productCategory->getKey() !== $categoryDTO->getCategoryKey() || $productCategory->getId() !== $categoryDTO->getCategoryId()) {
+        if ($productCategory->getCategoryKey() !== $categoryDTO->getCategoryKey() || $productCategory->getCategoryId() !== $categoryDTO->getCategoryId()) {
             return true;
         }
         return false;

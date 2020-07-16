@@ -12,8 +12,8 @@ class CsvProductDataTransferObject
     private ?object $category = null;
     private ?string $categoryKey = null;
     private int $categoryId = 0;
-    private ?string $attributeValue = null;
-    private ?string $attributeKey = null;
+    private string $attributeValue = '';
+    private string $attributeKey = '';
     private ?object $attribute = null;
     private ?object $product = null;
     private int $attributeId = 0;
@@ -86,7 +86,7 @@ class CsvProductDataTransferObject
     /**
      * @return string
      */
-    public function getAttributeKey(): ?string
+    public function getAttributeKey(): string
     {
         return $this->attributeKey;
     }

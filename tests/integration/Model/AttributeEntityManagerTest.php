@@ -73,7 +73,7 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
 
     public function TestDeleteProduct()
     {
-        $this->attributeDto = $this->testCreateAttribute();
+        $this->testCreateAttribute();
 
         $this->attributeEntityManager->delete($this->attributeDto);
 
