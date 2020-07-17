@@ -85,6 +85,5 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
         $this->attributeDto = new AttributeDataTransferObject();
         $this->attributeDto->setKey($name);
         $this->attributeDto->setValue($description);
-        $this->attributeDto->setProduct(null);
     }
 }

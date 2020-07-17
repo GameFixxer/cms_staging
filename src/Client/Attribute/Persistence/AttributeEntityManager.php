@@ -47,7 +47,6 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
         }
         $entity->setAttributeKey($attribute->getKey());
         $entity->setAttributeValue($attribute->getValue());
-        $entity->setProduct($attribute->getProduct());
         $transaction->persist($entity);
         $transaction->run();
 

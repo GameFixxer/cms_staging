@@ -31,7 +31,6 @@ class ProductAttribute implements ProductInterface
     }
     public function update(CsvProductDataTransferObject $csvDTO): void
     {
-        dump($csvDTO->getAttributeKey());
         if (empty($csvDTO->getAttributeKey())) {
             throw new \Exception('AttributeKey must not be empty', 1);
         }
@@ -40,7 +39,6 @@ class ProductAttribute implements ProductInterface
             $attribute = new AttributeDataTransferObject();
             $attribute->setKey($csvDTO->getAttributeKey());
             $attribute->setValue($csvDTO->getAttributeValue());
-            $attribute->setProduct($this->productBusinessFacade->get($csvDTO->getArticleNumber()));
             $attribute->setId(($this->attributeBusinessFacade->save($attribute))->getId());
             $csvDTO->setAttributeId($attribute->getId());
             $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));
@@ -48,7 +46,6 @@ class ProductAttribute implements ProductInterface
         } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $attribute)) {
             $attribute->setKey($csvDTO->getAttributeKey());
             $attribute->setValue($csvDTO->getAttributeValue());
-            $attribute->setProduct($this->productBusinessFacade->get($csvDTO->getArticleNumber()));
             $attribute->setId($this->attributeBusinessFacade->save($attribute)->getId());
             $csvDTO->setAttributeId($attribute->getId());
             $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));

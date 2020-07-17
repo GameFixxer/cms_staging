@@ -71,8 +71,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
                 $ormCategoryRepository->findOne(['attribute_key'=>$this->csvDTO->getAttributeKey()])->getAttributeValue()
             );
 
-            self::assertNotNull($ormCategoryRepository->findOne(['attribute_key'=>$this->csvDTO->getAttributeKey()])->getProduct());
-            codecept_debug($ormCategoryRepository->findOne(['attribute_key'=>$this->csvDTO->getAttributeKey()])->getProduct());
+            self::assertNotNull($ormCategoryRepository->findOne(['attribute_key'=>$this->csvDTO->getAttributeKey()]));
             self::assertEquals('', $productFromRepository->getName());
         }
     }

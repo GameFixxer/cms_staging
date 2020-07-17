@@ -35,7 +35,7 @@ class Product implements ProductInterface
         $productDTO = new ProductDataTransferObject();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $csvDTO->setId($this->productBusinessFacade->save($productDTO)->getId());
-        $csvDTO->setProduct($this->integrityManager->mapEntity($csvDTO));
+        //$csvDTO->setProduct($this->integrityManager->mapEntity($csvDTO));
 
         return $csvDTO;
     }

@@ -31,13 +31,19 @@ class Product
     protected $category;
 
     /**
-     * @ManyToMany(target = "attribute", though="attribute_key", nullable = true)
+     * @ManyToMany(target = "attribute",  though = "ProductAttribute", nullable = true)
      */
     protected $attribute;
 
     /**
      * @return mixed
      */
+
+    public function __construct()
+    {
+        $this->attribute = new PivotedCollection();
+    }
+
     public function getAttribute()
     {
         return $this->attribute;

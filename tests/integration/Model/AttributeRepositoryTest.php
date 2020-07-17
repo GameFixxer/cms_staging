@@ -81,7 +81,6 @@ class AttributeRepositoryTest extends \Codeception\Test\Unit
         $this->entity = new Attribute();
         $this->entity->setAttributeKey('mouse');
         $this->entity->setAttributeValue('mouse2');
-        $this->entity->setProduct(null);
 
         return $this->entity;
     }
