@@ -54,12 +54,7 @@ class ProductCategory implements ProductInterface
 
     private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
     {
-        $productDTO = new ProductDataTransferObject();
-        if (!empty($csvDTO->getId())) {
-            $productDTO->setId($csvDTO->getId());
-        }
-
-        $productDTO->setArticleNumber($csvDTO->getArticleNumber());
+        $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
         $productDTO->setCategory($csvDTO->getCategory());
         $this->productBusinessFacade->save($productDTO);
     }
