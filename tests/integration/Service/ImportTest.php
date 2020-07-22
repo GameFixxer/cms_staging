@@ -51,7 +51,7 @@ class ImportTest extends \Codeception\Test\Unit
     {
         parent::_after();
         unset($_SERVER['REQUEST_METHOD']);
-       // $this->deleteTestArticleFromDB();
+        // $this->deleteTestArticleFromDB();
         // $this->deleteTestCategoryFromDB();
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
     }
@@ -64,13 +64,9 @@ class ImportTest extends \Codeception\Test\Unit
         $this->importer->import();
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
-            if ($productFromRepository !== null) {
-                $this->assertSame($product->getName(), $productFromRepository->getName());
-                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
-                $this->assertNotNull($product->getCategory());
-                $this->assertNotNull($productFromRepository->getCategory());
-                $this->assertSame($product->getCategory(), $productFromRepository->getCategory());
-            }
+            $this->assertSame($product->getName(), $productFromRepository->getName());
+            $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
+            $this->assertNotNull($productFromRepository->getCategory());
         }
     }
 
@@ -84,11 +80,9 @@ class ImportTest extends \Codeception\Test\Unit
         foreach ($importList as $product) {
             $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
 
-                $this->assertSame($product->getName(), $productFromRepository->getName());
-                $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
-                $this->assertNotNull($product->getCategory());
-                $this->assertNotNull($productFromRepository->getCategory());
-                $this->assertSame($product->getCategory(), $productFromRepository->getCategory());
+            $this->assertSame($product->getName(), $productFromRepository->getName());
+            $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
+            $this->assertNotNull($productFromRepository->getCategory());
 
         }
         $this->setBackFiles('/import/dumper/test_product_abstract2.csv', '/import/testUpdate/test_product_abstract2.csv');

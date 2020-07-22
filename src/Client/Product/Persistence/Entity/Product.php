@@ -9,11 +9,7 @@ use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
 use Cycle\Annotated\Annotation\Relation\ManyToMany;
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
-/**
- * @Entity(
- *     table = "product"
- * )
- */
+/** @Entity */
 class Product
 {
     public const TABLE = 'product';
@@ -34,10 +30,6 @@ class Product
      * @ManyToMany(target = "attribute",  though = "ProductAttribute", nullable = true)
      */
     protected $attribute;
-
-    /**
-     * @return mixed
-     */
 
     public function __construct()
     {

@@ -60,7 +60,6 @@ class UnitTester extends \Codeception\Actor
     }
     public function getSmartyParams(string $paramName)
     {
-        //$this->view = $this->setUpSmartyAndView();
         return $this->view->getParam($paramName);
     }
     public function exchangeDtoToSmartyParam($value, string $name)

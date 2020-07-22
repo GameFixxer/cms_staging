@@ -10,11 +10,7 @@ use Cycle\Annotated\Annotation\Relation\HasMany;
 use Cycle\Annotated\Annotation\Relation\ManyToMany;
 use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
-/**
- * @Entity(
- *     table = "attribute"
- * )
- */
+/** @Entity */
 class Attribute
 {
     public const TABLE = 'attribute';
@@ -29,6 +25,29 @@ class Attribute
      * @var string
      */
     protected $attribute_key;
+
+    /*
+    /**
+     * @ManyToMany(target = "product",  though = "ProductAttribute", nullable = true)
+     */
+    /*
+    protected $product;
+
+    public function __construct()
+    {
+        $this->product = new PivotedCollection();
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    public function setProduct($product): void
+    {
+        $this->product = $product;
+    }*/
+
 
     /**
      * @Column( unique = "true", type="string")

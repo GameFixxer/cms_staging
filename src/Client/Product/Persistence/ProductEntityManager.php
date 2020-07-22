@@ -51,7 +51,6 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $entity->setAttribute($product->getAttribute());
         $transaction->persist($entity);
         $transaction->run();
-
         $product->setId($entity->getId());
 
         return $product;

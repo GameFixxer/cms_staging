@@ -31,7 +31,7 @@ class LoginPageTest extends \Codeception\Test\Unit
                 'admin'=>'true'
         ];
         $this->tester->setUpBootstrap();
-        $smartyParams = (string)$this->tester->getSmartyParams('login');
+        $smartyParams = (string)$this->tester->getSmartyParams('login')['login'];
         $this->assertEquals($smartyParams, 'LOGIN AREA');
     }
 }
