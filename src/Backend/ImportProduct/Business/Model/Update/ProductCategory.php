@@ -6,6 +6,7 @@ namespace App\Backend\ImportProduct\Business\Model\Update;
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface;
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManagerInterface;
 use App\Client\Category\Business\CategoryBusinessFacadeInterface;
+use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Generated\Dto\CategoryDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
@@ -43,7 +44,8 @@ class ProductCategory implements ProductInterface
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
             } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category) ||
-                $this->valueIntegrityManager->checkObjectValueChanged($csvDTO, $category)
+                $this->valueIntegrityManager->checkObjectValueChanged($csvDTO, $category) ||
+                !($this->productBusinessFacade->get($csvDTO->getArticleNumber()))->getCategory() instanceof Category
             ) {
                 $csvDTO->setCategoryId($category->getCategoryId());
                 $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
@@ -54,12 +56,10 @@ class ProductCategory implements ProductInterface
 
     private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
     {
-        $productDTO = new ProductDataTransferObject();
-        if (!empty($csvDTO->getId())) {
-            $productDTO->setId($csvDTO->getId());
+        $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
+        if (!$productDTO instanceof ProductDataTransferObject) {
+            throw new \Exception('Critical RepositoryError', 1);
         }
-
-        $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $productDTO->setCategory($csvDTO->getCategory());
         $this->productBusinessFacade->save($productDTO);
     }

@@ -14,7 +14,6 @@ class AttributeMapper implements AttributeMapperInterface
         $attributeDTO->setId($attribute->getAttributeId());
         $attributeDTO->setKey($attribute->getAttributeKey());
         $attributeDTO->setValue($attribute->getAttributeValue());
-        $attributeDTO->setProduct($attribute->getProduct());
         return  $attributeDTO;
     }
 }

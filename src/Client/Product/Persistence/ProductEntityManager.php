@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Client\Product\Persistence;
 
+use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
@@ -48,10 +49,12 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $entity->setCategory($product->getCategory());
         $entity->setProductDescription($product->getDescription());
         $entity->setArticleNumber($product->getArticleNumber());
-        $entity->setAttribute($product->getAttribute());
+        if ($product->getAttribute() instanceof Attribute) {
+            $entity->addAttribute($product->getAttribute());
+        }
+
         $transaction->persist($entity);
         $transaction->run();
-
         $product->setId($entity->getId());
 
         return $product;

@@ -25,9 +25,9 @@ class ActionProvider
     public function getProductActionList()
     {
         return [
-            $this->productAttribute,
             $this->productCategory,
-            $this->productInformation
+            $this->productInformation,
+            $this->productAttribute
         ];
     }
 

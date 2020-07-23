@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Generated\Dto;
 
+use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Category\Persistence\Entity\Category;
 
 class ProductDataTransferObject implements DataTransferObjectInterface
@@ -13,12 +14,12 @@ class ProductDataTransferObject implements DataTransferObjectInterface
     private string $articleNumber = '';
     private string $desc = '';
     private ?object $category = null;
-    private ?object $attribute = null;
+    private ?Attribute $attribute = null;
 
     /**
      * @return object|null
      */
-    public function getAttribute(): ?object
+    public function getAttribute(): ?Attribute
     {
         return $this->attribute;
     }

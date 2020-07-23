@@ -6,7 +6,6 @@ namespace App\Generated\Dto;
 class AttributeDataTransferObject implements DataTransferObjectInterface
 {
     private string $attributeKey;
-    private $product;
     private int $attributeId;
     private string $attributeValue;
     /**
@@ -25,21 +24,6 @@ class AttributeDataTransferObject implements DataTransferObjectInterface
         $this->attributeKey = $attributeKey;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param mixed $product
-     */
-    public function setProduct($product): void
-    {
-        $this->product = $product;
-    }
 
     /**
      * @return int

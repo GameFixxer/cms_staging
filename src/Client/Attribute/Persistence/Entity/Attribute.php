@@ -8,12 +8,9 @@ use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 use Cycle\Annotated\Annotation\Relation\HasMany;
 use Cycle\Annotated\Annotation\Relation\ManyToMany;
+use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
-/**
- * @Entity(
- *     table = "attribute"
- * )
- */
+/** @Entity */
 class Attribute
 {
     public const TABLE = 'attribute';
@@ -35,26 +32,6 @@ class Attribute
      */
     protected $attribute_value;
 
-    /**
-     * @ManyToMany(target = "product", though="article_number",  nullable = true)
-     */
-    protected $product;
-
-    /**
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    /**
-     * @param mixed $product
-     */
-    public function setProduct($product): void
-    {
-        $this->product = $product;
-    }
 
     /**
      * @return string

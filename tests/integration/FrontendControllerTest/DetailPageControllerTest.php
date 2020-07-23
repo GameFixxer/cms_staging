@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @group Page
+ */
+
 class DetailPageControllerTest extends \Codeception\Test\Unit
 {
     /**
@@ -22,11 +26,14 @@ class DetailPageControllerTest extends \Codeception\Test\Unit
         $this->tester->setSession();
         $_GET = [
                 'cl' => 'detail',
-                'id'=>'314'
+                'id'=>'Unit-15'
         ];
         $this->tester->setUpBootstrap();
-        $product = $this->tester->getSmartyParams('page');
-        $secondProduct = $this->tester->exchangeDtoToSmartyParam($this->tester->getProduct('314'), 'page');
-        $this->assertEquals($product, $secondProduct);
+        $product = $this->tester->getSmartyParams();
+        $secondProduct = $this->tester->getProduct('Unit-15');
+        $productDto = $product['page'];
+        $this->assertEquals($productDto->getArticleNumber(), $secondProduct->getArticleNumber());
+
+
     }
 }

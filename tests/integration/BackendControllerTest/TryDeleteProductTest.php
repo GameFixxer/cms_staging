@@ -32,7 +32,7 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
                 'admin' => 'true',
         ];
         $this->tester->setUpBootstrap();
-        $productList = (array)$this->tester->getSmartyParams('productlist');
+
         $tmp = (array)$this->tester->getProductList();
         $id = end($tmp)->getId();
 
@@ -45,11 +45,11 @@ class TryDeleteProductTest extends \Codeception\Test\Unit
         $_POST = [
                 'delete' => ''.$id
         ];
+        $productList = $this->tester->getSmartyParams()['productlist'];
+        $secondProductList = $this->tester->getProductList();
+        foreach ($secondProductList as $key => $product) {
+            $this->assertEquals($product->getArticleNumber(), $productList[$key]->getArticleNumber());
 
-        $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(
-            $this->tester->getProductList(),
-            'productlist'
-        );
-        $this->assertEquals($productList, $secondProductList);
+        }
     }
 }

@@ -4,6 +4,10 @@ namespace App\Tests\integration\BackendControllerTest;
 
 use UnitTester;
 
+/**
+ * @group Page
+ */
+
 class EditProductTest extends \Codeception\Test\Unit
 {
     /**
@@ -34,9 +38,7 @@ class EditProductTest extends \Codeception\Test\Unit
             'admin' => 'true',
         ];
         $this->tester->setUpBootstrap();
-        $productList = (array)$this->tester->getSmartyParams('productlist');
         $tmpProductList = (array)$this->tester->getProductList();
-        $singleProduct = (array)$this->tester->exchangeDtoToSmartyParam(end($tmpProductList), 'product');
         $id = end($tmpProductList)->getArticleNumber();
 
         $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -51,15 +53,6 @@ class EditProductTest extends \Codeception\Test\Unit
             'newpagename' => 'T-Shirt',
     ];
         $this->tester->arrange();
-        //$productList = (array)$this->tester->getSmartyParams('productlist');
-        $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(
-            $this->tester->getProductList(),
-            'productlist'
-        );
-        // Is Product at List changed?
-        $this->assertEquals($productList, $secondProductList);
-        //
-
         $_SERVER['REQUEST_METHOD'] = '';
         $_GET = [
                 'cl' => 'product',
@@ -67,9 +60,10 @@ class EditProductTest extends \Codeception\Test\Unit
                 'id' => ''.$id,
                 'admin' => 'true',
         ];
-        $this->tester->arrange();
-        $detailProduct = (array)$this->tester->exchangeDtoToSmartyParam($this->tester->getProduct($id), 'product');
+        $detailProduct = $this->tester->getProduct($id);
         //Is product at Detail Page changed?
-        $this->assertEquals($singleProduct, $detailProduct);
+        $this->assertEquals($id, $detailProduct->getArticleNumber());
+        $this->assertEquals('T-Shirt', $detailProduct->getName());
+        $this->assertEquals('A plain shirt', $detailProduct->getDescription());
     }
 }

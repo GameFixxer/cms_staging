@@ -14,6 +14,10 @@ class View
 
     private ?string $redirection;
 
+    private array $params;
+
+    private ?string $paramName;
+
     public function __construct()
     {
         $this->smarty = new \Smarty();
@@ -23,7 +27,9 @@ class View
         $this->smarty->setCacheDir($path.'/cache');
         $this->smarty->setConfigDir($path.'/configs');
         $this->template = '';
+        $this->params = [];
         $this->redirection = null;
+        $this->paramName = null;
     }
 
     public function addTemplate(string $template): void
@@ -40,16 +46,13 @@ class View
     {
         return $this->smarty->tpl_vars;
     }
-    public function getParam(string $name)
+    public function getParam()
     {
-        $vars = $this->smarty->tpl_vars;
-        if (isset($vars[$name])) {
-            return $vars[$name];
-        }
-        return null;
+        return $this->params;
     }
     public function addTlpParam(string $name, $value): void
     {
+        $this->params = [$name => $value];
         $this->smarty->assign($name, $value);
     }
 

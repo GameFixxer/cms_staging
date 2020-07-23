@@ -25,7 +25,7 @@ class HomeControllerTest extends \Codeception\Test\Unit
                 'page'=>'list'
         ];
         $this->tester->setUpBootstrap();
-        $smartyParams = (string)$this->tester->getSmartyParams('home');
+        $smartyParams = (string)$this->tester->getSmartyParams()['home'];
         $this->assertEquals($smartyParams, 'There is no place like 127.0.0.1');
     }
 }

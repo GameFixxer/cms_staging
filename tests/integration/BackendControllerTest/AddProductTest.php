@@ -41,7 +41,7 @@ class AddProductTest extends \Codeception\Test\Unit
         ];
         $this->tester->setUpBootstrap();
 
-        $productList = (array)$this->tester->getSmartyParams('productlist');
+        $productList = (array)$this->tester->getSmartyParams();
         $secondProductList = (array)$this->tester->exchangeDtoToSmartyParam(
             $this->tester->getProductList(),
             'productlist'

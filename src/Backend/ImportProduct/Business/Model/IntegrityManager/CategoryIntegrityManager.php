@@ -2,8 +2,6 @@
 declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
-
-
 use App\Client\Category\Persistence\Entity\Category;
 use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
@@ -25,13 +23,13 @@ class CategoryIntegrityManager implements IntegrityManagerInterface
             $listOfMethods = get_class_methods($categoryEntity);
 
             foreach ($listOfMethods as $method) {
-                if (str_starts_with($method, 'set')) {
-                    $stringWithSet = str_replace('set', 'get', $method);
-                    $strRplCategory = str_replace('Category', '', $stringWithSet);
-                    $categoryEntity ->$method($csvDTO->$strRplCategory());
+                if (empty($csvDTO->getKey())) {
+                    throw new \Exception('Critical Integrity Error', 1);
                 }
+                $categoryEntity->setCategoryKey($csvDTO->getKey());
             }
         }
+
         return $categoryEntity;
     }
 

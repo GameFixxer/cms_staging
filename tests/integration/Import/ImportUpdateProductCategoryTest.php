@@ -21,9 +21,9 @@ use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
 class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
 {
     private CsvProductDataTransferObject $csvDTO;
-    private ProductImport $importCreateProduct;
+    private $importCreateProduct;
     private ProductRepository $productRepository;
-    private ProductCategory $updateCategory;
+    private $updateCategory;
     private CategoryRepository $categoryRepository;
     private ContainerHelper $container;
 
@@ -37,7 +37,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
     }
 
     public function _after()
-    {
+    {/*
         if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
@@ -45,7 +45,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number'=>$this->csvDTO->getArticleNumber()]));
             $transaction->run();
-        }
+        }*/
     }
 
     public function testUpdateCategory()

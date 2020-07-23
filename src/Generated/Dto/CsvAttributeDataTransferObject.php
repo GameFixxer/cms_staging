@@ -24,21 +24,7 @@ class CsvAttributeDataTransferObject
         $this->attributeKey = $attributeKey;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
 
-    /**
-     * @param mixed $product
-     */
-    public function setProduct($product): void
-    {
-        $this->product = $product;
-    }
 
     /**
      * @return int
@@ -71,7 +57,6 @@ class CsvAttributeDataTransferObject
     {
         $this->attributeValue = $attributeValue;
     }
-    private $product;
     private int $attributeId;
     private string $attributeValue;
 }
