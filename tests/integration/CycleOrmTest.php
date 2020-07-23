@@ -50,11 +50,11 @@ class CycleOrmTest extends \Codeception\Test\Unit
     public function testORMFunctionality()
     {
         $this->createProduct();
-        $transaction =new Transaction($this->orm);
+        $transaction = new Transaction($this->orm);
         codecept_debug($transaction->persist($this->product));
     }
 
-    public function testORM(){
+    public function testORM() {
         $dbal = new Database\DatabaseManager(
             new \Spiral\Database\Config\DatabaseConfig([
                 'default' => 'default',

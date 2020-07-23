@@ -42,7 +42,7 @@ class ContainerHelper
 
     public function createArticleNumber(): string
     {
-        return rand(1, 1000) . substr(rand(1, 1000), rand(1, 1000));
+        return rand(1, 1000).substr(rand(1, 1000), rand(1, 1000));
     }
 
     public function getProductRepository(): ProductRepository

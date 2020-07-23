@@ -23,7 +23,7 @@ class CategoryIntegrityManager implements IntegrityManagerInterface
             $listOfMethods = get_class_methods($categoryEntity);
 
             foreach ($listOfMethods as $method) {
-                if (empty($csvDTO->getKey())){
+                if (empty($csvDTO->getKey())) {
                     throw new \Exception('Critical Integrity Error', 1);
                 }
                 $categoryEntity->setCategoryKey($csvDTO->getKey());
