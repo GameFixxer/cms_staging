@@ -26,29 +26,6 @@ class Attribute
      */
     protected $attribute_key;
 
-    /*
-    /**
-     * @ManyToMany(target = "product",  though = "ProductAttribute", nullable = true)
-     */
-    /*
-    protected $product;
-
-    public function __construct()
-    {
-        $this->product = new PivotedCollection();
-    }
-
-    public function getProduct()
-    {
-        return $this->product;
-    }
-
-    public function setProduct($product): void
-    {
-        $this->product = $product;
-    }*/
-
-
     /**
      * @Column( unique = "true", type="string")
      * @var string

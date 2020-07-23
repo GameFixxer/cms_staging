@@ -2,7 +2,6 @@
 namespace App\Tests\integration;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
-
 use App\Tests\integration\Helper\ContainerHelper;
 use App\Client\Product\Persistence\Entity\Product;
 use Cycle\ORM\Transaction;
@@ -116,7 +115,7 @@ class CycleOrmTest extends \Codeception\Test\Unit
         $transaction->run();
         $this->product = new Product();
         $this->product->setArticleNumber($articleNumber);
-        $this->product->setAttribute($attribute);
+        $this->product->addAttribute($attribute);
         $this->product->setProductName('productname');
         $this->product->setProductDescription('productdescription');
     }
