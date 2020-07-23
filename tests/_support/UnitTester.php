@@ -58,14 +58,14 @@ class UnitTester extends \Codeception\Actor
         $productRepository = $this->getProductRepository();
         return $productRepository->getProductList();
     }
-    public function getSmartyParams(string $paramName)
+    public function getSmartyParams()
     {
-        return $this->view->getParam($paramName);
+        return $this->view->getParam();
     }
     public function exchangeDtoToSmartyParam($value, string $name)
     {
         $this->makeSmarty($value, $name);
-        return $this->getSmartyParams($name);
+        return $this->getSmartyParams();
     }
     public function setSession()
     {

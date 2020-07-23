@@ -9,7 +9,7 @@ use App\Client\User\Persistence\Entity\User;
 
 class ShoppingCardDataTransferObject
 {
-    private ?int $id = 0;
+    private int $id = 0;
 
     private ?Product $product = null;
 
