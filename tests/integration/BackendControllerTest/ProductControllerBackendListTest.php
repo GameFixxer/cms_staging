@@ -34,7 +34,7 @@ class ProductControllerBackendListTest extends \Codeception\Test\Unit
         ];
         $this->tester->setUpBootstrap();
         $productList = $this->tester->getSmartyParams()['productlist'];
-        $secondProductList =$this->tester->getProductList();
+        $secondProductList = $this->tester->getProductList();
         foreach ($secondProductList as $key => $product) {
             $this->assertEquals($product->getArticleNumber(), $productList[$key]->getArticleNumber());
 
