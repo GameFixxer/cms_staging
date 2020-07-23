@@ -24,7 +24,7 @@ class ShoppingCard
     /**
      * @HasMany(target = "product",   nullable = true)
      */
-    protected Product $product;
+    protected ?Product $product;
 
     /**
      * @BelongsTo(target = "user",   nullable = true, )
@@ -70,7 +70,7 @@ class ShoppingCard
     /**
      * @param Product $product
      */
-    public function setProduct(Product $product): void
+    public function setProduct(?Product $product): void
     {
         $this->product = $product;
     }

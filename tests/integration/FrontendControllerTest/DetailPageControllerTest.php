@@ -29,7 +29,7 @@ class DetailPageControllerTest extends \Codeception\Test\Unit
                 'id'=>'Unit-15'
         ];
         $this->tester->setUpBootstrap();
-        $product = $this->tester->getSmartyParams('page');
+        $product = $this->tester->getSmartyParams();
         $secondProduct = $this->tester->getProduct('Unit-15');
         $productDto = $product['page'];
         $this->assertEquals($productDto->getArticleNumber(), $secondProduct->getArticleNumber());

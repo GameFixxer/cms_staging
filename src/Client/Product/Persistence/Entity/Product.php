@@ -46,7 +46,7 @@ class Product
     /**
      * @param Attribute $attribute
      */
-    public function addAttribute(Attribute  $attribute): void
+    public function addAttribute(?Attribute  $attribute): void
     {
         $this->getAttribute()->add($attribute);
     }
