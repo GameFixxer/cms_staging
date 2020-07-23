@@ -46,7 +46,7 @@ class View
     {
         return $this->smarty->tpl_vars;
     }
-    public function getParam(string $name)
+    public function getParam()
     {
         return $this->params;
     }

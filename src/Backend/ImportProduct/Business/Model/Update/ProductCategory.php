@@ -57,8 +57,10 @@ class ProductCategory implements ProductInterface
     private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
     {
         $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
+        if (!$productDTO instanceof ProductDataTransferObject) {
+            throw new \Exception('Critical RepositoryError', 1);
+        }
         $productDTO->setCategory($csvDTO->getCategory());
-        dump($productDTO->getArticleNumber());
         $this->productBusinessFacade->save($productDTO);
     }
 }

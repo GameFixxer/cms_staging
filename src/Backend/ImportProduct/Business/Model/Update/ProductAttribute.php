@@ -56,6 +56,9 @@ class ProductAttribute implements ProductInterface
     private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
     {
         $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
+        if (!$productDTO instanceof ProductDataTransferObject) {
+            throw new \Exception('Critical RepositoryError', 1);
+        }
         $productDTO->setAttribute($csvDTO->getAttribute());
         $this->productBusinessFacade->save($productDTO);
     }

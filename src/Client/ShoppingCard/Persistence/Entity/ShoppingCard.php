@@ -32,13 +32,13 @@ class ShoppingCard
     protected User $user;
 
     /**
-     * @Column(type="int")
+     * @Column(type="int"  )
      * @var int
      */
     protected $amount;
 
     /**
-     * @Column(type="int")
+     * @Column(type="int"  )
      * @var int
      */
     protected $sum;
@@ -62,7 +62,7 @@ class ShoppingCard
     /**
      * @return Product
      */
-    public function getProduct(): Product
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
@@ -78,7 +78,7 @@ class ShoppingCard
     /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }

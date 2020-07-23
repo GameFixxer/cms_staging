@@ -15,12 +15,12 @@ class ShoppingCardDataTransferObject
 
     private ?User $user = null;
 
-    private ?int $amount = 0;
+    private int $amount = 0;
 
-    private ?int $sum = 0 ;
+    private int $sum = 0;
 
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -48,7 +48,7 @@ class ShoppingCardDataTransferObject
     {
         $this->user = $user;
     }
-    public function getAmount(): ?int
+    public function getAmount(): int
     {
         return $this->amount;
     }

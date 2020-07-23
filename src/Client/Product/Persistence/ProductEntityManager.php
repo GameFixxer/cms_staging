@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace App\Client\Product\Persistence;
 
+use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
