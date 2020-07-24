@@ -9,4 +9,6 @@ interface ShoppingCardManagerInterface
     public function delete(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void;
 
     public function save(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void;
+
+    public function getUser(String $username);
 }

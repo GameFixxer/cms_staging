@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Frontend\ShoppingCard\Communication;
 
 use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
-use App\Client\ShoppingCard\Persistence\ShoppingCardEntityManagerInterface;
+use App\Client\User\Business\UserBusinessFacade;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Login\Communication\LoginController;
@@ -19,6 +19,7 @@ class ShoppingCardController implements BackendController
     private ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade;
     private SessionUser $sessionUser;
     private ShoppingCardManagerInterface $shoppingCardManager;
+    private UserBusinessFacade $businessFacade;
     private View $view;
 
 
@@ -26,11 +27,13 @@ class ShoppingCardController implements BackendController
         ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade,
         SessionUser $sessionUser,
         ShoppingCardManagerInterface $shoppingCardManager,
+        UserBusinessFacade $businessFacade,
         View $view
     ) {
         $this->shoppingCardBusinessFacade = $shoppingCardBusinessFacade;
         $this->sessionUser = $sessionUser;
         $this->shoppingCardManager = $shoppingCardManager;
+        $this->businessFacade = $businessFacade;
         $this->view = $view;
     }
 
@@ -45,6 +48,32 @@ class ShoppingCardController implements BackendController
     }
 
     public function shoppingCardAction()
+    {
+        $shoppingCardDTO = $this->shoppingCardBusinessFacade->get($this->shoppingCardManager->getUser($this->sessionUser->getUser()));
+        $this->view->addTlpParam('shoppingCard', $shoppingCardDTO);
+        $this->view->addTemplate('shoppingCard.tpl');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            switch ($_POST) {
+                case isset($_POST['delete']):
+                   $this->delete();
+                    break;
+                case isset($_POST['save']):
+                    $this->add();
+                    break;
+                case isset($_POST['checkout']):
+                    $this->checkout();
+                    break;
+            }
+            $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
+        }
+    }
+    private function delete()
+    {
+    }
+    private function add()
+    {
+    }
+    private function checkout()
     {
     }
 }
