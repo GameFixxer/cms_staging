@@ -51,6 +51,11 @@ class Product
         $this->getAttribute()->add($attribute);
     }
 
+    public function removeAttribute(?Attribute  $attribute): void
+    {
+        $this->getAttribute()->removeElement($attribute);
+    }
+
     /**
      * @Column(type="string")
      * @var string

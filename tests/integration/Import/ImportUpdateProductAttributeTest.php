@@ -56,7 +56,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
 
         self::assertNotNull($productFromRepository);
         if (!empty(($productFromRepository->getAttribute()))) {
-            self::assertNotSame('', $productFromRepository->getAttribute()->getAttributeId());
+            self::assertNotSame('', $productFromRepository->getAttribute()->getPivot()->getAttributeId());
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormCategoryRepository = $orm->getRepository(Attribute::class);
