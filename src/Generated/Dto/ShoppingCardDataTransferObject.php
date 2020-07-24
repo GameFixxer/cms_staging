@@ -13,7 +13,7 @@ class ShoppingCardDataTransferObject
 
     private ?Product $product = null;
 
-    private ?User $user = null;
+    private User $user;
 
     private int $amount = 0;
 
@@ -40,7 +40,7 @@ class ShoppingCardDataTransferObject
         $this->product = $product;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
