@@ -25,7 +25,7 @@
             <ul class="navbar-nav text-uppercase ml-auto">
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="http://localhost:8080/Index.php?cl=login&page=login&admin=true">Login</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" id="productlist" name="productlist" href="http://localhost:8080/Index.php?cl=list#portfolio">Productlist</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" id="shoppingcard" name="productlist" href="http://localhost:8080/Index.php?cl=list#portfolio">ShoppingCard</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="http://localhost:8080/Index.php?cl=dashboard&page=list&admin=true">Dashboard</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             </ul>

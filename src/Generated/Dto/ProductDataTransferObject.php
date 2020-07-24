@@ -27,7 +27,7 @@ class ProductDataTransferObject implements DataTransferObjectInterface
     /**
      * @param object|null $attribute
      */
-    public function setAttribute( $attribute): void
+    public function setAttribute($attribute): void
     {
         $this->attribute = $attribute;
     }

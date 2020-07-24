@@ -47,11 +47,6 @@ class CycleOrmTest extends \Codeception\Test\Unit
         self::assertSame($productEntity->getAttribute(), $this->product->getAttribute());
     }
 
-    public function testORMFunctionality()
-    {
-        $this->createProduct();
-        $transaction = new Transaction($this->orm);
-    }
 
     private function createProduct()
     {
