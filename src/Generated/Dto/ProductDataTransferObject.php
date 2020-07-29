@@ -15,6 +15,23 @@ class ProductDataTransferObject implements DataTransferObjectInterface
     private string $desc = '';
     private ?object $category = null;
     private $attribute = null;
+    private ?int $price = null;
+
+    /**
+     * @return int|null
+     */
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int|null $price
+     */
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
 
     /**
      * @return object|null

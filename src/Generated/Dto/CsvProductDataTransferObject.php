@@ -17,6 +17,23 @@ class CsvProductDataTransferObject
     private ?object $attribute = null;
     private ?object $product = null;
     private int $attributeId = 0;
+    private ?int $price = null;
+
+    /**
+     * @return int|null
+     */
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int|null $price
+     */
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
 
     /**
      * @return int

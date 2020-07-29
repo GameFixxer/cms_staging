@@ -3,42 +3,49 @@
 
 namespace App\Frontend\ShoppingCard\Business;
 
+use App\Client\Product\Persistence\Entity\Product;
 use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
-use App\Client\ShoppingCard\Persistence\Entity\ShoppingCard;
-use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\Dto\ShoppingCardDataTransferObject;
 
 class ShoppingCardManager implements ShoppingCardManagerInterface
 {
     private ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade;
-    private UserBusinessFacadeInterface $userBusinessFacade;
-    private \Cycle\ORM\RepositoryInterface $repository;
+    private \Cycle\ORM\RepositoryInterface $userRepository;
+    private \Cycle\ORM\RepositoryInterface $productRepository;
 
-    public function __construct(ShoppingCardBusinessFacadeInterface $productBusinessFacade,\Cycle\ORM\ORM $ormAttributeRepository)
+    public function __construct(ShoppingCardBusinessFacadeInterface $productBusinessFacade, \Cycle\ORM\ORM $ormAttributeRepository)
     {
         $this->shoppingCardBusinessFacade = $productBusinessFacade;
-        $this->repository = $ormAttributeRepository->getRepository(ShoppingCard::class);
+        $this->userRepository = $ormAttributeRepository->getRepository(User::class);
+        $this->productRepository = $ormAttributeRepository->getRepository(Product::class);
     }
 
-    public function delete(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void
+    public function add(ShoppingCardDataTransferObject $shoppingCardDataTransferObject, string $articleNumber)
     {
-        if ($this->shoppingCardBusinessFacade->get($shoppingCardDataTransferObject->getUser()) instanceof ShoppingCardDataTransferObject) {
-            $this->shoppingCardBusinessFacade->delete($shoppingCardDataTransferObject);
-        }
-    }
+        $productDTO = $this->getProduct($articleNumber);
+        if (!$productDTO instanceof Product) {
 
-    public function save(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void
-    {
-        $productDTO = $this->shoppingCardBusinessFacade->get($shoppingCardDataTransferObject->getUser()());
-        if (!$productDTO instanceof ShoppingCardDataTransferObject) {
-            $shoppingCardDataTransferObject->getUser()((string)rand(1, 2229));
         }
         $this->shoppingCardBusinessFacade->save($shoppingCardDataTransferObject);
     }
 
-    public function getUser(String $username)
+    public function remove(ShoppingCardDataTransferObject $shoppingCardDataTransferObject, string $articleNumber)
     {
-        return $this->repository->findOne(['username'=>$username]);
+        $productDTO = $this->getProduct($articleNumber);
+        if (!$productDTO instanceof Product) {
+
+        }
+        $this->shoppingCardBusinessFacade->save($shoppingCardDataTransferObject);
+    }
+
+
+    public function getUser(string $username)
+    {
+        return $this->userRepository->findOne(['username'=>$username]);
+    }
+    private function getProduct(string $articleNumber)
+    {
+        return $this->userRepository->findOne(['article_number'=>$articleNumber]);
     }
 }

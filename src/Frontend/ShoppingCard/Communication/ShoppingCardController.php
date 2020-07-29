@@ -42,9 +42,7 @@ class ShoppingCardController implements BackendController
         if (!$this->sessionUser->isLoggedIn()) {
             $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=login', ['admin=true']);
         }
-        if (($this->sessionUser->getUserRole() === 'user')) {
-            $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=shoppingCard', ['admin=true']);
-        }
+        $this->view->setRedirect(LoginCOntroller::ROUTE, '&page=shoppingCard', ['admin=true']);
     }
 
     public function shoppingCardAction()
@@ -55,10 +53,10 @@ class ShoppingCardController implements BackendController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
                 case isset($_POST['delete']):
-                   $this->delete();
+                   $this->remove((string)$_POST['remove']);
                     break;
                 case isset($_POST['save']):
-                    $this->add();
+                    $this->add((string)$_POST['add']);
                     break;
                 case isset($_POST['checkout']):
                     $this->checkout();
@@ -67,10 +65,10 @@ class ShoppingCardController implements BackendController
             $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
     }
-    private function delete()
+    private function remove(string $articleNumber)
     {
     }
-    private function add()
+    private function add(string $articleNumber)
     {
     }
     private function checkout()

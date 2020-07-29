@@ -6,9 +6,6 @@ use App\Generated\Dto\ShoppingCardDataTransferObject;
 
 interface ShoppingCardManagerInterface
 {
-    public function delete(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void;
-
-    public function save(ShoppingCardDataTransferObject $shoppingCardDataTransferObject): void;
-
-    public function getUser(String $username);
+    public function remove(ShoppingCardDataTransferObject $shoppingCardDataTransferObject, string $articleNumber):void;
+    public function add(ShoppingCardDataTransferObject $shoppingCardDataTransferObject, string $articleNumber):void;
 }

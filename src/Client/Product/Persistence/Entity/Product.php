@@ -23,6 +23,29 @@ class Product
      */
     protected $id;
 
+
+    /**
+     * @Column(type="int", nullable = true)
+     * @var int
+     */
+    protected $price;
+
+    /**
+     * @return int
+     */
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int $price
+     */
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
+
     /**
      * @BelongsTo(target = "category",   nullable = true)
      */

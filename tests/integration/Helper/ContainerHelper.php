@@ -15,6 +15,8 @@ use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\CategoryRepository;
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
+use App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager;
+use App\Client\ShoppingCard\Persistence\ShoppingCardRepository;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
 use App\Component\SymfonyContainer;
@@ -118,5 +120,15 @@ class ContainerHelper
     public function getAttributeEntityManager()
     {
         return $this->container->get(AttributeEntityManager::class);
+    }
+
+    public function getShoppingCardRepository()
+    {
+        return $this->container->get(ShoppingCardRepository::class);
+    }
+
+    public function getShoppingCardEntityManager()
+    {
+        return $this->container->get(ShoppingCardEntityManager::class);
     }
 }
