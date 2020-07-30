@@ -51,19 +51,19 @@ class ProductController implements BackendController
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case isset($_POST['delete']):
-                    $this->deleteProduct((string)$_POST['delete']);
-                    break;
-                case isset($_POST['save']):
-                    $this->saveProduct(
-                        (string)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
-                case isset($_POST['add']):
-                    $this->addToShoppingCard((string)$_POST['add']);
-                    break;
+            case isset($_POST['delete']):
+                $this->deleteProduct((string)$_POST['delete']);
+                break;
+            case isset($_POST['save']):
+                $this->saveProduct(
+                    (string)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
+            case isset($_POST['add']):
+                $this->addToShoppingCard((string)$_POST['add']);
+                break;
             }
             $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
@@ -73,20 +73,20 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case !empty($_POST['delete']):
-                    $this->deleteProduct((string)$_POST['delete']);
-                    break;
-                case !empty($_POST['save']):
+            case !empty($_POST['delete']):
+                $this->deleteProduct((string)$_POST['delete']);
+                break;
+            case !empty($_POST['save']):
 
-                    $this->saveProduct(
-                        (string)$_POST['save'],
-                        (string)$_POST['newpagedescription'],
-                        (string)$_POST['newpagename']
-                    );
-                    break;
-                case isset($_POST['add']):
-                    $this->addToShoppingCard((string)$_POST['add']);
-                    break;
+                $this->saveProduct(
+                    (string)$_POST['save'],
+                    (string)$_POST['newpagedescription'],
+                    (string)$_POST['newpagename']
+                );
+                break;
+            case isset($_POST['add']):
+                $this->addToShoppingCard((string)$_POST['add']);
+                break;
             }
         }
 

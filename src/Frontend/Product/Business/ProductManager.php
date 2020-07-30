@@ -34,7 +34,7 @@ class ProductManager implements ProductManagerInterface
     public function addToShoppingCard(string $articleNumber):ProductDataTransferObject
     {
         $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if (! $productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataTransferObject) {
             throw new \Exception('The given articlenumber returned null', 1);
         }
         return $productDTO;

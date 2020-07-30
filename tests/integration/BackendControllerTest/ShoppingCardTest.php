@@ -47,7 +47,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
 
     private function fillWithProducts()
     {
-        $product1 =  new Product;
+        $product1 = new Product;
         $product1->setPrice(1);
         $product1->setCategory(null);
         $product1->setArticleNumber('product1');
@@ -59,7 +59,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $transaction->persist($product1);
         $transaction->run();
 
-        $product2 =  new Product;
+        $product2 = new Product;
         $product2->setPrice(2);
         $product2->setCategory(null);
         $product2->setArticleNumber('product2');
@@ -70,7 +70,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $transaction->persist($product2);
         $transaction->run();
 
-        $product3 =  new Product;
+        $product3 = new Product;
         $product3->setPrice(3);
         $product3->setCategory(null);
         $product3->setArticleNumber('product3');
