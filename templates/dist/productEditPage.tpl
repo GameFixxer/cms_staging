@@ -2,7 +2,7 @@
 {extends file="basic.tpl"}
 {block name="title"}{/block}
 {block name="subtitel_h1"}Error 404 Page not found{/block}
-{block name="titel"}Detail:{$product->getName()}{/block}
+{block name="titel"}Detail:{$product->getProductName()}{/block}
 {block name="titel_button"}Back to home{/block}
 {block name="titel_button_href"}"http://localhost:8080/Index.php?cl=home"{/block}
 {block name="baselayout"}{/block}

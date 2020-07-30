@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Tests\integration;
 
 use App\Backend\ImportProduct\Business\Model\Create\Product;

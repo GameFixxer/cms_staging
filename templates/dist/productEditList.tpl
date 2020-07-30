@@ -40,7 +40,7 @@
                             </button>
                         </td>
                         <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" data-title={$page->getArticleNumber()} id={$page->getArticleNumber()}
-                                           name="edit" href="http://localhost:8080/Index.php?cl=product&page=detail&id={$page->getArticleNumber()}&admin=true"
+                                           name="edit" href="Index.php?cl=product&page=detail&id={$page->getArticleNumber()}&admin=true"
                                            type="submit">Edit
                             </a></th>
                     </tr

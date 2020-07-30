@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Service;
 
+use App\Generated\Dto\ProductDataTransferObject;
+
 class SessionUser
 {
     public function __construct()
@@ -33,6 +35,27 @@ class SessionUser
             return true;
         }
         return false;
+    }
+
+    public function addToShoppingCard(ProductDataTransferObject $product)
+    {
+        if (isset($_SESSION['shoppingCard'])) {
+            array_push($_SESSION['shoppingCard'], $product);
+        }
+        $_SESSION['shoppingCard'] = $product;
+    }
+
+    public function removeFromShoppingCard(ProductDataTransferObject $product)
+    {
+        if (isset($_SESSION['shoppingCard'])) {
+            array_pop($_SESSION['shoppingCard']);
+        }
+        $_SESSION['shoppingCard'] = $product;
+    }
+
+    public function getShoppingCard():array
+    {
+        return $_SESSION['shoppingCard'];
     }
 
     public function getSessionId():string

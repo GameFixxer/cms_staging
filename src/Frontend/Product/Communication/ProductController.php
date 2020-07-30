@@ -27,8 +27,7 @@ class ProductController implements BackendController
         SessionUser $userSession,
         ProductManagerInterface $productManager,
         View $view
-    )
-    {
+    ) {
         $this->productBusinessFacade = $productBusinessFacade;
         $this->userSession = $userSession;
         $this->view = $view;
@@ -62,6 +61,9 @@ class ProductController implements BackendController
                     (string)$_POST['newpagename']
                 );
                 break;
+            case isset($_POST['add']):
+                $this->addToShoppingCard((string)$_POST['add']);
+                break;
             }
             $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
@@ -82,15 +84,20 @@ class ProductController implements BackendController
                     (string)$_POST['newpagename']
                 );
                 break;
+            case isset($_POST['add']):
+                $this->addToShoppingCard((string)$_POST['add']);
+                break;
             }
         }
+
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
-        if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTlpParam('product', $productDTO);
-            $this->view->addTemplate('productEditPage.tpl');
-        } else {
-            $this->displayPageDoesNotExists();
-        }
+        $this->view->addTlpParam('product', $productDTO);
+        $this->view->addTemplate('productEditPage.tpl');
+    }
+
+    private function addToShoppingCard(string $articleNumber)
+    {
+        $this->userSession->addToShoppingCard($this->productManager->addToShoppingCard($articleNumber));
     }
 
     private function deleteProduct(string $articleNumber): void
@@ -107,32 +114,5 @@ class ProductController implements BackendController
         $productDTO->setName($name);
         $productDTO->setDescription($description);
         $this->productManager->save($productDTO);
-    }
-
-    private function checkForValidDTO($productDTO): bool
-    {
-        if (is_array($productDTO)) {
-            return $this->checkArrayOfDTO($productDTO);
-        } elseif ($productDTO === null) {
-            return false;
-        } else {
-            return $productDTO instanceof ProductDataTransferObject;
-        }
-    }
-
-    private function checkArrayOfDTO($productDTO): bool
-    {
-        foreach ($productDTO as $key) {
-            if (!($key instanceof ProductDataTransferObject) || $key === null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private function displayPageDoesNotExists(): void
-    {
-        $this->view->addTlpParam('error', '404 Page not found.');
-        $this->view->addTemplate('404.tpl');
     }
 }

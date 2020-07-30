@@ -23,6 +23,29 @@ class Product
      */
     protected $id;
 
+
+    /**
+     * @Column(type="int", nullable = true)
+     * @var int
+     */
+    protected $price;
+
+    /**
+     * @return int
+     */
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int $price
+     */
+    public function setPrice(?int $price): void
+    {
+        $this->price = $price;
+    }
+
     /**
      * @BelongsTo(target = "category",   nullable = true)
      */
@@ -48,8 +71,16 @@ class Product
      */
     public function addAttribute(?Attribute  $attribute): void
     {
-        $this->getAttribute()->add($attribute);
+        if (isset($attribute)) {
+            $this->getAttribute()->add($attribute);
+        }
     }
+
+    public function removeAttribute(?Attribute  $attribute): void
+    {
+        $this->getAttribute()->removeElement($attribute);
+    }
+
 
     /**
      * @Column(type="string")
