@@ -89,13 +89,14 @@ class ProductController implements BackendController
                     break;
             }
         }
+        /*
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
         if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTlpParam('product', $productDTO);
             $this->view->addTemplate('productEditPage.tpl');
-        } else {
-            $this->displayPageDoesNotExists();
         }
+        $this->displayPageDoesNotExists();*/
+
     }
 
     private function addToShoppingCard(string $articleNumber)

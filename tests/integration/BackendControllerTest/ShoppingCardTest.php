@@ -32,7 +32,6 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $this->container = new ContainerHelper();
         $this->orm = $this->container->getOrmProductRepository();
         $this->ormProductRepository = $this->orm->getRepository(Product::class);
-        $this->ormAttributeRepository = $this->orm->getRepository(Attribute::class);
         $this->fillWithProducts();
     }
 
@@ -42,13 +41,12 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         unset($_SERVER['REQUEST_METHOD']);
     }
 
-    public function testSessionShoppingCard(){
-
+    public function testSessionShoppingCard()
+    {
     }
 
-    private function fillWithProducts(){
-
-
+    private function fillWithProducts()
+    {
         $product1 =  new Product;
         $product1->setPrice(1);
         $product1->setCategory(null);
