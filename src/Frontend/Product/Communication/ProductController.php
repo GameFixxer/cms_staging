@@ -27,7 +27,8 @@ class ProductController implements BackendController
         SessionUser $userSession,
         ProductManagerInterface $productManager,
         View $view
-    ) {
+    )
+    {
         $this->productBusinessFacade = $productBusinessFacade;
         $this->userSession = $userSession;
         $this->view = $view;
@@ -51,16 +52,16 @@ class ProductController implements BackendController
         $this->view->addTemplate('productEditList.tpl');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case isset($_POST['delete']):
-                $this->deleteProduct((string)$_POST['delete']);
-                break;
-            case isset($_POST['save']):
-                $this->saveProduct(
-                    (string)$_POST['save'],
-                    (string)$_POST['newpagedescription'],
-                    (string)$_POST['newpagename']
-                );
-                break;
+                case isset($_POST['delete']):
+                    $this->deleteProduct((string)$_POST['delete']);
+                    break;
+                case isset($_POST['save']):
+                    $this->saveProduct(
+                        (string)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
+                    );
+                    break;
                 case isset($_POST['add']):
                     $this->addToShoppingCard((string)$_POST['add']);
                     break;
@@ -73,17 +74,17 @@ class ProductController implements BackendController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-            case !empty($_POST['delete']):
-                $this->deleteProduct((string)$_POST['delete']);
-                break;
-            case !empty($_POST['save']):
+                case !empty($_POST['delete']):
+                    $this->deleteProduct((string)$_POST['delete']);
+                    break;
+                case !empty($_POST['save']):
 
-                $this->saveProduct(
-                    (string)$_POST['save'],
-                    (string)$_POST['newpagedescription'],
-                    (string)$_POST['newpagename']
-                );
-                break;
+                    $this->saveProduct(
+                        (string)$_POST['save'],
+                        (string)$_POST['newpagedescription'],
+                        (string)$_POST['newpagename']
+                    );
+                    break;
                 case isset($_POST['add']):
                     $this->addToShoppingCard((string)$_POST['add']);
                     break;
@@ -91,10 +92,9 @@ class ProductController implements BackendController
         }
 
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
-        //if ($this->checkForValidDTO($productDTO)) {
-            $this->view->addTlpParam('product', $productDTO);
-            $this->view->addTemplate('productEditPage.tpl');
-        //}
+        $this->view->addTlpParam('product', $productDTO);
+        $this->view->addTemplate('productEditPage.tpl');
+
 
     }
 
@@ -119,16 +119,6 @@ class ProductController implements BackendController
         $this->productManager->save($productDTO);
     }
 
-    private function checkForValidDTO($productDTO): bool
-    {
-        if (is_array($productDTO)) {
-            return $this->checkArrayOfDTO($productDTO);
-        } elseif ($productDTO === null) {
-            return false;
-        } else {
-            return $productDTO instanceof ProductDataTransferObject;
-        }
-    }
 
     private function checkArrayOfDTO($productDTO): bool
     {
