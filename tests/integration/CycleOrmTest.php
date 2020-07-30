@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace App\Tests\integration;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;

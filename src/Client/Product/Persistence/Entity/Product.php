@@ -71,13 +71,16 @@ class Product
      */
     public function addAttribute(?Attribute  $attribute): void
     {
-        $this->getAttribute()->add($attribute);
+        if (isset($attribute)) {
+            $this->getAttribute()->add($attribute);
+        }
     }
 
     public function removeAttribute(?Attribute  $attribute): void
     {
         $this->getAttribute()->removeElement($attribute);
     }
+
 
     /**
      * @Column(type="string")

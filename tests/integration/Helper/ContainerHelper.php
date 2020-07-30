@@ -121,14 +121,4 @@ class ContainerHelper
     {
         return $this->container->get(AttributeEntityManager::class);
     }
-
-    public function getShoppingCardRepository()
-    {
-        return $this->container->get(ShoppingCardRepository::class);
-    }
-
-    public function getShoppingCardEntityManager()
-    {
-        return $this->container->get(ShoppingCardEntityManager::class);
-    }
 }

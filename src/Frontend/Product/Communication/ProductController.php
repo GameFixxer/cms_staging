@@ -27,8 +27,7 @@ class ProductController implements BackendController
         SessionUser $userSession,
         ProductManagerInterface $productManager,
         View $view
-    )
-    {
+    ) {
         $this->productBusinessFacade = $productBusinessFacade;
         $this->userSession = $userSession;
         $this->view = $view;
@@ -62,6 +61,9 @@ class ProductController implements BackendController
                     (string)$_POST['newpagename']
                 );
                 break;
+                case isset($_POST['add']):
+                    $this->addToShoppingCard((string)$_POST['add']);
+                    break;
             }
             $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
         }
@@ -82,6 +84,9 @@ class ProductController implements BackendController
                     (string)$_POST['newpagename']
                 );
                 break;
+                case isset($_POST['add']):
+                    $this->addToShoppingCard((string)$_POST['add']);
+                    break;
             }
         }
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
@@ -91,6 +96,11 @@ class ProductController implements BackendController
         } else {
             $this->displayPageDoesNotExists();
         }
+    }
+
+    private function addToShoppingCard(string $articleNumber)
+    {
+        $this->userSession->addToShoppingCard($this->productManager->addToShoppingCard($articleNumber));
     }
 
     private function deleteProduct(string $articleNumber): void
