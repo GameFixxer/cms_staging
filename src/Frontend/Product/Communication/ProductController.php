@@ -27,8 +27,7 @@ class ProductController implements BackendController
         SessionUser $userSession,
         ProductManagerInterface $productManager,
         View $view
-    )
-    {
+    ) {
         $this->productBusinessFacade = $productBusinessFacade;
         $this->userSession = $userSession;
         $this->view = $view;
@@ -94,8 +93,6 @@ class ProductController implements BackendController
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
         $this->view->addTlpParam('product', $productDTO);
         $this->view->addTemplate('productEditPage.tpl');
-
-
     }
 
     private function addToShoppingCard(string $articleNumber)
@@ -117,16 +114,5 @@ class ProductController implements BackendController
         $productDTO->setName($name);
         $productDTO->setDescription($description);
         $this->productManager->save($productDTO);
-    }
-
-
-    private function checkArrayOfDTO($productDTO): bool
-    {
-        foreach ($productDTO as $key) {
-            if (!($key instanceof ProductDataTransferObject) || $key === null) {
-                return false;
-            }
-        }
-        return true;
     }
 }
