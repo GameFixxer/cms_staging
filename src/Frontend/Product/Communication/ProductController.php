@@ -89,13 +89,12 @@ class ProductController implements BackendController
                     break;
             }
         }
-        /*
+
         $productDTO = $this->productBusinessFacade->get($_GET['id']);
-        if ($this->checkForValidDTO($productDTO)) {
+        //if ($this->checkForValidDTO($productDTO)) {
             $this->view->addTlpParam('product', $productDTO);
             $this->view->addTemplate('productEditPage.tpl');
-        }
-        $this->displayPageDoesNotExists();*/
+        //}
 
     }
 
@@ -139,11 +138,5 @@ class ProductController implements BackendController
             }
         }
         return true;
-    }
-
-    private function displayPageDoesNotExists(): void
-    {
-        $this->view->addTlpParam('error', '404 Page not found.');
-        $this->view->addTemplate('404.tpl');
     }
 }
