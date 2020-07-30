@@ -39,6 +39,11 @@
                                     type="submit" value={$page->getArticleNumber()}>Delete
                             </button>
                         </td>
+                        <td>
+                        <button class="btn btn-primary btn-sm text-uppercase" id="add" data-title={$page->getArticleNumber()} name="add"
+                                type="submit" value={$page->getArticleNumber()}>Add
+                        </button>
+                        </td>
                         <th scope="col"><a class="btn btn-primary btn-sm text-uppercase" data-title={$page->getArticleNumber()} id={$page->getArticleNumber()}
                                            name="edit" href="Index.php?cl=product&page=detail&id={$page->getArticleNumber()}&admin=true"
                                            type="submit">Edit
