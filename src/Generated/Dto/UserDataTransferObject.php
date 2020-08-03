@@ -12,6 +12,23 @@ class UserDataTransferObject
     private string $role = '';
     private string $session_id = '0';
     private string $reset_password = '';
+    private array $shoppingCard = [];
+
+    /**
+     * @return array
+     */
+    public function getShoppingCard(): array
+    {
+        return $this->shoppingCard;
+    }
+
+    /**
+     * @param array $shoppingCard
+     */
+    public function setShoppingCard(array $shoppingCard): void
+    {
+        $this->shoppingCard = $shoppingCard;
+    }
 
 
     public function setUsername(string $name): void

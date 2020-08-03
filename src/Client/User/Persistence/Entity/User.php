@@ -51,6 +51,28 @@ class User
      */
     protected $resetpassword;
 
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $shoppingCard;
+
+    /**
+     * @return string
+     */
+    public function getShoppingCard(): string
+    {
+        return $this->shoppingCard;
+    }
+
+    /**
+     * @param string $shoppingCard
+     */
+    public function setShoppingCard(string $shoppingCard): void
+    {
+        $this->shoppingCard = $shoppingCard;
+    }
+
     public function getSessionId():string
     {
         return $this->session_id;

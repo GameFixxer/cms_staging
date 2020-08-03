@@ -62,12 +62,13 @@ class MyCachedContainer extends Container
             'App\\Component\\View' => 'getViewService',
             'App\\Frontend\\Login\\Communication\\LoginController' => 'getLoginControllerService',
             'App\\Frontend\\Login\\Communication\\PasswordController' => 'getPasswordControllerService',
-            'App\\Frontend\\Model\\DetailController' => 'getDetailControllerService',
             'App\\Frontend\\Model\\ErrorController' => 'getErrorControllerService',
             'App\\Frontend\\Model\\HomeController' => 'getHomeControllerService',
-            'App\\Frontend\\Model\\ListController' => 'getListControllerService',
             'App\\Frontend\\Product\\Business\\ProductManager' => 'getProductManagerService',
+            'App\\Frontend\\Product\\Communication\\DetailController' => 'getDetailControllerService',
+            'App\\Frontend\\Product\\Communication\\ListController' => 'getListControllerService',
             'App\\Frontend\\Product\\Communication\\ProductController' => 'getProductControllerService',
+            'App\\Frontend\\ShoppingCard\\Communication\\ShoppingCardController' => 'getShoppingCardControllerService',
             'App\\Frontend\\User\\Business\\UserManager' => 'getUserManagerService',
             'App\\Frontend\\User\\Communication\\DashboardController' => 'getDashboardControllerService',
             'App\\Frontend\\User\\Communication\\UserController' => 'getUserControllerService',
@@ -98,6 +99,7 @@ class MyCachedContainer extends Container
     {
         return [
             'App\\Backend\\ImportComponent\\Mapper\\ProductMappingAssistant' => true,
+            'App\\Frontend\\ShoppingCard\\Business\\ShoppingCardManager' => true,
             'Cycle\\ORM\\ORM' => true,
             'Psr\\Container\\ContainerInterface' => true,
             'Symfony\\Component\\DependencyInjection\\ContainerInterface' => true,
@@ -505,16 +507,6 @@ class MyCachedContainer extends Container
     }
 
     /**
-     * Gets the public 'App\Frontend\Model\DetailController' shared service.
-     *
-     * @return \App\Frontend\Model\DetailController
-     */
-    protected function getDetailControllerService()
-    {
-        return $this->services['App\\Frontend\\Model\\DetailController'] = new \App\Frontend\Model\DetailController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
-    }
-
-    /**
      * Gets the public 'App\Frontend\Model\ErrorController' shared service.
      *
      * @return \App\Frontend\Model\ErrorController
@@ -535,16 +527,6 @@ class MyCachedContainer extends Container
     }
 
     /**
-     * Gets the public 'App\Frontend\Model\ListController' shared service.
-     *
-     * @return \App\Frontend\Model\ListController
-     */
-    protected function getListControllerService()
-    {
-        return $this->services['App\\Frontend\\Model\\ListController'] = new \App\Frontend\Model\ListController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
-    }
-
-    /**
      * Gets the public 'App\Frontend\Product\Business\ProductManager' shared service.
      *
      * @return \App\Frontend\Product\Business\ProductManager
@@ -555,6 +537,26 @@ class MyCachedContainer extends Container
     }
 
     /**
+     * Gets the public 'App\Frontend\Product\Communication\DetailController' shared service.
+     *
+     * @return \App\Frontend\Product\Communication\DetailController
+     */
+    protected function getDetailControllerService()
+    {
+        return $this->services['App\\Frontend\\Product\\Communication\\DetailController'] = new \App\Frontend\Product\Communication\DetailController(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Product\\Business\\ProductManager'] ?? $this->getProductManagerService()), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+    }
+
+    /**
+     * Gets the public 'App\Frontend\Product\Communication\ListController' shared service.
+     *
+     * @return \App\Frontend\Product\Communication\ListController
+     */
+    protected function getListControllerService()
+    {
+        return $this->services['App\\Frontend\\Product\\Communication\\ListController'] = new \App\Frontend\Product\Communication\ListController(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Product\\Business\\ProductManager'] ?? $this->getProductManagerService()), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+    }
+
+    /**
      * Gets the public 'App\Frontend\Product\Communication\ProductController' shared service.
      *
      * @return \App\Frontend\Product\Communication\ProductController
@@ -562,6 +564,16 @@ class MyCachedContainer extends Container
     protected function getProductControllerService()
     {
         return $this->services['App\\Frontend\\Product\\Communication\\ProductController'] = new \App\Frontend\Product\Communication\ProductController(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Product\\Business\\ProductManager'] ?? $this->getProductManagerService()), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+    }
+
+    /**
+     * Gets the public 'App\Frontend\ShoppingCard\Communication\ShoppingCardController' shared service.
+     *
+     * @return \App\Frontend\ShoppingCard\Communication\ShoppingCardController
+     */
+    protected function getShoppingCardControllerService()
+    {
+        return $this->services['App\\Frontend\\ShoppingCard\\Communication\\ShoppingCardController'] = new \App\Frontend\ShoppingCard\Communication\ShoppingCardController(($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), new \App\Frontend\ShoppingCard\Business\ShoppingCardManager(($this->services['App\\Client\\Product\\Persistence\\ProductRepository'] ?? $this->getProductRepositoryService())));
     }
 
     /**

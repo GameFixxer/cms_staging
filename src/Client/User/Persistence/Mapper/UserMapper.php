@@ -8,7 +8,6 @@ use App\Client\User\Persistence\Entity\User;
 
 class UserMapper implements UserMapperInterface
 {
-
     public function map(User $user): UserDataTransferObject
     {
         $userDataTransferObject = new UserDataTransferObject();
@@ -18,8 +17,13 @@ class UserMapper implements UserMapperInterface
         $userDataTransferObject->setUserRole($user->getRole());
         $userDataTransferObject->setSessionId($user->getSessionId());
         $userDataTransferObject->setResetPassword($user->getResetPassword());
+        if (empty($user->getShoppingCard())) {
+            $userDataTransferObject->setShoppingCard([]);
+
+        }
+        $userDataTransferObject->setShoppingCard(explode(',', $user->getShoppingCard()));
+
 
         return $userDataTransferObject;
-
     }
 }

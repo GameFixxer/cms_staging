@@ -93,14 +93,16 @@
             <argument id="App\Service\File\Model\Get" type="service"/>
             <argument id="App\Service\File\Model\Move" type="service"/>
         </service>
-        <!--ImportComponents-->
+        <!--ControllerComponents-->
         <service id="App\Frontend\Product\Business\ProductManager" public ="true">
             <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
         </service>
         <service id="App\Frontend\User\Business\UserManager" public ="true">
             <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
         </service>
-
+        <service id="App\Frontend\ShoppingCard\Business\ShoppingCardManager">
+            <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
+        </service>
 
 
     </services>

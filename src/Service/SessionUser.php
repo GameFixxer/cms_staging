@@ -10,6 +10,7 @@ class SessionUser
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+            $_SESSION['shoppingCard'] = [];
         }
     }
 
@@ -17,6 +18,7 @@ class SessionUser
     {
         //session_destroy();
     }
+
     public function setSessionId(string $id)
     {
         $_SESSION['ID'] = $id;
@@ -37,24 +39,38 @@ class SessionUser
         return false;
     }
 
-    public function addToShoppingCard(ProductDataTransferObject $product)
+    public function addToShoppingCard(String $product):void
     {
+        $article = [$product];
         if (isset($_SESSION['shoppingCard'])) {
-            array_push($_SESSION['shoppingCard'], $product);
+
+            array_push($_SESSION['shoppingCard'], $article);
         }
-        $_SESSION['shoppingCard'] = $product;
+        $_SESSION['shoppingCard'] = [];
+        array_push($_SESSION['shoppingCard'], $article);
+
     }
 
-    public function removeFromShoppingCard(ProductDataTransferObject $product)
+    public function setShoppingCard(array $card):void
     {
-        if (isset($_SESSION['shoppingCard'])) {
-            array_pop($_SESSION['shoppingCard']);
-        }
-        $_SESSION['shoppingCard'] = $product;
+        $_SESSION['shoppingCard'] = $card;
     }
 
-    public function getShoppingCard():array
+    public function removeFromShoppingCard(String $articleNumber):void
     {
+        $key = array_search($articleNumber, $_SESSION['shoppingCard']);
+        if ($key !== false) {
+            unset(($_SESSION['shoppingCard'])[$key]);
+        }
+
+        $_SESSION['shoppingCard'] = $articleNumber;
+    }
+
+    public function getShoppingCard()
+    {
+        if (!isset($_SESSION['shoppingCard'])) {
+            return [];
+        }
         return $_SESSION['shoppingCard'];
     }
 
