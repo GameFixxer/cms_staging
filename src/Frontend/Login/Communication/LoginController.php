@@ -90,10 +90,11 @@ class LoginController implements BackendController
     {
         $userDTO = $this->userBusinessFacade->get($this->userSession->getUser());
 
-        $userDTO->setShoppingCard($this->userSession->getShoppingCard());
+        if ($userDTO instanceof UserDataTransferObject) {
+            $userDTO->setShoppingCard($this->userSession->getShoppingCard());
 
-        $this->userBusinessFacade->save($userDTO);
-
+            $this->userBusinessFacade->save($userDTO);
+        }
         $this->userSession->logoutUser();
 
         $this->view->setRedirect(LoginController::ROUTE, '&page=login', ['admin=true']);
