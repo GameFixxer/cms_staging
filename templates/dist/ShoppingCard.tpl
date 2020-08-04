@@ -20,6 +20,7 @@
                         <th scope="col">Productname</th>
                         <th scope="col">Price</th>
                         <th scope="col">Amount</th>
+                        <th scope="col"></th>
                         <th scope="col">Total</th>
                     </tr>
                     {if !empty($productlist)}
@@ -32,6 +33,16 @@
                         <th scope="row" id={$page->getArticleNumber()}>{$page->getArticleNumber()}</th>
                         <td>{$page->getName()}</td>
                         <td>{$page->getPrice()}</td>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <button class="btn btn-primary btn-sm text-uppercase" id="add" data-title={$page->getArticleNumber()} name="add"
+                                    type="submit" value={$page->getArticleNumber()}>Add
+                            </button>
+                            <button class="btn btn-primary btn-sm text-uppercase" id="remove" data-title={$page->getArticleNumber()} name="remove"
+                                    type="submit" value={$page->getArticleNumber()}>remove
+                            </button>
+
+                        </th>
                     </tr
                     {/foreach}
                     <tr>

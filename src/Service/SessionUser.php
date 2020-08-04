@@ -41,12 +41,12 @@ class SessionUser
 
     public function addToShoppingCard(String $product):void
     {
-        $article = [$product];
-        if (isset($_SESSION['shoppingCard'])) {
-
+        $article [] = $product;
+        dump(isset($_SESSION['shoppingCard']));
+        if (!isset($_SESSION['shoppingCard'])) {
+            $_SESSION['shoppingCard'] = [];
             array_push($_SESSION['shoppingCard'], $article);
         }
-        $_SESSION['shoppingCard'] = [];
         array_push($_SESSION['shoppingCard'], $article);
 
     }
@@ -59,8 +59,9 @@ class SessionUser
     public function removeFromShoppingCard(String $articleNumber):void
     {
         $key = array_search($articleNumber, $_SESSION['shoppingCard']);
-        if ($key !== false) {
+        if ($key !== false && isset($_SESSION['shoppingCard'])) {
             unset(($_SESSION['shoppingCard'])[$key]);
+            dump($_SESSION['shoppingCard']);
         }
 
         $_SESSION['shoppingCard'] = $articleNumber;

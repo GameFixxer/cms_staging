@@ -19,6 +19,7 @@ use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
 use App\Component\SymfonyContainer;
 use App\Service\DatabaseManager;
+use App\Service\SessionUser;
 use Cycle\ORM\ORM;
 
 class ContainerHelper
@@ -118,5 +119,9 @@ class ContainerHelper
     public function getAttributeEntityManager()
     {
         return $this->container->get(AttributeEntityManager::class);
+    }
+    public function getUserSession()
+    {
+        return$this->container->get(SessionUser::class);
     }
 }

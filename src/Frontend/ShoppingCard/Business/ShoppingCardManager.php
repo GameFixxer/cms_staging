@@ -17,11 +17,12 @@ class ShoppingCardManager implements ShoppingCardManagerInterface
     public function getShoppingCard(array $card)
     {
         $shoppingCard = [];
+        dump($card);
         if (isset($card)) {
             foreach ($card as $product) {
-                $article = $this->productRepository->getProduct($product);
+                $article = $this->productRepository->getProduct($product[0]);
                 if (isset($article)) {
-                    $shoppingCard[] = $this->productRepository->getProduct($product);
+                    $shoppingCard[] = $article;
                 }
             }
         }
