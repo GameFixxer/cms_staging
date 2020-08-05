@@ -7,7 +7,7 @@ use App\Generated\Dto\AddressDataTransferObject;
 
 interface AddressBusinessFacadeInterface
 {
-    public function get(User $user, string $type, bool $primary): AddressDataTransferObject;
+    public function get(User $user, string $type, bool $primary): ?AddressDataTransferObject;
 
     /**
      * @return AddressDataTransferObject[]

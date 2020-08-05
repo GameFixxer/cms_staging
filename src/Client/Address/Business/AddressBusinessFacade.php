@@ -19,7 +19,7 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
         $this->addressEntityManager = $addressEntityManager;
     }
 
-    public function get(User $user, string $type, bool $primary): AddressDataTransferObject
+    public function get(User $user, string $type, bool $primary): ?AddressDataTransferObject
     {
         return $this->addressRepository->getAddress($user, $type, $primary);
     }

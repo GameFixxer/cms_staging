@@ -21,22 +21,17 @@ class AddressDataTransferObject
 
     protected string $type = "";
 
-    protected bool $primary = false;
+    protected $active = false;
 
-    /**
-     * @return bool
-     */
-    public function isPrimary(): bool
+
+    public function getActive(): bool
     {
-        return $this->primary;
+        return $this->active;
     }
 
-    /**
-     * @param bool $primary
-     */
-    public function setPrimary(bool $primary): void
+    public function setActive(bool $active): void
     {
-        $this->primary = $primary;
+        $this->active = $active;
     }
 
     /**

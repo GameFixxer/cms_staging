@@ -57,26 +57,25 @@ class Address
     protected $type;
 
     /**
-     * @Column(type"boolean", nullable=false)
-     * @var boolean
+     * @Column(type="enum(active, nonactive)", nullable=false)
+     * @var mixed
      */
-
-    protected bool $primary;
+    protected $active;
 
     /**
-     * @return bool
+     * @return mixed
      */
-    public function isPrimary(): bool
+    public function getActive()
     {
-        return $this->primary;
+        return $this->active;
     }
 
     /**
-     * @param bool $primary
+     * @param mixed $active
      */
-    public function setPrimary(bool $primary): void
+    public function setActive($active): void
     {
-        $this->primary = $primary;
+        $this->active = $active;
     }
 
     /**

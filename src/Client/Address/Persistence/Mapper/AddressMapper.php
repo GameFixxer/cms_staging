@@ -19,7 +19,7 @@ class AddressMapper implements AddressMapperInterface
         $addressDataTransferObject->setStreet($address->getStreet());
         $addressDataTransferObject->setTown($address->getTown());
         $addressDataTransferObject->setType($address->getType());
-        $addressDataTransferObject->setPrimary($address->isPrimary());
+        $addressDataTransferObject->setActive($address->getActive());
 
         return $addressDataTransferObject;
     }

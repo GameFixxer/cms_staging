@@ -43,6 +43,10 @@ class MyCachedContainer extends Container
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductCategory' => 'getProductCategoryService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductImporter' => 'getProductImporterService',
             'App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation' => 'getProductInformationService',
+            'App\\Client\\Address\\Business\\AddressBusinessFacade' => 'getAddressBusinessFacadeService',
+            'App\\Client\\Address\\Persistence\\AddressEntityManager' => 'getAddressEntityManagerService',
+            'App\\Client\\Address\\Persistence\\AddressRepository' => 'getAddressRepositoryService',
+            'App\\Client\\Address\\Persistence\\Mapper\\AddressMapper' => 'getAddressMapperService',
             'App\\Client\\Attribute\\Business\\AttributeBusinessFacade' => 'getAttributeBusinessFacadeService',
             'App\\Client\\Attribute\\Persistence\\AttributeEntityManager' => 'getAttributeEntityManagerService',
             'App\\Client\\Attribute\\Persistence\\AttributeRepository' => 'getAttributeRepositoryService',
@@ -314,6 +318,46 @@ class MyCachedContainer extends Container
     protected function getProductInformationService()
     {
         return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\Update\\ProductInformation'] = new \App\Backend\ImportProduct\Business\Model\Update\ProductInformation(($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\ValueIntegrityManager'] ?? $this->getValueIntegrityManagerService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Address\Business\AddressBusinessFacade' shared service.
+     *
+     * @return \App\Client\Address\Business\AddressBusinessFacade
+     */
+    protected function getAddressBusinessFacadeService()
+    {
+        return $this->services['App\\Client\\Address\\Business\\AddressBusinessFacade'] = new \App\Client\Address\Business\AddressBusinessFacade(($this->services['App\\Client\\Address\\Persistence\\AddressRepository'] ?? $this->getAddressRepositoryService()), ($this->services['App\\Client\\Address\\Persistence\\AddressEntityManager'] ?? $this->getAddressEntityManagerService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Address\Persistence\AddressEntityManager' shared service.
+     *
+     * @return \App\Client\Address\Persistence\AddressEntityManager
+     */
+    protected function getAddressEntityManagerService()
+    {
+        return $this->services['App\\Client\\Address\\Persistence\\AddressEntityManager'] = new \App\Client\Address\Persistence\AddressEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Address\\Persistence\\AddressRepository'] ?? $this->getAddressRepositoryService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Address\Persistence\AddressRepository' shared service.
+     *
+     * @return \App\Client\Address\Persistence\AddressRepository
+     */
+    protected function getAddressRepositoryService()
+    {
+        return $this->services['App\\Client\\Address\\Persistence\\AddressRepository'] = new \App\Client\Address\Persistence\AddressRepository(($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] ?? ($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] = new \App\Client\Address\Persistence\Mapper\AddressMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Address\Persistence\Mapper\AddressMapper' shared service.
+     *
+     * @return \App\Client\Address\Persistence\Mapper\AddressMapper
+     */
+    protected function getAddressMapperService()
+    {
+        return $this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] = new \App\Client\Address\Persistence\Mapper\AddressMapper();
     }
 
     /**

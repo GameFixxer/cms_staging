@@ -45,7 +45,7 @@ class AddressEntityManager implements AddressEntityManagerInterface
         if (!$entity instanceof Address) {
             $entity = new Address();
         }
-        $entity->setPrimary($address->isPrimary());
+        $entity->setSetToPrimary($address->getActive());
         $entity->setType($address->getType());
         $entity->setTown($address->getTown());
         $entity->setStreet($address->getStreet());
