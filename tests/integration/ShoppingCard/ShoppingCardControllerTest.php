@@ -48,22 +48,15 @@ class ShoppingCardControllerTest extends \Codeception\Test\Unit
 
     public function removeFromShoppingCard()
     {
-        
+
     }
 
     private function createProduct()
     {
-        $tmp = rand(1, 1000).substr('', rand(1, 1000));
-        $this->createCSVDTO(''.$tmp, 'tester');
-        $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $this->csvDTO->setId($csvProduct->getId());
+
     }
 
     private function createCSVDTO(string $articleNumber, string $categoryKey)
     {
-        $this->csvDTO = new CsvProductDataTransferObject();
-        $this->csvDTO->setKey($categoryKey);
-        $this->csvDTO->setArticleNumber($articleNumber);
-        $this->csvDTO->setName('test');
     }
 }

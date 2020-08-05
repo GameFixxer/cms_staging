@@ -17,10 +17,9 @@ class ShoppingCardManager implements ShoppingCardManagerInterface
     public function getShoppingCard(array $card)
     {
         $shoppingCard = [];
-        dump($card);
         if (isset($card)) {
             foreach ($card as $product) {
-                $article = $this->productRepository->getProduct($product[0]);
+                $article = $this->productRepository->getProduct($product);
                 if (isset($article)) {
                     $shoppingCard[] = $article;
                 }

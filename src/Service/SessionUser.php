@@ -41,14 +41,16 @@ class SessionUser
 
     public function addToShoppingCard(String $product):void
     {
-        $article [] = $product;
-        dump(isset($_SESSION['shoppingCard']));
-        if (!isset($_SESSION['shoppingCard'])) {
+        if (!isset($_SESSION['shoppingCard']) && !is_array($_SESSION['shoppingCard'])) {
             $_SESSION['shoppingCard'] = [];
-            array_push($_SESSION['shoppingCard'], $article);
+            array_push($_SESSION['shoppingCard'], $product);
+        } elseif (!is_array($_SESSION['shoppingCard'])) {
+            $tmp = [];
+            $tmp [] = $_SESSION['shoppingCard'];
+            $_SESSION['shoppingCard'] = $tmp;
+            array_push($_SESSION['shoppingCard'], $product);
         }
-        array_push($_SESSION['shoppingCard'], $article);
-
+        array_push($_SESSION['shoppingCard'], $product);
     }
 
     public function setShoppingCard(array $card):void
@@ -60,11 +62,15 @@ class SessionUser
     {
         $key = array_search($articleNumber, $_SESSION['shoppingCard']);
         if ($key !== false && isset($_SESSION['shoppingCard'])) {
-            unset(($_SESSION['shoppingCard'])[$key]);
-            dump($_SESSION['shoppingCard']);
+            $_SESSION['shoppingCard'][$key] = null;
+            $card = [];
+            foreach ($_SESSION['shoppingCard'] as $item) {
+                if (isset($item)) {
+                    $card[] = $item;
+                }
+            }
+            $_SESSION['shoppingCard'] = $card;
         }
-
-        $_SESSION['shoppingCard'] = $articleNumber;
     }
 
     public function getShoppingCard()
