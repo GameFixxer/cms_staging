@@ -72,12 +72,4 @@ class ShoppingCardControllerTest extends \Codeception\Test\Unit
         self::assertSame($this->session->getShoppingCard(), $cache);
     }
 
-    private function createProduct()
-    {
-
-    }
-
-    private function createCSVDTO(string $articleNumber, string $categoryKey)
-    {
-    }
 }

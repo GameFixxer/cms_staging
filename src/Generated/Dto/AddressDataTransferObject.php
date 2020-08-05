@@ -1,67 +1,27 @@
 <?php
 
-
-namespace App\Client\Address\Persistence\Entity;
+declare(strict_types=1);
+namespace App\Generated\Dto;
 
 use App\Client\User\Persistence\Entity\User;
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
 
-/**
- * @Entity(
- *     table = "address"
- * )
- */
-class Address
+class AddressDataTransferObject
 {
-    /**
-     * @Column(type="primary")
-     * @var int
-     */
-    protected $address_id;
+    protected int $address_id = 0;
 
-    /**
-     * @BelongsTo(target = "user",   nullable =false)
-     */
-    protected $user;
+    protected User $user;
 
-    /**
-     * @Column(type="string",nullable = false)
-     * @var string
-     */
-    protected $country;
+    protected string $country = "";
 
-    /**
-     * @Column( type="string", nullable=false)
-     * @var string
-     */
-    protected $street;
+    protected string $street = "";
 
-    /**
-     * @Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $town;
+    protected string $town = "";
 
-    /**
-     * @Column(type="int", nullable=false)
-     * @var int
-     */
-    protected $postCode;
+    protected int $postCode = 0;
 
-    /**
-     * @Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $type;
+    protected string $type = "";
 
-    /**
-     * @Column(type"boolean", nullable=false)
-     * @var boolean
-     */
-
-    protected bool $primary;
+    protected bool $primary = false;
 
     /**
      * @return bool
@@ -190,7 +150,4 @@ class Address
     {
         $this->type = $type;
     }
-
-
-
 }
