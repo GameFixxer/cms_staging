@@ -41,7 +41,7 @@ class SessionUser
 
     public function addToShoppingCard(String $product):void
     {
-        if (!isset($_SESSION['shoppingCard']) && !is_array($_SESSION['shoppingCard'])) {
+        if (!isset($_SESSION['shoppingCard'])) {
             $_SESSION['shoppingCard'] = [];
             array_push($_SESSION['shoppingCard'], $product);
         } elseif (!is_array($_SESSION['shoppingCard'])) {

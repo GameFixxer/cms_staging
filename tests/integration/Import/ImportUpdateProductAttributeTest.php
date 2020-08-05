@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
+use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Product\Persistence\Entity\Product as ProductEntity;
@@ -55,8 +56,14 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
 
         self::assertNotNull($productFromRepository);
+        $orm = new DatabaseManager();
+        $orm = $orm->connect();
+        $ormProductRepository = $orm->getRepository(Product::class);
+        $productFromRepository2 =  $ormProductRepository->select()->where('article_number', ''.$this->csvDTO->getArticleNumber())->load('attribute')->fetchAll();
+        dump($productFromRepository2);
         if (!empty(($productFromRepository->getAttribute()))) {
-            self::assertNotSame('', $productFromRepository->getAttribute()->getPivot()->getAttributeId());
+
+           // self::assertNotSame('', $productFromRepository->getAttribute()->getPivot()->getAttributeId());
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormCategoryRepository = $orm->getRepository(Attribute::class);

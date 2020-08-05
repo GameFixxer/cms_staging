@@ -57,7 +57,6 @@ class ShoppingCardControllerTest extends \Codeception\Test\Unit
             'add' => '13'
         ];
         $this->tester->setUpBootstrap();
-        $this->testAddToShoppingCard();
         $_SERVER['REQUEST_METHOD'] = 'POST';
         $_GET = [
         'cl' => 'card',

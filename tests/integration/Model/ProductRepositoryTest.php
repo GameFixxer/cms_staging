@@ -12,6 +12,11 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
+/**
+ * @group model
+ */
+
+
 class ProductRepositoryTest extends \Codeception\Test\Unit
 {
     private ContainerHelper $container;
@@ -47,7 +52,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $productRepository = $this->container->getProductRepository();
 
         $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
-
+        codecept_debug($productDtoFromRepository);
         $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getName());
         $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getDescription());
         $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
@@ -80,6 +85,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setProductDescription('a very noisy neighbour');
         $this->entity->setArticleNumber($this->container->createArticleNumber());
         $this->entity->setCategory(null);
+        $this->entity->setPrice(0);
 
         return $this->entity;
     }

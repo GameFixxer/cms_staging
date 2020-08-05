@@ -62,7 +62,6 @@ class ShoppingCardController implements BackendController
 
     private function makeListFromCard():array
     {
-        dump($this->sessionUser->getShoppingCard());
         return $this->shoppingCardManager->getShoppingCard((array) $this->sessionUser->getShoppingCard());
     }
 }
