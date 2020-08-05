@@ -35,27 +35,22 @@ class DetailController implements Controller
     public function action(): void
     {
         $articleNumber = ($_GET['id'] ?? '0');
+
         $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if ($articleNumber === 0 || !($this->checkForValidDTO($productDTO))) {
+        if (!$productDTO instanceof ProductDataTransferObject) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
+        } else {
+            $this->view->addTemplate('detail.tpl');
+            $this->view->addTlpParam('page', $productDTO);
+            if (isset($_POST['add'])) {
+                $this->addToShoppingCard((string)$_POST['add']);
+            }
         }
-        $this->view->addTemplate('detail.tpl');
-        $this->view->addTlpParam('page', $productDTO);
-        if (isset($_POST['add'])) {
-            $this->addToShoppingCard((string)$_POST['add']);
-        }
-    }
-
-    private function checkForValidDTO($productDTO): bool
-    {
-        return $productDTO instanceof ProductDataTransferObject;
     }
 
     private function addToShoppingCard(string $articleNumber)
     {
-        dump($articleNumber);
-        dump(session_status());
         $this->userSession->addToShoppingCard($articleNumber);
     }
 }

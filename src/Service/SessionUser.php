@@ -117,6 +117,7 @@ class SessionUser
     }
     public function logoutUser(): void
     {
+        $_SESSION['username'] = null;
         session_unset();
         session_destroy();
     }
