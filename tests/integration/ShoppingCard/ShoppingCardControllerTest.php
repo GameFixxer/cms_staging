@@ -43,12 +43,33 @@ class ShoppingCardControllerTest extends \Codeception\Test\Unit
             'add' => '13'
         ];
         $this->tester->setUpBootstrap();
-        self::assertSame($this->session->getShoppingCard()[0][0], '13');
+        self::assertSame($this->session->getShoppingCard()[0], '13');
     }
 
-    public function removeFromShoppingCard()
+    public function testRemoveFromShoppingCard()
     {
+        $_POST = [
+            'add' => '13'
+        ];
+        $this->tester->setUpBootstrap();
+        $cache = $this->session->getShoppingCard();
+        $_POST = [
+            'add' => '13'
+        ];
+        $this->tester->setUpBootstrap();
+        $this->testAddToShoppingCard();
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_GET = [
+        'cl' => 'card',
+        'page' => 'list',
+            'admin' => 'true'
+    ];
 
+        $_POST = [
+            'remove' => '13'
+        ];
+        $this->tester->setUpBootstrap();
+        self::assertSame($this->session->getShoppingCard(), $cache);
     }
 
     private function createProduct()
