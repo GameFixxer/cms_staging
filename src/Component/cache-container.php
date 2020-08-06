@@ -55,6 +55,10 @@ class MyCachedContainer extends Container
             'App\\Client\\Category\\Persistence\\CategoryEntityManager' => 'getCategoryEntityManagerService',
             'App\\Client\\Category\\Persistence\\CategoryRepository' => 'getCategoryRepositoryService',
             'App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper' => 'getCategoryMapperService',
+            'App\\Client\\Order\\Business\\OrderBusinessFacade' => 'getOrderBusinessFacadeService',
+            'App\\Client\\Order\\Persistence\\Mapper\\OrderMapper' => 'getOrderMapperService',
+            'App\\Client\\Order\\Persistence\\OrderEntityManager' => 'getOrderEntityManagerService',
+            'App\\Client\\Order\\Persistence\\OrderRepository' => 'getOrderRepositoryService',
             'App\\Client\\Product\\Business\\ProductBusinessFacade' => 'getProductBusinessFacadeService',
             'App\\Client\\Product\\Persistence\\Mapper\\ProductMapper' => 'getProductMapperService',
             'App\\Client\\Product\\Persistence\\ProductEntityManager' => 'getProductEntityManagerService',
@@ -438,6 +442,46 @@ class MyCachedContainer extends Container
     protected function getCategoryMapperService()
     {
         return $this->services['App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper'] = new \App\Client\Category\Persistence\Mapper\CategoryMapper();
+    }
+
+    /**
+     * Gets the public 'App\Client\Order\Business\OrderBusinessFacade' shared service.
+     *
+     * @return \App\Client\Order\Business\OrderBusinessFacade
+     */
+    protected function getOrderBusinessFacadeService()
+    {
+        return $this->services['App\\Client\\Order\\Business\\OrderBusinessFacade'] = new \App\Client\Order\Business\OrderBusinessFacade(($this->services['App\\Client\\Order\\Persistence\\OrderRepository'] ?? $this->getOrderRepositoryService()), ($this->services['App\\Client\\Order\\Persistence\\OrderEntityManager'] ?? $this->getOrderEntityManagerService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Order\Persistence\Mapper\OrderMapper' shared service.
+     *
+     * @return \App\Client\Order\Persistence\Mapper\OrderMapper
+     */
+    protected function getOrderMapperService()
+    {
+        return $this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] = new \App\Client\Order\Persistence\Mapper\OrderMapper();
+    }
+
+    /**
+     * Gets the public 'App\Client\Order\Persistence\OrderEntityManager' shared service.
+     *
+     * @return \App\Client\Order\Persistence\OrderEntityManager
+     */
+    protected function getOrderEntityManagerService()
+    {
+        return $this->services['App\\Client\\Order\\Persistence\\OrderEntityManager'] = new \App\Client\Order\Persistence\OrderEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Order\\Persistence\\OrderRepository'] ?? $this->getOrderRepositoryService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\Order\Persistence\OrderRepository' shared service.
+     *
+     * @return \App\Client\Order\Persistence\OrderRepository
+     */
+    protected function getOrderRepositoryService()
+    {
+        return $this->services['App\\Client\\Order\\Persistence\\OrderRepository'] = new \App\Client\Order\Persistence\OrderRepository(($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] ?? ($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] = new \App\Client\Order\Persistence\Mapper\OrderMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
     }
 
     /**

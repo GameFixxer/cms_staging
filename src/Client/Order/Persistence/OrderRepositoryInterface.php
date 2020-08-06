@@ -12,5 +12,5 @@ interface OrderRepositoryInterface
      */
     public function getOrderList(): array;
 
-    public function getAddress(int $orderId): ?OrderDataTransferObject;
+    public function getOrder(int $orderId): ?OrderDataTransferObject;
 }

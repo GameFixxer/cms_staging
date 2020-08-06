@@ -7,6 +7,7 @@ use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
 use DateTime;
+use DateTimeImmutable;
 
 /** @Entity */
 class Order
@@ -40,7 +41,7 @@ class Order
 
     /**
      * @Column(type="date")
-     * @var DateTime()
+     * @var \DateTimeImmutable
      */
     protected $dateOfOrder;
 
@@ -125,17 +126,17 @@ class Order
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getDateOfOrder(): DateTime
+    public function getDateOfOrder(): DateTimeImmutable
     {
         return $this->dateOfOrder;
     }
 
     /**
-     * @param DateTime $dateOfOrder
+     * @param DateTimeImmutable $dateOfOrder
      */
-    public function setDateOfOrder(DateTime $dateOfOrder): void
+    public function setDateOfOrder(DateTimeImmutable $dateOfOrder): void
     {
         $this->dateOfOrder = $dateOfOrder;
     }

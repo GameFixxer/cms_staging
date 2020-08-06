@@ -34,7 +34,7 @@ class OrderRepository implements OrderRepositoryInterface
         return $orderList;
     }
 
-    public function getAddress(int $orderId): ?OrderDataTransferObject
+    public function getOrder(int $orderId): ?OrderDataTransferObject
     {
         $order = $this->repository->findByPK($orderId);
         if ($order instanceof Order) {

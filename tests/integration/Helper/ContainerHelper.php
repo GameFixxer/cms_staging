@@ -13,6 +13,7 @@ use App\Client\Attribute\Persistence\AttributeEntityManager;
 use App\Client\Attribute\Persistence\AttributeRepository;
 use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Order\Persistence\OrderRepository;
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\User\Persistence\UserEntityManager;
@@ -124,4 +125,9 @@ class ContainerHelper
     {
         return$this->container->get(SessionUser::class);
     }
+
+    public function getOrderRepository(){
+        return $this->container->get(OrderRepository::class);
+    }
+
 }

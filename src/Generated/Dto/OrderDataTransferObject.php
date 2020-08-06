@@ -6,16 +6,17 @@ namespace App\Generated\Dto;
 use App\Client\Address\Persistence\Entity\Address;
 use App\Client\User\Persistence\Entity\User;
 use DateTime;
+use DateTimeImmutable;
 
 class OrderDataTransferObject
 {
     protected int $orderId;
-    protected User $user;
-    protected Address $address;
+    protected $user;
+    protected $address;
     protected int $sum;
     protected string $status;
     protected string $orderedProducts;
-    protected \DateTime $dateOfOrder;
+    protected DateTimeImmutable $dateOfOrder;
 
 
     /**
@@ -99,17 +100,17 @@ class OrderDataTransferObject
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getDateOfOrder(): DateTime
+    public function getDateOfOrder(): DateTimeImmutable
     {
         return $this->dateOfOrder;
     }
 
     /**
-     * @param DateTime $dateOfOrder
+     * @param DateTimeImmutable $dateOfOrder
      */
-    public function setDateOfOrder(DateTime $dateOfOrder): void
+    public function setDateOfOrder(DateTimeImmutable $dateOfOrder): void
     {
         $this->dateOfOrder = $dateOfOrder;
     }

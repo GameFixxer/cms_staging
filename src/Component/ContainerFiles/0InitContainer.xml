@@ -16,6 +16,7 @@
 
         <!-- Mapper -->
 
+        <service id="App\Client\Order\Persistence\Mapper\OrderMapper" public="true"/>
         <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true"/>
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
@@ -24,6 +25,10 @@
 
         <!--Repository-->
 
+        <service id="App\Client\Order\Persistence\OrderRepository" public="true">
+            <argument id="App\Client\Order\Persistence\Mapper\OrderMapper" type="service"/>
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
         <service id="App\Client\Address\Persistence\AddressRepository" public="true">
             <argument id="App\Client\Address\Persistence\Mapper\AddressMapper" type="service"/>
             <argument id="Cycle\ORM\ORM" type="service"/>
@@ -49,6 +54,10 @@
 
         <!--EntityManager-->
 
+        <service id="App\Client\Order\Persistence\OrderEntityManager" public="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument id="App\Client\Order\Persistence\OrderRepository" type="service"/>
+        </service>
         <service id="App\Client\Address\Persistence\AddressEntityManager" public="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
             <argument id="App\Client\Address\Persistence\AddressRepository" type="service"/>
@@ -72,6 +81,10 @@
 
         <!--BusinessFacade-->
 
+        <service id="App\Client\Order\Business\OrderBusinessFacade" public="true">
+            <argument id="App\Client\Order\Persistence\OrderRepository" type="service"/>
+            <argument id="App\Client\Order\Persistence\OrderEntityManager" type="service"/>
+        </service>
         <service id="App\Client\Address\Business\AddressBusinessFacade" public="true">
             <argument id="App\Client\Address\Persistence\AddressRepository" type="service"/>
             <argument id="App\Client\Address\Persistence\AddressEntityManager" type="service"/>
