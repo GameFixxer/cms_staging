@@ -36,16 +36,16 @@ class ShoppingCardController implements BackendController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             switch ($_POST) {
-                case isset($_POST['add']):
-                    $this->addToShoppingCard((string)$_POST['add']);
-                    break;
+            case isset($_POST['add']):
+                $this->addToShoppingCard((string)$_POST['add']);
+                break;
 
-                case isset($_POST['remove']):
-                    $this->removeFromShoppingCard((string)$_POST['remove']);
-                    break;
+            case isset($_POST['remove']):
+                $this->removeFromShoppingCard((string)$_POST['remove']);
+                break;
             }
         }
-        $tmp  =$this->makeListFromCard();
+        $tmp = $this->makeListFromCard();
         $this->view->addTlpParam('productlist', $tmp);
         $this->view->addTemplate('ShoppingCard.tpl');
     }
@@ -62,6 +62,6 @@ class ShoppingCardController implements BackendController
 
     private function makeListFromCard():array
     {
-        return $this->shoppingCardManager->getShoppingCard((array) $this->sessionUser->getShoppingCard());
+        return $this->shoppingCardManager->getShoppingCard((array)$this->sessionUser->getShoppingCard());
     }
 }
