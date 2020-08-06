@@ -41,7 +41,7 @@ class OrderEntityManager implements OrderEntityManagerInterface
         $transaction = new Transaction($this->orm);
 
 
-        $entity = $this->repository->findOne(['address_id'=>$order->getOrderId()]);
+        $entity = $this->repository->findByPK($order->getOrderId());
         if (!$entity instanceof Order) {
             $entity = new Order();
         }
@@ -56,7 +56,7 @@ class OrderEntityManager implements OrderEntityManagerInterface
 
         $transaction->persist($entity);
         $transaction->run();
-        $order->setOrderId($entity->getAddressId());
+        $order->setOrderId($entity->getOrderId());
 
         return $order;
     }
