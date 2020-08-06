@@ -24,9 +24,12 @@
             <argument type="service" id="App\Service\PasswordManager"/>
             <argument type="service" id="App\Service\SessionUser"/>
         </service>
-        <service id="App\Frontend\Model\DetailController" public="true">
-            <argument type="service" id="App\Component\View"/>
+        <service id="App\Frontend\Product\Communication\DetailController" public="true">
+
             <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Frontend\Product\Business\ProductManager"/>
+            <argument type="service" id="App\Component\View"/>
         </service>
         <service id="App\Frontend\Model\ErrorController" public="true">
             <argument type="service" id="App\Component\View"/>
@@ -34,9 +37,12 @@
         <service id="App\Frontend\Model\HomeController" public="true">
             <argument type="service" id="App\Component\View"/>
         </service>
-        <service id="App\Frontend\Model\ListController" public="true">
-            <argument type="service" id="App\Component\View"/>
+        <service id="App\Frontend\Product\Communication\ListController" public="true">
+
             <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Frontend\Product\Business\ProductManager"/>
+            <argument type="service" id="App\Component\View"/>
         </service>
         <service id="App\Frontend\Product\Communication\ProductController" public="true">
             <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
@@ -54,6 +60,12 @@
             <argument type="service" id="App\Component\View"/>
             <argument type="service" id="App\Service\PasswordManager"/>
             <argument type="service" id="App\Frontend\User\Business\UserManager"/>
+        </service>
+        <service id="App\Frontend\ShoppingCard\Communication\ShoppingCardController" public="true">
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Component\View"/>
+            <argument type="service" id="App\Frontend\ShoppingCard\Business\ShoppingCardManager"/>
+
         </service>
 
 

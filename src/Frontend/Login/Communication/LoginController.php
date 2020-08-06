@@ -88,12 +88,21 @@ class LoginController implements BackendController
 
     public function logoutAction()
     {
+        $userDTO = $this->userBusinessFacade->get($this->userSession->getUser());
+
+        if ($userDTO instanceof UserDataTransferObject) {
+            $userDTO->setShoppingCard($this->userSession->getShoppingCard());
+
+            $this->userBusinessFacade->save($userDTO);
+        }
         $this->userSession->logoutUser();
+
         $this->view->setRedirect(LoginController::ROUTE, '&page=login', ['admin=true']);
     }
     private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
+            $this->userSession->setShoppingCard(array_merge($userDTO->getShoppingCard(), $this->userSession->getShoppingCard()));
             $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getUserRole());
             $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);

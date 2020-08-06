@@ -27,6 +27,13 @@
                                 <div class="portfolio-caption-heading">{$page->getName()}</div>
                                 <div class="portfolio-caption-subheading text-muted">{$page->getDescription()}</div>
                             </div>
+                            <form id="updateform" name="updateform" action="" method="post">
+                            <td>
+                                <button class="btn btn-primary btn-sm text-uppercase" id="add" data-title={$page->getArticleNumber()} name="add"
+                                        type="submit" value={$page->getArticleNumber()}>Add
+                                </button>
+                            </td>
+                                </form>
                         </object>
                     </div>
                 {/foreach}

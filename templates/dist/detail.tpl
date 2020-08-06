@@ -29,6 +29,13 @@
                             <div class="portfolio-caption-subheading text-muted">Id:{$page->getArticleNumber()}</div>
                         </div>
                     </div>
+                    <form id="updateform" name="updateform" action="" method="post">
+                    <td>
+                        <button class="btn btn-primary btn-sm text-uppercase" id="add" data-title={$page->getArticleNumber()} name="add"
+                                type="submit" value={$page->getArticleNumber()}>Add
+                        </button>
+                    </td>
+                    </form>
                 </div>
             </div>
             <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="http://localhost:8080/Index.php?cl=list">Return to productlist</a>

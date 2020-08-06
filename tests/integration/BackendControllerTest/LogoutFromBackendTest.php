@@ -29,7 +29,7 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
         $this->tester->arrange();
         $this->tester->setSession();
 
-        $_SERVER['REQUEST_METHOD'] = '';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
 
         $_GET = [
             'cl' => 'login',
@@ -38,11 +38,13 @@ class LogoutFromBackendTest extends \Codeception\Test\Unit
         ];
 
         $this->tester->setUpBootstrap();
-
-
-        $this->tester->setUpBootstrap();
+        $_GET = [
+            'cl' => 'login',
+            'page' => 'logout',
+            'admin' => 'true',
+        ];
         if ($_GET['cl'] === 'login' && $_GET['page'] === 'logout') {
-            $this->assertEmpty($_SESSION);
+            $this->assertNull($_SESSION['username']);
             $this->assertTrue(true);
         } else {
             $this->assertTrue(false);

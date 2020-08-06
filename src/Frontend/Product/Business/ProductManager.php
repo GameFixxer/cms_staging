@@ -31,7 +31,7 @@ class ProductManager implements ProductManagerInterface
         $this->productBusinessFacade->save($product);
     }
 
-    public function addToShoppingCard(string $articleNumber):ProductDataTransferObject
+    public function addPriceToShoppingCard(string $articleNumber):ProductDataTransferObject
     {
         $productDTO = $this->productBusinessFacade->get($articleNumber);
         if (!$productDTO instanceof ProductDataTransferObject) {

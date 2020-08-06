@@ -10,6 +10,7 @@ class SessionUser
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+            $_SESSION['shoppingCard'] = [];
         }
     }
 
@@ -17,6 +18,7 @@ class SessionUser
     {
         //session_destroy();
     }
+
     public function setSessionId(string $id)
     {
         $_SESSION['ID'] = $id;
@@ -37,24 +39,45 @@ class SessionUser
         return false;
     }
 
-    public function addToShoppingCard(ProductDataTransferObject $product)
+    public function addToShoppingCard(String $product):void
     {
-        if (isset($_SESSION['shoppingCard'])) {
+        if (!isset($_SESSION['shoppingCard'])) {
+            $_SESSION['shoppingCard'] = [];
+            array_push($_SESSION['shoppingCard'], $product);
+        } elseif (!is_array($_SESSION['shoppingCard'])) {
+            $tmp = [];
+            $tmp [] = $_SESSION['shoppingCard'];
+            $_SESSION['shoppingCard'] = $tmp;
             array_push($_SESSION['shoppingCard'], $product);
         }
-        $_SESSION['shoppingCard'] = $product;
+        array_push($_SESSION['shoppingCard'], $product);
     }
 
-    public function removeFromShoppingCard(ProductDataTransferObject $product)
+    public function setShoppingCard(array $card):void
     {
-        if (isset($_SESSION['shoppingCard'])) {
-            array_pop($_SESSION['shoppingCard']);
+        $_SESSION['shoppingCard'] = $card;
+    }
+
+    public function removeFromShoppingCard(String $articleNumber):void
+    {
+        $key = array_search($articleNumber, $_SESSION['shoppingCard']);
+        if ($key !== false && isset($_SESSION['shoppingCard'])) {
+            $_SESSION['shoppingCard'][$key] = null;
+            $card = [];
+            foreach ($_SESSION['shoppingCard'] as $item) {
+                if (isset($item)) {
+                    $card[] = $item;
+                }
+            }
+            $_SESSION['shoppingCard'] = $card;
         }
-        $_SESSION['shoppingCard'] = $product;
     }
 
-    public function getShoppingCard():array
+    public function getShoppingCard()
     {
+        if (!isset($_SESSION['shoppingCard'])) {
+            return [];
+        }
         return $_SESSION['shoppingCard'];
     }
 
@@ -94,6 +117,7 @@ class SessionUser
     }
     public function logoutUser(): void
     {
+        $_SESSION['username'] = null;
         session_unset();
         session_destroy();
     }

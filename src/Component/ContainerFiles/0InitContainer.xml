@@ -16,16 +16,22 @@
 
         <!-- Mapper -->
 
+        <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true"/>
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
         <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
         <service id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" public ="true"/>
+
         <!--Repository-->
+
+        <service id="App\Client\Address\Persistence\AddressRepository" public="true">
+            <argument id="App\Client\Address\Persistence\Mapper\AddressMapper" type="service"/>
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
         <service id="App\Client\Attribute\Persistence\AttributeRepository" public ="true">
             <argument id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" type="service"/>
             <argument id="Cycle\ORM\ORM" type="service"/>
         </service>
-
         <service id="App\Client\Product\Persistence\ProductRepository" public="true">
             <argument type="service" id="App\Client\Product\Persistence\Mapper\ProductMapper"/>
             <argument type="service" id="Cycle\ORM\ORM"/>
@@ -43,11 +49,14 @@
 
         <!--EntityManager-->
 
+        <service id="App\Client\Address\Persistence\AddressEntityManager" public="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument id="App\Client\Address\Persistence\AddressRepository" type="service"/>
+        </service>
         <service id="App\Client\Attribute\Persistence\AttributeEntityManager" public ="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
             <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
         </service>
-
         <service id="App\Client\Product\Persistence\ProductEntityManager" public="true">
             <argument type="service" id="Cycle\ORM\ORM"/>
             <argument type="service" id="App\Client\Product\Persistence\ProductRepository"/>
@@ -63,11 +72,14 @@
 
         <!--BusinessFacade-->
 
+        <service id="App\Client\Address\Business\AddressBusinessFacade" public="true">
+            <argument id="App\Client\Address\Persistence\AddressRepository" type="service"/>
+            <argument id="App\Client\Address\Persistence\AddressEntityManager" type="service"/>
+        </service>
         <service id="App\Client\Attribute\Business\AttributeBusinessFacade" public ="true">
             <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
             <argument id="App\Client\Attribute\Persistence\AttributeEntityManager" type="service"/>
         </service>
-
         <service id="App\Client\Product\Business\ProductBusinessFacade" public ="true">
             <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
             <argument id="App\Client\Product\Persistence\ProductEntityManager" type="service"/>
@@ -93,12 +105,15 @@
             <argument id="App\Service\File\Model\Get" type="service"/>
             <argument id="App\Service\File\Model\Move" type="service"/>
         </service>
-        <!--ImportComponents-->
+        <!--ControllerComponents-->
         <service id="App\Frontend\Product\Business\ProductManager" public ="true">
             <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
         </service>
         <service id="App\Frontend\User\Business\UserManager" public ="true">
             <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
+        </service>
+        <service id="App\Frontend\ShoppingCard\Business\ShoppingCardManager">
+            <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
         </service>
 
 

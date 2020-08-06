@@ -97,7 +97,7 @@ class ProductController implements BackendController
 
     private function addToShoppingCard(string $articleNumber)
     {
-        $this->userSession->addToShoppingCard($this->productManager->addToShoppingCard($articleNumber));
+        $this->userSession->addToShoppingCard($articleNumber);
     }
 
     private function deleteProduct(string $articleNumber): void

@@ -5,6 +5,7 @@ namespace App\Client\User\Persistence\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Relation\HasMany;
 use PhpParser\Node\Scalar\String_;
 
 /**
@@ -50,6 +51,49 @@ class User
      * @var string
      */
     protected $resetpassword;
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $shoppingCard;
+
+    /**
+     * @HasMany(target="address", nullable= true)
+     */
+    protected $address;
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShoppingCard(): string
+    {
+        return $this->shoppingCard;
+    }
+
+    /**
+     * @param string $shoppingCard
+     */
+    public function setShoppingCard(string $shoppingCard): void
+    {
+        $this->shoppingCard = $shoppingCard;
+    }
 
     public function getSessionId():string
     {

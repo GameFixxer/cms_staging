@@ -85,6 +85,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setRole('user');
         $this->entity->setSessionId('');
         $this->entity->setResetPassword('');
+        $this->entity->setShoppingCard("");
 
         return $this->entity;
     }

@@ -10,5 +10,5 @@ interface ProductManagerInterface
 
     public function save(ProductDataTransferObject $product): void;
 
-    public function addToShoppingCard(string $articleNumber):ProductDataTransferObject;
+    public function addPriceToShoppingCard(string $articleNumber):ProductDataTransferObject;
 }

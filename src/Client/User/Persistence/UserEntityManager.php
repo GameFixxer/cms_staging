@@ -47,6 +47,7 @@ class UserEntityManager implements UserEntityManagerInterface
         $entity->setRole($user->getUserRole());
         $entity->setSessionId($user->getSessionId());
         $entity->setResetPassword($user->getResetPassword());
+        $entity->setShoppingCard(implode(',', $user->getShoppingCard()));
         $transaction->persist($entity);
         $transaction->run();
 
