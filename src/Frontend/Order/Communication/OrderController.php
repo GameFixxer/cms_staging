@@ -3,14 +3,10 @@ declare(strict_types=1);
 
 namespace App\Frontend\Order\Communication;
 
-use App\Client\Address\Business\AddressBusinessFacadeInterface;
-use App\Client\Order\Business\OrderBusinessFacadeInterface;
-use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
-use App\Frontend\User\Communication\DashboardController;
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Frontend\Order\Business\OrderManagerInterface;
+use App\Generated\Dto\AddressDataTransferObject;
 use App\Service\SessionUser;
 
 class OrderController implements BackendController
@@ -18,61 +14,66 @@ class OrderController implements BackendController
     public const ROUTE = 'order';
     private SessionUser $userSession;
     private View $view;
-    private UserBusinessFacadeInterface $userBusinessFacade;
-    private OrderBusinessFacadeInterface $businessFacade;
-    private OrderDataTransferObject $orderDataTransferObject;
-    private AddressBusinessFacadeInterface $addressBusinessFacade;
-    private ProductBusinessFacadeInterface $productBusinessFacade;
+    private OrderManagerInterface $orderManager;
+
 
     public function __construct(
         View $view,
-        UserBusinessFacadeInterface $userBusinessFacade,
         SessionUser $userSession,
-        OrderBusinessFacadeInterface $businessFacade,
-        AddressBusinessFacadeInterface $addressBusinessFacade,
-        ProductBusinessFacadeInterface $productBusinessFacade
+        OrderManagerInterface $orderManager
     ) {
         $this->userSession = $userSession;
         $this->view = $view;
-        $this->userBusinessFacade = $userBusinessFacade;
-        $this->businessFacade = $businessFacade;
-        $this->addressBusinessFacade = $addressBusinessFacade;
-        $this->productBusinessFacade = $productBusinessFacade;
+        $this->orderManager = $orderManager;
     }
 
     public function init(): void
     {
         if ($this->userSession->isLoggedIn() && !($_GET['page'] === 'logout')) {
             $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
-            $this->orderDataTransferObject->setUser($this->userBusinessFacade->get($this->userSession->getUser()));
+            $this->orderManager->setUser($this->userSession->getUser());
         }
         $this->view->addTlpParam('login', 'LOGIN AREA');
     }
 
     public function action()
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['checkout']) && isset($_POST['address'])&& isset($_POST['payment'])) {
+                if ($_POST['address'] === 'notNew') {
+                    $this->addShoppingCardItems();
+                    $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
+                    $this->pushOrder();
+                }elseif ($_POST['address'] === 'new'){
+                    $this->createNewAddress();
+                }
+            }
+        }
+    }
+    private function createNewAddress(){
+        $newAddress = new AddressDataTransferObject();
+        $newAddress->setUser($this->orderManager->getUser($this->userSession->getUser()));
+        $newAddress->setType($_POST['address']['type']);
+        $newAddress->setTown($_POST['address']['town']);
+        $newAddress->setPostCode($_POST['address']['postcode']);
+        $newAddress->setCountry($_POST['address']['country']);
+        $newAddress->setStreet($_POST['address']['street']);
+        $newAddress->setActive($_POST['address']['active']);
+        $this->orderManager->createNewAddress($newAddress);
     }
 
     private function addShoppingCardItems()
     {
-        $card = $this->userSession->getShoppingCard();
-        $sum = 0;
-        foreach ($card as $item) {
-            $sum = $sum + $this->productBusinessFacade->get($item)->getPrice();
-        }
-        $this->orderDataTransferObject->setSum($sum);
-        $this->orderDataTransferObject->setOrderedProducts(implode(',', $card));
+        $this->orderManager->addShoppingCardItems($this->userSession->getShoppingCard());
     }
 
-    private function addAddressToOrder(string $type, bool $primary)
+    public function addAddressToOrder(string $type, bool $primary)
     {
-        $this->orderDataTransferObject->setAddress(
-            $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
-        );
+        $this->orderManager->addAddressToOrder($type, $primary);
     }
 
     private function pushOrder()
     {
-        $this->businessFacade->save($this->orderDataTransferObject);
+        $this->orderManager->pushOrder();
     }
 }
