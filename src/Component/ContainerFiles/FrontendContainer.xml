@@ -67,6 +67,11 @@
             <argument type="service" id="App\Frontend\ShoppingCard\Business\ShoppingCardManager"/>
 
         </service>
+        <service id="App\Frontend\Order\Communication\OrderController" public="true">
+            <argument id="App\Component\View" type="service"/>
+            <argument id="App\Service\SessionUser" type="service"/>
+            <argument type="service" id="App\Frontend\Order\Business\OrderManager"/>
+        </service>
 
 
 

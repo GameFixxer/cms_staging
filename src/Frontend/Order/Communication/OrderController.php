@@ -29,11 +29,14 @@ class OrderController implements BackendController
 
     public function init(): void
     {
-        if ($this->userSession->isLoggedIn() && !($_GET['page'] === 'logout')) {
-            $this->view->setRedirect(self::ROUTE, '&page=list', ['admin=true']);
-            $this->orderManager->setUser($this->userSession->getUser());
+        if (!$this->userSession->isLoggedIn()) {
+            $this->view->addTlpParam('login', 'LOGIN AREA');
+            $this->view->setRedirect('login', '&page=list', ['admin=true']);
         }
-        $this->view->addTlpParam('login', 'LOGIN AREA');
+        $this->view->addTlpParam('order', 'Check Out');
+        $this->view->addTemplate('order.tpl');
+        $this->orderManager->setUser($this->userSession->getUser());
+
     }
 
     public function action()

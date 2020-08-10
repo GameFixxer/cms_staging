@@ -29,6 +29,7 @@ class OrderManager implements OrderManagerInterface
         $this->businessFacade = $businessFacade;
         $this->addressBusinessFacade = $addressBusinessFacade;
         $this->productBusinessFacade = $productBusinessFacade;
+        $this->orderDataTransferObject = new OrderDataTransferObject();
     }
 
     public function getUser(string $username):User

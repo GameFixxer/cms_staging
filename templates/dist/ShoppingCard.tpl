@@ -56,6 +56,12 @@
                     </tbody>
                 </table>
             </form>
+            <form id="checkout" name="checkout" action="" method="post">
+                <a class="btn btn-primary btn-lg text-uppercase"
+                   name="edit" href="/Index.php?cl=order&page=logout&admin=true"
+                   type="submit"> Checkout
+                </a>
+            </form>
         </div>
     </section>
     <div class="modal fade" id="model" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

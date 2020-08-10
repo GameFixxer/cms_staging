@@ -72,6 +72,8 @@ class MyCachedContainer extends Container
             'App\\Frontend\\Login\\Communication\\PasswordController' => 'getPasswordControllerService',
             'App\\Frontend\\Model\\ErrorController' => 'getErrorControllerService',
             'App\\Frontend\\Model\\HomeController' => 'getHomeControllerService',
+            'App\\Frontend\\Order\\Business\\OrderManager' => 'getOrderManagerService',
+            'App\\Frontend\\Order\\Communication\\OrderController' => 'getOrderControllerService',
             'App\\Frontend\\Product\\Business\\ProductManager' => 'getProductManagerService',
             'App\\Frontend\\Product\\Communication\\DetailController' => 'getDetailControllerService',
             'App\\Frontend\\Product\\Communication\\ListController' => 'getListControllerService',
@@ -612,6 +614,26 @@ class MyCachedContainer extends Container
     protected function getHomeControllerService()
     {
         return $this->services['App\\Frontend\\Model\\HomeController'] = new \App\Frontend\Model\HomeController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())));
+    }
+
+    /**
+     * Gets the public 'App\Frontend\Order\Business\OrderManager' shared service.
+     *
+     * @return \App\Frontend\Order\Business\OrderManager
+     */
+    protected function getOrderManagerService()
+    {
+        return $this->services['App\\Frontend\\Order\\Business\\OrderManager'] = new \App\Frontend\Order\Business\OrderManager(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Order\\Business\\OrderBusinessFacade'] ?? $this->getOrderBusinessFacadeService()), ($this->services['App\\Client\\Address\\Business\\AddressBusinessFacade'] ?? $this->getAddressBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+    }
+
+    /**
+     * Gets the public 'App\Frontend\Order\Communication\OrderController' shared service.
+     *
+     * @return \App\Frontend\Order\Communication\OrderController
+     */
+    protected function getOrderControllerService()
+    {
+        return $this->services['App\\Frontend\\Order\\Communication\\OrderController'] = new \App\Frontend\Order\Communication\OrderController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Frontend\\Order\\Business\\OrderManager'] ?? $this->getOrderManagerService()));
     }
 
     /**
