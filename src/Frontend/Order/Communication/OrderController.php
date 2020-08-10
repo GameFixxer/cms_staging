@@ -38,13 +38,15 @@ class OrderController implements BackendController
 
     public function action()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout']) && isset($_POST['address'])&& isset($_POST['payment'])) {
-            if ($_POST['address'] === 'notNew') {
-                $this->addShoppingCardItems();
-                $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
-                $this->pushOrder();
-            } elseif ($_POST['address'] === 'new') {
-                $this->createNewAddress();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['checkout']) && $this->requirementsFullFilled()) {
+                if ($_POST['address'] === 'notNew') {
+                    $this->addShoppingCardItems();
+                    $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
+                    $this->pushOrder();
+                } elseif ($_POST['address'] === 'new') {
+                    $this->createNewAddress();
+                }
             }
         }
     }
@@ -74,5 +76,10 @@ class OrderController implements BackendController
     private function pushOrder()
     {
         $this->orderManager->pushOrder();
+    }
+
+    private function requirementsFullFilled():bool
+    {
+        return isset($_POST['address'])&& isset($_POST['payment']);
     }
 }
