@@ -38,19 +38,18 @@ class OrderController implements BackendController
 
     public function action()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['checkout']) && isset($_POST['address'])&& isset($_POST['payment'])) {
-                if ($_POST['address'] === 'notNew') {
-                    $this->addShoppingCardItems();
-                    $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
-                    $this->pushOrder();
-                }elseif ($_POST['address'] === 'new'){
-                    $this->createNewAddress();
-                }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout']) && isset($_POST['address'])&& isset($_POST['payment'])) {
+            if ($_POST['address'] === 'notNew') {
+                $this->addShoppingCardItems();
+                $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
+                $this->pushOrder();
+            } elseif ($_POST['address'] === 'new') {
+                $this->createNewAddress();
             }
         }
     }
-    private function createNewAddress(){
+    private function createNewAddress()
+    {
         $newAddress = new AddressDataTransferObject();
         $newAddress->setUser($this->orderManager->getUser($this->userSession->getUser()));
         $newAddress->setType($_POST['address']['type']);
