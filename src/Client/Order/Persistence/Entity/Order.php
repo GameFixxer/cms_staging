@@ -45,6 +45,8 @@ class Order
      */
     protected $dateOfOrder;
 
+
+
     /**
      * @return int
      */

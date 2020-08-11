@@ -30,8 +30,14 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
 
     public function getList():array
     {
-        return$this->addressRepository->getAddressList();
+        return $this->addressRepository->getAddressList();
     }
+
+    public function getListFromSpecificUser(int $userId):array
+    {
+        return $this->addressRepository->getAddressListFromUser($userId);
+    }
+
     public function save(AddressDataTransferObject $address):AddressDataTransferObject
     {
         return $this->addressEntityManager->save($address);

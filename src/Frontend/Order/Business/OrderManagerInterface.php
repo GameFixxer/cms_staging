@@ -19,4 +19,6 @@ interface OrderManagerInterface
 
     public function createNewAddress(AddressDataTransferObject $newAddress):void;
 
+    public function getAddressListFromUser():array;
+
 }

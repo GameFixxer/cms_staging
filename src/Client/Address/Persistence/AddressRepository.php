@@ -47,4 +47,18 @@ class AddressRepository implements AddressRepositoryInterface
         }
         return null;
     }
+
+    public function getAddressListFromUser(int $userId):array
+    {
+        $addressList = [];
+        $userAddressEntityList = $this->repository
+            ->select()
+            ->with('user')->where('user_id', $userId)
+            ->fetchAll();
+        foreach ($userAddressEntityList as $address) {
+            $addressList[] = $this->addressMapper->map($address);
+        }
+
+        return $addressList;
+    }
 }

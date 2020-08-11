@@ -33,14 +33,14 @@ class OrderController implements BackendController
             $this->view->addTlpParam('login', 'LOGIN AREA');
             $this->view->setRedirect('login', '&page=list', ['admin=true']);
         }
-        $this->view->addTlpParam('order', 'Check Out');
-        $this->view->addTemplate('order.tpl');
         $this->orderManager->setUser($this->userSession->getUser());
-
     }
 
     public function action()
     {
+        $this->view->addTlpParam('order', $this->orderManager->getAddressListFromUser());
+        $this->view->addTemplate('order.tpl');
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['checkout']) && $this->requirementsFullFilled()) {
                 if ($_POST['address'] === 'notNew') {
@@ -53,16 +53,26 @@ class OrderController implements BackendController
             }
         }
     }
+
+    public function paymentAction()
+    {
+        $this->view->addTlpParam('order', $this->orderManager->getAddressListFromUser());
+        $this->view->addTemplate('payment.tpl');
+    }
+
+
     private function createNewAddress()
     {
         $newAddress = new AddressDataTransferObject();
         $newAddress->setUser($this->orderManager->getUser($this->userSession->getUser()));
+        $newAddress->setFirstName($_POST['address']['firstname']);
+        $newAddress->setLastName($_POST['address']['lastname']);
         $newAddress->setType($_POST['address']['type']);
         $newAddress->setTown($_POST['address']['town']);
         $newAddress->setPostCode($_POST['address']['postcode']);
         $newAddress->setCountry($_POST['address']['country']);
         $newAddress->setStreet($_POST['address']['street']);
-        $newAddress->setActive($_POST['address']['active']);
+        $newAddress->setActive(true);
         $this->orderManager->createNewAddress($newAddress);
     }
 

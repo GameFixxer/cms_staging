@@ -57,21 +57,67 @@ class Address
     protected $type;
 
     /**
-     * @Column(type="enum(active, nonactive)", nullable=false)
-     * @var mixed
+     * @Column(type="boolean", nullable=false)
+     * @var bool
      */
-    protected $active;
 
     /**
-     * @return mixed
+     * @Column(type="string")
+     * @var string
      */
-    public function getActive()
+    protected $firstName;
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
     {
-        return $this->active;
+        return $this->firstName;
     }
 
     /**
-     * @param mixed $active
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @Column(type="string")
+     * @var string
+     */
+    protected $lastName;
+
+    protected $active;
+
+    /**
+     * @return bool
+     */
+
+    public function getActive(): bool
+    {
+        return (bool) $this->active;
+    }
+
+    /**
+     * @param bool $active
      */
     public function setActive($active): void
     {

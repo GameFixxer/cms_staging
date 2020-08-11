@@ -17,4 +17,6 @@ interface AddressBusinessFacadeInterface
     public function save(AddressDataTransferObject $address): AddressDataTransferObject;
 
     public function delete(AddressDataTransferObject $address);
+
+    public function getListFromSpecificUser(int $userId):array;
 }

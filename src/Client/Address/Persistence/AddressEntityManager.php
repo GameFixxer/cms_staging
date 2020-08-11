@@ -52,6 +52,8 @@ class AddressEntityManager implements AddressEntityManagerInterface
         $entity->setPostCode($address->getPostCode());
         $entity->setCountry($address->getCountry());
         $entity->setUser($address->getUser());
+        $entity->setFirstName($address->getFirstName());
+        $entity->setLastName($address->getLastName());
 
 
         $transaction->persist($entity);

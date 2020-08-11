@@ -13,4 +13,6 @@ interface AddressRepositoryInterface
     public function getAddressList(): array;
 
     public function getAddress(User $user, string $type, bool $primary): ?AddressDataTransferObject;
+
+    public function getAddressListFromUser(int $userId):array;
 }

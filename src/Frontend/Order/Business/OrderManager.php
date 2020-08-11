@@ -32,6 +32,12 @@ class OrderManager implements OrderManagerInterface
         $this->orderDataTransferObject = new OrderDataTransferObject();
     }
 
+    public function getAddressListFromUser():array
+    {
+      return  $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getUserId());
+
+    }
+
     public function getUser(string $username):User
     {
         $userDTO = $this->userBusinessFacade->get($username);
