@@ -4,16 +4,18 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use App\Service\Container;
-use App\Service\DependencyProvider;
+use App\Component\SymfonyContainer;
+use Xervice\DataProvider\Communication\Console\CleanCommand;
+use Xervice\DataProvider\Communication\Console\GenerateCommand;
+
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 // ... register commands
-$container = new Container();
-$containerProvider = new DependencyProvider();
-$containerProvider->providerDependency($container);
-
-$application->add(new \App\Command\ImportCommand($container));
+$container = new SymfonyContainer();
+$application->add(new GenerateCommand());
+$application->add(new CleanCommand());
+//$application->add(new \App\Command\ImportCommand($container));
 $application->run();
+

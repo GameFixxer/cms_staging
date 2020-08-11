@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<DataProviders
+        xmlns="xervice:dataprovider-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="xervice:dataprovider-01 http://static.xervice.online/schema/dataprovider.schema.xsd"
+>
+    <DataProvider name="OdataCustomerList">
+        <DataElement name="OdataCustomers" type="OdataCustomer[]" singleton="OdataCustomer" />
+    </DataProvider>
+
+    <DataProvider name="Address">
+        <DataElement name="address_id" type="int" default="0" />
+        <DataElement name="User" type="User" default="''" />
+        <DataElement name="country" type="string" default="''" />
+        <DataElement name="street" type="string" default="''" />
+        <DataElement name="town" type="string" default="''" />
+        <DataElement name="postcode" type="int" default="0" />
+        <DataElement name="type" type="string" default="''" />
+        <DataElement name="firstname" type="string" default="''" />
+        <DataElement name="lastname" type="string" default="''" />
+        <DataElement name="active" type="bool" default="false" />
+    </DataProvider>
+
+    <DataProvider name="Attribute">
+        <DataElement name="attributeId" type="int" default="" />
+        <DataElement name="attributeKey" type="string" default="''" />
+        <DataElement name="attributeValue" type="string" default="''" />
+    </DataProvider>
+
+    <DataProvider name="Category">
+        <DataElement name="categoryId" type="int" default="0" />
+        <DataElement name="categoryKey" type="string" default="''" />
+    </DataProvider>
+
+    <DataProvider name="Category">
+        <DataElement name="to" type="string" default="''" />
+        <DataElement name="message" type="string" default="''" />
+        <DataElement name="subject" type="string" default="''" />
+    </DataProvider>
+
+    <DataProvider name="User">
+        <DataElement name="username" type="string" default="''" />
+        <DataElement name="password" type="string" default="''" />
+        <DataElement name="role" type="string" default="''" />
+        <DataElement name="sessionId" type="string" default="''" />
+        <DataElement name="resetPassword" type="string" default="''" />
+        <DataElement name="id" type="int" default="0" />
+        <DataElement name="shoppingCard" type="ShoppingCard" default="" />
+    </DataProvider>
+
+    <DataProvider name="Product">
+        <DataElement name="name" type="string" default="''" />
+        <DataElement name="description" type="string" default="''" />
+        <DataElement name="articleNumber" type="string" default="''" />
+        <DataElement name="category" type="Category" default="" />
+        <DataElement name="attribute" type="Attribute" default="" />
+        <DataElement name="id" type="int" default="0" />
+        <DataElement name="price" type="int" default="0" />
+    </DataProvider>
+
+    <DataProvider name="Product">
+        <DataElement name="id" type="int" default="" />
+        <DataElement name="user" type="User" default="" />
+        <DataElement name="address" type="Address" default= "" />
+        <DataElement name="sum" type="int" default="0" />
+        <DataElement name="shoppingCard" type="ShoppingCard" default="" />
+        <DataElement name="status" type="string" default="" />
+        <DataElement name="dateOfOrder" type="DateTimeImmutable" default="" />
+    </DataProvider>
+
+</DataProviders>

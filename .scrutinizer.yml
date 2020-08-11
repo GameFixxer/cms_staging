@@ -20,7 +20,7 @@ filter:
     - '*/dist/*'
     - '/node_modules'
     - '/templates_c'
-    - '/configs'
+    - '/config'
     - '*/_generated/*'
     - 'c3.php'
     - 'src/Component/cache-container.php'

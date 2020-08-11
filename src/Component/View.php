@@ -25,7 +25,7 @@ class View
         $this->smarty->setTemplateDir($path.'/templates/dist');
         $this->smarty->setCompileDir($path.'/templates_c');
         $this->smarty->setCacheDir($path.'/cache');
-        $this->smarty->setConfigDir($path.'/configs');
+        $this->smarty->setConfigDir($path.'/config');
         $this->template = '';
         $this->params = [];
         $this->redirection = null;

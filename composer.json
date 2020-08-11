@@ -17,7 +17,8 @@
         "symfony/console": "^5.1",
         "symfony/filesystem": "^5.1",
         "symfony/dependency-injection": "^5.1",
-        "symfony/config": "^5.1"
+        "symfony/config": "^5.1",
+        "xervice/data-provider": "^2.5"
     },
     "autoload": {
         "psr-4": {
@@ -37,5 +38,17 @@
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
         "codeception/c3": "^2.4"
+    },
+
+    "scripts": {
+        "post-update-cmd": "MyVendor\\MyClass::postUpdate",
+        "post-package-install": [
+            "MyVendor\\MyClass::postPackageInstall"
+        ],
+        "post-install-cmd": [
+            "MyVendor\\MyClass::warmCache",
+            "phpunit -c app/"
+        ]
     }
+
 }

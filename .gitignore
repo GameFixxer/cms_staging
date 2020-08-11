@@ -4,6 +4,6 @@ vendor
 !template_c/.gitkeep
 /cache/*
 !cache/.gitkeep
-/configs/*
-!configs/.gitkeep
+/config/*
+!config/.gitkeep
 
