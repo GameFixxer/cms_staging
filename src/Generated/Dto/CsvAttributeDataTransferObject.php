@@ -3,7 +3,6 @@
 
 namespace App\Generated\Dto;
 
-
 class CsvAttributeDataTransferObject
 {
     private string $attributeKey;

@@ -6,7 +6,6 @@ namespace App\Tests\integration\Import;
 use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 use App\Client\Product\Persistence\ProductRepository;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Client\Product\Persistence\Entity\Product as ProductEntity;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
@@ -20,10 +19,10 @@ use Cycle\ORM\Transaction;
 class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 {
     private CsvProductDataTransferObject $csvDTO;
-    private ProductImport $importCreateProduct;
+    private $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
-    private ProductInformation $updateProductInfo;
+    private $updateProductInfo;
 
     public function _before()
     {

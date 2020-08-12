@@ -5,7 +5,6 @@ namespace App\Backend\ImportProduct\Business\Model\Create;
 
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 

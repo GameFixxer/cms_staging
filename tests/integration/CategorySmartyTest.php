@@ -2,10 +2,7 @@
 declare(strict_types=1);
 namespace App\Tests\integration;
 
-use App\Backend\ImportProduct\Business\Model\Create\Product;
-use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Client\Product\Persistence\ProductRepository;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
@@ -22,7 +19,7 @@ class CategorySmartyTest extends \Codeception\Test\Unit
     private CsvProductDataTransferObject $csvDTO;
     private $importCreateProduct;
     private ProductRepository $productRepository;
-    private  $updateCategory;
+    private $updateCategory;
     private ContainerHelper $container;
 
     public function _before()

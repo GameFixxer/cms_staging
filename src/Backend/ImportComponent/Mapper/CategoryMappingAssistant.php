@@ -6,7 +6,6 @@ namespace App\Backend\ImportComponent\Mapper;
 use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\StringConverter\StringConverter;
 use App\Generated\Dto\CsvCategoryDataTransferObject;
-use App\Generated\Dto\CsvDataTransferObject;
 
 class CategoryMappingAssistant implements MappingAssistantInterface
 {

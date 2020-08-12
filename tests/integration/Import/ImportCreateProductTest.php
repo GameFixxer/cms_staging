@@ -7,7 +7,6 @@ namespace App\Tests\integration\Import;
 use App\Client\Product\Persistence\ProductRepository;
 
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
@@ -21,7 +20,7 @@ use Cycle\ORM\Transaction;
 class ImportCreateProductTest extends \Codeception\Test\Unit
 {
     private CsvProductDataTransferObject $csvDTO;
-    private CreateProduct $importCreateProduct;
+    private $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
 

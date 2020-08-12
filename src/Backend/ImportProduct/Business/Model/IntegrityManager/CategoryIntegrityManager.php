@@ -3,9 +3,7 @@ declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Category\Persistence\Entity\Category;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
-use function PHPUnit\Framework\isEmpty;
 
 class CategoryIntegrityManager implements IntegrityManagerInterface
 {

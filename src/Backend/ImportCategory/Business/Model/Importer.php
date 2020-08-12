@@ -7,7 +7,6 @@ use App\Backend\ImportCategory\Business\Model\Create\CategoryInterface;
 use App\Backend\ImportCategory\Business\Model\Update\CategoryUpdateInterface;
 use App\Backend\ImportComponent\Loader\CsvImportLoaderInterface;
 use App\Generated\Dto\CsvCategoryDataTransferObject;
-use App\Generated\Dto\CsvDataTransferObject;
 
 class Importer
 {

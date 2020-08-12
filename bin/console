@@ -16,6 +16,8 @@ $application = new Application();
 $container = new SymfonyContainer();
 $application->add(new GenerateCommand());
 $application->add(new CleanCommand());
-//$application->add(new \App\Command\ImportCommand($container));
+$application->add(new \App\Backend\ImportProduct\Communication\ImportCommand($container));
+$application->add(new \App\Backend\ImportAttribute\Communication\ImportCommand($container));
+$application->add(new \App\Backend\ImportCategory\Communication\ImportCommand($container));
 $application->run();
 
