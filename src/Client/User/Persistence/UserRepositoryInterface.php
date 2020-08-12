@@ -2,6 +2,7 @@
 
 namespace App\Client\User\Persistence;
 
+use App\Client\User\Persistence\Entity\User;
 use App\Generated\UserDataProvider;
 
 interface UserRepositoryInterface
@@ -9,7 +10,9 @@ interface UserRepositoryInterface
     /**
      * @return UserDataProvider[]
      */
-    public function getUserList(): array;
+    public function getList(): array;
 
-    public function getUser(string $username): ?UserDataProvider;
+    public function get(string $username): ?UserDataProvider;
+
+    public function getEntity(string $username):?User;
 }

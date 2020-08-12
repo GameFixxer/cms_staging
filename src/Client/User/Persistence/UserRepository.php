@@ -24,7 +24,7 @@ class UserRepository implements UserRepositoryInterface
     /**
      * @return UserDataProvider[]
      */
-    public function getUserList(): array
+    public function getList(): array
     {
         $userList = [];
 
@@ -37,13 +37,24 @@ class UserRepository implements UserRepositoryInterface
         return $userList;
     }
 
-    public function getUser(string $username): ?UserDataProvider
+    public function get(string $username): ?UserDataProvider
     {
         $userEntity = $this->ormUserRepository->findOne([
             'username' => $username
         ]);
         if ($userEntity instanceof User) {
             return $this->userMapper->map($userEntity);
+        }
+        return null;
+    }
+    public function getEntity(string $username):?User
+    {
+        $entity = $userEntity = $this->ormUserRepository->findOne([
+            'username' => $username
+        ]);
+
+        if ($entity instanceof User) {
+            return $entity;
         }
         return null;
     }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Client\User\Business;
 
+use App\Client\User\Persistence\Entity\User;
 use App\Generated\UserDataProvider;
 
 interface UserBusinessFacadeInterface
@@ -16,5 +17,7 @@ interface UserBusinessFacadeInterface
 
     public function save(UserDataProvider $user): UserDataProvider;
 
-    public function delete(UserDataProvider $user);
+    public function delete(UserDataProvider $user):void;
+
+    public function getEntity(string $username): ?User;
 }

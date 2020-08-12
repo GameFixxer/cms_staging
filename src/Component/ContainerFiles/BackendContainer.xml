@@ -69,6 +69,7 @@
         </service>
         <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager" public="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument type="service" id="App\Client\Attribute\Business\AttributeBusinessFacade"/>
         </service>
 
         <service id="App\Backend\ImportProduct\Business\Model\Update\ProductAttribute" public="true">

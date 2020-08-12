@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Client\User\Business;
 
+use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\UserEntityManagerInterface;
 use App\Client\User\Persistence\UserRepositoryInterface;
 use App\Generated\UserDataProvider;
@@ -21,14 +22,19 @@ class UserBusinessFacade implements UserBusinessFacadeInterface
 
     public function get(string $username): ?UserDataProvider
     {
-        return $this->userRepository->getUser($username);
+        return $this->userRepository->get($username);
+    }
+
+    public function getEntity(string $username): ?User
+    {
+        return $this->userRepository->getEntity($username);
     }
     /**
      * @return UserDataProvider[]
      */
     public function getList():array
     {
-        return$this->userRepository->getUserList();
+        return$this->userRepository->getList();
     }
 
     public function save(UserDataProvider $user):UserDataProvider

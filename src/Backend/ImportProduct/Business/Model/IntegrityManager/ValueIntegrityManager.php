@@ -32,7 +32,7 @@ class ValueIntegrityManager implements ValueIntegrityManagerInterface
     public function checkObjectValueChanged(CsvProductDataProvider $csvDTO, CategoryDataProvider $categoryDTO):bool
     {
         $productCategory = $this->productBusinessFacade->get($csvDTO->getArticleNumber())->getCategory();
-        if (!$productCategory instanceof Category) {
+        if (!$productCategory instanceof CategoryDataProvider) {
             return true;
         }
         if ($productCategory->getCategoryKey() !== $categoryDTO->getCategoryKey() || $productCategory->getCategoryId() !== $categoryDTO->getCategoryId()) {

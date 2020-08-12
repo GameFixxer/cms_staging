@@ -4,21 +4,26 @@
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
+use App\Generated\AttributeDataProvider;
 use App\Generated\CsvProductDataProvider;
+use App\Client\Attribute\Business\AttributeBusinessFacadeInterface;
+use Cycle\ORM\ORM;
 
 class AttributeIntegrityManager implements IntegrityManagerInterface
 {
     private \Cycle\ORM\RepositoryInterface $ormAttributeRepository;
+    private AttributeBusinessFacadeInterface $attributeBusinessFacade;
 
-    public function __construct(\Cycle\ORM\ORM $ormAttributeRepository)
+    public function __construct(ORM $ormAttributeRepository , AttributeBusinessFacadeInterface $attributeBusinessFacade)
     {
         $this->ormAttributeRepository = $ormAttributeRepository->getRepository(Attribute::class);
+        $this->attributeBusinessFacade =$attributeBusinessFacade;
     }
 
-    public function mapEntity(CsvProductDataProvider $csvDTO): ?object
+    public function mapEntity(CsvProductDataProvider $csvDTO): ?AttributeDataProvider
     {
         $categoryEntity = $this->loadEntityFromRepository($csvDTO->getAttributeKey());
-        if ($categoryEntity instanceof Attribute) {
+        if ($categoryEntity instanceof AttributeDataProvider) {
             $listOfMethods = get_class_methods($categoryEntity);
             foreach ($listOfMethods as $method) {
                 if (str_starts_with($method, 'set')) {
@@ -34,6 +39,6 @@ class AttributeIntegrityManager implements IntegrityManagerInterface
 
     private function loadEntityFromRepository(string $key): ?object
     {
-        return $this->ormAttributeRepository->findOne(['attribute_key'=>$key]);
+        return $this->attributeBusinessFacade->get($key);
     }
 }

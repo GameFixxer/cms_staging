@@ -6,5 +6,5 @@ use App\Generated\CsvProductDataProvider;
 
 interface IntegrityManagerInterface
 {
-    public function mapEntity(CsvProductDataProvider $csvDTO): ?object;
+    public function mapEntity(CsvProductDataProvider $csvDTO);
 }

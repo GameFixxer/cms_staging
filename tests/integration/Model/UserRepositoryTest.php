@@ -51,7 +51,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     {
         $userRepository = $this->container->getUserRepository();
 
-        $userDtoFromRepository = $userRepository->getUser($this->entity->getUsername());
+        $userDtoFromRepository = $userRepository->get($this->entity->getUsername());
         $this->assertSame($this->entity->getUsername(), $userDtoFromRepository->getUsername());
         $this->assertSame($this->entity->getPassword(), $userDtoFromRepository->getUserPassword());
         $this->assertSame($this->entity->getId(), $userDtoFromRepository->getUserId());
@@ -68,7 +68,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     {
         $userRepository = $this->container->getUserRepository();
 
-        $userListFromUserRepository = $userRepository->getUserList();
+        $userListFromUserRepository = $userRepository->getList();
 
         $lastUserOfUserList = end($userListFromUserRepository);
 

@@ -31,7 +31,7 @@ class UserEntityManager implements UserEntityManagerInterface
         $transaction->delete($this->ormUserRepository->findByPK($user->getId()));
         $transaction->run();
 
-        $this->userRepository->getUserList();
+        $this->userRepository->getList();
     }
 
     public function save(UserDataProvider $user): UserDataProvider

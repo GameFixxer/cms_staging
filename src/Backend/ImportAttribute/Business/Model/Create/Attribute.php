@@ -29,7 +29,7 @@ class Attribute implements AttributeInterface
         }
         $attribute = new AttributeDataProvider;
         $attribute->setAttributeKey($csvDTO->getAttributeKey());
-        $csvDTO->setAttributeId($this->attributeBusinessFacade->save($attribute)->getId());
+        $csvDTO->setAttributeId($this->attributeBusinessFacade->save($attribute)->getAttributeId());
 
         return $csvDTO;
     }

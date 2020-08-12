@@ -22,4 +22,5 @@ class UserMapper implements UserMapperInterface
 
         return $userDataTransferObject;
     }
+
 }

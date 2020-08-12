@@ -36,10 +36,10 @@ class ProductCategory implements ProductInterface
         if (empty($csvDTO->getCategoryKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
-            $category = $this->categoryBusinessFacade->getByKey($csvDTO->getKey());
+            $category = $this->categoryBusinessFacade->getByKey($csvDTO->getAttributeKey());
             if (!$category instanceof CategoryDataProvider) {
                 $category = new CategoryDataProvider();
-                $category->setCategoryKey($csvDTO->getKey());
+                $category->setCategoryKey($csvDTO->getAttributeKey());
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);
