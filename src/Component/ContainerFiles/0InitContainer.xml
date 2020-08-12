@@ -15,7 +15,10 @@
         <service id="App\Service\SessionUser" public="true"/>
 
         <!-- Mapper -->
-
+        <service id="App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper" public="true">
+            <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
+            <argument id="App\Client\Product\Persistence\Mapper\ProductMapper" type="service"/>
+        </service>
         <service id="App\Client\Order\Persistence\Mapper\OrderMapper" public="true"/>
         <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true">
             <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
@@ -26,7 +29,10 @@
         <service id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" public ="true"/>
 
         <!--Repository-->
-
+        <service id="App\Client\ShoppingCard\Persistence\ShoppingCardRepository" public="true">
+            <argument id="App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper" type="service"/>
+            <argument id="Cycle\ORM\ORM" type="service"/>
+        </service>
         <service id="App\Client\Order\Persistence\OrderRepository" public="true">
             <argument id="App\Client\Order\Persistence\Mapper\OrderMapper" type="service"/>
             <argument id="Cycle\ORM\ORM" type="service"/>
@@ -55,7 +61,10 @@
 
 
         <!--EntityManager-->
-
+        <service id="App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager" public="true">
+            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument id="App\Client\ShoppingCard\Persistence\ShoppingCardRepository" type="service"/>
+        </service>
         <service id="App\Client\Order\Persistence\OrderEntityManager" public="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
             <argument id="App\Client\Order\Persistence\OrderRepository" type="service"/>
