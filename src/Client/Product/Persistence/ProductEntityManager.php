@@ -50,7 +50,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $entity->setProductDescription($product->getDescription());
         $entity->setArticleNumber($product->getArticleNumber());
         if ($product->getAttribute() instanceof Attribute) {
-            $entity->addAttribute($product->getAttribute());
+            $entity->setAttribute($product->getAttribute());
         }
 
         $transaction->persist($entity);
