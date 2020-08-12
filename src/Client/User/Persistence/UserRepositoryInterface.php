@@ -13,6 +13,4 @@ interface UserRepositoryInterface
     public function getList(): array;
 
     public function get(string $username): ?UserDataProvider;
-
-    public function getEntity(string $username):?User;
 }

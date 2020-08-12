@@ -33,7 +33,6 @@ class DatabaseManager
                 ],
             ])
         );
-
         $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
         $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
 

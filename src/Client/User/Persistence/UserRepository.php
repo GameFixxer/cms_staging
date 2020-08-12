@@ -47,15 +47,4 @@ class UserRepository implements UserRepositoryInterface
         }
         return null;
     }
-    public function getEntity(string $username):?User
-    {
-        $entity = $userEntity = $this->ormUserRepository->findOne([
-            'username' => $username
-        ]);
-
-        if ($entity instanceof User) {
-            return $entity;
-        }
-        return null;
-    }
 }

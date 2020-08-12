@@ -25,10 +25,6 @@ class UserBusinessFacade implements UserBusinessFacadeInterface
         return $this->userRepository->get($username);
     }
 
-    public function getEntity(string $username): ?User
-    {
-        return $this->userRepository->getEntity($username);
-    }
     /**
      * @return UserDataProvider[]
      */

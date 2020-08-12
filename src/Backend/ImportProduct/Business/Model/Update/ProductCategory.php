@@ -45,7 +45,7 @@ class ProductCategory implements ProductInterface
                 $this->saveUpdatedProduct($csvDTO);
             } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $category) ||
                 $this->valueIntegrityManager->checkObjectValueChanged($csvDTO, $category) ||
-                !($this->productBusinessFacade->get($csvDTO->getArticleNumber()))->getCategory() instanceof Category
+                !($this->productBusinessFacade->get($csvDTO->getArticleNumber()))->getCategory() instanceof CategoryDataProvider
             ) {
                 $csvDTO->setCategoryId($category->getCategoryId());
                 $csvDTO->setCategory(($this->categoryIntegrityManager->mapEntity($csvDTO)));
