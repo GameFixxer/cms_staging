@@ -70,7 +70,7 @@
         <DataElement name="sum" type="int" default="0" />
         <DataElement name="shoppingCard" type="ShoppingCard" singleton="ShoppingCard" />
         <DataElement name="status" type="string" default="''" />
-        <DataElement name="dateOfOrder" type="DateTimeImmutable" default="" />
+        <DataElement name="dateOfOrder" type="" default="" />
     </DataProvider>
 
     <DataProvider name="CsvProduct">

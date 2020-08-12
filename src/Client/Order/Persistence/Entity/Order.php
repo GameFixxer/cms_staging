@@ -45,6 +45,27 @@ class Order
      */
     protected $dateOfOrder;
 
+    /**
+     * @BelongsTo(target="shoppingCard", nullable=false)
+     */
+    protected $shoppingCard;
+
+    /**
+     * @return mixed
+     */
+    public function getShoppingCard()
+    {
+        return $this->shoppingCard;
+    }
+
+    /**
+     * @param mixed $shoppingCard
+     */
+    public function setShoppingCard($shoppingCard): void
+    {
+        $this->shoppingCard = $shoppingCard;
+    }
+
 
 
     /**

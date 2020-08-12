@@ -17,7 +17,7 @@ class OrderMapper implements OrderMapperInterface
         $orderDataTransferObject->setSum($order->getSum());
         $orderDataTransferObject->setAddress($order->getAddress());
         $orderDataTransferObject->setDateOfOrder($order->getDateOfOrder());
-        $orderDataTransferObject->setShoppingCard($order->getShoppingCard);
+        $orderDataTransferObject->setShoppingCard($order->getShoppingCard());
 
         return $orderDataTransferObject;
     }

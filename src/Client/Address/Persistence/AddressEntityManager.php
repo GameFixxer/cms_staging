@@ -11,7 +11,7 @@ use Cycle\ORM\Transaction;
 class AddressEntityManager implements AddressEntityManagerInterface
 {
     /**
-     * @var AddressRepository
+     * @var AddressRepositoryInterface
      */
     private AddressRepositoryInterface $addressRepository;
     private \Cycle\ORM\RepositoryInterface $repository;
