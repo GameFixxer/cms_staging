@@ -11,6 +11,9 @@ final class ShoppingCardDataProvider extends \Xervice\DataProvider\Business\Mode
     protected $product = [];
 
     /** @var int */
+    protected $id;
+
+    /** @var int */
     protected $sum;
 
     /** @var int */
@@ -68,6 +71,47 @@ final class ShoppingCardDataProvider extends \Xervice\DataProvider\Business\Mode
     public function addProduct(ProductDataProvider $Product)
     {
         $this->product[] = $Product; return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * @param int $id
+     * @return ShoppingCardDataProvider
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ShoppingCardDataProvider
+     */
+    public function unsetId()
+    {
+        $this->id = null;
+
+        return $this;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function hasId()
+    {
+        return ($this->id !== null && $this->id !== []);
     }
 
 
@@ -221,6 +265,16 @@ final class ShoppingCardDataProvider extends \Xervice\DataProvider\Business\Mode
             'isCamelCase' => false,
             'singleton' => 'Product',
             'singleton_type' => '\\App\\Generated\\ProductDataProvider',
+          ),
+          'id' =>
+          array (
+            'name' => 'id',
+            'allownull' => false,
+            'default' => '0',
+            'type' => 'int',
+            'is_collection' => false,
+            'is_dataprovider' => false,
+            'isCamelCase' => false,
           ),
           'sum' =>
           array (

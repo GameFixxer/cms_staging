@@ -253,7 +253,7 @@ class MyCachedContainer extends Container
      */
     protected function getAttributeIntegrityManagerService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\AttributeIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\AttributeIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\AttributeIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Attribute\\Business\\AttributeBusinessFacade'] ?? $this->getAttributeBusinessFacadeService()));
     }
 
     /**
@@ -343,7 +343,7 @@ class MyCachedContainer extends Container
      */
     protected function getAddressEntityManagerService()
     {
-        return $this->services['App\\Client\\Address\\Persistence\\AddressEntityManager'] = new \App\Client\Address\Persistence\AddressEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Address\\Persistence\\AddressRepository'] ?? $this->getAddressRepositoryService()));
+        return $this->services['App\\Client\\Address\\Persistence\\AddressEntityManager'] = new \App\Client\Address\Persistence\AddressEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Address\\Persistence\\AddressRepository'] ?? $this->getAddressRepositoryService()), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()));
     }
 
     /**
@@ -353,7 +353,7 @@ class MyCachedContainer extends Container
      */
     protected function getAddressRepositoryService()
     {
-        return $this->services['App\\Client\\Address\\Persistence\\AddressRepository'] = new \App\Client\Address\Persistence\AddressRepository(($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] ?? ($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] = new \App\Client\Address\Persistence\Mapper\AddressMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Address\\Persistence\\AddressRepository'] = new \App\Client\Address\Persistence\AddressRepository(($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] ?? $this->getAddressMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
     }
 
     /**
@@ -363,7 +363,7 @@ class MyCachedContainer extends Container
      */
     protected function getAddressMapperService()
     {
-        return $this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] = new \App\Client\Address\Persistence\Mapper\AddressMapper();
+        return $this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] = new \App\Client\Address\Persistence\Mapper\AddressMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()));
     }
 
     /**

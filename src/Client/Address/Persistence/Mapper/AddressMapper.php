@@ -6,6 +6,7 @@ namespace App\Client\Address\Persistence\Mapper;
 use App\Client\Address\Persistence\Entity\Address;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Generated\AddressDataProvider;
+use App\Generated\UserDataProvider;
 
 class AddressMapper implements AddressMapperInterface
 {
@@ -19,7 +20,11 @@ class AddressMapper implements AddressMapperInterface
     public function map(Address $address): AddressDataProvider
     {
         $addressDataTransferObject = new  AddressDataProvider();
-        $addressDataTransferObject->setUser($this->userBusinessFacade->get($address->getUser()->getUsername()));
+        $user = $this->userBusinessFacade->get($address->getUser()->getUsername());
+        if (!$user instanceof UserDataProvider) {
+            throw new \Exception('UserRepository Returned null for username:'.$address->getUser()->getUsername(), 1);
+        }
+        $addressDataTransferObject->setUser($user);
         $addressDataTransferObject->setAddress_id($address->getAddressId());
         $addressDataTransferObject->setCountry($address->getCountry());
         $addressDataTransferObject->setPostCode($address->getPostCode());

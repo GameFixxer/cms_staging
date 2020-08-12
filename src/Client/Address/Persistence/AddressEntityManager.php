@@ -13,13 +13,13 @@ class AddressEntityManager implements AddressEntityManagerInterface
     /**
      * @var AddressRepository
      */
-    private AddressRepository $addressRepository;
+    private AddressRepositoryInterface $addressRepository;
     private \Cycle\ORM\RepositoryInterface $repository;
     private \Spiral\Database\DatabaseInterface $database;
 
     private ORM $orm;
 
-    public function __construct(ORM $orm, AddressRepository $addressRepository)
+    public function __construct(ORM $orm, AddressRepositoryInterface $addressRepository)
     {
         $this->addressRepository = $addressRepository;
         $this->orm = $orm;
@@ -40,9 +40,6 @@ class AddressEntityManager implements AddressEntityManagerInterface
 
     public function save(AddressDataProvider $address): AddressDataProvider
     {
-        $transaction = new Transaction($this->orm);
-
-
         $entity = $this->repository->findOne(['address_id'=>$address->getAddress_id()]);
         $values = [
             'town'         => $address->getTown(),

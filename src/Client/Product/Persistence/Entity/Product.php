@@ -52,7 +52,7 @@ class Product
     protected $category;
 
     /**
-     * @ManyToMany(target = "attribute",  though = "ProductAttribute", nullable = true)
+     * @ManyToMany(target = "attributes",  though = "ProductAttribute", nullable = true)
      */
     protected $attribute;
 

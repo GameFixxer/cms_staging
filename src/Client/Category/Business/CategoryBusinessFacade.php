@@ -41,7 +41,7 @@ class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
         return $this->categoryEntityManager->save($category);
     }
 
-    public function delete(CategoryDataTransferObject $category):void
+    public function delete(CategoryDataProvider $category):void
     {
         $this->categoryEntityManager->delete($category);
     }

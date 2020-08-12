@@ -17,5 +17,5 @@ interface UserBusinessFacadeInterface
 
     public function save(UserDataProvider $user): UserDataProvider;
 
-    public function delete(UserDataProvider $user):void;
+    public function delete(UserDataProvider $user);
 }

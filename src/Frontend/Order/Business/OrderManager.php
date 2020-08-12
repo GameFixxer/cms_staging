@@ -25,7 +25,8 @@ class OrderManager implements OrderManagerInterface
         OrderBusinessFacadeInterface $businessFacade,
         AddressBusinessFacadeInterface $addressBusinessFacade,
         ProductBusinessFacadeInterface $productBusinessFacade
-    ) {
+    )
+    {
         $this->userBusinessFacade = $userBusinessFacade;
         $this->businessFacade = $businessFacade;
         $this->addressBusinessFacade = $addressBusinessFacade;
@@ -33,12 +34,12 @@ class OrderManager implements OrderManagerInterface
         $this->orderDataTransferObject = new OrderDataProvider();
     }
 
-    public function getAddressListFromUser():array
+    public function getAddressListFromUser(): array
     {
-        return  $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getId());
+        return $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getId());
     }
 
-    public function getUser(string $username):User
+    public function getUser(string $username): User
     {
         $userDTO = $this->userBusinessFacade->get($username);
         $userEntity = new User();
@@ -52,7 +53,7 @@ class OrderManager implements OrderManagerInterface
         return $userEntity;
     }
 
-    public function addShoppingCardItems(ShoppingCardDataProvider $card):void
+    public function addShoppingCardItems(ShoppingCardDataProvider $card): void
     {
         $sum = 0;
         foreach ($card as $item) {
@@ -62,24 +63,24 @@ class OrderManager implements OrderManagerInterface
         $this->orderDataTransferObject->addShoppingCard($card);
     }
 
-    public function setUser(String $user):void
+    public function setUser(string $user): void
     {
         $this->orderDataTransferObject->setUser($this->userBusinessFacade->get($user));
     }
 
-    public function addAddressToOrder(string $type, bool $primary):void
+    public function addAddressToOrder(string $type, bool $primary): void
     {
         $this->orderDataTransferObject->setAddress(
             $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
         );
     }
 
-    public function pushOrder():void
+    public function pushOrder(): void
     {
         $this->businessFacade->save($this->orderDataTransferObject);
     }
 
-    public function createNewAddress(AddressDataProvider $newAddress):void
+    public function createNewAddress(AddressDataProvider $newAddress): void
     {
         $this->addressBusinessFacade->save($newAddress);
     }
