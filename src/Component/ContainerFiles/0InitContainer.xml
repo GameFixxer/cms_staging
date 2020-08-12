@@ -17,7 +17,9 @@
         <!-- Mapper -->
 
         <service id="App\Client\Order\Persistence\Mapper\OrderMapper" public="true"/>
-        <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true"/>
+        <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true">
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+        </service>
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
         <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
@@ -61,6 +63,7 @@
         <service id="App\Client\Address\Persistence\AddressEntityManager" public="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
             <argument id="App\Client\Address\Persistence\AddressRepository" type="service"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
         </service>
         <service id="App\Client\Attribute\Persistence\AttributeEntityManager" public ="true">
             <argument id="Cycle\ORM\ORM" type="service"/>
