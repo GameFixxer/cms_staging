@@ -2,9 +2,9 @@
 
 namespace App\Backend\ImportAttribute\Business\Model\Update;
 
-use App\Generated\Dto\CsvAttributeDataTransferObject;
+use App\Generated\CsvAttributeDataProvider;
 
 interface AttributeImporterInterface
 {
-    public function performUpdateActions(CsvAttributeDataTransferObject $csvDTO): void;
+    public function performUpdateActions(CsvAttributeDataProvider $csvDTO): void;
 }

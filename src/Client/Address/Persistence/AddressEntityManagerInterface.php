@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace App\Client\Address\Persistence;
 
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 
 interface AddressEntityManagerInterface
 {
-    public function delete(AddressDataTransferObject $address): void;
+    public function delete(AddressDataProvider $address): void;
 
-    public function save(AddressDataTransferObject $address): AddressDataTransferObject;
+    public function save(AddressDataProvider $address): AddressDataProvider;
 }

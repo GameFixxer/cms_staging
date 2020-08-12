@@ -5,7 +5,7 @@ namespace App\Client\Order\Persistence;
 
 use App\Client\Order\Persistence\Entity\Order;
 use App\Client\Order\Persistence\Mapper\OrderMapperInterface;
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\OrderDataProvider;
 
 class OrderRepository implements OrderRepositoryInterface
 {
@@ -19,7 +19,7 @@ class OrderRepository implements OrderRepositoryInterface
     }
 
     /**
-     * @return OrderDataTransferObject[]
+     * @return OrderDataProvider[]
      */
     public function getOrderList(): array
     {
@@ -34,7 +34,7 @@ class OrderRepository implements OrderRepositoryInterface
         return $orderList;
     }
 
-    public function getOrder(int $orderId): ?OrderDataTransferObject
+    public function getOrder(int $orderId): ?OrderDataProvider
     {
         $order = $this->repository->findByPK($orderId);
         if ($order instanceof Order) {

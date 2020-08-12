@@ -5,7 +5,7 @@ namespace App\Client\Product\Business;
 
 use App\Client\Product\Persistence\ProductEntityManagerInterface;
 use App\Client\Product\Persistence\ProductRepositoryInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 class ProductBusinessFacade implements ProductBusinessFacadeInterface
 {
@@ -18,24 +18,24 @@ class ProductBusinessFacade implements ProductBusinessFacadeInterface
         $this->productEntityManager = $productEntityManager;
     }
 
-    public function get(string $articleNumber): ?ProductDataTransferObject
+    public function get(string $articleNumber): ?ProductDataProvider
     {
         return $this->productRepository->getProduct($articleNumber);
     }
 
     /**
-     * @return ProductDataTransferObject[]
+     * @return ProductDataProvider[]
      */
 
     public function getList():array
     {
         return$this->productRepository->getProductList();
     }
-    public function save(ProductDataTransferObject $product):ProductDataTransferObject
+    public function save(ProductDataProvider $product):ProductDataProvider
     {
         return $this->productEntityManager->save($product);
     }
-    public function delete(ProductDataTransferObject $product)
+    public function delete(ProductDataProvider $product)
     {
         $this->productEntityManager->delete($product);
     }

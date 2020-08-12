@@ -2,18 +2,18 @@
 declare(strict_types=1);
 namespace App\Client\Order\Business;
 
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\OrderDataProvider;
 
 interface OrderBusinessFacadeInterface
 {
-    public function get(int $orderId): ?OrderDataTransferObject;
+    public function get(int $orderId): ?OrderDataProvider;
 
     /**
-     * @return OrderDataTransferObject[]
+     * @return OrderDataProvider[]
      */
     public function getList(): array;
 
-    public function save(OrderDataTransferObject $order): OrderDataTransferObject;
+    public function save(OrderDataProvider $order): OrderDataProvider;
 
-    public function delete(OrderDataTransferObject $order);
+    public function delete(OrderDataProvider $order);
 }

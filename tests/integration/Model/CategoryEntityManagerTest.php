@@ -6,7 +6,7 @@ namespace App\Tests\integration\Model;
 
 use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\Entity\Category;
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
@@ -16,7 +16,7 @@ use Cycle\ORM\Transaction;
  */
 class CategoryEntityManagerTest extends \Codeception\Test\Unit
 {
-    private CategoryDataTransferObject $categoryDTO;
+    private CategoryDataProvider $categoryDTO;
     private ContainerHelper $container;
     private CategoryEntityManager $categoryEntityManager;
 
@@ -69,7 +69,7 @@ class CategoryEntityManagerTest extends \Codeception\Test\Unit
 
     private function createDto(string $categoryKey)
     {
-        $this->categoryDTO = new CategoryDataTransferObject();
+        $this->categoryDTO = new CategoryDataProvider();
         $this->categoryDTO->setCategoryKey($categoryKey);
     }
 }

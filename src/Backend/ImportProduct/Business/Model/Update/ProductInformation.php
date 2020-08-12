@@ -5,8 +5,8 @@ namespace App\Backend\ImportProduct\Business\Model\Update;
 
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManager;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
+use App\Generated\ProductDataProvider;
 
 
 class ProductInformation implements ProductInterface
@@ -22,13 +22,13 @@ class ProductInformation implements ProductInterface
         $this->valueIntegrityManager = $valueIntegrityManager;
     }
 
-    public function update(CsvProductDataTransferObject $csvDTO):void
+    public function update(CsvProductDataProvider $csvDTO):void
     {
         if ($csvDTO->getName() === '' || $csvDTO->getDescription() === '') {
             throw new \Exception('Name and Description must not be empty', 1);
         }
         $productDTO = $this-> productBusinessFacade->get($csvDTO->getArticleNumber());
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             throw new \Exception('ProductDTO empty', 1);
         }
         if ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $productDTO)) {

@@ -2,12 +2,12 @@
 
 namespace App\Client\Product\Persistence;
 
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 
 interface ProductEntityManagerInterface
 {
-    public function delete(ProductDataTransferObject $product): void;
+    public function delete(ProductDataProvider $product): void;
 
-    public function save(ProductDataTransferObject $product): ProductDataTransferObject;
+    public function save(ProductDataProvider $product): ProductDataProvider;
 }

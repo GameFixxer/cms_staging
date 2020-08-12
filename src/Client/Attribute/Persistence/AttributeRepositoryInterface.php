@@ -2,14 +2,14 @@
 
 namespace App\Client\Attribute\Persistence;
 
-use App\Generated\Dto\AttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
 
 interface AttributeRepositoryInterface
 {
     /**
-     * @return AttributeDataTransferObject[]
+     * @return AttributeDataProvider[]
      */
     public function getAttributeList(): array;
 
-    public function getAttribute(string $attributeKey): ?AttributeDataTransferObject;
+    public function getAttribute(string $attributeKey): ?AttributeDataProvider;
 }

@@ -8,7 +8,7 @@ use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\Controller;
 use App\Frontend\Product\Business\ProductManagerInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use App\Service\SessionUser;
 
 class DetailController implements Controller
@@ -37,7 +37,7 @@ class DetailController implements Controller
         $articleNumber = ($_GET['id'] ?? '0');
 
         $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             $this->view->addTlpParam('error', '404 Page not found.');
             $this->view->addTemplate('404.tpl');
         } else {

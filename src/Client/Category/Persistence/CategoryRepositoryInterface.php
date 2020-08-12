@@ -2,16 +2,16 @@
 
 namespace App\Client\Category\Persistence;
 
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 interface CategoryRepositoryInterface
 {
     /**
-     * @return CategoryDataTransferObject[]
+     * @return CategoryDataProvider[]
      */
     public function getCategoryList(): array;
 
-    public function getCategory(int $categoryId): ?CategoryDataTransferObject;
+    public function getCategory(int $categoryId): ?CategoryDataProvider;
 
-    public function getCategoryByKey(string $key): ?CategoryDataTransferObject;
+    public function getCategoryByKey(string $key): ?CategoryDataProvider;
 }

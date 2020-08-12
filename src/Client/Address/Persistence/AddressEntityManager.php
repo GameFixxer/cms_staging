@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Client\Address\Persistence;
 
 use App\Client\Address\Persistence\Entity\Address;
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
@@ -27,21 +27,21 @@ class AddressEntityManager implements AddressEntityManagerInterface
 
 
 
-    public function delete(AddressDataTransferObject $address):void
+    public function delete(AddressDataProvider $address):void
     {
         $transaction = new Transaction($this->orm);
-        $transaction->delete($this->repository->findOne(['address_id'=>$address->getAddressId()]));
+        $transaction->delete($this->repository->findOne(['address_id'=>$address->getAddress_id()]));
         $transaction->run();
 
         $this->addressRepository->getAddressList();
     }
 
-    public function save(AddressDataTransferObject $address): AddressDataTransferObject
+    public function save(AddressDataProvider $address): AddressDataProvider
     {
         $transaction = new Transaction($this->orm);
 
 
-        $entity = $this->repository->findOne(['address_id'=>$address->getAddressId()]);
+        $entity = $this->repository->findOne(['address_id'=>$address->getAddress_id()]);
         if (!$entity instanceof Address) {
             $entity = new Address();
         }
@@ -58,7 +58,7 @@ class AddressEntityManager implements AddressEntityManagerInterface
 
         $transaction->persist($entity);
         $transaction->run();
-        $address->setAddressId($entity->getAddressId());
+        $address->setAddress_id($entity->getAddressId());
 
         return $address;
     }

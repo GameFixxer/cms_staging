@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Client\User\Persistence;
 
 use App\Client\User\Persistence\Entity\User;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
@@ -25,33 +25,33 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->ormUserRepository = $orm->getRepository(User::class);
     }
 
-    public function delete(UserDataTransferObject $user):void
+    public function delete(UserDataProvider $user):void
     {
         $transaction = new Transaction($this->orm);
-        $transaction->delete($this->ormUserRepository->findByPK($user->getUserId()));
+        $transaction->delete($this->ormUserRepository->findByPK($user->getId()));
         $transaction->run();
 
         $this->userRepository->getUserList();
     }
 
-    public function save(UserDataTransferObject $user): UserDataTransferObject
+    public function save(UserDataProvider $user): UserDataProvider
     {
         $transaction = new Transaction($this->orm);
-        $entity = $this->ormUserRepository->findByPK($user->getUserId());
+        $entity = $this->ormUserRepository->findByPK($user->getId());
 
         if (!$entity instanceof User) {
             $entity = new User();
         }
         $entity->setUsername($user->getUserName());
-        $entity->setPassword($user->getUserPassword());
-        $entity->setRole($user->getUserRole());
+        $entity->setPassword($user->getPassword());
+        $entity->setRole($user->getRole());
         $entity->setSessionId($user->getSessionId());
         $entity->setResetPassword($user->getResetPassword());
-        $entity->setShoppingCard(implode(',', $user->getShoppingCard()));
+        $entity->setShoppingCard($user->getShoppingCard());
         $transaction->persist($entity);
         $transaction->run();
 
-        $user->setUserId($entity->getId());
+        $user->setId($entity->getId());
 
         return $user;
     }

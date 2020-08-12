@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Frontend\Product\Communication;
 
-use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Login\Communication\LoginController;
-use App\Frontend\Product\Business\ProductManager;
 use App\Frontend\Product\Business\ProductManagerInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use App\Service\SessionUser;
 
 class ProductController implements BackendController
@@ -102,14 +100,14 @@ class ProductController implements BackendController
 
     private function deleteProduct(string $articleNumber): void
     {
-        $productDTO = new ProductDataTransferObject();
+        $productDTO = new ProductDataProvider();
         $productDTO->setArticleNumber($articleNumber);
         $this->productManager->delete($productDTO);
     }
 
     private function saveProduct(string $articleNumber, string $description, string $name): void
     {
-        $productDTO = new ProductDataTransferObject();
+        $productDTO = new ProductDataProvider();
         $productDTO->setArticleNumber($articleNumber);
         $productDTO->setName($name);
         $productDTO->setDescription($description);

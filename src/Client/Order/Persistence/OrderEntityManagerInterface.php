@@ -2,11 +2,11 @@
 declare(strict_types=1);
 namespace App\Client\Order\Persistence;
 
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\OrderDataProvider;
 
 interface OrderEntityManagerInterface
 {
-    public function delete(OrderDataTransferObject $order): void;
+    public function delete(OrderDataProvider $order): void;
 
-    public function save(OrderDataTransferObject $order): OrderDataTransferObject;
+    public function save(OrderDataProvider $order): OrderDataProvider;
 }

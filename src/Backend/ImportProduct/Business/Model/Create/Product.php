@@ -5,8 +5,8 @@ namespace App\Backend\ImportProduct\Business\Model\Create;
 
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
+use App\Generated\ProductDataProvider;
 
 
 class Product implements ProductInterface
@@ -20,21 +20,20 @@ class Product implements ProductInterface
         $this->integrityManager = $integrityManager;
     }
 
-    public function createProduct(CsvProductDataTransferObject $csvDTO) : ?CsvProductDataTransferObject
+    public function createProduct(CsvProductDataProvider $csvDTO) : ?CsvProductDataProvider
     {
         if ($csvDTO->getArticleNumber() === '') {
             throw new \Exception('ArticleNumber must not be empty', 1);
         }
 
         $productFromRepo = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
-        if ($productFromRepo instanceof ProductDataTransferObject) {
+        if ($productFromRepo instanceof ProductDataProvider) {
             $csvDTO->setId($productFromRepo->getId());
             return $csvDTO;
         }
-        $productDTO = new ProductDataTransferObject();
+        $productDTO = new ProductDataProvider();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $csvDTO->setId($this->productBusinessFacade->save($productDTO)->getId());
-        //$csvDTO->setProduct($this->integrityManager->mapEntity($csvDTO));
 
         return $csvDTO;
     }

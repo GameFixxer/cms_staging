@@ -4,7 +4,7 @@
 namespace App\Client\Attribute\Persistence;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
-use App\Generated\Dto\AttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
@@ -28,29 +28,29 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
 
 
 
-    public function delete(AttributeDataTransferObject $attribute):void
+    public function delete(AttributeDataProvider $attribute):void
     {
         $transaction = new Transaction($this->orm);
         $transaction->delete($this->ormAttributeRepository->findOne(['attribute_key'=>$attribute
-            ->getKey()]));
+            ->getAttributeKey()]));
         $transaction->run();
 
         $this->attributeRepository->getAttributeList();
     }
 
-    public function save(AttributeDataTransferObject $attribute): AttributeDataTransferObject
+    public function save(AttributeDataProvider $attribute): AttributeDataProvider
     {
         $transaction = new Transaction($this->orm);
-        $entity = $this->ormAttributeRepository->findOne(['attribute_key'=>$attribute->getKey()]);
+        $entity = $this->ormAttributeRepository->findOne(['attribute_key'=>$attribute->getAttributeKey()]);
         if (!$entity instanceof Attribute) {
             $entity = new Attribute();
         }
-        $entity->setAttributeKey($attribute->getKey());
-        $entity->setAttributeValue($attribute->getValue());
+        $entity->setAttributeKey($attribute->getAttributeKey());
+        $entity->setAttributeValue($attribute->getAttributeValue());
         $transaction->persist($entity);
         $transaction->run();
 
-        $attribute->setId($entity->getAttributeId());
+        $attribute->setAttributeId($entity->getAttributeId());
 
         return $attribute;
     }

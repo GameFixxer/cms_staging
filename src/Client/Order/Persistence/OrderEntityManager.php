@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Client\Order\Persistence;
 
 use App\Client\Order\Persistence\Entity\Order;
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\OrderDataProvider;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 
@@ -27,36 +27,36 @@ class OrderEntityManager implements OrderEntityManagerInterface
 
 
 
-    public function delete(OrderDataTransferObject $order):void
+    public function delete(OrderDataProvider $order):void
     {
         $transaction = new Transaction($this->orm);
-        $transaction->delete($this->repository->findOne(['orderId'=>$order->getOrderId()]));
+        $transaction->delete($this->repository->findOne(['orderId'=>$order->getId()]));
         $transaction->run();
 
         $this->orderRepository->getOrderList();
     }
 
-    public function save(OrderDataTransferObject $order): OrderDataTransferObject
+    public function save(OrderDataProvider $order): OrderDataProvider
     {
         $transaction = new Transaction($this->orm);
 
 
-        $entity = $this->repository->findByPK($order->getOrderId());
+        $entity = $this->repository->findByPK($order->getId());
         if (!$entity instanceof Order) {
             $entity = new Order();
         }
-        $entity->setOrderId($order->getOrderId());
+        $entity->setOrderId($order->getId());
         $entity->setStatus($order->getStatus());
         $entity->setUser($order->getUser());
         $entity->setSum($order->getSum());
         $entity->setAddress($order->getAddress());
         $entity->setDateOfOrder($order->getDateOfOrder());
-        $entity->setOrderedProducts($order->getOrderedProducts());
+        $entity->setShoppingCard($order->getShoppingCard());
 
 
         $transaction->persist($entity);
         $transaction->run();
-        $order->setOrderId($entity->getOrderId());
+        $order->setId($entity->getOrderId());
 
         return $order;
     }

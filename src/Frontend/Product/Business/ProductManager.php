@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Frontend\Product\Business;
 
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 class ProductManager implements ProductManagerInterface
 {
@@ -15,26 +15,26 @@ class ProductManager implements ProductManagerInterface
         $this->productBusinessFacade = $productBusinessFacade;
     }
 
-    public function delete(ProductDataTransferObject $productDTO): void
+    public function delete(ProductDataProvider $productDTO): void
     {
-        if ($this->productBusinessFacade->get($productDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
+        if ($this->productBusinessFacade->get($productDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $this->productBusinessFacade->delete($productDTO);
         }
     }
 
-    public function save(ProductDataTransferObject $product): void
+    public function save(ProductDataProvider $product): void
     {
         $productDTO = $this->productBusinessFacade->get($product->getArticleNumber());
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             $product->setArticleNumber((string)rand(1, 2229));
         }
         $this->productBusinessFacade->save($product);
     }
 
-    public function addPriceToShoppingCard(string $articleNumber):ProductDataTransferObject
+    public function addPriceToShoppingCard(string $articleNumber):ProductDataProvider
     {
         $productDTO = $this->productBusinessFacade->get($articleNumber);
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             throw new \Exception('The given articlenumber returned null', 1);
         }
         return $productDTO;

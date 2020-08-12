@@ -4,16 +4,16 @@
 namespace App\Client\Attribute\Persistence\Mapper;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
-use App\Generated\Dto\AttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
 
 class AttributeMapper implements AttributeMapperInterface
 {
-    public function map(Attribute $attribute):AttributeDataTransferObject
+    public function map(Attribute $attribute):AttributeDataProvider
     {
-        $attributeDTO = new AttributeDataTransferObject();
-        $attributeDTO->setId($attribute->getAttributeId());
-        $attributeDTO->setKey($attribute->getAttributeKey());
-        $attributeDTO->setValue($attribute->getAttributeValue());
+        $attributeDTO = new AttributeDataProvider();
+        $attributeDTO->setAttributeId($attribute->getAttributeId());
+        $attributeDTO->setAttributeKey($attribute->getAttributeKey());
+        $attributeDTO->setAttributeValue($attribute->getAttributeValue());
         return  $attributeDTO;
     }
 }

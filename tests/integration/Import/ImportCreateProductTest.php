@@ -7,11 +7,10 @@ namespace App\Tests\integration\Import;
 use App\Client\Product\Persistence\ProductRepository;
 
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
+use App\Generated\ProductDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
-use App\Backend\ImportProduct\Business\Model\Create\Product as CreateProduct;
 use Cycle\ORM\Transaction;
 
 /**
@@ -19,7 +18,7 @@ use Cycle\ORM\Transaction;
  */
 class ImportCreateProductTest extends \Codeception\Test\Unit
 {
-    private CsvProductDataTransferObject $csvDTO;
+    private CsvProductDataProvider $csvDTO;
     private $importCreateProduct;
     private ProductRepository $productRepository;
     private ContainerHelper $container;
@@ -33,7 +32,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
+        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(Product::class);
@@ -74,7 +73,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
 
     private function createCSVDTO(string $articleNumber)
     {
-        $this->csvDTO = new CsvProductDataTransferObject();
+        $this->csvDTO = new CsvProductDataProvider();
         $this->csvDTO->setArticleNumber($articleNumber);
         $this->csvDTO->setName('test');
     }

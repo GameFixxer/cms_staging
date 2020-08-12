@@ -2,9 +2,9 @@
 
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
 
 interface IntegrityManagerInterface
 {
-    public function mapEntity(CsvProductDataTransferObject $csvDTO): ?object;
+    public function mapEntity(CsvProductDataProvider $csvDTO): ?object;
 }

@@ -2,20 +2,20 @@
 declare(strict_types=1);
 namespace App\Client\Category\Business;
 
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 interface CategoryBusinessFacadeInterface
 {
-    public function get(int $categoryId): ?CategoryDataTransferObject;
+    public function get(int $categoryId): ?CategoryDataProvider;
 
-    public function getByKey(string $key): ?CategoryDataTransferObject;
+    public function getByKey(string $key): ?CategoryDataProvider;
 
     /**
-     * @return CategoryDataTransferObject[]
+     * @return CategoryDataProvider[]
      */
     public function getList();
 
-    public function save(CategoryDataTransferObject $category): CategoryDataTransferObject;
+    public function save(CategoryDataProvider $category): CategoryDataProvider;
 
-    public function delete(CategoryDataTransferObject $category);
+    public function delete(CategoryDataProvider $category);
 }

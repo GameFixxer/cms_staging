@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace App\Frontend\Order\Business;
 
 use App\Client\User\Persistence\Entity\User;
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 
 interface OrderManagerInterface
 {
@@ -17,7 +17,7 @@ interface OrderManagerInterface
 
     public function getUser(string $username): User;
 
-    public function createNewAddress(AddressDataTransferObject $newAddress):void;
+    public function createNewAddress(AddressDataProvider $newAddress):void;
 
     public function getAddressListFromUser():array;
 

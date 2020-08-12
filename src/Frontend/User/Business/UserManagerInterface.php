@@ -2,11 +2,11 @@
 
 namespace App\Frontend\User\Business;
 
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 interface UserManagerInterface
 {
-    public function delete(UserDataTransferObject $user): void;
+    public function delete(UserDataProvider $user): void;
 
-    public function save(UserDataTransferObject $user): void;
+    public function save(UserDataProvider $user): void;
 }

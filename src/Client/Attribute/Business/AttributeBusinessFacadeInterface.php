@@ -2,18 +2,18 @@
 
 namespace App\Client\Attribute\Business;
 
-use App\Generated\Dto\AttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
 
 interface AttributeBusinessFacadeInterface
 {
-    public function get(string $attributeKey): ?AttributeDataTransferObject;
+    public function get(string $attributeKey): ?AttributeDataProvider;
 
     /**
-     * @return AttributeDataTransferObject[]
+     * @return AttributeDataProvider[]
      */
     public function getList(): array;
 
-    public function save(AttributeDataTransferObject $attribute): AttributeDataTransferObject;
+    public function save(AttributeDataProvider $attribute): AttributeDataProvider;
 
-    public function delete(AttributeDataTransferObject $attribute);
+    public function delete(AttributeDataProvider $attribute);
 }

@@ -6,7 +6,7 @@ namespace App\Client\Category\Persistence;
 use App\Client\Category\Persistence\Entity\Category;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 class CategoryEntityManager implements CategoryEntityManagerInterface
 {
@@ -27,7 +27,7 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
 
 
 
-    public function delete(CategoryDataTransferObject $category):void
+    public function delete(CategoryDataProvider $category):void
     {
         $transaction = new Transaction($this->orm);
         $transaction->delete($this->ormCategoryRepository->findByPK($category->getCategoryId()));
@@ -36,7 +36,7 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
         $this->categoryRepository->getCategoryList();
     }
 
-    public function save(CategoryDataTransferObject $category): CategoryDataTransferObject
+    public function save(CategoryDataProvider $category): CategoryDataProvider
     {
         $transaction = new Transaction($this->orm);
 

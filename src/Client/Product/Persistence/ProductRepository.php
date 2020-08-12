@@ -7,7 +7,7 @@ namespace App\Client\Product\Persistence;
 
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use Cycle\ORM\ORM;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -28,7 +28,7 @@ class ProductRepository implements ProductRepositoryInterface
 
 
     /**
-     * @return ProductDataTransferObject[]
+     * @return ProductDataProvider[]
      */
     public function getProductList(): array
     {
@@ -41,7 +41,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $productList;
     }
 
-    public function getProduct(string $articleNumber): ?ProductDataTransferObject
+    public function getProduct(string $articleNumber): ?ProductDataProvider
     {
         $productEntity = $this->ormProductRepository->findOne(['article_Number'=>$articleNumber]);
         if ($productEntity instanceof Product) {

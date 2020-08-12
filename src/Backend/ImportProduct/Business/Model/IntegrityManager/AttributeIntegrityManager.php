@@ -4,7 +4,7 @@
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
 
 class AttributeIntegrityManager implements IntegrityManagerInterface
 {
@@ -15,7 +15,7 @@ class AttributeIntegrityManager implements IntegrityManagerInterface
         $this->ormAttributeRepository = $ormAttributeRepository->getRepository(Attribute::class);
     }
 
-    public function mapEntity(CsvProductDataTransferObject $csvDTO): ?object
+    public function mapEntity(CsvProductDataProvider $csvDTO): ?object
     {
         $categoryEntity = $this->loadEntityFromRepository($csvDTO->getAttributeKey());
         if ($categoryEntity instanceof Attribute) {

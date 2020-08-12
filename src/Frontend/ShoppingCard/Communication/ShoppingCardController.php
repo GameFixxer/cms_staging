@@ -6,7 +6,6 @@ namespace App\Frontend\ShoppingCard\Communication;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\ShoppingCard\Business\ShoppingCardManagerInterface;
-use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\SessionUser;
 
 class ShoppingCardController implements BackendController

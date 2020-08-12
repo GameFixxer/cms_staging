@@ -4,8 +4,8 @@
 namespace App\Backend\ImportAttribute\Business\Model\Create;
 
 use App\Client\Attribute\Business\AttributeBusinessFacadeInterface;
-use App\Generated\Dto\AttributeDataTransferObject;
-use App\Generated\Dto\CsvAttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
+use App\Generated\CsvAttributeDataProvider;
 
 class Attribute implements AttributeInterface
 {
@@ -16,7 +16,7 @@ class Attribute implements AttributeInterface
         $this->attributeBusinessFacade = $attributeBusinessFacade;
     }
 
-    public function createCategory(CsvAttributeDataTransferObject $csvDTO) : ?CsvAttributeDataTransferObject
+    public function createCategory(CsvAttributeDataProvider $csvDTO) : ?CsvAttributeDataProvider
     {
         if ($csvDTO->getAttributeKey() === '') {
             throw new \Exception('CategoryKey must not be empty', 1);
@@ -27,8 +27,8 @@ class Attribute implements AttributeInterface
             $csvDTO->setAttributeId($attributeFromRepository->getAttributeId());
             return $csvDTO;
         }
-        $attribute = new AttributeDataTransferObject();
-        $attribute->setKey($csvDTO->getAttributeKey());
+        $attribute = new AttributeDataProvider;
+        $attribute->setAttributeKey($csvDTO->getAttributeKey());
         $csvDTO->setAttributeId($this->attributeBusinessFacade->save($attribute)->getId());
 
         return $csvDTO;

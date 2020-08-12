@@ -7,7 +7,7 @@ namespace App\Client\User\Persistence;
 
 use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapperInterface;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 use Cycle\ORM\ORM;
 
 class UserRepository implements UserRepositoryInterface
@@ -22,7 +22,7 @@ class UserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @return UserDataTransferObject[]
+     * @return UserDataProvider[]
      */
     public function getUserList(): array
     {
@@ -37,7 +37,7 @@ class UserRepository implements UserRepositoryInterface
         return $userList;
     }
 
-    public function getUser(string $username): ?UserDataTransferObject
+    public function getUser(string $username): ?UserDataProvider
     {
         $userEntity = $this->ormUserRepository->findOne([
             'username' => $username

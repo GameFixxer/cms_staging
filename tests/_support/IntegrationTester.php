@@ -17,7 +17,6 @@
  * @SuppressWarnings(PHPMD)
  */
 
-use App\Generated\Dto\ProductDataTransferObject;
 
 class IntegrationTester extends \Codeception\Actor
 {

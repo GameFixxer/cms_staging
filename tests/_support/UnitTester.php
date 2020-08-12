@@ -20,7 +20,7 @@
 use App\Client\Product\Persistence\ProductRepository;
 
 use App\Component\View;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use App\Service\SessionUser;
 
 class UnitTester extends \Codeception\Actor
@@ -44,7 +44,7 @@ class UnitTester extends \Codeception\Actor
     {
         $this->view = include __DIR__.'/../../Bootstrap.php';
     }
-    public function getProduct(string $articleNumber): ?ProductDataTransferObject
+    public function getProduct(string $articleNumber): ?ProductDataProvider
     {
         $productRepository = $this->getProductRepository();
         return $productRepository->getProduct($articleNumber);

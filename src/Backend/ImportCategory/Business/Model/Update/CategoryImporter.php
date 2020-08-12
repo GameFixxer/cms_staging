@@ -5,7 +5,7 @@ namespace App\Backend\ImportCategory\Business\Model\Update;
 
 use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
-use App\Generated\Dto\CsvCategoryDataTransferObject;
+use App\Generated\CsvCategoryDataProvider;
 
 class CategoryImporter implements CategoryUpdateInterface
 {
@@ -20,7 +20,7 @@ class CategoryImporter implements CategoryUpdateInterface
         $this->importArrayList = $filterProvider->getCategoryActionList();
     }
 
-    public function performUpdateActions(CsvCategoryDataTransferObject $csvDTO):void
+    public function performUpdateActions(CsvCategoryDataProvider $csvDTO):void
     {
         foreach ($this->importArrayList as $action) {
             if ($action === null) {

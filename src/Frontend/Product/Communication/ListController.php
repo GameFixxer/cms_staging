@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Frontend\Product\Communication;
 
-use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\Controller;
 use App\Frontend\Product\Business\ProductManagerInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use App\Service\SessionUser;
 
 class ListController implements Controller
@@ -50,13 +49,13 @@ class ListController implements Controller
     {
         if (is_array($productDTO)) {
             foreach ($productDTO as $key) {
-                if (!($key instanceof ProductDataTransferObject)) {
+                if (!($key instanceof ProductDataProvider)) {
                     return false;
                 }
             }
             return true;
         }
-        return $productDTO instanceof ProductDataTransferObject;
+        return $productDTO instanceof ProductDataProvider;
     }
 
     private function addToShoppingCard(string $articleNumber)

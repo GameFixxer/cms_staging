@@ -8,12 +8,13 @@ use App\Client\Order\Business\OrderBusinessFacadeInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Client\User\Persistence\Entity\User;
-use App\Generated\Dto\AddressDataTransferObject;
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\AddressDataProvider;
+use App\Generated\OrderDataProvider;
+use App\Generated\ShoppingCardDataProvider;
 
 class OrderManager implements OrderManagerInterface
 {
-    private OrderDataTransferObject $orderDataTransferObject;
+    private OrderDataProvider $orderDataTransferObject;
     private UserBusinessFacadeInterface $userBusinessFacade;
     private ProductBusinessFacadeInterface $productBusinessFacade;
     private AddressBusinessFacadeInterface $addressBusinessFacade;
@@ -29,13 +30,12 @@ class OrderManager implements OrderManagerInterface
         $this->businessFacade = $businessFacade;
         $this->addressBusinessFacade = $addressBusinessFacade;
         $this->productBusinessFacade = $productBusinessFacade;
-        $this->orderDataTransferObject = new OrderDataTransferObject();
+        $this->orderDataTransferObject = new OrderDataProvider();
     }
 
     public function getAddressListFromUser():array
     {
-      return  $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getUserId());
-
+        return  $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getId());
     }
 
     public function getUser(string $username):User
@@ -46,20 +46,20 @@ class OrderManager implements OrderManagerInterface
         $userEntity->setUsername($userDTO->getUsername());
         $userEntity->setResetPassword($userDTO->getResetPassword());
         $userEntity->setSessionId($userDTO->getSessionId());
-        $userEntity->setShoppingCard(implode(',', $userDTO->getShoppingCard()));
-        $userEntity->setRole($userDTO->getUserRole());
-        $userEntity->setPassword($userDTO->getUserPassword());
+        $userEntity->setShoppingCard($userDTO->getShoppingCard());
+        $userEntity->setRole($userDTO->getRole());
+        $userEntity->setPassword($userDTO->getPassword());
         return $userEntity;
     }
 
-    public function addShoppingCardItems(array $card):void
+    public function addShoppingCardItems(ShoppingCardDataProvider $card):void
     {
         $sum = 0;
         foreach ($card as $item) {
             $sum = $sum + $this->productBusinessFacade->get($item)->getPrice();
         }
         $this->orderDataTransferObject->setSum($sum);
-        $this->orderDataTransferObject->setOrderedProducts(implode(',', $card));
+        $this->orderDataTransferObject->addShoppingCard($card);
     }
 
     public function setUser(String $user):void
@@ -79,7 +79,7 @@ class OrderManager implements OrderManagerInterface
         $this->businessFacade->save($this->orderDataTransferObject);
     }
 
-    public function createNewAddress(AddressDataTransferObject $newAddress):void
+    public function createNewAddress(AddressDataProvider $newAddress):void
     {
         $this->addressBusinessFacade->save($newAddress);
     }

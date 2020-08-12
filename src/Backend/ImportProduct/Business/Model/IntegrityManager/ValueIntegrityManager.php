@@ -4,10 +4,8 @@ namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\CategoryDataTransferObject;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\DataTransferObjectInterface;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\CategoryDataProvider;
+use App\Generated\CsvProductDataProvider;
 
 class ValueIntegrityManager implements ValueIntegrityManagerInterface
 {
@@ -18,7 +16,7 @@ class ValueIntegrityManager implements ValueIntegrityManagerInterface
         $this->productBusinessFacade = $productBusinessFacade;
     }
 
-    public function checkValuesChanged(CsvProductDataTransferObject $csvDTO, DataTransferObjectInterface $dto):bool
+    public function checkValuesChanged(CsvProductDataProvider $csvDTO, $dto):bool
     {
         foreach (get_class_methods($dto) as $action) {
             $getter = ''.$action;
@@ -31,7 +29,7 @@ class ValueIntegrityManager implements ValueIntegrityManagerInterface
         return false;
     }
 
-    public function checkObjectValueChanged(CsvProductDataTransferObject $csvDTO, CategoryDataTransferObject $categoryDTO):bool
+    public function checkObjectValueChanged(CsvProductDataProvider $csvDTO, CategoryDataProvider $categoryDTO):bool
     {
         $productCategory = $this->productBusinessFacade->get($csvDTO->getArticleNumber())->getCategory();
         if (!$productCategory instanceof Category) {

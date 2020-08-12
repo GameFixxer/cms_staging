@@ -4,7 +4,7 @@
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
 
 class ProductIntegrityManager implements IntegrityManagerInterface
 {
@@ -15,7 +15,7 @@ class ProductIntegrityManager implements IntegrityManagerInterface
         $this->ormProductRepository = $ormProductRepository->getRepository(Product::class);
     }
 
-    public function mapEntity(CsvProductDataTransferObject $csvDTO): ?object
+    public function mapEntity(CsvProductDataProvider $csvDTO): ?object
     {
         $productEntity = $this->loadEntityFromRepository($csvDTO->getCategoryId());
         if ($productEntity instanceof Product) {

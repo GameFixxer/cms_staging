@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace App\Frontend\User\Business;
 
 use App\Client\User\Business\UserBusinessFacadeInterface;
-use App\Frontend\User\Business\UserManagerInterface;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 class UserManager implements UserManagerInterface
 {
@@ -16,18 +15,18 @@ class UserManager implements UserManagerInterface
         $this->userBusinessFacade = $userBusinessFacade;
     }
 
-    public function delete(UserDataTransferObject $user): void
+    public function delete(UserDataProvider $user): void
     {
-        if ($this->userBusinessFacade->get($user->getUsername()) instanceof UserDataTransferObject) {
+        if ($this->userBusinessFacade->get($user->getUsername()) instanceof UserDataProvider) {
             $this->userBusinessFacade->delete($user);
         }
     }
 
-    public function save(UserDataTransferObject $user): void
+    public function save(UserDataProvider $user): void
     {
         $userDTO = $this->userBusinessFacade->get($user->getUsername());
-        if ($userDTO instanceof UserDataTransferObject) {
-            $user->setUserId($userDTO->getUserId());
+        if ($userDTO instanceof UserDataProvider) {
+            $user->setId($userDTO->getId());
         }
         $this->userBusinessFacade->save($user);
     }

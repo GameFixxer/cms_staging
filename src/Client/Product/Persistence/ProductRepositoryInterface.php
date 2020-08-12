@@ -2,14 +2,14 @@
 
 namespace App\Client\Product\Persistence;
 
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 interface ProductRepositoryInterface
 {
     /**
-     * @return ProductDataTransferObject[]
+     * @return ProductDataProvider[]
      */
     public function getProductList(): array;
 
-    public function getProduct(string $articleNumber): ?ProductDataTransferObject;
+    public function getProduct(string $articleNumber): ?ProductDataProvider;
 }

@@ -3,15 +3,12 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Client\Attribute\Persistence\AttributeEntityManager;
 use App\Client\Attribute\Persistence\Entity\Attribute;
-use App\Client\Product\Persistence\ProductEntityManager;
-use App\Generated\Dto\AttributeDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\AttributeDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
-use App\Client\Product\Persistence\Entity\Product;
+
 
 /**
  * @group Attribute
@@ -19,7 +16,7 @@ use App\Client\Product\Persistence\Entity\Product;
 
 class AttributeEntityManagerTest extends \Codeception\Test\Unit
 {
-    private AttributeDataTransferObject $attributeDto;
+    private AttributeDataProvider $attributeDto;
     private ContainerHelper $container;
     private Transaction $transaction;
     private \Cycle\ORM\RepositoryInterface $ormAttributeRepository;
@@ -42,33 +39,33 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->ormAttributeRepository->findOne(['attribute_key'=>$this->attributeDto->getKey()]) instanceof Attribute) {
-            $this->transaction->delete($this->ormAttributeRepository->findOne(['attribute_key'=>$this->attributeDto->getKey()]));
+        if ($this->ormAttributeRepository->findOne(['attribute_key'=>$this->attributeDto->getAttributeKey()]) instanceof Attribute) {
+            $this->transaction->delete($this->ormAttributeRepository->findOne(['attribute_key'=>$this->attributeDto->getAttributeKey()]));
             $this->transaction->run();
         }
     }
 
     public function testCreateAttribute()
     {
-        $this->attributeDto->setId(($this->attributeEntityManager->save($this->attributeDto))->getId());
+        $this->attributeDto->setAttributeId(($this->attributeEntityManager->save($this->attributeDto))->getAttributeId());
 
-        $attributeFromRepository = $this->container->getAttributeRepository()->getAttribute($this->attributeDto->getKey());
+        $attributeFromRepository = $this->container->getAttributeRepository()->getAttribute($this->attributeDto->getAttributeKey());
 
-        $this->assertSame($this->attributeDto->getKey(), $attributeFromRepository->getKey());
-        $this->assertSame($this->attributeDto->getValue(), $attributeFromRepository->getValue());
-        $this->assertSame($this->attributeDto->getId(), $attributeFromRepository->getId());
+        $this->assertSame($this->attributeDto->getAttributeKey(), $attributeFromRepository->getAttributeKey());
+        $this->assertSame($this->attributeDto->getAttributeValue(), $attributeFromRepository->getAttributeValue());
+        $this->assertSame($this->attributeDto->getAttributeId(), $attributeFromRepository->getAttributeId());
     }
 
     public function testUpdateAttribute()
     {
-        $this->attributeDto->setKey('fabulous');
-        $this->attributeDto->setValue('even more fabulous');
+        $this->attributeDto->setAttributeKey('fabulous');
+        $this->attributeDto->setAttributeValue('even more fabulous');
         $this->attributeDto = $this->attributeEntityManager->save($this->attributeDto);
-        $attributeFromRepository = $this->container->getAttributeRepository()->getAttribute($this->attributeDto->getKey());
+        $attributeFromRepository = $this->container->getAttributeRepository()->getAttribute($this->attributeDto->getAttributeKey());
 
-        $this->assertSame($this->attributeDto->getKey(), $attributeFromRepository->getKey());
-        $this->assertSame($this->attributeDto->getValue(), $attributeFromRepository->getValue());
-        $this->assertSame($this->attributeDto->getId(), $attributeFromRepository->getId());
+        $this->assertSame($this->attributeDto->getAttributeKey(), $attributeFromRepository->getAttributeKey());
+        $this->assertSame($this->attributeDto->getAttributeValue(), $attributeFromRepository->getAttributeValue());
+        $this->assertSame($this->attributeDto->getAttributeId(), $attributeFromRepository->getAttributeId());
     }
 
     public function TestDeleteProduct()
@@ -77,13 +74,13 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
 
         $this->attributeEntityManager->delete($this->attributeDto);
 
-        $this->assertNull($this->container->getProductRepository()->getProduct($this->attributeDto->getId()));
+        $this->assertNull($this->container->getProductRepository()->getProduct($this->attributeDto->getAttributeId()));
     }
 
     private function createDto(String $name, String $description)
     {
-        $this->attributeDto = new AttributeDataTransferObject();
-        $this->attributeDto->setKey($name);
-        $this->attributeDto->setValue($description);
+        $this->attributeDto = new AttributeDataProvider;
+        $this->attributeDto->setAttributeKey($name);
+        $this->attributeDto->setAttributeValue($description);
     }
 }

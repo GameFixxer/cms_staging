@@ -8,9 +8,9 @@ use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityMana
 use App\Client\Category\Business\CategoryBusinessFacadeInterface;
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\CategoryDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CategoryDataProvider;
+use App\Generated\ProductDataProvider;
+use App\Generated\CsvProductDataProvider;
 
 class ProductCategory implements ProductInterface
 {
@@ -31,14 +31,14 @@ class ProductCategory implements ProductInterface
         $this->valueIntegrityManager = $integrityManager;
     }
 
-    public function update(CsvProductDataTransferObject $csvDTO):void
+    public function update(CsvProductDataProvider $csvDTO):void
     {
-        if (empty($csvDTO->getKey())) {
+        if (empty($csvDTO->getCategoryKey())) {
             throw new \Exception('CategoryKey must not be empty', 1);
         } else {
             $category = $this->categoryBusinessFacade->getByKey($csvDTO->getKey());
-            if (!$category instanceof CategoryDataTransferObject) {
-                $category = new CategoryDataTransferObject();
+            if (!$category instanceof CategoryDataProvider) {
+                $category = new CategoryDataProvider();
                 $category->setCategoryKey($csvDTO->getKey());
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
@@ -54,10 +54,10 @@ class ProductCategory implements ProductInterface
         }
     }
 
-    private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
+    private function saveUpdatedProduct(CsvProductDataProvider $csvDTO)
     {
         $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             throw new \Exception('Critical RepositoryError', 1);
         }
         $productDTO->setCategory($csvDTO->getCategory());

@@ -6,7 +6,7 @@ namespace App\Backend\ImportAttribute\Business\Model;
 use App\Backend\ImportAttribute\Business\Model\Create\AttributeInterface;
 use App\Backend\ImportAttribute\Business\Model\Update\AttributeImporterInterface;
 use App\Backend\ImportComponent\Loader\CsvImportLoaderInterface;
-use App\Generated\Dto\CsvAttributeDataTransferObject;
+use App\Generated\CsvAttributeDataProvider;
 
 class Importer
 {
@@ -33,7 +33,7 @@ class Importer
         if (isset($rawCategoryList)) {
             foreach ($rawCategoryList as $object) {
                 $updatedDTO = $this->attribute->createCategory($object);
-                if ($updatedDTO instanceof CsvAttributeDataTransferObject) {
+                if ($updatedDTO instanceof CsvAttributeDataProvider) {
                     $this->attributeImporter->performUpdateActions($updatedDTO);
                 }
             }

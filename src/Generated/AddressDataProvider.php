@@ -126,8 +126,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      */
     public function addUser(UserDataProvider $User)
     {
-        $this->User[] = $User;
-        return $this;
+        $this->User[] = $User; return $this;
     }
 
 
@@ -464,9 +463,9 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      */
     protected function getElements(): array
     {
-        return array(
+        return array (
           'address_id' =>
-          array(
+          array (
             'name' => 'address_id',
             'allownull' => false,
             'default' => '0',
@@ -476,7 +475,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'User' =>
-          array(
+          array (
             'name' => 'User',
             'allownull' => false,
             'default' => '',
@@ -488,7 +487,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'singleton_type' => '\\App\\Generated\\UserDataProvider',
           ),
           'country' =>
-          array(
+          array (
             'name' => 'country',
             'allownull' => false,
             'default' => '\'\'',
@@ -498,7 +497,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'street' =>
-          array(
+          array (
             'name' => 'street',
             'allownull' => false,
             'default' => '\'\'',
@@ -508,7 +507,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'town' =>
-          array(
+          array (
             'name' => 'town',
             'allownull' => false,
             'default' => '\'\'',
@@ -518,7 +517,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'postcode' =>
-          array(
+          array (
             'name' => 'postcode',
             'allownull' => false,
             'default' => '0',
@@ -528,7 +527,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'type' =>
-          array(
+          array (
             'name' => 'type',
             'allownull' => false,
             'default' => '\'\'',
@@ -538,7 +537,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'firstName' =>
-          array(
+          array (
             'name' => 'firstName',
             'allownull' => false,
             'default' => '\'\'',
@@ -548,7 +547,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'lastName' =>
-          array(
+          array (
             'name' => 'lastName',
             'allownull' => false,
             'default' => '\'\'',
@@ -558,7 +557,7 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'active' =>
-          array(
+          array (
             'name' => 'active',
             'allownull' => false,
             'default' => 'false',

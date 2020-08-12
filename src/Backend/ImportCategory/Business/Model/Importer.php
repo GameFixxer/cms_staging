@@ -6,7 +6,7 @@ namespace App\Backend\ImportCategory\Business\Model;
 use App\Backend\ImportCategory\Business\Model\Create\CategoryInterface;
 use App\Backend\ImportCategory\Business\Model\Update\CategoryUpdateInterface;
 use App\Backend\ImportComponent\Loader\CsvImportLoaderInterface;
-use App\Generated\Dto\CsvCategoryDataTransferObject;
+use App\Generated\CsvCategoryDataProvider;
 
 class Importer
 {
@@ -33,7 +33,7 @@ class Importer
         if (isset($rawCategoryList)) {
             foreach ($rawCategoryList as $object) {
                 $updatedDTO = $this->createCategory->createCategory($object);
-                if ($updatedDTO instanceof CsvCategoryDataTransferObject) {
+                if ($updatedDTO instanceof CsvCategoryDataProvider) {
                     $this->updateImport->performUpdateActions($updatedDTO);
                 }
             }

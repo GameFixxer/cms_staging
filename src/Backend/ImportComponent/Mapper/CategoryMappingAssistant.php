@@ -5,7 +5,7 @@ namespace App\Backend\ImportComponent\Mapper;
 
 use App\Backend\ImportComponent\ImportFilterProvider;
 use App\Backend\ImportComponent\StringConverter\StringConverter;
-use App\Generated\Dto\CsvCategoryDataTransferObject;
+use App\Generated\CsvCategoryDataProvider;
 
 class CategoryMappingAssistant implements MappingAssistantInterface
 {
@@ -21,9 +21,9 @@ class CategoryMappingAssistant implements MappingAssistantInterface
         $this->columnAttributes = $importFilter->getCategoryFilterList();
     }
 
-    public function mapInputToDTO(array $headerList, array $product): CsvCategoryDataTransferObject
+    public function mapInputToDTO(array $headerList, array $product): CsvCategoryDataProvider
     {
-        $csvDataTransferObject = new CsvCategoryDataTransferObject();
+        $csvDataTransferObject = new CsvCategoryDataProvider();
         foreach ($headerList as $column) {
             $action = 'set'.$this->stringConverter->camelCaseToSnakeCase($column);
             $csvDataTransferObject->$action($product[$column]);

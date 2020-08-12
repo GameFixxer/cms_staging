@@ -5,21 +5,18 @@ namespace App\Tests\integration\Import;
 use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\ProductRepository;
-use App\Client\Category\Persistence\Entity\Category;
-use App\Client\Product\Persistence\Entity\Product as ProductEntity;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
+use App\Generated\ProductDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
-use App\Backend\ImportProduct\Business\Model\Create\Product as ProductImport;
 
 /**
  * @group Import4
  */
 class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
 {
-    private CsvProductDataTransferObject $csvDTO;
+    private CsvProductDataProvider $csvDTO;
     private $importCreateProduct;
     private ProductRepository $productRepository;
     private  $updateAttribute;
@@ -37,15 +34,15 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
     }
 
     public function _after()
-    {/*
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
+    {
+        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
-            $ormProductRepository = $orm->getRepository(ProductEntity::class);
+            $ormProductRepository = $orm->getRepository(Product::class);
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number'=>$this->csvDTO->getArticleNumber()]));
             $transaction->run();
-        }*/
+        }
     }
 
     public function testUpdateAttribute()
@@ -98,9 +95,9 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
 
     private function createCSVDTO(string $articleNumber, string $categoryKey)
     {
-        $this->csvDTO = new CsvProductDataTransferObject();
+        $this->csvDTO = new CsvProductDataProvider();
         $this->csvDTO->setAttributeKey($categoryKey);
-        $this->csvDTO->setKey($categoryKey);
+        $this->csvDTO->setCategoryKey($categoryKey);
         $this->csvDTO->setAttributeValue($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
         $this->csvDTO->setName('test');

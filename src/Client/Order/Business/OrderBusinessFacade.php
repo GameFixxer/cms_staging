@@ -5,7 +5,7 @@ namespace App\Client\Order\Business;
 
 use App\Client\Order\Persistence\OrderEntityManagerInterface;
 use App\Client\Order\Persistence\OrderRepositoryInterface;
-use App\Generated\Dto\OrderDataTransferObject;
+use App\Generated\OrderDataProvider;
 
 class OrderBusinessFacade implements OrderBusinessFacadeInterface
 {
@@ -18,24 +18,24 @@ class OrderBusinessFacade implements OrderBusinessFacadeInterface
         $this->orderEntityManager = $orderEntityManager;
     }
 
-    public function get(int $orderId): ?OrderDataTransferObject
+    public function get(int $orderId): ?OrderDataProvider
     {
         return $this->orderRepository->getOrder($orderId);
     }
 
     /**
-     * @return OrderDataTransferObject[]
+     * @return OrderDataProvider[]
      */
 
     public function getList():array
     {
         return$this->orderRepository->getOrderList();
     }
-    public function save(OrderDataTransferObject $order):OrderDataTransferObject
+    public function save(OrderDataProvider $order):OrderDataProvider
     {
         return $this->orderEntityManager->save($order);
     }
-    public function delete(OrderDataTransferObject $order)
+    public function delete(OrderDataProvider $order)
     {
         $this->orderEntityManager->delete($order);
     }

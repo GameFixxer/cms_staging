@@ -2,12 +2,11 @@
 declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\IntegrityManager;
 
-use App\Generated\Dto\CategoryDataTransferObject;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\DataTransferObjectInterface;
+use App\Generated\CategoryDataProvider;
+use App\Generated\CsvProductDataProvider;
 
 interface ValueIntegrityManagerInterface
 {
-    public function checkValuesChanged(CsvProductDataTransferObject $csvDTO, DataTransferObjectInterface $dto): bool;
-    public function checkObjectValueChanged(CsvProductDataTransferObject $csvDTO, CategoryDataTransferObject $categoryDTO):bool;
+    public function checkValuesChanged(CsvProductDataProvider $csvDTO, $dto): bool;
+    public function checkObjectValueChanged(CsvProductDataProvider $csvDTO, CategoryDataProvider $categoryDTO):bool;
 }

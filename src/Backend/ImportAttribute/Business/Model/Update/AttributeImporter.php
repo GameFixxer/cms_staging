@@ -4,7 +4,7 @@
 namespace App\Backend\ImportAttribute\Business\Model\Update;
 
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
-use App\Generated\Dto\CsvAttributeDataTransferObject;
+use App\Generated\CsvAttributeDataProvider;
 
 class AttributeImporter implements AttributeImporterInterface
 {
@@ -15,7 +15,7 @@ class AttributeImporter implements AttributeImporterInterface
         $this->importArrayList = $filterProvider->getAttributeActionList();
     }
 
-    public function performUpdateActions(CsvAttributeDataTransferObject $csvDTO):void
+    public function performUpdateActions(CsvAttributeDataProvider $csvDTO):void
     {
         foreach ($this->importArrayList as $action) {
             if ($action === null) {

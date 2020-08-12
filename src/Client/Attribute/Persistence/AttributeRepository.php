@@ -5,7 +5,7 @@ namespace App\Client\Attribute\Persistence;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Attribute\Persistence\Mapper\AttributeMapperInterface;
-use App\Generated\Dto\AttributeDataTransferObject;
+use App\Generated\AttributeDataProvider;
 
 class AttributeRepository implements AttributeRepositoryInterface
 {
@@ -25,7 +25,7 @@ class AttributeRepository implements AttributeRepositoryInterface
 
 
     /**
-     * @return AttributeDataTransferObject[]
+     * @return AttributeDataProvider[]
      */
     public function getAttributeList(): array
     {
@@ -38,7 +38,7 @@ class AttributeRepository implements AttributeRepositoryInterface
         return $attributeList;
     }
 
-    public function getAttribute(string $attributeKey): ?AttributeDataTransferObject
+    public function getAttribute(string $attributeKey): ?AttributeDataProvider
     {
         $attributeEntity = $this->ormAttributeRepository->findOne(['attribute_key'=>$attributeKey]);
         if ($attributeEntity instanceof Attribute) {

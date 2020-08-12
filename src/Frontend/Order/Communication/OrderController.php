@@ -6,7 +6,7 @@ namespace App\Frontend\Order\Communication;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Order\Business\OrderManagerInterface;
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 use App\Service\SessionUser;
 
 class OrderController implements BackendController
@@ -63,7 +63,7 @@ class OrderController implements BackendController
 
     private function createNewAddress()
     {
-        $newAddress = new AddressDataTransferObject();
+        $newAddress = new AddressDataProvider();
         $newAddress->setUser($this->orderManager->getUser($this->userSession->getUser()));
         $newAddress->setFirstName($_POST['address']['firstname']);
         $newAddress->setLastName($_POST['address']['lastname']);

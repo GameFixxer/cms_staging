@@ -2,9 +2,9 @@
 declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
 
 interface UpdateInterface
 {
-    public function performUpdateActions(CsvProductDataTransferObject $csvDTO): void;
+    public function performUpdateActions(CsvProductDataProvider $csvDTO): void;
 }

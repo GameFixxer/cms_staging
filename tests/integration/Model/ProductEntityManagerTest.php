@@ -4,7 +4,7 @@
 namespace App\Tests\integration\Model;
 
 use App\Client\Product\Persistence\ProductEntityManager;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
@@ -16,7 +16,7 @@ use App\Client\Product\Persistence\Entity\Product;
 
 class ProductEntityManagerTest extends \Codeception\Test\Unit
 {
-    private ProductDataTransferObject $productDto;
+    private ProductDataProvider $productDto;
     private ContainerHelper $container;
     private ProductEntityManager $productEntityManager;
 
@@ -75,7 +75,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
     private function createDto(String $name, String $description)
     {
-        $this->productDto = new ProductDataTransferObject();
+        $this->productDto = new ProductDataProvider();
         $this->productDto->setName($name);
         $this->productDto->setDescription($description);
         $this->productDto->setArticleNumber($this->container->createArticleNumber());

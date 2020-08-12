@@ -7,7 +7,7 @@ namespace App\Client\Category\Persistence;
 
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Category\Persistence\Mapper\CategoryMapperInterface;
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 
 class CategoryRepository implements CategoryRepositoryInterface
@@ -28,7 +28,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
 
     /**
-     * @return CategoryDataTransferObject[]
+     * @return CategoryDataProvider[]
      */
     public function getCategoryList(): array
     {
@@ -41,7 +41,7 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $categoryList;
     }
 
-    public function getCategory(int $categoryId): ?CategoryDataTransferObject
+    public function getCategory(int $categoryId): ?CategoryDataProvider
     {
         $categoryEntity = $this->ormCategoryRepository->findByPK($categoryId);
         if ($categoryEntity instanceof Category) {
@@ -50,7 +50,7 @@ class CategoryRepository implements CategoryRepositoryInterface
         return null;
     }
 
-    public function getCategoryByKey(string $key): ?CategoryDataTransferObject
+    public function getCategoryByKey(string $key): ?CategoryDataProvider
     {
         $categoryEntity = $this->ormCategoryRepository->findOne(['category_key'=>$key]);
         if ($categoryEntity instanceof Category) {

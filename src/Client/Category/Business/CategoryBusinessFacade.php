@@ -5,7 +5,7 @@ namespace App\Client\Category\Business;
 
 use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Category\Persistence\CategoryRepositoryInterface;
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
 {
@@ -18,25 +18,25 @@ class CategoryBusinessFacade implements CategoryBusinessFacadeInterface
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    public function get(int $categoryId): ?CategoryDataTransferObject
+    public function get(int $categoryId): ?CategoryDataProvider
     {
         return $this->categoryRepository->getCategory($categoryId);
     }
 
-    public function getByKey(string $key): ?CategoryDataTransferObject
+    public function getByKey(string $key): ?CategoryDataProvider
     {
         return $this->categoryRepository->getCategoryByKey($key);
     }
 
     /**
-     * @return CategoryDataTransferObject[]
+     * @return CategoryDataProvider[]
      */
     public function getList():array
     {
         return $this->categoryRepository->getCategoryList();
     }
 
-    public function save(CategoryDataTransferObject $category): CategoryDataTransferObject
+    public function save(CategoryDataProvider $category): CategoryDataProvider
     {
         return $this->categoryEntityManager->save($category);
     }

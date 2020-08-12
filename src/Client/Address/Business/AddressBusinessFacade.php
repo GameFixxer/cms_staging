@@ -6,7 +6,7 @@ namespace App\Client\Address\Business;
 use App\Client\Address\Persistence\AddressEntityManagerInterface;
 use App\Client\Address\Persistence\AddressRepositoryInterface;
 use App\Client\User\Persistence\Entity\User;
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 
 class AddressBusinessFacade implements AddressBusinessFacadeInterface
 {
@@ -19,13 +19,13 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
         $this->addressEntityManager = $addressEntityManager;
     }
 
-    public function get(User $user, string $type, bool $primary): ?AddressDataTransferObject
+    public function get(User $user, string $type, bool $primary): ?AddressDataProvider
     {
         return $this->addressRepository->getAddress($user, $type, $primary);
     }
 
     /**
-     * @return AddressDataTransferObject[]
+     * @return AddressDataProvider[]
      */
 
     public function getList():array
@@ -38,11 +38,11 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
         return $this->addressRepository->getAddressListFromUser($userId);
     }
 
-    public function save(AddressDataTransferObject $address):AddressDataTransferObject
+    public function save(AddressDataProvider $address):AddressDataProvider
     {
         return $this->addressEntityManager->save($address);
     }
-    public function delete(AddressDataTransferObject $address)
+    public function delete(AddressDataProvider $address)
     {
         $this->addressEntityManager->delete($address);
     }

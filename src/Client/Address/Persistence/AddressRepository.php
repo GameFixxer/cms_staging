@@ -6,7 +6,7 @@ namespace App\Client\Address\Persistence;
 use App\Client\Address\Persistence\Entity\Address;
 use App\Client\Address\Persistence\Mapper\AddressMapperInterface;
 use App\Client\User\Persistence\Entity\User;
-use App\Generated\Dto\AddressDataTransferObject;
+use App\Generated\AddressDataProvider;
 
 class AddressRepository implements AddressRepositoryInterface
 {
@@ -20,7 +20,7 @@ class AddressRepository implements AddressRepositoryInterface
     }
 
     /**
-     * @return AddressDataTransferObject[]
+     * @return AddressDataProvider[]
      */
     public function getAddressList(): array
     {
@@ -35,7 +35,7 @@ class AddressRepository implements AddressRepositoryInterface
         return $addressList;
     }
 
-    public function getAddress(User $user, string $type, bool $primary): ?AddressDataTransferObject
+    public function getAddress(User $user, string $type, bool $primary): ?AddressDataProvider
     {
         $addressEntity = $this->repository->findOne([
             'user' => $user,

@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace App\Client\Product\Persistence\Mapper;
 
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 class ProductMapper implements ProductMapperInterface
 {
-    public function map(Product $product): ProductDataTransferObject
+    public function map(Product $product): ProductDataProvider
     {
-        $productDataTransferObject = new ProductDataTransferObject();
+        $productDataTransferObject = new ProductDataProvider();
         $productDataTransferObject->setId((int)$product->getId());
         $productDataTransferObject->setName($product->getProductName());
         $productDataTransferObject->setDescription($product->getProductDescription());

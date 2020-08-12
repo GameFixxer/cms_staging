@@ -8,7 +8,7 @@ use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\User\Communication\DashboardController;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 use App\Service\PasswordManager;
 use App\Service\SessionUser;
 
@@ -70,8 +70,8 @@ class PasswordController implements BackendController
     private function safePassword(string $password):bool
     {
         $userDTO = $this->userBusinessFacade->get($_SESSION['username']);
-        if ($userDTO instanceof UserDataTransferObject) {
-            $userDTO->setUserPassword($password);
+        if ($userDTO instanceof UserDataProvider) {
+            $userDTO->setPassword($password);
             $userDTO->setResetPassword('0');
             $userDTO->setSessionId('0');
             $this->userBusinessFacade->save($userDTO);

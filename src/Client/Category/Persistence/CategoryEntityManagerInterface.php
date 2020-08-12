@@ -2,11 +2,11 @@
 
 namespace App\Client\Category\Persistence;
 
-use App\Generated\Dto\CategoryDataTransferObject;
+use App\Generated\CategoryDataProvider;
 
 interface CategoryEntityManagerInterface
 {
-    public function delete(CategoryDataTransferObject $category): void;
+    public function delete(CategoryDataProvider $category): void;
 
-    public function save(CategoryDataTransferObject $category): CategoryDataTransferObject;
+    public function save(CategoryDataProvider $category): CategoryDataProvider;
 }

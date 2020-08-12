@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace App\Frontend\Login\Communication;
 
-use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\User\Communication\DashboardController;
-use App\Generated\Dto\EmailDataTransferObject;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\EmailDataProvider;
+use App\Generated\UserDataProvider;
 use App\Service\PasswordManager;
 use App\Service\SymfonyMailerManager;
 use App\Service\SessionUser;
@@ -52,7 +51,7 @@ class LoginController implements BackendController
             $username = (string)trim($_POST['username']);
             $password = (string)trim($_POST['password']);
             $userDTO = $this->userBusinessFacade->get($username);
-            if ($userDTO instanceof UserDataTransferObject) {
+            if ($userDTO instanceof UserDataProvider) {
                 $this->loginUser($userDTO, $password, $username);
             }
             $this->view->addTlpParam('loginMessage', 'Invalid Username or Password');
@@ -66,9 +65,9 @@ class LoginController implements BackendController
         if (isset($_POST['resetpassword']) && !empty(trim($_POST['email']))) {
             $username = (string)trim($_POST['email']);
             $userDTO = $this->userBusinessFacade->get($username);
-            if ($userDTO instanceof UserDataTransferObject) {
+            if ($userDTO instanceof UserDataProvider) {
                 $resetCode = $this->passwordManager->createResetPassword();
-                $emailDTO = new EmailDataTransferObject();
+                $emailDTO = new EmailDataProvider();
                 $emailDTO->setTo($username);
                 $emailDTO->setSubject('Reseting your Password');
                 $emailDTO->setMessage('If you really have forgotten your password pls enter the following number:'.$resetCode);
@@ -90,7 +89,7 @@ class LoginController implements BackendController
     {
         $userDTO = $this->userBusinessFacade->get($this->userSession->getUser());
 
-        if ($userDTO instanceof UserDataTransferObject) {
+        if ($userDTO instanceof UserDataProvider) {
             $userDTO->setShoppingCard($this->userSession->getShoppingCard());
 
             $this->userBusinessFacade->save($userDTO);
@@ -99,12 +98,13 @@ class LoginController implements BackendController
 
         $this->view->setRedirect(LoginController::ROUTE, '&page=login', ['admin=true']);
     }
-    private function loginUser(UserDataTransferObject $userDTO, string $password, string $username)
+    private function loginUser(UserDataProvider $userDTO, string $password, string $username)
     {
-        if ($this->passwordManager->checkPassword($password, $userDTO->getUserPassword())) {
-            $this->userSession->setShoppingCard(array_merge($userDTO->getShoppingCard(), $this->userSession->getShoppingCard()));
+        if ($this->passwordManager->checkPassword($password, $userDTO->getPassword())) {
+            $userDTO->addShoppingCard( $this->userSession->getShoppingCard());
+            $this->userSession->setShoppingCard($userDTO->getShoppingCard());
             $this->userSession->loginUser($username);
-            $this->userSession->setUserRole($userDTO->getUserRole());
+            $this->userSession->setUserRole($userDTO->getRole());
             $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
         }
     }
@@ -117,7 +117,7 @@ class LoginController implements BackendController
         return $sessionId;
     }
 
-    private function setEmergencyUserData(String $sessionId, string $resetCode, UserDataTransferObject $userDTO)
+    private function setEmergencyUserData(String $sessionId, string $resetCode, UserDataProvider $userDTO)
     {
         $userDTO->setSessionId($sessionId);
         $userDTO->setResetPassword($resetCode);

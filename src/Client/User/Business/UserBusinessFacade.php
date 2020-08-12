@@ -5,7 +5,7 @@ namespace App\Client\User\Business;
 
 use App\Client\User\Persistence\UserEntityManagerInterface;
 use App\Client\User\Persistence\UserRepositoryInterface;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 
 class UserBusinessFacade implements UserBusinessFacadeInterface
@@ -19,23 +19,23 @@ class UserBusinessFacade implements UserBusinessFacadeInterface
         $this->userEntityManager = $userEntityManager;
     }
 
-    public function get(string $username): ?UserDataTransferObject
+    public function get(string $username): ?UserDataProvider
     {
         return $this->userRepository->getUser($username);
     }
     /**
-     * @return UserDataTransferObject[]
+     * @return UserDataProvider[]
      */
     public function getList():array
     {
         return$this->userRepository->getUserList();
     }
 
-    public function save(UserDataTransferObject $user):UserDataTransferObject
+    public function save(UserDataProvider $user):UserDataProvider
     {
         return $this->userEntityManager->save($user);
     }
-    public function delete(UserDataTransferObject $user)
+    public function delete(UserDataProvider $user)
     {
         $this->userEntityManager->delete($user);
     }

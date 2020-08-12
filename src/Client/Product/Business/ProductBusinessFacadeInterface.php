@@ -2,18 +2,18 @@
 declare(strict_types=1);
 namespace App\Client\Product\Business;
 
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 interface ProductBusinessFacadeInterface
 {
-    public function get(string $articleNumber): ?ProductDataTransferObject;
+    public function get(string $articleNumber): ?ProductDataProvider;
 
     /**
-     * @return ProductDataTransferObject[]
+     * @return ProductDataProvider[]
      */
     public function getList(): array;
 
-    public function save(ProductDataTransferObject $product): ProductDataTransferObject;
+    public function save(ProductDataProvider $product): ProductDataProvider;
 
-    public function delete(ProductDataTransferObject $product);
+    public function delete(ProductDataProvider $product);
 }

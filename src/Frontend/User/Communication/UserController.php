@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace App\Frontend\User\Communication;
 
-use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Login\Communication\LoginController;
-use App\Frontend\User\Business\UserManager;
 use App\Frontend\User\Business\UserManagerInterface;
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 use App\Service\PasswordManager;
 use App\Service\SessionUser;
 
@@ -99,17 +97,17 @@ class UserController implements BackendController
 
     private function deleteUser(String $username): void
     {
-        $userDTO = new UserDataTransferObject();
+        $userDTO = new UserDataProvider();
         $userDTO->setUsername($username);
         $this->userManager->delete($userDTO);
     }
 
     private function saveUser(String $password, String $username, String $role): void
     {
-        $userDTO = new UserDataTransferObject();
+        $userDTO = new UserDataProvider();
         $userDTO->setUsername($username);
-        $userDTO->setUserPassword($this->passwordManager->encryptPassword($password));
-        $userDTO->setUserRole($role);
+        $userDTO->setPassword($this->passwordManager->encryptPassword($password));
+        $userDTO->setRole($role);
         $this->userManager->save($userDTO);
     }
 
@@ -120,14 +118,14 @@ class UserController implements BackendController
         } elseif ($userDTO === null) {
             return false;
         } else {
-            return $userDTO instanceof UserDataTransferObject;
+            return $userDTO instanceof UserDataProvider;
         }
     }
 
     private function checkArrayOfDTO($userDTO): bool
     {
         foreach ($userDTO as $key) {
-            if (!($key instanceof UserDataTransferObject) || $key === null) {
+            if (!($key instanceof UserDataProvider) || $key === null) {
                 return false;
             }
         }

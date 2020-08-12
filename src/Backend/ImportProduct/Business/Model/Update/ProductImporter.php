@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Backend\ImportProduct\Business\Model\Update;
 
 use App\Backend\ImportProduct\Business\Model\ActionProvider;
-use App\Generated\Dto\CsvProductDataTransferObject;
+use App\Generated\CsvProductDataProvider;
 
 class ProductImporter implements UpdateInterface
 {
@@ -19,7 +19,7 @@ class ProductImporter implements UpdateInterface
         $this->importArrayList = $filterProvider->getProductActionList();
     }
 
-    public function performUpdateActions(CsvProductDataTransferObject $csvDTO):void
+    public function performUpdateActions(CsvProductDataProvider $csvDTO):void
     {
         foreach ($this->importArrayList as $action) {
             if (!$action instanceof ProductInterface) {

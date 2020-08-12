@@ -7,9 +7,9 @@ use App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerIn
 use App\Backend\ImportProduct\Business\Model\IntegrityManager\ValueIntegrityManagerInterface;
 use App\Client\Attribute\Business\AttributeBusinessFacadeInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
-use App\Generated\Dto\AttributeDataTransferObject;
-use App\Generated\Dto\CsvProductDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\AttributeDataprovider;
+use App\Generated\CsvProductDataProvider;
+use App\Generated\ProductDataProvider;
 
 class ProductAttribute implements ProductInterface
 {
@@ -29,34 +29,34 @@ class ProductAttribute implements ProductInterface
         $this->valueIntegrityManager = $valueIntegrityManager;
         $this->integrityManager = $integrityManager;
     }
-    public function update(CsvProductDataTransferObject $csvDTO): void
+    public function update(CsvProductDataProvider $csvDTO): void
     {
         if (empty($csvDTO->getAttributeKey())) {
             throw new \Exception('AttributeKey must not be empty', 1);
         }
         $attribute = $this->attributeBusinessFacade->get($csvDTO->getAttributeKey());
-        if (!$attribute instanceof AttributeDataTransferObject) {
-            $attribute = new AttributeDataTransferObject();
-            $attribute->setKey($csvDTO->getAttributeKey());
-            $attribute->setValue($csvDTO->getAttributeValue());
-            $attribute->setId(($this->attributeBusinessFacade->save($attribute))->getId());
-            $csvDTO->setAttributeId($attribute->getId());
+        if (!$attribute instanceof AttributeDataprovider) {
+            $attribute = new AttributeDataprovider();
+            $attribute->setAttributeKey($csvDTO->getAttributeKey());
+            $attribute->setAttributeValue($csvDTO->getAttributeValue());
+            $attribute->setAttributeId(($this->attributeBusinessFacade->save($attribute))->getAttributeId());
+            $csvDTO->setAttributeId($attribute->getAttributeId());
             $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));
             $this->saveUpdatedProduct($csvDTO);
         } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $attribute)) {
-            $attribute->setKey($csvDTO->getAttributeKey());
-            $attribute->setValue($csvDTO->getAttributeValue());
-            $attribute->setId($this->attributeBusinessFacade->save($attribute)->getId());
-            $csvDTO->setAttributeId($attribute->getId());
+            $attribute->setAttributeKey($csvDTO->getAttributeKey());
+            $attribute->setAttributeValue($csvDTO->getAttributeValue());
+            $attribute->setAttributeId($this->attributeBusinessFacade->save($attribute)->getAttributeId());
+            $csvDTO->setAttributeId($attribute->getAttributeId());
             $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));
             $this->saveUpdatedProduct($csvDTO);
         }
     }
 
-    private function saveUpdatedProduct(CsvProductDataTransferObject $csvDTO)
+    private function saveUpdatedProduct(CsvProductDataProvider $csvDTO)
     {
         $productDTO = $this->productBusinessFacade->get($csvDTO->getArticleNumber());
-        if (!$productDTO instanceof ProductDataTransferObject) {
+        if (!$productDTO instanceof ProductDataProvider) {
             throw new \Exception('Critical RepositoryError', 1);
         }
         $productDTO->setAttribute($csvDTO->getAttribute());

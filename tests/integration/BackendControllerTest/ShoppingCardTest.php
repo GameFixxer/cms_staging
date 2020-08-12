@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\BackendControllerTest;
 
-use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\SessionUser;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;

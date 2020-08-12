@@ -2,14 +2,14 @@
 
 namespace App\Client\User\Persistence;
 
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 interface UserRepositoryInterface
 {
     /**
-     * @return UserDataTransferObject[]
+     * @return UserDataProvider[]
      */
     public function getUserList(): array;
 
-    public function getUser(string $username): ?UserDataTransferObject;
+    public function getUser(string $username): ?UserDataProvider;
 }

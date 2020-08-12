@@ -2,11 +2,11 @@
 
 namespace App\Client\User\Persistence;
 
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 interface UserEntityManagerInterface
 {
-    public function delete(UserDataTransferObject $user): void;
+    public function delete(UserDataProvider $user): void;
 
-    public function save(UserDataTransferObject $user): UserDataTransferObject;
+    public function save(UserDataProvider $user): UserDataProvider;
 }

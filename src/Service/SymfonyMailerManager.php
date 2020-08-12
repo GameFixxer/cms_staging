@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace App\Service;
 
 
-use App\Generated\Dto\EmailDataTransferObject;
-use App\Service\Mailer;
+use App\Generated\EmailDataProvider;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
-use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\Mailer\Transport\Transports;
 use Symfony\Component\Mime\Email;
 
@@ -22,12 +20,12 @@ class SymfonyMailerManager
     }
 
 
-    public function sendMail(EmailDataTransferObject $emailDTO):bool
+    public function sendMail(EmailDataProvider $emailDTO):bool
     {
         $this->createMail($emailDTO);
         return $this->mailer->sendMail($this->email);
     }
-    private function createMail(EmailDataTransferObject $emailDTO)
+    private function createMail(EmailDataProvider $emailDTO)
     {
         $this->email = (new Email())
             ->from('r.berndt@nexus-united.com')

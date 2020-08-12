@@ -2,9 +2,9 @@
 
 namespace App\Backend\ImportAttribute\Business\Model\Create;
 
-use App\Generated\Dto\CsvAttributeDataTransferObject;
+use App\Generated\CsvAttributeDataProvider;
 
 interface AttributeInterface
 {
-    public function createCategory(CsvAttributeDataTransferObject $csvDTO): ?CsvAttributeDataTransferObject;
+    public function createCategory(CsvAttributeDataProvider $csvDTO): ?CsvAttributeDataProvider;
 }

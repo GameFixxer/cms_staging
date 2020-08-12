@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace App\Client\User\Business;
 
-use App\Generated\Dto\UserDataTransferObject;
+use App\Generated\UserDataProvider;
 
 interface UserBusinessFacadeInterface
 {
-    public function get(string $username): ?UserDataTransferObject;
+    public function get(string $username): ?UserDataProvider;
 
     /**
-     * @return UserDataTransferObject[]
+     * @return UserDataProvider[]
      */
     public function getList(): array;
 
-    public function save(UserDataTransferObject $user): UserDataTransferObject;
+    public function save(UserDataProvider $user): UserDataProvider;
 
-    public function delete(UserDataTransferObject $user);
+    public function delete(UserDataProvider $user);
 }

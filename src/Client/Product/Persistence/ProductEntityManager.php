@@ -6,7 +6,7 @@ use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
-use App\Generated\Dto\ProductDataTransferObject;
+use App\Generated\ProductDataProvider;
 
 class ProductEntityManager implements ProductEntityManagerInterface
 {
@@ -27,7 +27,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
 
 
 
-    public function delete(ProductDataTransferObject $product):void
+    public function delete(ProductDataProvider $product):void
     {
         $transaction = new Transaction($this->orm);
         $transaction->delete($this->ormProductRepository->findOne(['article_Number'=>$product->getArticleNumber()]));
@@ -36,7 +36,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $this->productRepository->getProductList();
     }
 
-    public function save(ProductDataTransferObject $product): ProductDataTransferObject
+    public function save(ProductDataProvider $product): ProductDataProvider
     {
         $transaction = new Transaction($this->orm);
 
