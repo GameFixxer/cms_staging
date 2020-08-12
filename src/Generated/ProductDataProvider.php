@@ -19,7 +19,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     /** @var \App\Generated\CategoryDataProvider */
     protected $category;
 
-    /** @var \App\Generated\AttributeDataProvider[] */
+    /** @var AttributeDataProvider[] */
     protected $attribute;
 
     /** @var int */
@@ -205,7 +205,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @return \App\Generated\AttributeDataProvider[]
+     * @return AttributeDataProvider[]
      */
     public function getAttribute(): AttributeDataProvider
     {
@@ -214,10 +214,10 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @param \App\Generated\AttributeDataProvider[] $attribute
+     * @param AttributeDataProvider[] $attribute
      * @return ProductDataProvider
      */
-    public function setAttribute(AttributeDataProvider $attribute)
+    public function setAttribute(array $attribute)
     {
         $this->attribute = $attribute;
 
@@ -246,7 +246,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @param \App\Generated\AttributeDataProvider $Attribute
+     * @param AttributeDataProvider $Attribute
      * @return ProductDataProvider
      */
     public function addAttribute(AttributeDataProvider $Attribute)

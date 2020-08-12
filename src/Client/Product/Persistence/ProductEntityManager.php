@@ -4,6 +4,7 @@ namespace App\Client\Product\Persistence;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Product\Persistence\Entity\Product;
+use App\Generated\AttributeDataProvider;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 use App\Generated\ProductDataProvider;
@@ -49,7 +50,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $entity->setCategory($product->getCategory());
         $entity->setProductDescription($product->getDescription());
         $entity->setArticleNumber($product->getArticleNumber());
-        if ($product->getAttribute() instanceof Attribute) {
+        if (!empty($product->getAttribute())) {
             $entity->setAttribute($product->getAttribute());
         }
 
