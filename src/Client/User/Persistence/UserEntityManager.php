@@ -16,6 +16,7 @@ class UserEntityManager implements UserEntityManagerInterface
      */
     private UserRepository $userRepository;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
+    private \Spiral\Database\DatabaseInterface $database;
     private ORM $orm;
 
     public function __construct(ORM $orm, UserRepository $userRepository)
@@ -23,6 +24,7 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->userRepository = $userRepository;
         $this->orm = $orm;
         $this->ormUserRepository = $orm->getRepository(User::class);
+        $this->database = $orm->getSource(User::class)->getDatabase();
     }
 
     public function delete(UserDataProvider $user):void
@@ -36,19 +38,23 @@ class UserEntityManager implements UserEntityManagerInterface
 
     public function save(UserDataProvider $user): UserDataProvider
     {
-        $transaction = new Transaction($this->orm);
-        $entity = $this->ormUserRepository->findByPK($user->getId());
+        $entity = $this->ormUserRepository ->findByPK($user->getid());
+        $values = [
+            'username'          =>  $user->getUsername(),
+            'password'          =>  $user->getPassword(),
+            'role'                  =>  $user->getRole(),
+            'session_id'        => $user->getSessionId(),
+            'resetpassword' => $user->getResetPassword(),
+            'shopping_card'  => $user->getShoppingCard()
+        ];
 
         if (!$entity instanceof User) {
-            $entity = new User();
+            $transaction= $this->database->insert('user')->values($values);
+        } else {
+            $values ['id'] =  $entity->getId();
+            $transaction = $this->database->update('user')->values($values)->where('id', '=', $entity->getId());
         }
-        $entity->setUsername($user->getUserName());
-        $entity->setPassword($user->getPassword());
-        $entity->setRole($user->getRole());
-        $entity->setSessionId($user->getSessionId());
-        $entity->setResetPassword($user->getResetPassword());
-        $entity->setShoppingCard($user->getShoppingCard());
-        $transaction->persist($entity);
+
         $transaction->run();
 
         $user->setId($entity->getId());

@@ -48,10 +48,10 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
         ];
 
         if (!$entity instanceof ShoppingCard) {
-            $transaction= $this->database->insert('address')->values($values);
+            $transaction= $this->database->insert('shoppingCard')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-            $transaction = $this->database->update('address')->values($values)->where('id', '=', $entity->getId());
+            $transaction = $this->database->update('shoppingCard')->values($values)->where('id', '=', $entity->getId());
         }
 
         $transaction->run();
