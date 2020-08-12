@@ -25,6 +25,7 @@ filter:
     - 'c3.php'
     - 'src/Component/cache-container.php'
     - 'src/Component/cache-container.php.meta'
+    - 'src/Generated/*'
 
 
 checks:
