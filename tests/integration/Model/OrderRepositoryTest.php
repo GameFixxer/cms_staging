@@ -56,17 +56,17 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
 
         $productDtoFromRepository = $orderRepository->getOrder($this->entity->getOrderId());
 
-        $this->assertSame($this->entity->getOrderId(), $productDtoFromRepository->getOrderId());
+        $this->assertSame($this->entity->getOrderId(), $productDtoFromRepository->getId());
         $this->assertSame(
             $this->entity->getDateOfOrder()->format('Y-m-d'),
             $productDtoFromRepository->getDateofOrder()->format('Y-m-d')
         );
         codecept_debug($this->entity->getAddress());
-        $this->assertSame($this->entity->getAddress()->getAddressId(), $productDtoFromRepository->getAddress()->getAddressId());
-        $this->assertSame($this->entity->getUser()->getUserId(), $productDtoFromRepository->getUser()->getUserId());
+        $this->assertSame($this->entity->getAddress()->getAddressId(), $productDtoFromRepository->getAddress()->getAddress_id());
+        $this->assertSame($this->entity->getUser()->getUserId(), $productDtoFromRepository->getUser()->getId());
         $this->assertSame($this->entity->getSum(), $productDtoFromRepository->getSum());
         $this->assertSame($this->entity->getStatus(), $productDtoFromRepository->getStatus());
-        $this->assertSame($this->entity->getOrderedProducts(), $productDtoFromRepository->getOrderedProducts());
+        $this->assertSame($this->entity->getOrderedProducts(), $productDtoFromRepository->getShoppingCard());
     }
 
     public function testGetProductWithNonExistingProduct()
@@ -84,7 +84,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
 
         $lastOrderOfOrderRepositoryList = end($orderList);
 
-        $this->assertSame($this->entity->getOrderId(), $lastOrderOfOrderRepositoryList->getOrderId());
+        $this->assertSame($this->entity->getOrderId(), $lastOrderOfOrderRepositoryList->getId());
         $this->assertSame(
             $this->entity->getDateOfOrder()->format('Y-m-d'),
             $lastOrderOfOrderRepositoryList->getDateofOrder()->format('Y-m-d')
@@ -93,7 +93,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $this->assertSame($this->entity->getUser(), $lastOrderOfOrderRepositoryList->getUser());
         $this->assertSame($this->entity->getSum(), $lastOrderOfOrderRepositoryList->getSum());
         $this->assertSame($this->entity->getStatus(), $lastOrderOfOrderRepositoryList->getStatus());
-        $this->assertSame($this->entity->getOrderedProducts(), $lastOrderOfOrderRepositoryList->getOrderedProducts());
+        $this->assertSame($this->entity->getOrderedProducts(), $lastOrderOfOrderRepositoryList->getShoppingCard()s());
     }
 
     private function createOrderEntity() :Order
@@ -115,7 +115,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     {
         $this->user = new User();
         $this->user->setAddress(null);
-        $this->user->setShoppingCard("");
+        $this->user->setShoppingCard(null);
         $this->user->setPassword("1243");
         $this->user->setRole("root");
         $this->user->setSessionId("");
