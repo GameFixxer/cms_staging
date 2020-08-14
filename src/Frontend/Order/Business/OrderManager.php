@@ -6,11 +6,14 @@ namespace App\Frontend\Order\Business;
 use App\Client\Address\Business\AddressBusinessFacadeInterface;
 use App\Client\Order\Business\OrderBusinessFacadeInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
+use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
 use App\Generated\OrderDataProvider;
 use App\Generated\ShoppingCardDataProvider;
+use App\Generated\UserDataProvider;
+use App\Service\SessionUser;
 
 class OrderManager implements OrderManagerInterface
 {
@@ -19,19 +22,24 @@ class OrderManager implements OrderManagerInterface
     private ProductBusinessFacadeInterface $productBusinessFacade;
     private AddressBusinessFacadeInterface $addressBusinessFacade;
     private OrderBusinessFacadeInterface $businessFacade;
+    private ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade;
+    private SessionUser $sessionUser;
 
     public function __construct(
         UserBusinessFacadeInterface $userBusinessFacade,
         OrderBusinessFacadeInterface $businessFacade,
         AddressBusinessFacadeInterface $addressBusinessFacade,
-        ProductBusinessFacadeInterface $productBusinessFacade
-    )
-    {
+        ProductBusinessFacadeInterface $productBusinessFacade,
+        ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade,
+        SessionUser $sessionUser
+    ) {
         $this->userBusinessFacade = $userBusinessFacade;
         $this->businessFacade = $businessFacade;
         $this->addressBusinessFacade = $addressBusinessFacade;
         $this->productBusinessFacade = $productBusinessFacade;
         $this->orderDataTransferObject = new OrderDataProvider();
+        $this->shoppingCardBusinessFacade = $shoppingCardBusinessFacade;
+        $this->sessionUser = $sessionUser;
     }
 
     public function getAddressListFromUser(): array
@@ -39,18 +47,10 @@ class OrderManager implements OrderManagerInterface
         return $this->addressBusinessFacade->getListFromSpecificUser($this->orderDataTransferObject->getUser()->getId());
     }
 
-    public function getUser(string $username): User
+    public function getUser(string $username): UserDataProvider
     {
         $userDTO = $this->userBusinessFacade->get($username);
-        $userEntity = new User();
-        $userEntity->setAddress($userDTO->getShoppingCard());
-        $userEntity->setUsername($userDTO->getUsername());
-        $userEntity->setResetPassword($userDTO->getResetPassword());
-        $userEntity->setSessionId($userDTO->getSessionId());
-        //$userEntity->setShoppingCard($userDTO->getShoppingCard());
-        $userEntity->setRole($userDTO->getRole());
-        $userEntity->setPassword($userDTO->getPassword());
-        return $userEntity;
+        return $userDTO;
     }
 
     public function addShoppingCardItems(ShoppingCardDataProvider $card): void
@@ -71,7 +71,7 @@ class OrderManager implements OrderManagerInterface
     public function addAddressToOrder(string $type, bool $primary): void
     {
         $this->orderDataTransferObject->setAddress(
-          $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
+            $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
         );
     }
 
@@ -83,5 +83,15 @@ class OrderManager implements OrderManagerInterface
     public function createNewAddress(AddressDataProvider $newAddress): void
     {
         $this->addressBusinessFacade->save($newAddress);
+    }
+    public function createShoppingCard(array $sessionCard):ShoppingCardDataProvider
+    {
+        $shoppingcard = $this->shoppingCardBusinessFacade->get(
+            $this->userBusinessFacade->get(
+                $this->sessionUser->getUser()
+            )->getId()
+        );
+
+        return $shoppingcard;
     }
 }

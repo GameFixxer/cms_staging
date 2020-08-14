@@ -5,6 +5,7 @@ namespace App\Frontend\Order\Business;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
 use App\Generated\ShoppingCardDataProvider;
+use App\Generated\UserDataProvider;
 
 interface OrderManagerInterface
 {
@@ -16,10 +17,12 @@ interface OrderManagerInterface
 
     public function pushOrder(): void;
 
-    public function getUser(string $username): User;
+    public function getUser(string $username): UserDataProvider;
 
     public function createNewAddress(AddressDataProvider $newAddress):void;
 
     public function getAddressListFromUser():array;
+
+    public function createShoppingCard(array $sessionCard):ShoppingCardDataProvider;
 
 }

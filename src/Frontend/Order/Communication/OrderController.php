@@ -6,6 +6,7 @@ namespace App\Frontend\Order\Communication;
 use App\Component\View;
 use App\Frontend\BackendController;
 use App\Frontend\Order\Business\OrderManagerInterface;
+use App\Frontend\ShoppingCard\Business\ShoppingCardManagerInterface;
 use App\Generated\AddressDataProvider;
 use App\Service\SessionUser;
 
@@ -78,7 +79,7 @@ class OrderController implements BackendController
 
     private function addShoppingCardItems()
     {
-        $this->orderManager->addShoppingCardItems($this->userSession->getShoppingCard());
+        $this->orderManager->addShoppingCardItems($this->orderManager->createShoppingCard($this->userSession->getShoppingCard()));
     }
 
     public function addAddressToOrder(string $type, bool $primary)
