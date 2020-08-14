@@ -20,7 +20,7 @@ class ShoppingCardBusinessFacade implements ShoppingCardBusinessFacadeInterface
         $this->shoppingCardEntityManager = $shoppingCardEntityManager;
     }
 
-    public function get(int $id): ?ShoppingCardDataProvider
+    public function get(int $id): ShoppingCardDataProvider
     {
         return $this->shoppingCardRepository->get($id);
     }

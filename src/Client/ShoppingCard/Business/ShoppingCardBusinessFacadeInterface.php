@@ -6,7 +6,7 @@ use App\Generated\ShoppingCardDataProvider;
 
 interface ShoppingCardBusinessFacadeInterface
 {
-    public function get(int $id): ?ShoppingCardDataProvider;
+    public function get(int $id): ShoppingCardDataProvider;
 
     /**
      * @param ShoppingCardDataProvider $shoppingCardDataProvider
