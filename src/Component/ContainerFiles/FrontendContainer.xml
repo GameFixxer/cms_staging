@@ -17,6 +17,7 @@
             <argument type="service" id="App\Service\PasswordManager"/>
             <argument type="service" id="App\Service\SessionUser"/>
             <argument type="service" id="App\Service\SymfonyMailerManager"/>
+            <argument type="service" id="App\Frontend\Login\Business\LoginManager"/>
         </service>
         <service id="App\Frontend\Login\Communication\PasswordController" public="true">
             <argument type="service" id="App\Component\View"/>
@@ -72,7 +73,7 @@
             <argument id="App\Service\SessionUser" type="service"/>
             <argument type="service" id="App\Frontend\Order\Business\OrderManager"/>
         </service>
-
+        <service id="App\Frontend\Login\Business\LoginManager"/>
 
 
     </services>

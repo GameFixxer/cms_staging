@@ -6,6 +6,7 @@ namespace App\Frontend\Login\Communication;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Component\View;
 use App\Frontend\BackendController;
+use App\Frontend\Login\Business\LoginManager;
 use App\Frontend\User\Communication\DashboardController;
 use App\Generated\EmailDataProvider;
 use App\Generated\UserDataProvider;
@@ -21,6 +22,7 @@ class LoginController implements BackendController
     private PasswordManager $passwordManager;
     private SessionUser $userSession;
     private SymfonyMailerManager $mailManager;
+    private LoginManager $loginManager;
 
 
     public function __construct(
@@ -28,7 +30,8 @@ class LoginController implements BackendController
         UserBusinessFacadeInterface $userBusinessFacade,
         PasswordManager $passwordManager,
         SessionUser $userSession,
-        SymfonyMailerManager $mailManager
+        SymfonyMailerManager $mailManager,
+        LoginManager $loginManager
     ) {
         $this->userSession = $userSession;
         $this->view = $view;
@@ -90,7 +93,7 @@ class LoginController implements BackendController
         $userDTO = $this->userBusinessFacade->get($this->userSession->getUser());
 
         if ($userDTO instanceof UserDataProvider) {
-            $userDTO->setShoppingCard($this->userSession->getShoppingCard());
+            $userDTO->setShoppingCard($this->loginManager->createShoppingCard($this->userSession->getShoppingCard()));
 
             $this->userBusinessFacade->save($userDTO);
         }
@@ -101,8 +104,8 @@ class LoginController implements BackendController
     private function loginUser(UserDataProvider $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getPassword())) {
-            $userDTO->addShoppingCard( $this->userSession->getShoppingCard());
-            $this->userSession->setShoppingCard($userDTO->getShoppingCard());
+            $userDTO->addShoppingCard($this->loginManager->createShoppingCard($this->userSession->getShoppingCard()));
+            $this->userSession->setShoppingCard($this->loginManager-> extractSessionShoppingCard($userDTO->getShoppingCard()));
             $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getRole());
             $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
