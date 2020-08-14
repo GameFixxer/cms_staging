@@ -23,8 +23,12 @@
         <service id="App\Client\Address\Persistence\Mapper\AddressMapper" public="true">
             <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
         </service>
-        <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true"/>
-        <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
+        <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true">
+            <argument type="service" id="App\Client\Attribute\Persistence\Mapper\AttributeMapper"/>
+        </service>
+        <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true">
+            <argument type="service" id="App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade"/>
+        </service>
         <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>
         <service id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" public ="true"/>
 
@@ -140,12 +144,7 @@
         <service id="App\Frontend\ShoppingCard\Business\ShoppingCardManager">
             <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
         </service>
-        <service id="App\Frontend\Order\Business\OrderManager" public="true">
-            <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
-            <argument id="App\Client\Order\Business\OrderBusinessFacade" type="service"/>
-            <argument id="App\Client\Address\Business\AddressBusinessFacade" type="service"/>
-            <argument id="App\Client\Product\Business\ProductBusinessFacade" type="service"/>
-        </service>
+
 
 
 

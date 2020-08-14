@@ -73,7 +73,23 @@
             <argument id="App\Service\SessionUser" type="service"/>
             <argument type="service" id="App\Frontend\Order\Business\OrderManager"/>
         </service>
-        <service id="App\Frontend\Login\Business\LoginManager"/>
+        <service id="App\Frontend\Login\Business\LoginManager">
+            <argument type="service" id="App\Service\SessionUser"/>
+            <argument type="service" id="App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade"/>
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+        </service>
+        <service id="App\Frontend\Order\Business\OrderManager" public="true">
+            <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
+            <argument type="service" id="App\Client\Order\Business\OrderBusinessFacade"/>
+            <argument type="service" id="App\Client\Address\Business\AddressBusinessFacade"/>
+            <argument type="service" id="App\Client\Product\Business\ProductBusinessFacade"/>
+            <argument type="service" id="App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade"/>
+            <argument type="service" id="App\Service\SessionUser"/>
+        </service>
+        <service id="App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade" public="true">
+            <argument id="App\Client\ShoppingCard\Persistence\ShoppingCardRepository" type="service"/>
+            <argument id="App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager" type="service"/>
+        </service>
 
 
     </services>

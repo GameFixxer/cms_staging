@@ -49,8 +49,11 @@ class OrderManager implements OrderManagerInterface
 
     public function getUser(string $username): UserDataProvider
     {
-        $userDTO = $this->userBusinessFacade->get($username);
-        return $userDTO;
+        $user = $this->userBusinessFacade->get($this->sessionUser->getUser());
+        if (! $user instanceof UserDataProvider) {
+            throw new \Exception('Fatal UserRepository error', 1);
+        }
+        return $user;
     }
 
     public function addShoppingCardItems(ShoppingCardDataProvider $card): void
@@ -63,9 +66,13 @@ class OrderManager implements OrderManagerInterface
         $this->orderDataTransferObject->addShoppingCard($card);
     }
 
-    public function setUser(string $user): void
+    public function setUser(string $username): void
     {
-        $this->orderDataTransferObject->setUser($this->userBusinessFacade->get($user));
+        $user = $this->userBusinessFacade->get($username);
+        if (! $user instanceof UserDataProvider) {
+            throw new \Exception('Fatal UserRepository error', 1);
+        }
+        $this->orderDataTransferObject->setUser($user);
     }
 
     public function addAddressToOrder(string $type, bool $primary): void
