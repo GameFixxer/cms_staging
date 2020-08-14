@@ -90,7 +90,8 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     private function createOrderEntity() :Order
     {
         $date = new  \DateTimeImmutable;
-        $date->setDate(date("Y", time()), date("m", time()), date("d", time()));
+        $date->setTimestamp(time());
+        $date->format('d,m,Y');
         $this->entity = new Order();
         $this->entity->setDateOfOrder($date);
         $this->entity->setUser($this->user);
