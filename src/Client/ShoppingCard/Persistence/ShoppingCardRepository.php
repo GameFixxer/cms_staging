@@ -22,13 +22,15 @@ class ShoppingCardRepository implements ShoppingCardRepositoryInterface
      * @return ShoppingCardDataProvider
      */
 
-    public function get(int $id): ?ShoppingCardDataProvider
+    public function get(int $id): ShoppingCardDataProvider
     {
         $addressEntity = $this->repository->findByPK($id);
-        if ($addressEntity instanceof ShoppingCard) {
-            return $this->shoppingCardMapper->map($addressEntity);
+        if (!$addressEntity instanceof ShoppingCard) {
+            throw new \Exception('Critical RepositoryError', 1);
         }
-        return null;
+        return $this->shoppingCardMapper->map($addressEntity);
+
+
     }
 
 }

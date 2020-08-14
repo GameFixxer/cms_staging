@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Client\User\Persistence\Mapper;
 
 use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
+use App\Client\ShoppingCard\Persistence\Entity\ShoppingCard;
 use App\Generated\UserDataProvider;
 use App\Client\User\Persistence\Entity\User;
 

@@ -112,6 +112,7 @@ class MyCachedContainer extends Container
     {
         return [
             'App\\Backend\\ImportComponent\\Mapper\\ProductMappingAssistant' => true,
+            'App\\Frontend\\Login\\Business\\LoginManager' => true,
             'App\\Frontend\\ShoppingCard\\Business\\ShoppingCardManager' => true,
             'Cycle\\ORM\\ORM' => true,
             'Psr\\Container\\ContainerInterface' => true,
@@ -616,7 +617,7 @@ class MyCachedContainer extends Container
      */
     protected function getLoginControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())));
+        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())), new \App\Frontend\Login\Business\LoginManager());
     }
 
     /**
