@@ -38,6 +38,7 @@ class LoginController implements BackendController
         $this->userBusinessFacade = $userBusinessFacade;
         $this->passwordManager = $passwordManager;
         $this->mailManager = $mailManager;
+        $this->loginManager = $loginManager;
     }
 
     public function init(): void

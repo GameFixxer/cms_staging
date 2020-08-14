@@ -51,9 +51,9 @@ class AttributeRepositoryTest extends \Codeception\Test\Unit
 
         $productDtoFromRepository = $attributeRepository->getAttribute($this->entity->getAttributeKey());
 
-        $this->assertSame($this->entity->getAttributeKey(), $productDtoFromRepository->getKey());
-        $this->assertSame($this->entity->getAttributeValue(), $productDtoFromRepository->getValue());
-        $this->assertSame($this->entity->getAttributeId(), $productDtoFromRepository->getId());
+        $this->assertSame($this->entity->getAttributeKey(), $productDtoFromRepository->getAttributeKey());
+        $this->assertSame($this->entity->getAttributeValue(), $productDtoFromRepository->getAttributeValue());
+        $this->assertSame($this->entity->getAttributeId(), $productDtoFromRepository->getAttributeId());
     }
 
     public function testGetProductWithNonExistingProduct()
@@ -71,9 +71,9 @@ class AttributeRepositoryTest extends \Codeception\Test\Unit
 
         $lastProductOfProductRepositoryList = end($productListFromProductRepository);
 
-        $this->assertSame($this->entity->getAttributeKey(), $lastProductOfProductRepositoryList->getKey());
-        $this->assertSame($this->entity->getAttributeValue(), $lastProductOfProductRepositoryList->getValue());
-        $this->assertSame($this->entity->getAttributeId(), $lastProductOfProductRepositoryList->getId());
+        $this->assertSame($this->entity->getAttributeKey(), $lastProductOfProductRepositoryList->getAttributeKey());
+        $this->assertSame($this->entity->getAttributeValue(), $lastProductOfProductRepositoryList->getAttributeValue());
+        $this->assertSame($this->entity->getAttributeId(), $lastProductOfProductRepositoryList->getAttributeId());
     }
 
     private function createAttributeEntity() :Attribute

@@ -57,11 +57,6 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $productDtoFromRepository = $orderRepository->getOrder($this->entity->getOrderId());
 
         $this->assertSame($this->entity->getOrderId(), $productDtoFromRepository->getId());
-        $this->assertSame(
-            $this->entity->getDateOfOrder()->format('Y-m-d'),
-            $productDtoFromRepository->getDateofOrder()->format('Y-m-d')
-        );
-        codecept_debug($this->entity->getAddress());
         $this->assertSame($this->entity->getAddress()->getAddressId(), $productDtoFromRepository->getAddress()->getAddress_id());
         $this->assertSame($this->entity->getUser()->getUserId(), $productDtoFromRepository->getUser()->getId());
         $this->assertSame($this->entity->getSum(), $productDtoFromRepository->getSum());
@@ -85,10 +80,6 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $lastOrderOfOrderRepositoryList = end($orderList);
 
         $this->assertSame($this->entity->getOrderId(), $lastOrderOfOrderRepositoryList->getId());
-        $this->assertSame(
-            $this->entity->getDateOfOrder()->format('Y-m-d'),
-            $lastOrderOfOrderRepositoryList->getDateofOrder()->format('Y-m-d')
-        );
         $this->assertSame($this->entity->getAddress(), $lastOrderOfOrderRepositoryList->getAddress());
         $this->assertSame($this->entity->getUser(), $lastOrderOfOrderRepositoryList->getUser());
         $this->assertSame($this->entity->getSum(), $lastOrderOfOrderRepositoryList->getSum());

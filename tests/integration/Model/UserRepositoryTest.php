@@ -53,8 +53,8 @@ class UserRepositoryTest extends \Codeception\Test\Unit
 
         $userDtoFromRepository = $userRepository->get($this->entity->getUsername());
         $this->assertSame($this->entity->getUsername(), $userDtoFromRepository->getUsername());
-        $this->assertSame($this->entity->getPassword(), $userDtoFromRepository->getUserPassword());
-        $this->assertSame($this->entity->getId(), $userDtoFromRepository->getUserId());
+        $this->assertSame($this->entity->getPassword(), $userDtoFromRepository->getPassword());
+        $this->assertSame($this->entity->getId(), $userDtoFromRepository->getId());
     }
 
     public function testGetUserWithNonExistingUser()
@@ -73,8 +73,8 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $lastUserOfUserList = end($userListFromUserRepository);
 
         $this->assertSame($this->entity->getUsername(), $lastUserOfUserList ->getUsername());
-        $this->assertSame($this->entity->getPassword(), $lastUserOfUserList->getUserPassword());
-        $this->assertSame($this->entity->getId(), $lastUserOfUserList ->getUserId());
+        $this->assertSame($this->entity->getPassword(), $lastUserOfUserList->getPassword());
+        $this->assertSame($this->entity->getId(), $lastUserOfUserList ->getId());
     }
 
     private function createProductEntity() :User
@@ -85,7 +85,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setRole('user');
         $this->entity->setSessionId('');
         $this->entity->setResetPassword('');
-        $this->entity->setShoppingCard("");
+        $this->entity->setShoppingCard(null);
 
         return $this->entity;
     }
