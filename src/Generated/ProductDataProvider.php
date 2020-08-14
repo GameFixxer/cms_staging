@@ -19,8 +19,8 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     /** @var \App\Generated\CategoryDataProvider */
     protected $category;
 
-    /** @var AttributeDataProvider[] */
-    protected $attribute;
+    /** @var \App\Generated\AttributeDataProvider[] */
+    protected $attribute = [];
 
     /** @var int */
     protected $id;
@@ -199,22 +199,21 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      */
     public function addCategory(CategoryDataProvider $Category)
     {
-        $this->category[] = $Category;
-        return $this;
+        $this->category[] = $Category; return $this;
     }
 
 
     /**
-     * @return AttributeDataProvider[]
+     * @return \App\Generated\AttributeDataProvider[]
      */
-    public function getAttribute(): AttributeDataProvider
+    public function getAttribute(): array
     {
         return $this->attribute;
     }
 
 
     /**
-     * @param AttributeDataProvider[] $attribute
+     * @param \App\Generated\AttributeDataProvider[] $attribute
      * @return ProductDataProvider
      */
     public function setAttribute(array $attribute)
@@ -246,13 +245,12 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @param AttributeDataProvider $Attribute
+     * @param \App\Generated\AttributeDataProvider $Attribute
      * @return ProductDataProvider
      */
     public function addAttribute(AttributeDataProvider $Attribute)
     {
-        $this->attribute[] = $Attribute;
-        return $this;
+        $this->attribute[] = $Attribute; return $this;
     }
 
 
@@ -343,9 +341,9 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      */
     protected function getElements(): array
     {
-        return array(
+        return array (
           'name' =>
-          array(
+          array (
             'name' => 'name',
             'allownull' => false,
             'default' => '\'\'',
@@ -355,7 +353,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'description' =>
-          array(
+          array (
             'name' => 'description',
             'allownull' => false,
             'default' => '\'\'',
@@ -365,7 +363,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'articleNumber' =>
-          array(
+          array (
             'name' => 'articleNumber',
             'allownull' => false,
             'default' => '\'\'',
@@ -375,7 +373,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'category' =>
-          array(
+          array (
             'name' => 'category',
             'allownull' => false,
             'default' => '',
@@ -387,19 +385,19 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'singleton_type' => '\\App\\Generated\\CategoryDataProvider',
           ),
           'attribute' =>
-          array(
+          array (
             'name' => 'attribute',
             'allownull' => false,
             'default' => '',
-            'type' => '\\App\\Generated\\AttributeDataProvider',
-            'is_collection' => false,
-            'is_dataprovider' => true,
+            'type' => '\\App\\Generated\\AttributeDataProvider[]',
+            'is_collection' => true,
+            'is_dataprovider' => false,
             'isCamelCase' => false,
             'singleton' => 'Attribute',
             'singleton_type' => '\\App\\Generated\\AttributeDataProvider',
           ),
           'id' =>
-          array(
+          array (
             'name' => 'id',
             'allownull' => false,
             'default' => '0',
@@ -409,7 +407,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'isCamelCase' => false,
           ),
           'price' =>
-          array(
+          array (
             'name' => 'price',
             'allownull' => false,
             'default' => '0',

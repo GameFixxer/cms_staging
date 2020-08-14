@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Client\Product\Persistence\Entity;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
+use App\Generated\AttributeDataProvider;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Relation\BelongsTo;
@@ -67,8 +68,16 @@ class Product
     }
 
     /**
-     * @param Attribute $attribute
+     * @param array $attributes
      */
+
+    public function setAttribute(array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            $this->addAttribute($attribute);
+        }
+    }
+
     public function addAttribute(?Attribute  $attribute): void
     {
         if (isset($attribute)) {

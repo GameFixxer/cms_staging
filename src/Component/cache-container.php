@@ -63,6 +63,9 @@ class MyCachedContainer extends Container
             'App\\Client\\Product\\Persistence\\Mapper\\ProductMapper' => 'getProductMapperService',
             'App\\Client\\Product\\Persistence\\ProductEntityManager' => 'getProductEntityManagerService',
             'App\\Client\\Product\\Persistence\\ProductRepository' => 'getProductRepositoryService',
+            'App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper' => 'getShoppingCardMapperService',
+            'App\\Client\\ShoppingCard\\Persistence\\ShoppingCardEntityManager' => 'getShoppingCardEntityManagerService',
+            'App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository' => 'getShoppingCardRepositoryService',
             'App\\Client\\User\\Business\\UserBusinessFacade' => 'getUserBusinessFacadeService',
             'App\\Client\\User\\Persistence\\Mapper\\UserMapper' => 'getUserMapperService',
             'App\\Client\\User\\Persistence\\UserEntityManager' => 'getUserEntityManagerService',
@@ -524,6 +527,36 @@ class MyCachedContainer extends Container
     protected function getProductRepositoryService()
     {
         return $this->services['App\\Client\\Product\\Persistence\\ProductRepository'] = new \App\Client\Product\Persistence\ProductRepository(($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper' shared service.
+     *
+     * @return \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper
+     */
+    protected function getShoppingCardMapperService()
+    {
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] = new \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper())));
+    }
+
+    /**
+     * Gets the public 'App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager' shared service.
+     *
+     * @return \App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager
+     */
+    protected function getShoppingCardEntityManagerService()
+    {
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardEntityManager'] = new \App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository'] ?? $this->getShoppingCardRepositoryService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\ShoppingCard\Persistence\ShoppingCardRepository' shared service.
+     *
+     * @return \App\Client\ShoppingCard\Persistence\ShoppingCardRepository
+     */
+    protected function getShoppingCardRepositoryService()
+    {
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository'] = new \App\Client\ShoppingCard\Persistence\ShoppingCardRepository(($this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] ?? $this->getShoppingCardMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
     }
 
     /**

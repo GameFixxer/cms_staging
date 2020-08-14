@@ -4,6 +4,7 @@ namespace App\Client\Address\Persistence;
 
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
+use App\Generated\UserDataProvider;
 
 interface AddressRepositoryInterface
 {
@@ -12,7 +13,7 @@ interface AddressRepositoryInterface
      */
     public function getAddressList(): array;
 
-    public function getAddress(User $user, string $type, bool $primary): ?AddressDataProvider;
+    public function getAddress(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider;
 
     public function getAddressListFromUser(int $userId):array;
 }

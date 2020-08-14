@@ -7,6 +7,7 @@ use App\Client\Address\Persistence\AddressEntityManagerInterface;
 use App\Client\Address\Persistence\AddressRepositoryInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
+use App\Generated\UserDataProvider;
 
 class AddressBusinessFacade implements AddressBusinessFacadeInterface
 {
@@ -19,7 +20,7 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
         $this->addressEntityManager = $addressEntityManager;
     }
 
-    public function get(User $user, string $type, bool $primary): ?AddressDataProvider
+    public function get(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider
     {
         return $this->addressRepository->getAddress($user, $type, $primary);
     }

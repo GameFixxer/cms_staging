@@ -47,7 +47,7 @@ class OrderManager implements OrderManagerInterface
         $userEntity->setUsername($userDTO->getUsername());
         $userEntity->setResetPassword($userDTO->getResetPassword());
         $userEntity->setSessionId($userDTO->getSessionId());
-        $userEntity->setShoppingCard($userDTO->getShoppingCard());
+        //$userEntity->setShoppingCard($userDTO->getShoppingCard());
         $userEntity->setRole($userDTO->getRole());
         $userEntity->setPassword($userDTO->getPassword());
         return $userEntity;
@@ -71,7 +71,7 @@ class OrderManager implements OrderManagerInterface
     public function addAddressToOrder(string $type, bool $primary): void
     {
         $this->orderDataTransferObject->setAddress(
-            $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
+          $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
         );
     }
 

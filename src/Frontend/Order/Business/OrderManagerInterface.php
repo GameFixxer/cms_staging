@@ -4,10 +4,11 @@ namespace App\Frontend\Order\Business;
 
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
+use App\Generated\ShoppingCardDataProvider;
 
 interface OrderManagerInterface
 {
-    public function addShoppingCardItems(array $card): void;
+    public function addShoppingCardItems(ShoppingCardDataProvider $card): void;
 
     public function setUser(string $user) : void;
 

@@ -7,6 +7,7 @@ use App\Client\Address\Persistence\Entity\Address;
 use App\Client\Address\Persistence\Mapper\AddressMapperInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
+use App\Generated\UserDataProvider;
 
 class AddressRepository implements AddressRepositoryInterface
 {
@@ -35,10 +36,10 @@ class AddressRepository implements AddressRepositoryInterface
         return $addressList;
     }
 
-    public function getAddress(User $user, string $type, bool $primary): ?AddressDataProvider
+    public function getAddress(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider
     {
         $addressEntity = $this->repository->findOne([
-            'user' => $user,
+            'user_id' => $user->getId(),
             'type' => $type,
             'primary' => $primary
         ]);

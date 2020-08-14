@@ -19,8 +19,8 @@ final class CsvProductDataProvider extends \Xervice\DataProvider\Business\Model\
     /** @var \App\Generated\CategoryDataProvider */
     protected $category;
 
-    /** @var \App\Generated\AttributeDataProvider */
-    protected $attribute;
+    /** @var \App\Generated\AttributeDataProvider[] */
+    protected $attribute = [];
 
     /** @var \App\Generated\UserDataProvider */
     protected $user;
@@ -222,19 +222,19 @@ final class CsvProductDataProvider extends \Xervice\DataProvider\Business\Model\
 
 
     /**
-     * @return \App\Generated\AttributeDataProvider
+     * @return \App\Generated\AttributeDataProvider[]
      */
-    public function getAttribute(): AttributeDataProvider
+    public function getAttribute(): array
     {
         return $this->attribute;
     }
 
 
     /**
-     * @param \App\Generated\AttributeDataProvider $attribute
+     * @param \App\Generated\AttributeDataProvider[] $attribute
      * @return CsvProductDataProvider
      */
-    public function setAttribute(AttributeDataProvider $attribute)
+    public function setAttribute(array $attribute)
     {
         $this->attribute = $attribute;
 
@@ -663,9 +663,9 @@ final class CsvProductDataProvider extends \Xervice\DataProvider\Business\Model\
             'name' => 'attribute',
             'allownull' => false,
             'default' => '',
-            'type' => '\\App\\Generated\\AttributeDataProvider',
-            'is_collection' => false,
-            'is_dataprovider' => true,
+            'type' => '\\App\\Generated\\AttributeDataProvider[]',
+            'is_collection' => true,
+            'is_dataprovider' => false,
             'isCamelCase' => false,
             'singleton' => 'Attribute',
             'singleton_type' => '\\App\\Generated\\AttributeDataProvider',
