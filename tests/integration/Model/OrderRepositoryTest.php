@@ -93,7 +93,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $this->assertSame($this->entity->getUser(), $lastOrderOfOrderRepositoryList->getUser());
         $this->assertSame($this->entity->getSum(), $lastOrderOfOrderRepositoryList->getSum());
         $this->assertSame($this->entity->getStatus(), $lastOrderOfOrderRepositoryList->getStatus());
-        $this->assertSame($this->entity->getOrderedProducts(), $lastOrderOfOrderRepositoryList->getShoppingCard()s());
+        $this->assertSame($this->entity->getOrderedProducts(), $lastOrderOfOrderRepositoryList->getShoppingCard());
     }
 
     private function createOrderEntity() :Order
