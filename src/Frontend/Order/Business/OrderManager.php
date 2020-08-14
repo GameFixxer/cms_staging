@@ -78,7 +78,7 @@ class OrderManager implements OrderManagerInterface
     public function addAddressToOrder(string $type, bool $primary): void
     {
         $user = $this->orderDataTransferObject->getUser();
-        if (! $user instanceof UserDataProvider) {
+        if (!isset($user)) {
             throw new \Exception('Fatal UserRepository error', 1);
         }
         $this->orderDataTransferObject->setAddress(
@@ -98,13 +98,16 @@ class OrderManager implements OrderManagerInterface
     public function createShoppingCard(array $sessionCard):ShoppingCardDataProvider
     {
         $user = $this->userBusinessFacade->get($this->sessionUser->getUser());
-        if (! $user instanceof UserDataProvider) {
+        if (!$user instanceof UserDataProvider) {
             throw new \Exception('Fatal UserRepository error', 1);
         }
         $shoppingcard = $this->shoppingCardBusinessFacade->get(
             $user->getId()
         );
-
+        if (!$shoppingcard instanceof ShoppingCardDataProvider) {
+            throw new \Exception('Fatal ShoppingCardRepository error', 1);
+        }
         return $shoppingcard;
     }
+
 }
