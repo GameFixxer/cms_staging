@@ -86,10 +86,12 @@ class OrderManager implements OrderManagerInterface
     }
     public function createShoppingCard(array $sessionCard):ShoppingCardDataProvider
     {
+        $user = $this->userBusinessFacade->get($this->sessionUser->getUser());
+        if (! $user instanceof UserDataProvider) {
+            throw new \Exception('Fatal UserRepository error', 1);
+        }
         $shoppingcard = $this->shoppingCardBusinessFacade->get(
-            $this->userBusinessFacade->get(
-                $this->sessionUser->getUser()
-            )->getId()
+            $user->getId()
         );
 
         return $shoppingcard;
