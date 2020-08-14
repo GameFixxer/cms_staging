@@ -77,8 +77,12 @@ class OrderManager implements OrderManagerInterface
 
     public function addAddressToOrder(string $type, bool $primary): void
     {
+        $user = $this->orderDataTransferObject->getUser();
+        if (! $user instanceof UserDataProvider) {
+            throw new \Exception('Fatal UserRepository error', 1);
+        }
         $this->orderDataTransferObject->setAddress(
-            $this->addressBusinessFacade->get($this->orderDataTransferObject->getUser(), $type, $primary)
+            $this->addressBusinessFacade->get($user, $type, $primary)
         );
     }
 
