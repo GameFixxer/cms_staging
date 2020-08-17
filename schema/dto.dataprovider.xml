@@ -50,7 +50,7 @@
         <DataElement name="sessionId" type="string" default="''" />
         <DataElement name="resetPassword" type="string" default="''" />
         <DataElement name="id" type="int" default="0" />
-        <DataElement name="shoppingCard" type="ShoppingCard" singleton="ShoppingCard" />
+        <DataElement name="shoppingCardId" type="int" default="0" />
     </DataProvider>
 
     <DataProvider name="Product">

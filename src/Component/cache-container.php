@@ -63,6 +63,7 @@ class MyCachedContainer extends Container
             'App\\Client\\Product\\Persistence\\Mapper\\ProductMapper' => 'getProductMapperService',
             'App\\Client\\Product\\Persistence\\ProductEntityManager' => 'getProductEntityManagerService',
             'App\\Client\\Product\\Persistence\\ProductRepository' => 'getProductRepositoryService',
+            'App\\Client\\ShoppingCard\\Business\\ShoppingCardBusinessFacade' => 'getShoppingCardBusinessFacadeService',
             'App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper' => 'getShoppingCardMapperService',
             'App\\Client\\ShoppingCard\\Persistence\\ShoppingCardEntityManager' => 'getShoppingCardEntityManagerService',
             'App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository' => 'getShoppingCardRepositoryService',
@@ -507,7 +508,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductMapperService()
     {
-        return $this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper();
+        return $this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())));
     }
 
     /**
@@ -527,7 +528,17 @@ class MyCachedContainer extends Container
      */
     protected function getProductRepositoryService()
     {
-        return $this->services['App\\Client\\Product\\Persistence\\ProductRepository'] = new \App\Client\Product\Persistence\ProductRepository(($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Product\\Persistence\\ProductRepository'] = new \App\Client\Product\Persistence\ProductRepository(($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? $this->getProductMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+    }
+
+    /**
+     * Gets the public 'App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade' shared service.
+     *
+     * @return \App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade
+     */
+    protected function getShoppingCardBusinessFacadeService()
+    {
+        return $this->services['App\\Client\\ShoppingCard\\Business\\ShoppingCardBusinessFacade'] = new \App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade(($this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository'] ?? $this->getShoppingCardRepositoryService()), ($this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardEntityManager'] ?? $this->getShoppingCardEntityManagerService()));
     }
 
     /**
@@ -537,7 +548,7 @@ class MyCachedContainer extends Container
      */
     protected function getShoppingCardMapperService()
     {
-        return $this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] = new \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper())));
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] = new \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? $this->getProductMapperService()));
     }
 
     /**
@@ -617,7 +628,10 @@ class MyCachedContainer extends Container
      */
     protected function getLoginControllerService()
     {
-        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())), ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())), new \App\Frontend\Login\Business\LoginManager());
+        $a = ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService());
+        $b = ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser()));
+
+        return $this->services['App\\Frontend\\Login\\Communication\\LoginController'] = new \App\Frontend\Login\Communication\LoginController(($this->services['App\\Component\\View'] ?? ($this->services['App\\Component\\View'] = new \App\Component\View())), $a, ($this->services['App\\Service\\PasswordManager'] ?? ($this->services['App\\Service\\PasswordManager'] = new \App\Service\PasswordManager())), $b, ($this->services['App\\Service\\SymfonyMailerManager'] ?? ($this->services['App\\Service\\SymfonyMailerManager'] = new \App\Service\SymfonyMailerManager())), new \App\Frontend\Login\Business\LoginManager($b, ($this->services['App\\Client\\ShoppingCard\\Business\\ShoppingCardBusinessFacade'] ?? $this->getShoppingCardBusinessFacadeService()), $a));
     }
 
     /**
@@ -657,7 +671,7 @@ class MyCachedContainer extends Container
      */
     protected function getOrderManagerService()
     {
-        return $this->services['App\\Frontend\\Order\\Business\\OrderManager'] = new \App\Frontend\Order\Business\OrderManager(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Order\\Business\\OrderBusinessFacade'] ?? $this->getOrderBusinessFacadeService()), ($this->services['App\\Client\\Address\\Business\\AddressBusinessFacade'] ?? $this->getAddressBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
+        return $this->services['App\\Frontend\\Order\\Business\\OrderManager'] = new \App\Frontend\Order\Business\OrderManager(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Order\\Business\\OrderBusinessFacade'] ?? $this->getOrderBusinessFacadeService()), ($this->services['App\\Client\\Address\\Business\\AddressBusinessFacade'] ?? $this->getAddressBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()), ($this->services['App\\Client\\ShoppingCard\\Business\\ShoppingCardBusinessFacade'] ?? $this->getShoppingCardBusinessFacadeService()), ($this->services['App\\Service\\SessionUser'] ?? ($this->services['App\\Service\\SessionUser'] = new \App\Service\SessionUser())));
     }
 
     /**

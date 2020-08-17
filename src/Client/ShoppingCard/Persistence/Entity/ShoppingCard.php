@@ -38,12 +38,12 @@ class ShoppingCard
     protected $quantity;
 
     /**
-     * @BelongsTo(target="User", nullable=false)
+     * @BelongsTo(target="user", nullable=false)
      * @var User
      */
     protected $User;
 
-    /** @HasMany(target = "products") */
+    /** @HasMany(target = "product") */
     protected $shoppingCard;
 
     public function __construct()

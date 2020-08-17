@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Client\User\Persistence\Entity;
 
-use App\Client\ShoppingCard\Persistence\Entity\ShoppingCard;
+
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
 use Cycle\Annotated\Annotation\Relation\HasMany;
-use PhpParser\Node\Scalar\String_;
+
 
 /**
  * @Entity(
@@ -54,11 +53,28 @@ class User
      */
     protected $resetpassword;
 
+
     /**
-     * @BelongsTo(target="shoppingCard")
-     * @var mixed
+     * @Column(type= "int")
+     * @var int
      */
-    protected $shoppingCard;
+    protected $shoppingcard_id;
+
+    /**
+     * @return int
+     */
+    public function getShoppingcardId(): int
+    {
+        return $this->shoppingcard_id;
+    }
+
+    /**
+     * @param int $shoppingcard_id
+     */
+    public function setShoppingcardId(int $shoppingcard_id): void
+    {
+        $this->shoppingcard_id = $shoppingcard_id;
+    }
 
     /**
      * @HasMany(target="address", nullable= true)
@@ -81,21 +97,6 @@ class User
         $this->address = $address;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShoppingCard(): ShoppingCard
-    {
-        return $this->shoppingCard;
-    }
-
-    /**
-     * @param ShoppingCard $shoppingCard
-     */
-    public function setShoppingCard(ShoppingCard $shoppingCard): void
-    {
-        $this->shoppingCard = $shoppingCard;
-    }
 
     public function getSessionId():string
     {

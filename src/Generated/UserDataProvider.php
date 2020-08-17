@@ -25,8 +25,8 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
     /** @var int */
     protected $id;
 
-    /** @var \App\Generated\ShoppingCardDataProvider */
-    protected $shoppingCard;
+    /** @var int */
+    protected $shoppingCardId;
 
 
     /**
@@ -276,21 +276,21 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
 
 
     /**
-     * @return \App\Generated\ShoppingCardDataProvider
+     * @return int
      */
-    public function getShoppingCard(): ShoppingCardDataProvider
+    public function getShoppingCardId(): int
     {
-        return $this->shoppingCard;
+        return $this->shoppingCardId;
     }
 
 
     /**
-     * @param \App\Generated\ShoppingCardDataProvider $shoppingCard
+     * @param int $shoppingCardId
      * @return UserDataProvider
      */
-    public function setShoppingCard(ShoppingCardDataProvider $shoppingCard)
+    public function setShoppingCardId(int $shoppingCardId)
     {
-        $this->shoppingCard = $shoppingCard;
+        $this->shoppingCardId = $shoppingCardId;
 
         return $this;
     }
@@ -299,9 +299,9 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
     /**
      * @return UserDataProvider
      */
-    public function unsetShoppingCard()
+    public function unsetShoppingCardId()
     {
-        $this->shoppingCard = null;
+        $this->shoppingCardId = null;
 
         return $this;
     }
@@ -310,19 +310,9 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
     /**
      * @return bool
      */
-    public function hasShoppingCard()
+    public function hasShoppingCardId()
     {
-        return ($this->shoppingCard !== null && $this->shoppingCard !== []);
-    }
-
-
-    /**
-     * @param \App\Generated\ShoppingCardDataProvider $ShoppingCard
-     * @return UserDataProvider
-     */
-    public function addShoppingCard(ShoppingCardDataProvider $ShoppingCard)
-    {
-        $this->shoppingCard[] = $ShoppingCard; return $this;
+        return ($this->shoppingCardId !== null && $this->shoppingCardId !== []);
     }
 
 
@@ -392,17 +382,15 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'is_dataprovider' => false,
             'isCamelCase' => false,
           ),
-          'shoppingCard' =>
+          'shoppingCardId' =>
           array (
-            'name' => 'shoppingCard',
+            'name' => 'shoppingCardId',
             'allownull' => false,
-            'default' => '',
-            'type' => '\\App\\Generated\\ShoppingCardDataProvider',
+            'default' => '0',
+            'type' => 'int',
             'is_collection' => false,
-            'is_dataprovider' => true,
+            'is_dataprovider' => false,
             'isCamelCase' => false,
-            'singleton' => 'ShoppingCard',
-            'singleton_type' => '\\App\\Generated\\ShoppingCardDataProvider',
           ),
         );
     }
