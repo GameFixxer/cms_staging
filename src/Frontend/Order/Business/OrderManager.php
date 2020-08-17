@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Frontend\Order\Business;
 
 use App\Client\Address\Business\AddressBusinessFacadeInterface;
+use App\Client\Address\Persistence\Entity\Address;
 use App\Client\Order\Business\OrderBusinessFacadeInterface;
 use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
@@ -81,9 +82,11 @@ class OrderManager implements OrderManagerInterface
         if (!isset($user)) {
             throw new \Exception('Fatal UserRepository error', 1);
         }
-        $this->orderDataTransferObject->setAddress(
-            $this->addressBusinessFacade->get($user, $type, $primary)
-        );
+        $address =  $this->addressBusinessFacade->get($user, $type, $primary);
+        if (!isset($address)) {
+            throw new \Exception('Fatal AddressRepository error', 1);
+        }
+        $this->orderDataTransferObject->setAddress($address);
     }
 
     public function pushOrder(): void
@@ -101,13 +104,13 @@ class OrderManager implements OrderManagerInterface
         if (!$user instanceof UserDataProvider) {
             throw new \Exception('Fatal UserRepository error', 1);
         }
-        $shoppingcard = $this->shoppingCardBusinessFacade->get(
+        $shoppingCard = $this->shoppingCardBusinessFacade->get(
             $user->getId()
         );
-        if (!$shoppingcard instanceof ShoppingCardDataProvider) {
+        if (!isset($shoppingCard)) {
             throw new \Exception('Fatal ShoppingCardRepository error', 1);
         }
-        return $shoppingcard;
+        return $shoppingCard;
     }
 
 }
