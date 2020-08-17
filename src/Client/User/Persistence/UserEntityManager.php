@@ -40,25 +40,28 @@ class UserEntityManager implements UserEntityManagerInterface
     {
         $entity = $this->ormUserRepository ->findByPK($user->getid());
         $values = [
-            'username'          =>  $user->getUsername(),
-            'password'          =>  $user->getPassword(),
-            'role'                  =>  $user->getRole(),
-            'session_id'        => $user->getSessionId(),
+            'username' =>  $user->getUsername(),
+            'password' =>  $user->getPassword(),
+            'role'     =>  $user->getRole(),
+            'session_id'  => $user->getSessionId(),
             'resetpassword' => $user->getResetPassword(),
-            'shopping_card'  => $user->getShoppingCard()
+            'shoppingcard_id'  => $user->getShoppingCardId()
         ];
+
+        dump($values , $user->toArray());
 
         if (!$entity instanceof User) {
             $transaction= $this->database->insert('user')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-            $transaction = $this->database->update('user')->values($values)->where('id', '=', $entity->getId());
+            //$transaction = $this->database->update('user')->values($values)->where('id', '=', $entity->getId());
+            $transaction = $this->database->update('user', $values, ['id' => $entity->getId()]);
         }
-
+        dump(__LINE__, 'Before firing transaction->run() Username:'.$user->getUsername());
+        dump(__LINE__, 'Before firing transaction->run() DTO:', $this->userRepository->get($user->getUsername()));
         $transaction->run();
-
-        $user->setId($entity->getId());
-
-        return $user;
+        dump(__LINE__, 'After firing transaction->run() Username:'.$user->getUsername());
+        dump(__LINE__, 'After firing transaction->run() DTO:', $this->userRepository->get($user->getUsername()));
+        return $this->userRepository->get($user->getUsername());
     }
 }

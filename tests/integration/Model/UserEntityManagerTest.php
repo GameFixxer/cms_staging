@@ -10,6 +10,11 @@ use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
 
+/**
+ * @group Repository
+ */
+
+
 class UserEntityManagerTest extends \Codeception\Test\Unit
 {
     private UserDataProvider $userDto;
@@ -35,26 +40,27 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
 
     public function testCreateUser()
     {
-        $createdProduct = $this->userEntityManager->save($this->userDto);
-
+        $this->userDto = $this->userEntityManager->save($this->userDto);
         $userFromRepository = $this->container->getUserRepository()->get($this->userDto->getUsername());
 
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getPassword(), $userFromRepository->getPassword());
         $this->assertSame($this->userDto->getId(), $userFromRepository->getId());
 
-        return $createdProduct;
     }
 
     public function testUpdateUser()
     {
-        $this->userDto = $this->testCreateUser();
+        $this->testCreateUser();
 
         $this->userDto->setUsername('fabulous');
         $this->userDto->setPassword('even more fabulous');
-        $this->userDto = $this->userEntityManager->save($this->userDto);
-        $userFromRepository = $this->container->getUserRepository()->get($this->userDto->getUsername());
 
+        $this->userDto = $this->userEntityManager->save($this->userDto);
+
+        $userFromRepository = $this->container->getUserRepository()->get($this->userDto->getUsername());
+        dump($userFromRepository);
+        die();
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getPassword(), $userFromRepository->getPassword());
         $this->assertSame($this->userDto->getId(), $userFromRepository->getId());
@@ -62,7 +68,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
 
     public function testDeleteUser()
     {
-        $this->userDto = $this->testCreateUser();
+        $this->testCreateUser();
 
         $this->userEntityManager->delete($this->userDto);
 
@@ -76,5 +82,8 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->userDto->setUsername($username);
         $this->userDto->setPassword($password);
         $this->userDto->setRole($role);
+        $this->userDto->setResetPassword('');
+        $this->userDto->setSessionId('');
+        $this->userDto->setShoppingCardId(0);
     }
 }

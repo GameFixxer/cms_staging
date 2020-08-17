@@ -25,7 +25,6 @@ foreach ($controllerList as $controller) {
         $isFind = true;
         $controller = $container->get($controller);
         $actionName = $action.'Action';
-        //$controller = new $controller($container);
         if ($isAdmin) {
             $controller->init();
         }

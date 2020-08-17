@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace App\Service;
 
-
 class SessionUser
 {
     public function __construct()
@@ -86,7 +85,10 @@ class SessionUser
     }
     public function isLoggedIn(): bool
     {
-        return isset($_SESSION['loggedin']);
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+            return $_SESSION['loggedin'];
+        }
+        return false;
     }
 
     public function setUser(String $name):void

@@ -40,11 +40,11 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     }
 
     public function _after()
-    {
+    {/*
         if ($this->ormUserRepository->findByPK($this->entity->getId()) instanceof User) {
             $this->transaction->delete($this->ormUserRepository->findByPK($this->entity->getId()));
             $this->transaction->run();
-        }
+        }*/
     }
 
     public function testGetUserWithExistingUser()
@@ -85,7 +85,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setRole('user');
         $this->entity->setSessionId('');
         $this->entity->setResetPassword('');
-        $this->entity->setShoppingCard(null);
+        $this->entity->setShoppingcardId(0);
 
         return $this->entity;
     }
