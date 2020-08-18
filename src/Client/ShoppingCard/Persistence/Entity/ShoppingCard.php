@@ -43,7 +43,7 @@ class ShoppingCard
      */
     protected $User;
 
-    /** @HasMany(target = "product") */
+    /** @HasMany(target = "product", nullable=true) */
     protected $shoppingCard;
 
     public function __construct()

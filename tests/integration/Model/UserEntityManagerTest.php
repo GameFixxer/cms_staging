@@ -30,12 +30,14 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        $orm = new DatabaseManager();
-        $orm = $orm->connect();
-        $ormUserRepository = $orm->getRepository(User::class);
-        $transaction = new Transaction($orm);
-        $transaction->delete($ormUserRepository->findByPK($this->userDto->getId()));
-        $transaction->run();
+        if (isset($this->userDto) && !($this->userDto->getId() === null)) {
+            $orm = new DatabaseManager();
+            $orm = $orm->connect();
+            $ormUserRepository = $orm->getRepository(User::class);
+            $transaction = new Transaction($orm);
+            $transaction->delete($ormUserRepository->findByPK($this->userDto->getId()));
+            $transaction->run();
+        }
     }
 
     public function testCreateUser()
@@ -46,7 +48,6 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getPassword(), $userFromRepository->getPassword());
         $this->assertSame($this->userDto->getId(), $userFromRepository->getId());
-
     }
 
     public function testUpdateUser()
@@ -59,8 +60,6 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->userDto = $this->userEntityManager->save($this->userDto);
 
         $userFromRepository = $this->container->getUserRepository()->get($this->userDto->getUsername());
-        dump($userFromRepository);
-        die();
         $this->assertSame($this->userDto->getUsername(), $userFromRepository->getUsername());
         $this->assertSame($this->userDto->getPassword(), $userFromRepository->getPassword());
         $this->assertSame($this->userDto->getId(), $userFromRepository->getId());
@@ -73,7 +72,8 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
         $this->userEntityManager->delete($this->userDto);
 
         $this->assertNull($this->container->getUserRepository()->get($this->userDto->getUsername()));
-        $this->userDto = $this->testCreateUser();
+
+        unset($this->userDto);
     }
 
     private function createDto(String $username, String $password, String $role)

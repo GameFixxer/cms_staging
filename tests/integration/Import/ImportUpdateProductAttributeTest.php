@@ -3,8 +3,10 @@ declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
 use App\Client\Attribute\Persistence\Entity\Attribute;
+use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\ProductRepository;
+use App\Generated\CategoryDataProvider;
 use App\Generated\CsvProductDataProvider;
 use App\Generated\ProductDataProvider;
 use App\Service\DatabaseManager;
@@ -19,9 +21,10 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
     private CsvProductDataProvider $csvDTO;
     private $importCreateProduct;
     private ProductRepository $productRepository;
-    private  $updateAttribute;
-    private  $attributeRepository;
+    private $updateAttribute;
+    private $attributeRepository;
     private ContainerHelper $container;
+    private CategoryEntityManagerInterface $categoryEntityManager;
 
 
     public function _before()
@@ -31,6 +34,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $this->importCreateProduct = $this->container->getCreateProduct();
         $this->updateAttribute = $this->container->getUpdateAttribute();
         $this->attributeRepository = $this->container->getAttributeRepository();
+        $this->categoryEntityManager = $this->container->getCategoryEntityManager();
     }
 
     public function _after()
@@ -100,6 +104,14 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $this->csvDTO->setCategoryKey($categoryKey);
         $this->csvDTO->setAttributeValue($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
+        $this->csvDTO->setCategory($this->createCategory());
         $this->csvDTO->setName('test');
+    }
+
+    private function createCategory()
+    {
+        $category = new CategoryDataProvider();
+        $category->setCategoryKey('abc');
+        return $this->categoryEntityManager->save($category);
     }
 }

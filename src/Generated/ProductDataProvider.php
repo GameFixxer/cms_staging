@@ -16,7 +16,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     /** @var string */
     protected $articleNumber = '';
 
-    /** @var \App\Generated\CategoryDataProvider */
+    /** @var \App\Generated?CategoryDataProvider */
     protected $category;
 
     /** @var \App\Generated\AttributeDataProvider[] */
@@ -153,19 +153,19 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @return \App\Generated\CategoryDataProvider
+     * @return \App\Generated?CategoryDataProvider
      */
-    public function getCategory(): CategoryDataProvider
+    public function getCategory(): ?CategoryDataProvider
     {
         return $this->category;
     }
 
 
     /**
-     * @param \App\Generated\CategoryDataProvider $category
+     * @param \App\Generated?CategoryDataProvider $category
      * @return ProductDataProvider
      */
-    public function setCategory(CategoryDataProvider $category)
+    public function setCategory(?CategoryDataProvider $category)
     {
         $this->category = $category;
 
@@ -194,10 +194,10 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @param \App\Generated\CategoryDataProvider $Category
+     * @param \App\Generated?CategoryDataProvider $Category
      * @return ProductDataProvider
      */
-    public function addCategory(CategoryDataProvider $Category)
+    public function addCategory(?CategoryDataProvider $Category)
     {
         $this->category[] = $Category; return $this;
     }
@@ -377,12 +377,12 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'name' => 'category',
             'allownull' => false,
             'default' => '',
-            'type' => '\\App\\Generated\\CategoryDataProvider',
+            'type' => '\\App\\Generated\?CategoryDataProvider',
             'is_collection' => false,
             'is_dataprovider' => true,
             'isCamelCase' => false,
             'singleton' => 'Category',
-            'singleton_type' => '\\App\\Generated\\CategoryDataProvider',
+            'singleton_type' => '\\App\\Generated\?CategoryDataProvider',
           ),
           'attribute' =>
           array (

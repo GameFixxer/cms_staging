@@ -30,7 +30,7 @@ class Product
 
 
     /**
-     * @Column(type="int", nullable = true)
+     * @Column(type="int")
      * @var int
      */
     protected $price;
@@ -38,7 +38,7 @@ class Product
     /**
      * @return int
      */
-    public function getPrice(): ?int
+    public function getPrice(): int
     {
         return $this->price;
     }
@@ -46,7 +46,7 @@ class Product
     /**
      * @param int $price
      */
-    public function setPrice(?int $price): void
+    public function setPrice(int $price): void
     {
         $this->price = $price;
     }

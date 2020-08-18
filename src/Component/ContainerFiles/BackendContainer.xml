@@ -13,6 +13,7 @@
         <!--ImportComponents-->
         <service id="App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager" public ="true">
             <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="App\Client\Category\Business\CategoryBusinessFacade"/>
         </service>
         <service id="App\Backend\ImportComponent\StringConverter\StringConverter" public ="true"/>
         <service id="App\Backend\ImportComponent\ImportFilterProvider" public ="true"/>

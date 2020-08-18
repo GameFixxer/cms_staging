@@ -107,7 +107,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     {
         $this->user = new User();
         $this->user->setAddress(null);
-        $this->user->setShoppingCard(null);
+        $this->user->setShoppingcardId(0);
         $this->user->setPassword("1243");
         $this->user->setRole("root");
         $this->user->setSessionId("");

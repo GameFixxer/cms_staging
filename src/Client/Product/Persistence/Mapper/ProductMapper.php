@@ -37,7 +37,7 @@ class ProductMapper implements ProductMapperInterface
      * @param PivotedCollection $address
      * @return AttributeDataProvider[]
      */
-    private function mapProducts(PivotedCollection $address): array
+    private function mapProducts( $address): array
     {
         $mappedProducts = [];
         foreach ($address->toArray() as $productEntity) {

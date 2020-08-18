@@ -57,7 +57,7 @@
         <DataElement name="name" type="string" default="''" />
         <DataElement name="description" type="string" default="''" />
         <DataElement name="articleNumber" type="string" default="''" />
-        <DataElement name="category" type="Category" singleton="Category" />
+        <DataElement name="category" type="?Category" singleton="Category" />
         <DataElement name="attribute" type="Attribute[]" singleton="Attribute" />
         <DataElement name="id" type="int" default="0" />
         <DataElement name="price" type="int" default="0" />

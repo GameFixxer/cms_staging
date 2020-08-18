@@ -268,7 +268,7 @@ class MyCachedContainer extends Container
      */
     protected function getCategoryIntegrityManagerService()
     {
-        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\CategoryIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Backend\\ImportProduct\\Business\\Model\\IntegrityManager\\CategoryIntegrityManager'] = new \App\Backend\ImportProduct\Business\Model\IntegrityManager\CategoryIntegrityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Category\\Business\\CategoryBusinessFacade'] ?? $this->getCategoryBusinessFacadeService()));
     }
 
     /**

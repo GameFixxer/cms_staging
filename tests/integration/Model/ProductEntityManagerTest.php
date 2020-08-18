@@ -3,7 +3,9 @@
 
 namespace App\Tests\integration\Model;
 
+use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Product\Persistence\ProductEntityManager;
+use App\Generated\CategoryDataProvider;
 use App\Generated\ProductDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -19,12 +21,14 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     private ProductDataProvider $productDto;
     private ContainerHelper $container;
     private ProductEntityManager $productEntityManager;
+    private CategoryEntityManagerInterface $categoryEntityManager;
 
     public function _before()
     {
         $this->container = new ContainerHelper();
         $this->productEntityManager = $this->container->getProductEntityManager();
         $this->createDto('fu', 'ba');
+        $this->categoryEntityManager = $this->container->getCategoryEntityManager();
     }
 
     public function _after()
@@ -79,5 +83,15 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
         $this->productDto->setName($name);
         $this->productDto->setDescription($description);
         $this->productDto->setArticleNumber($this->container->createArticleNumber());
+        $this->productDto->setCategory($this->createCategory());
+
     }
+
+    private function createCategory()
+    {
+        $category = new CategoryDataProvider();
+        $category->setCategoryKey('abc');
+        return $this->categoryEntityManager->save($category);
+    }
+
 }

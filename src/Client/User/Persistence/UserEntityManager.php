@@ -48,8 +48,6 @@ class UserEntityManager implements UserEntityManagerInterface
             'shoppingcard_id'  => $user->getShoppingCardId()
         ];
 
-        dump($values , $user->toArray());
-
         if (!$entity instanceof User) {
             $transaction= $this->database->insert('user')->values($values);
         } else {
@@ -57,11 +55,7 @@ class UserEntityManager implements UserEntityManagerInterface
             //$transaction = $this->database->update('user')->values($values)->where('id', '=', $entity->getId());
             $transaction = $this->database->update('user', $values, ['id' => $entity->getId()]);
         }
-        dump(__LINE__, 'Before firing transaction->run() Username:'.$user->getUsername());
-        dump(__LINE__, 'Before firing transaction->run() DTO:', $this->userRepository->get($user->getUsername()));
         $transaction->run();
-        dump(__LINE__, 'After firing transaction->run() Username:'.$user->getUsername());
-        dump(__LINE__, 'After firing transaction->run() DTO:', $this->userRepository->get($user->getUsername()));
         return $this->userRepository->get($user->getUsername());
     }
 }
