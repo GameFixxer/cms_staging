@@ -27,8 +27,9 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     {
         $this->container = new ContainerHelper();
         $this->productEntityManager = $this->container->getProductEntityManager();
-        $this->createDto('fu', 'ba');
         $this->categoryEntityManager = $this->container->getCategoryEntityManager();
+        $this->createDto('fu', 'ba');
+
     }
 
     public function _after()

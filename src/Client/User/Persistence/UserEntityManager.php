@@ -38,7 +38,6 @@ class UserEntityManager implements UserEntityManagerInterface
 
     public function save(UserDataProvider $user): UserDataProvider
     {
-        $entity = $this->ormUserRepository ->findByPK($user->getid());
         $values = [
             'username' =>  $user->getUsername(),
             'password' =>  $user->getPassword(),
@@ -47,13 +46,13 @@ class UserEntityManager implements UserEntityManagerInterface
             'resetpassword' => $user->getResetPassword(),
             'shoppingcard_id'  => $user->getShoppingCardId()
         ];
-
-        if (!$entity instanceof User) {
+        if (!$this->ormUserRepository ->findByPK($user->getId()) instanceof User) {
             $transaction= $this->database->insert('user')->values($values);
         } else {
-            $values ['id'] =  $entity->getId();
-            $transaction = $this->database->update('user', $values, ['id' => $entity->getId()]);
+            $values ['id'] =  $user->getId();
+            $transaction = $this->database->update('user', $values, ['id' => $user->getId()]);
         }
+
         $transaction->run();
 
         $newUser = $this->userRepository->get($user->getUsername());

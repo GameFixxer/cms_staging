@@ -23,7 +23,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
     protected $resetPassword = '';
 
     /** @var int */
-    protected $id;
+    protected $id = 0;
 
     /** @var int */
     protected $shoppingCardId;
