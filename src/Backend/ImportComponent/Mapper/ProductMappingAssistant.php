@@ -27,8 +27,9 @@ class ProductMappingAssistant implements MappingAssistantInterface
         foreach ($headerList as $column) {
             $action = 'set'.$this->stringConverter->camelCaseToSnakeCase($column);
             $isolateProduct = str_replace('Product', '', $action);
-            $isolateCategory = str_replace('Category', '', $isolateProduct);
-            $csvDataTransferObject->$isolateCategory($product[$column]);
+            //$isolateCategory = str_replace('Category', '', $isolateProduct);
+            dump($isolateProduct);
+            $csvDataTransferObject->$isolateProduct($product[$column]);
         }
         return $csvDataTransferObject;
     }

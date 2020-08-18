@@ -33,6 +33,7 @@ class Product implements ProductInterface
         }
         $productDTO = new ProductDataProvider();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
+        $productDTO->setPrice($csvDTO->getPrice());
         $csvDTO->setId($this->productBusinessFacade->save($productDTO)->getId());
 
         return $csvDTO;

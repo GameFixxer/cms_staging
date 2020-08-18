@@ -63,7 +63,7 @@ class ImportTest extends \Codeception\Test\Unit
         $this->setBackFiles('/import/dumper/test_product_abstract.csv', '/import/test/test_product_abstract.csv');
         $this->importer->import();
         foreach ($importList as $product) {
-            $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
+            $productFromRepository = $this->productRepository->get($product->getArticleNumber());
             $this->assertSame($product->getName(), $productFromRepository->getName());
             $this->assertSame($product->getDescription(), $productFromRepository->getDescription());
             $this->assertNotNull($productFromRepository->getCategory());
@@ -78,7 +78,7 @@ class ImportTest extends \Codeception\Test\Unit
         $this->importer->import();
 
         foreach ($importList as $product) {
-            $productFromRepository = $this->productRepository->getProduct($product->getArticleNumber());
+            $productFromRepository = $this->productRepository->get($product->getArticleNumber());
 
             $this->assertSame($product->getName(), $productFromRepository->getName());
             $this->assertSame($product->getDescription(), $productFromRepository->getDescription());

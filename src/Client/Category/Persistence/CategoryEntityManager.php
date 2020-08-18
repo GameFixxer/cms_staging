@@ -40,11 +40,15 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
     {
         $transaction = new Transaction($this->orm);
 
-
-        $entity = $this->ormCategoryRepository->findByPK($category->getCategoryId());
-        if (!$entity instanceof Category) {
+        if (empty($category->getCategoryId())) {
             $entity = new Category();
+        } else {
+            $entity = $this->ormCategoryRepository->findByPK($category->getCategoryId());
+            if (!$entity instanceof Category) {
+                $entity = new Category();
+            }
         }
+
         $entity->setCategoryKey($category->getCategoryKey());
         $transaction->persist($entity);
         $transaction->run();

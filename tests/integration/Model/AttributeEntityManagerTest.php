@@ -74,7 +74,7 @@ class AttributeEntityManagerTest extends \Codeception\Test\Unit
 
         $this->attributeEntityManager->delete($this->attributeDto);
 
-        $this->assertNull($this->container->getProductRepository()->getProduct($this->attributeDto->getAttributeId()));
+        $this->assertNull($this->container->getProductRepository()->get($this->attributeDto->getAttributeId()));
     }
 
     private function createDto(String $name, String $description)

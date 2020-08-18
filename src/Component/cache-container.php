@@ -508,7 +508,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductMapperService()
     {
-        return $this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())));
+        return $this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] = new \App\Client\Product\Persistence\Mapper\ProductMapper(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())), ($this->services['App\\Client\\Category\\Business\\CategoryBusinessFacade'] ?? $this->getCategoryBusinessFacadeService()));
     }
 
     /**

@@ -47,7 +47,7 @@ class UnitTester extends \Codeception\Actor
     public function getProduct(string $articleNumber): ?ProductDataProvider
     {
         $productRepository = $this->getProductRepository();
-        return $productRepository->getProduct($articleNumber);
+        return $productRepository->get($articleNumber);
     }
     public function getContainer()
     {
@@ -56,7 +56,7 @@ class UnitTester extends \Codeception\Actor
     public function getProductList()
     {
         $productRepository = $this->getProductRepository();
-        return $productRepository->getProductList();
+        return $productRepository->getList();
     }
     public function getSmartyParams()
     {
@@ -75,7 +75,7 @@ class UnitTester extends \Codeception\Actor
     }
     public function createArticleNumber():string
     {
-        $list = $this->getProductRepository()->getProductList();
+        $list = $this->getProductRepository()->getList();
         $idCounter = end($list)->getId() + 1;
         return (string)$idCounter;
     }

@@ -25,6 +25,7 @@
         </service>
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true">
             <argument type="service" id="App\Client\Attribute\Persistence\Mapper\AttributeMapper"/>
+            <argument type="service" id="App\Client\Category\Business\CategoryBusinessFacade"/>
         </service>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>
         <service id="App\Client\Category\Persistence\Mapper\CategoryMapper" public="true"/>

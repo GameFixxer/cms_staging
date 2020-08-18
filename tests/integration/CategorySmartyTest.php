@@ -32,7 +32,7 @@ class CategorySmartyTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
+        if ($this->productRepository->get($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(ProductEntity::class);
@@ -46,7 +46,7 @@ class CategorySmartyTest extends \Codeception\Test\Unit
     {
         $this->createProduct();
         $this->updateCategory->update($this->csvDTO);
-        $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
         self::assertSame($productFromRepository->getCategory()->getCategoryKey(), $this->csvDTO->getCategoryKey());
     }
 

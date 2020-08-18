@@ -32,7 +32,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
+        if ($this->productRepository->get($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(Product::class);
@@ -46,7 +46,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
     {
         $this->createCSVDTO('abc123');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
-        $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
         self::assertNotNull($csvProduct);
         self::assertNotNull($productFromRepository);
         self::assertSame($csvProduct->getArticleNumber(), $productFromRepository->getArticleNumber());
@@ -57,9 +57,9 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
     {
         $this->createCSVDTO('abc123');
         $csvProduct1 = $this->importCreateProduct->createProduct($this->csvDTO);
-        $productFromRepository1 = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository1 = $this->productRepository->get($this->csvDTO->getArticleNumber());
         $csvProduct2 = $this->importCreateProduct->createProduct($this->csvDTO);
-        $productFromRepository2 = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository2 = $this->productRepository->get($this->csvDTO->getArticleNumber());
         self::assertNotNull($csvProduct1);
         self::assertNotNull($productFromRepository1);
         self::assertSame($csvProduct1->getArticleNumber(), $productFromRepository1->getArticleNumber());
@@ -75,6 +75,8 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
     {
         $this->csvDTO = new CsvProductDataProvider();
         $this->csvDTO->setArticleNumber($articleNumber);
+        $this->csvDTO->setPrice(1);
         $this->csvDTO->setName('test');
+        $this->csvDTO->setCategoryId(0);
     }
 }

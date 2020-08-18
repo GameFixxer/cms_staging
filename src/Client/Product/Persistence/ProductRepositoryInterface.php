@@ -9,7 +9,7 @@ interface ProductRepositoryInterface
     /**
      * @return ProductDataProvider[]
      */
-    public function getProductList(): array;
+    public function getList(): array;
 
-    public function getProduct(string $articleNumber): ?ProductDataProvider;
+    public function get(string $articleNumber): ?ProductDataProvider;
 }

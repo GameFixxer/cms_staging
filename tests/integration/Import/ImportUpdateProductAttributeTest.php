@@ -39,7 +39,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
+        if ($this->productRepository->get($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(Product::class);
@@ -54,7 +54,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $this->createProduct();
         $this->updateAttribute->update($this->csvDTO);
 
-        $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
 
         self::assertNotNull($productFromRepository);
         $orm = new DatabaseManager();
@@ -105,7 +105,9 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $this->csvDTO->setAttributeValue($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
         $this->csvDTO->setCategory($this->createCategory());
+        $this->csvDTO->setPrice(1);
         $this->csvDTO->setName('test');
+        $this->csvDTO->setCategoryId($this->csvDTO->getCategory()->getCategoryId());
     }
 
     private function createCategory()

@@ -51,7 +51,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $productRepository = $this->container->getProductRepository();
 
-        $productDtoFromRepository = $productRepository->getProduct($this->entity->getArticleNumber());
+        $productDtoFromRepository = $productRepository->get($this->entity->getArticleNumber());
         codecept_debug($productDtoFromRepository);
         $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getName());
         $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getDescription());
@@ -62,14 +62,14 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
     {
         $productRepository = $this->container->getProductRepository();
 
-        $this->assertNull($productRepository->getProduct(0));
+        $this->assertNull($productRepository->get(0));
     }
 
     public function testGetLastProductOfProductListWithNonEmptyDatabase()
     {
         $productRepository = $this->container->getProductRepository();
 
-        $productListFromProductRepository = $productRepository->getProductList();
+        $productListFromProductRepository = $productRepository->getList();
 
         $lastProductOfProductRepositoryList = end($productListFromProductRepository);
 

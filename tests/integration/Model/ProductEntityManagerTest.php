@@ -45,7 +45,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
     {
         $createdProduct = $this->productEntityManager->save($this->productDto);
 
-        $productFromRepository = $this->container->getProductRepository()->getProduct($this->productDto->getArticleNumber());
+        $productFromRepository = $this->container->getProductRepository()->get($this->productDto->getArticleNumber());
 
         $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
         $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
@@ -61,7 +61,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
         $this->productDto->setName('fabulous');
         $this->productDto->setDescription('even more fabulous');
         $this->productDto = $this->productEntityManager->save($this->productDto);
-        $productFromRepository = $this->container->getProductRepository()->getProduct($this->productDto->getArticleNumber());
+        $productFromRepository = $this->container->getProductRepository()->get($this->productDto->getArticleNumber());
 
         $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
         $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
@@ -74,7 +74,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
         $this->productEntityManager->delete($this->productDto);
 
-        $this->assertNull($this->container->getProductRepository()->getProduct($this->productDto->getId()));
+        $this->assertNull($this->container->getProductRepository()->get($this->productDto->getId()));
     }
 
     private function createDto(String $name, String $description)

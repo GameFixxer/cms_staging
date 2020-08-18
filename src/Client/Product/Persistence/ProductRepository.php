@@ -30,7 +30,7 @@ class ProductRepository implements ProductRepositoryInterface
     /**
      * @return ProductDataProvider[]
      */
-    public function getProductList(): array
+    public function getList(): array
     {
         $productList = [];
         $productEntityList = (array)$this->ormProductRepository->select()->fetchALl();
@@ -41,7 +41,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $productList;
     }
 
-    public function getProduct(string $articleNumber): ?ProductDataProvider
+    public function get(string $articleNumber): ?ProductDataProvider
     {
         $productEntity = $this->ormProductRepository->findOne(['article_Number'=>$articleNumber]);
         if ($productEntity instanceof Product) {

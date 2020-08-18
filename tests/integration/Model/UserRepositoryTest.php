@@ -61,7 +61,7 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     {
         $productRepository = $this->container->getProductRepository();
 
-        $this->assertNull($productRepository->getProduct(0));
+        $this->assertNull($productRepository->get(0));
     }
 
     public function testGetLastUserOfUserListWithNonEmptyDatabase()

@@ -2,10 +2,12 @@
 declare(strict_types=1);
 namespace App\Tests\integration\Import;
 
+use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Category\Persistence\CategoryRepository;
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\ProductRepository;
 use App\Client\Category\Persistence\Entity\Category;
+use App\Generated\CategoryDataProvider;
 use App\Generated\CsvProductDataProvider;
 use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
@@ -23,6 +25,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
     private $updateCategory;
     private CategoryRepository $categoryRepository;
     private ContainerHelper $container;
+    private CategoryEntityManagerInterface $categoryEntityManager;
 
     public function _before()
     {
@@ -31,11 +34,12 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $this->importCreateProduct = $this->container->getCreateProduct();
         $this->updateCategory = $this->container->getUpdateProductCategory();
         $this->categoryRepository = $this->container->getCategoryRepository();
+        $this->categoryEntityManager = $this->container->getCategoryEntityManager();
     }
 
     public function _after()
     {
-        if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
+        if ($this->productRepository->get($this->csvDTO->getArticleNumber()) instanceof ProductDataProvider) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
             $ormProductRepository = $orm->getRepository(Product::class);
@@ -49,7 +53,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
     {
         $this->createProduct();
         $this->updateCategory->update($this->csvDTO);
-        $productFromRepository = $this->productRepository->getProduct($this->csvDTO->getArticleNumber());
+        $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
 
         self::assertNotNull($productFromRepository);
         if (!empty(($productFromRepository->getCategory()))) {
@@ -81,6 +85,15 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $this->csvDTO = new CsvProductDataProvider();
         $this->csvDTO->setCategoryKey($categoryKey);
         $this->csvDTO->setArticleNumber($articleNumber);
+        $this->csvDTO->setPrice(1);
         $this->csvDTO->setName('test');
+        $this->csvDTO->setCategory($this->createCategory());
+        $this->csvDTO->setCategoryId(  $this->csvDTO->getCategory()->getCategoryId());
+    }
+    private function createCategory()
+    {
+        $category = new CategoryDataProvider();
+        $category->setCategoryKey('abc');
+        return $this->categoryEntityManager->save($category);
     }
 }

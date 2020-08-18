@@ -20,7 +20,7 @@ class ProductBusinessFacade implements ProductBusinessFacadeInterface
 
     public function get(string $articleNumber): ?ProductDataProvider
     {
-        return $this->productRepository->getProduct($articleNumber);
+        return $this->productRepository->get($articleNumber);
     }
 
     /**
@@ -29,7 +29,7 @@ class ProductBusinessFacade implements ProductBusinessFacadeInterface
 
     public function getList():array
     {
-        return$this->productRepository->getProductList();
+        return$this->productRepository->getList();
     }
     public function save(ProductDataProvider $product):ProductDataProvider
     {

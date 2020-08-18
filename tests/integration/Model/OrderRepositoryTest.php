@@ -119,7 +119,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     {
         $this->address = new Address();
         $this->address->setUser($this->user);
-        $this->address->setActive("active");
+        $this->address->setActive(true);
         $this->address->setCountry("Germany");
         $this->address->setPostCode(42178);
         $this->address->setTown("Leichlingen");
