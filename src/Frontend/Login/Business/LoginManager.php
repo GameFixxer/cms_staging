@@ -26,17 +26,17 @@ class LoginManager implements LoginManagerInterface
 
     public function createShoppingCard(array $sessionCard):ShoppingCardDataProvider
     {
-        $shoppingcard = $this->shoppingCardBusinessFacade->get(
+        $shoppingCard = $this->shoppingCardBusinessFacade->get(
             $this->userBusinessFacade->get(
                 $this->sessionUser->getUser()
             )->getId()
         );
-
-        return $shoppingcard;
+        return $this->shoppingCardBusinessFacade->save($shoppingCard);
     }
 
-    public function extractSessionShoppingCard(ShoppingCardDataProvider $cardData):array
+    public function extractSessionShoppingCard(int $id):array
     {
+        $cardData = $this->shoppingCardBusinessFacade->get($id);
         $shoppingCard = [];
         foreach ($cardData->getProduct() as $productDataProvider) {
             $shoppingCard[] = $productDataProvider->getName();

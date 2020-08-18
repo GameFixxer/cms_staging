@@ -8,5 +8,5 @@ interface LoginManagerInterface
 {
     public function createShoppingCard(array $sessionCard): ShoppingCardDataProvider;
 
-    public function extractSessionShoppingCard(ShoppingCardDataProvider $cardData): array;
+    public function extractSessionShoppingCard(int $id): array;
 }

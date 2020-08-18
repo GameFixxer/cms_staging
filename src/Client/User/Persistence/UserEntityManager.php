@@ -52,10 +52,15 @@ class UserEntityManager implements UserEntityManagerInterface
             $transaction= $this->database->insert('user')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-            //$transaction = $this->database->update('user')->values($values)->where('id', '=', $entity->getId());
             $transaction = $this->database->update('user', $values, ['id' => $entity->getId()]);
         }
         $transaction->run();
-        return $this->userRepository->get($user->getUsername());
+
+        $newUser = $this->userRepository->get($user->getUsername());
+
+        if (! $newUser instanceof UserDataProvider) {
+            throw new \Exception('Fatal error while saving/loading', 1);
+        }
+        return $newUser;
     }
 }

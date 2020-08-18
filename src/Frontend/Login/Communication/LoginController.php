@@ -94,7 +94,7 @@ class LoginController implements BackendController
         $userDTO = $this->userBusinessFacade->get($this->userSession->getUser());
 
         if ($userDTO instanceof UserDataProvider) {
-            $userDTO->setShoppingCard($this->loginManager->createShoppingCard($this->userSession->getShoppingCard()));
+            $userDTO->setShoppingCardId($this->loginManager->createShoppingCard($this->userSession->getShoppingCard())->getId());
 
             $this->userBusinessFacade->save($userDTO);
         }
@@ -105,8 +105,8 @@ class LoginController implements BackendController
     private function loginUser(UserDataProvider $userDTO, string $password, string $username)
     {
         if ($this->passwordManager->checkPassword($password, $userDTO->getPassword())) {
-            $userDTO->addShoppingCard($this->loginManager->createShoppingCard($this->userSession->getShoppingCard()));
-            $this->userSession->setShoppingCard($this->loginManager-> extractSessionShoppingCard($userDTO->getShoppingCard()));
+            $userDTO->setShoppingCardId($this->loginManager->createShoppingCard($this->userSession->getShoppingCard())->getId());
+            $this->userSession->setShoppingCard($this->loginManager-> extractSessionShoppingCard($userDTO->getShoppingCardId()));
             $this->userSession->loginUser($username);
             $this->userSession->setUserRole($userDTO->getRole());
             $this->view->setRedirect(DashboardController::ROUTE, '&page=list', ['admin=true']);
