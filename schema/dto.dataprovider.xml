@@ -23,7 +23,6 @@
         <DataElement name="type" type="string" default="''" />
         <DataElement name="firstName" type="string" default="''" />
         <DataElement name="lastName" type="string" default="''" />
-        <DataElement name="active" type="bool" default="false" />
     </DataProvider>
 
     <DataProvider name="Attribute">

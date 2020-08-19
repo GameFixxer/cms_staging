@@ -36,12 +36,12 @@ class AddressRepository implements AddressRepositoryInterface
         return $addressList;
     }
 
-    public function getAddress(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider
+    public function getAddress(UserDataProvider $user, string $type, int $postcode): ?AddressDataProvider
     {
         $addressEntity = $this->repository->findOne([
             'user_id' => $user->getId(),
             'type' => $type,
-            'primary' => $primary
+            'post_code' => $postcode
         ]);
         if ($addressEntity instanceof Address) {
             return $this->addressMapper->map($addressEntity);

@@ -44,7 +44,7 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
             'sum'         => $shoppingCardDataProvider->getSum(),
             'quantity'      => $shoppingCardDataProvider->getQuantity(),
             'shoppingCard'         => $shoppingCardDataProvider->getProduct(),
-            'user_id'        => $shoppingCardDataProvider->getUser()->getId(),
+            'User_id'        => $shoppingCardDataProvider->getUser()->getId()
         ];
 
         if (!$entity instanceof ShoppingCard) {
@@ -56,7 +56,7 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
 
         $transaction->run();
 
-        $shoppingCardDataProvider->setId($entity->getId());
+        $shoppingCardDataProvider = $this->shoppingCardRepository->getByUserId($shoppingCardDataProvider->getUser()->getId());
 
         return $shoppingCardDataProvider;
     }

@@ -15,4 +15,6 @@ interface ShoppingCardBusinessFacadeInterface
     public function save(ShoppingCardDataProvider $shoppingCardDataProvider): ShoppingCardDataProvider;
 
     public function delete(ShoppingCardDataProvider $shoppingCardDataProvider);
+
+    public function getByUserId(int $id):ShoppingCardDataProvider;
 }

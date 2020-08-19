@@ -15,6 +15,7 @@
         <service id="App\Service\SessionUser" public="true"/>
 
         <!-- Mapper -->
+
         <service id="App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper" public="true">
             <argument id="App\Client\User\Business\UserBusinessFacade" type="service"/>
             <argument id="App\Client\Product\Persistence\Mapper\ProductMapper" type="service"/>
@@ -143,8 +144,6 @@
         <service id="App\Frontend\ShoppingCard\Business\ShoppingCardManager">
             <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
         </service>
-
-
 
 
     </services>

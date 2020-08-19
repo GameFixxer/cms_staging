@@ -31,7 +31,6 @@ class AddressMapper implements AddressMapperInterface
         $addressDataTransferObject->setStreet($address->getStreet());
         $addressDataTransferObject->setTown($address->getTown());
         $addressDataTransferObject->setType($address->getType());
-        $addressDataTransferObject->setActive($address->getActive());
         $addressDataTransferObject->setFirstName($address->getFirstName());
         $addressDataTransferObject->setLastName($address->getLastName());
 

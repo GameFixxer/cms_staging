@@ -9,13 +9,17 @@ use App\Backend\ImportProduct\Business\Model\Update\ProductAttribute;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
+use App\Client\Address\Persistence\AddressEntityManager;
+use App\Client\Address\Persistence\AddressEntityManagerInterface;
 use App\Client\Attribute\Persistence\AttributeEntityManager;
 use App\Client\Attribute\Persistence\AttributeRepository;
 use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Order\Persistence\OrderEntityManager;
 use App\Client\Order\Persistence\OrderRepository;
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
+use App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager;
 use App\Client\User\Persistence\UserEntityManager;
 use App\Client\User\Persistence\UserRepository;
 use App\Component\SymfonyContainer;
@@ -128,6 +132,19 @@ class ContainerHelper
 
     public function getOrderRepository(){
         return $this->container->get(OrderRepository::class);
+    }
+
+    public function getOrderEntityManager(){
+        return$this->container->get(OrderEntityManager::class);
+    }
+
+    public function getAddressEntityManager()
+    {
+        return $this->container->get(AddressEntityManager::class);
+    }
+
+    public function getShoppingCardEntityManager(){
+        return $this->container->get(ShoppingCardEntityManager::class);
     }
 
 }

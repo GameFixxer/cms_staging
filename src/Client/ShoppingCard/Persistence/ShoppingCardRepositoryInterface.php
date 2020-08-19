@@ -11,4 +11,6 @@ interface ShoppingCardRepositoryInterface
      * @return ShoppingCardDataProvider
      */
     public function get(int $id): ShoppingCardDataProvider;
+
+    public function getByUserId(int $id): ShoppingCardDataProvider;
 }

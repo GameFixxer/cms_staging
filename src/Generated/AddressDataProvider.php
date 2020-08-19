@@ -34,8 +34,6 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     /** @var string */
     protected $lastName = '';
 
-    /** @var bool */
-    protected $active = false;
 
 
     /**
@@ -418,47 +416,6 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @return bool
-     */
-    public function getActive(): bool
-    {
-        return $this->active;
-    }
-
-
-    /**
-     * @param bool $active
-     * @return AddressDataProvider
-     */
-    public function setActive(bool $active = false)
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-
-    /**
-     * @return AddressDataProvider
-     */
-    public function unsetActive()
-    {
-        $this->active = null;
-
-        return $this;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function hasActive()
-    {
-        return ($this->active !== null && $this->active !== []);
-    }
-
-
-    /**
      * @return array
      */
     protected function getElements(): array
@@ -552,16 +509,6 @@ final class AddressDataProvider extends \Xervice\DataProvider\Business\Model\Dat
             'allownull' => false,
             'default' => '\'\'',
             'type' => 'string',
-            'is_collection' => false,
-            'is_dataprovider' => false,
-            'isCamelCase' => false,
-          ),
-          'active' =>
-          array (
-            'name' => 'active',
-            'allownull' => false,
-            'default' => 'false',
-            'type' => 'bool',
             'is_collection' => false,
             'is_dataprovider' => false,
             'isCamelCase' => false,

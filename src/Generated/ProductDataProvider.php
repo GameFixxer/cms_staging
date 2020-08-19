@@ -23,7 +23,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     protected $attribute = [];
 
     /** @var int */
-    protected $id;
+    protected $id =0;
 
     /** @var int */
     protected $price;

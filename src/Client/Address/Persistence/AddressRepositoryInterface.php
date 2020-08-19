@@ -13,7 +13,7 @@ interface AddressRepositoryInterface
      */
     public function getAddressList(): array;
 
-    public function getAddress(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider;
+    public function getAddress(UserDataProvider $user, string $type, int $postcode): ?AddressDataProvider;
 
     public function getAddressListFromUser(int $userId):array;
 }

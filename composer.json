@@ -39,11 +39,12 @@
         "codeception/module-asserts": "^1.0.0",
         "codeception/c3": "^2.4"
     },
-
     "scripts": {
-        "post-install-cmd": [
-            "/bin/console"
-        ]
-    }
+    "post-install-cmd": [
+        "/bin/console"
+    ]
+}
+
+
 
 }

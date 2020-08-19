@@ -38,4 +38,8 @@ class ShoppingCardBusinessFacade implements ShoppingCardBusinessFacadeInterface
     {
         $this->shoppingCardEntityManager->delete($shoppingCardDataProvider);
     }
+    public function getByUserId(int $id):ShoppingCardDataProvider
+    {
+        return$this->shoppingCardRepository->getByUserId($id);
+    }
 }

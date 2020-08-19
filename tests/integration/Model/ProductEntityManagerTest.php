@@ -13,7 +13,7 @@ use Cycle\ORM\Transaction;
 use App\Client\Product\Persistence\Entity\Product;
 
 /**
- * @group ProductEntityManagerTest
+ * @group Product
  */
 
 class ProductEntityManagerTest extends \Codeception\Test\Unit
@@ -44,26 +44,22 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
     public function testCreateProduct()
     {
-        $createdProduct = $this->productEntityManager->save($this->productDto);
-
+        $this->productDto = $this->productEntityManager->save($this->productDto);
         $productFromRepository = $this->container->getProductRepository()->get($this->productDto->getArticleNumber());
-
         $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
         $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
         $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
 
-        return $createdProduct;
     }
 
     public function testUpdateProduct()
     {
-        $this->productDto = $this->testCreateProduct();
+        $this->testCreateProduct();
 
         $this->productDto->setName('fabulous');
         $this->productDto->setDescription('even more fabulous');
         $this->productDto = $this->productEntityManager->save($this->productDto);
         $productFromRepository = $this->container->getProductRepository()->get($this->productDto->getArticleNumber());
-
         $this->assertSame($this->productDto->getName(), $productFromRepository->getName());
         $this->assertSame($this->productDto->getDescription(), $productFromRepository->getDescription());
         $this->assertSame($this->productDto->getId(), $productFromRepository->getId());
@@ -85,6 +81,8 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
         $this->productDto->setDescription($description);
         $this->productDto->setArticleNumber($this->container->createArticleNumber());
         $this->productDto->setCategory($this->createCategory());
+        $this->productDto->setPrice(1);
+        $this->productDto->setAttribute([]);
 
     }
 

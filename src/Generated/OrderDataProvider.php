@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace App\Generated;
 
+use DateTimeImmutable;
+
 /**
  * Auto generated data provider
  */
@@ -25,7 +27,7 @@ final class OrderDataProvider extends \Xervice\DataProvider\Business\Model\DataP
     /** @var string */
     protected $status = '';
 
-    /** @var \App\Generated\DataProvider */
+    /** @var DateTimeImmutable */
     protected $dateOfOrder;
 
 
@@ -306,19 +308,19 @@ final class OrderDataProvider extends \Xervice\DataProvider\Business\Model\DataP
 
 
     /**
-     * @return \App\Generated\DataProvider
+     * @return DateTimeImmutable
      */
-    public function getDateOfOrder(): DataProvider
+    public function getDateOfOrder(): DateTimeImmutable
     {
         return $this->dateOfOrder;
     }
 
 
     /**
-     * @param \App\Generated\DataProvider $dateOfOrder
+     * @param DateTimeImmutable $dateOfOrder
      * @return OrderDataProvider
      */
-    public function setDateOfOrder(DataProvider $dateOfOrder)
+    public function setDateOfOrder(DateTimeImmutable $dateOfOrder)
     {
         $this->dateOfOrder = $dateOfOrder;
 

@@ -49,7 +49,6 @@ class AddressEntityManager implements AddressEntityManagerInterface
             'first_name'        => $address->getFirstName(),
             'last_name'      =>$address->getLastName(),
             'user_id'      =>$address->getUser()->getId(),
-            'active'      =>$address->getActive(),
             'type'      =>$address->getType()
         ];
 
@@ -62,7 +61,7 @@ class AddressEntityManager implements AddressEntityManagerInterface
 
         $transaction->run();
 
-        $address->setAddress_id($entity->getAddressId());
+        $address = $this->addressRepository->getAddress($address->getUser(), $address->getType(), $address->getPostcode());
 
         return $address;
     }
