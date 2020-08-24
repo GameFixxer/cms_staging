@@ -8,7 +8,9 @@ use App\Client\Order\Persistence\Entity\Order;
 use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacadeInterface;
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Business\UserBusinessFacadeInterface;
+use App\Generated\AddressDataProvider;
 use App\Generated\OrderDataProvider;
+use App\Generated\UserDataProvider;
 
 class OrderMapper implements OrderMapperInterface
 {
@@ -20,8 +22,7 @@ class OrderMapper implements OrderMapperInterface
         ShoppingCardBusinessFacadeInterface $shoppingCardBusinessFacade,
         UserBusinessFacadeInterface $userBusinessFacade,
         AddressBusinessFacadeInterface $addressBusinessFacade
-    )
-    {
+    ) {
         $this->shoppingCardBusinessFacade = $shoppingCardBusinessFacade;
         $this->userBusinessFacade = $userBusinessFacade;
         $this->addressBusinessFacade = $addressBusinessFacade;
@@ -32,14 +33,22 @@ class OrderMapper implements OrderMapperInterface
         $orderDataTransferObject = new   OrderDataProvider();
         $orderDataTransferObject->setId($order->getOrderId());
         $orderDataTransferObject->setStatus($order->getStatus());
-        $orderDataTransferObject->setUser($this->userBusinessFacade->getById($order->getUserId()));
+        $user = $this->userBusinessFacade->getById($order->getUserId());
+        if (! $user instanceof UserDataProvider) {
+            throw new \Exception('Critical RepositoryError', 1);
+        }
+        $orderDataTransferObject->setUser($user);
         $orderDataTransferObject->setSum($order->getSum());
-        $orderDataTransferObject->setAddress(
-            $this->addressBusinessFacade->get(
-                $orderDataTransferObject->getUser(),
-                $order->getAddress()->getType(),
-                $order->getAddress()->getPostCode()
-            ));
+        $address = $this->addressBusinessFacade->get(
+            $orderDataTransferObject->getUser(),
+            $order->getAddress()->getType(),
+            $order->getAddress()->getPostCode()
+        );
+        if (! $address instanceof AddressDataProvider) {
+            throw new \Exception('Critical RepositoryError', 1);
+        }
+        $orderDataTransferObject->setAddress($address);
+
         $orderDataTransferObject->setDateOfOrder($order->getDateOfOrder());
         $orderDataTransferObject->setShoppingCard($this->shoppingCardBusinessFacade->get($order->getShoppingCardId()));
 

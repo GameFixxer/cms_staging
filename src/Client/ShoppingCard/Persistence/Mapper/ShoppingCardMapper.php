@@ -45,12 +45,12 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
      */
     private function mapProducts(String $productString): array
     {
-        $articleByNumber= explode(',', $productString);
+        $articleByNumber = explode(',', $productString);
         $mappedProducts = [];
         foreach ($articleByNumber as $item) {
             $product = $this->productBusinessFacade->get($item);
             if ($product instanceof ProductDataProvider) {
-                $mappedProducts[]=$product;
+                $mappedProducts[] = $product;
             }
             return $mappedProducts;
         }

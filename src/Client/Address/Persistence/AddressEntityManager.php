@@ -63,6 +63,10 @@ class AddressEntityManager implements AddressEntityManagerInterface
 
         $address = $this->addressRepository->getAddress($address->getUser(), $address->getType(), $address->getPostcode());
 
+        if (!$address instanceof AddressDataProvider) {
+            throw new \Exception('Critical RepositoryError', 1);
+        }
+
         return $address;
     }
 }

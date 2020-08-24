@@ -41,7 +41,6 @@ class OrderEntityManager implements OrderEntityManagerInterface
 
     public function save(OrderDataProvider $order): OrderDataProvider
     {
-        $transaction = new Transaction($this->orm);
         $values = [
             'sum' =>  $order->getSum(),
             'status' =>  $order->getStatus(),
