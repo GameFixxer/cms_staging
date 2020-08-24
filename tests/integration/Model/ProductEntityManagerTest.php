@@ -67,7 +67,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
     public function TestDeleteProduct()
     {
-        $this->productDto = $this->testCreateProduct();
+        $this->testCreateProduct();
 
         $this->productEntityManager->delete($this->productDto);
 

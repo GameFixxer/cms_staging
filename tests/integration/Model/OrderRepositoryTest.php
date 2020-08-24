@@ -51,11 +51,11 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     }
 
     public function _after()
-    {/*
+    {
         if ($this->ormAttributeRepository->findByPK($this->entity->getId()) instanceof Order) {
             $this->transaction->delete($this->ormAttributeRepository->findByPK($this->entity->getId()));
             $this->transaction->run();
-        }*/
+        }
     }
 
     public function testGetOrderWithExistingOrder()

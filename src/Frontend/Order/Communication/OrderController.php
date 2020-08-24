@@ -73,7 +73,6 @@ class OrderController implements BackendController
         $newAddress->setPostCode($_POST['address']['postcode']);
         $newAddress->setCountry($_POST['address']['country']);
         $newAddress->setStreet($_POST['address']['street']);
-        $newAddress->setActive(true);
         $this->orderManager->createNewAddress($newAddress);
     }
 
