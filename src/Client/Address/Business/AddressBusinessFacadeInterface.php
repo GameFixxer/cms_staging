@@ -8,7 +8,7 @@ use App\Generated\UserDataProvider;
 
 interface AddressBusinessFacadeInterface
 {
-    public function get(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider;
+    public function get(UserDataProvider $user, string $type, int $postCode): ?AddressDataProvider;
 
     /**
      * @return AddressDataProvider[]

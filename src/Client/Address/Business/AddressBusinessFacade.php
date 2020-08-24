@@ -20,9 +20,9 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
         $this->addressEntityManager = $addressEntityManager;
     }
 
-    public function get(UserDataProvider $user, string $type, bool $primary): ?AddressDataProvider
+    public function get(UserDataProvider $user, string $type, int $postCode): ?AddressDataProvider
     {
-        return $this->addressRepository->getAddress($user, $type, $primary);
+        return $this->addressRepository->getAddress($user, $type, $postCode);
     }
 
     /**

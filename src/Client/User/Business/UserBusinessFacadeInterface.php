@@ -18,4 +18,6 @@ interface UserBusinessFacadeInterface
     public function save(UserDataProvider $user): UserDataProvider;
 
     public function delete(UserDataProvider $user);
+
+    public function getById(int $id):?UserDataProvider;
 }

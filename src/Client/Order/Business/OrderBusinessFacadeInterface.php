@@ -16,4 +16,6 @@ interface OrderBusinessFacadeInterface
     public function save(OrderDataProvider $order): OrderDataProvider;
 
     public function delete(OrderDataProvider $order);
+
+    public function getWithDateAndUserId(int $userId, string $dateOfOrder): ?OrderDataProvider;
 }

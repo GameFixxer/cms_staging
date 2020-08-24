@@ -16,7 +16,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     /** @var string */
     protected $articleNumber = '';
 
-    /** @var \App\Generated?CategoryDataProvider */
+    /** @var \App\Generated\?CategoryDataProvider */
     protected $category;
 
     /** @var \App\Generated\AttributeDataProvider[] */
@@ -26,7 +26,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
     protected $id =0;
 
     /** @var int */
-    protected $price;
+    protected $price = 0;
 
 
     /**

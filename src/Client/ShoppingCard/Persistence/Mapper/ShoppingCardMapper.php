@@ -3,23 +3,22 @@ declare(strict_types=1);
 
 namespace App\Client\ShoppingCard\Persistence\Mapper;
 
-use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
+use App\Client\Product\Business\ProductBusinessFacadeInterface;
 use App\Client\ShoppingCard\Persistence\Entity\ShoppingCard;
 use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Generated\ProductDataProvider;
 use App\Generated\ShoppingCardDataProvider;
 use App\Generated\UserDataProvider;
-use Doctrine\Common\Collections\ArrayCollection;
 
 class ShoppingCardMapper implements ShoppingCardMapperInterface
 {
     private UserBusinessFacadeInterface $userBusinessFacade;
-    private ProductMapperInterface $productMapper;
+    private ProductBusinessFacadeInterface $productBusinessFacade;
 
-    public function __construct(UserBusinessFacadeInterface $userBusinessFacade, ProductMapperInterface $productMapper)
+    public function __construct(UserBusinessFacadeInterface $userBusinessFacade, ProductBusinessFacadeInterface $productBusinessFacade)
     {
         $this->userBusinessFacade = $userBusinessFacade;
-        $this->productMapper = $productMapper;
+        $this->productBusinessFacade = $productBusinessFacade;
     }
 
     public function map(ShoppingCard $shoppingCard): ShoppingCardDataProvider
@@ -41,15 +40,19 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
     }
 
     /**
-     * @param ArrayCollection $product
+     * @param String $productString
      * @return ProductDataProvider[]
      */
-    private function mapProducts(ArrayCollection $product): array
+    private function mapProducts(String $productString): array
     {
+        $articleByNumber= explode(',', $productString);
         $mappedProducts = [];
-        foreach ($product as $productEntity) {
-            $mappedProducts[]= $this->productMapper->map($productEntity);
+        foreach ($articleByNumber as $item) {
+            $product = $this->productBusinessFacade->get($item);
+            if ($product instanceof ProductDataProvider) {
+                $mappedProducts[]=$product;
+            }
+            return $mappedProducts;
         }
-        return $mappedProducts;
     }
 }

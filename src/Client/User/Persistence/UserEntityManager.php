@@ -56,7 +56,6 @@ class UserEntityManager implements UserEntityManagerInterface
         $transaction->run();
 
         $newUser = $this->userRepository->get($user->getUsername());
-
         if (! $newUser instanceof UserDataProvider) {
             throw new \Exception('Fatal error while saving/loading', 1);
         }

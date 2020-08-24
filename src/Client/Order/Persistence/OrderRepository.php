@@ -21,7 +21,7 @@ class OrderRepository implements OrderRepositoryInterface
     /**
      * @return OrderDataProvider[]
      */
-    public function getOrderList(): array
+    public function getList(): array
     {
         $orderList = [];
 
@@ -34,9 +34,18 @@ class OrderRepository implements OrderRepositoryInterface
         return $orderList;
     }
 
-    public function getOrder(int $orderId): ?OrderDataProvider
+    public function get(int $orderId): ?OrderDataProvider
     {
         $order = $this->repository->findByPK($orderId);
+        if ($order instanceof Order) {
+            return $this->orderMapper->map($order);
+        }
+        return null;
+    }
+
+    public function getWithDateAndUserId(int $userId, string $dateOfOrder): ?OrderDataProvider
+    {
+        $order = $this->repository->findOne(['user_id'=>$userId, 'date_of_order'=> $dateOfOrder]);
         if ($order instanceof Order) {
             return $this->orderMapper->map($order);
         }

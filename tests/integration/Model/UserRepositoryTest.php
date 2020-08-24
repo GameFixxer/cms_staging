@@ -5,14 +5,20 @@ namespace App\Tests\integration\Model;
 
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Entity\TestEntity;
+use App\Client\User\Business\UserBusinessFacadeInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\Mapper\UserMapper;
 use App\Client\User\Persistence\UserRepository;
+use App\Generated\UserDataProvider;
 use App\Service\DatabaseManager;
 use App\Service\PasswordManager;
 use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
+
+/**
+ * @group userrep
+ */
 
 class UserRepositoryTest extends \Codeception\Test\Unit
 {
@@ -20,7 +26,8 @@ class UserRepositoryTest extends \Codeception\Test\Unit
     private Transaction $transaction;
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
     private PasswordManager $passwordManager;
-    private User $entity;
+    private $businessFacade;
+    private UserDataProvider $entity;
 
     public function _before()
     {
@@ -35,16 +42,18 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->ormUserRepository = $orm->getRepository(User::class);
 
         $this->transaction = new Transaction($orm);
-        $this->transaction->persist($this->createProductEntity());
-        $this->transaction->run();
+
+        $this->businessFacade = $this->container->getUserBusinessFacade();
+
+        $this->entity = $this->businessFacade->save($this->createUser());
     }
 
     public function _after()
-    {/*
+    {
         if ($this->ormUserRepository->findByPK($this->entity->getId()) instanceof User) {
             $this->transaction->delete($this->ormUserRepository->findByPK($this->entity->getId()));
             $this->transaction->run();
-        }*/
+        }
     }
 
     public function testGetUserWithExistingUser()
@@ -69,7 +78,6 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $userRepository = $this->container->getUserRepository();
 
         $userListFromUserRepository = $userRepository->getList();
-
         $lastUserOfUserList = end($userListFromUserRepository);
 
         $this->assertSame($this->entity->getUsername(), $lastUserOfUserList ->getUsername());
@@ -77,9 +85,9 @@ class UserRepositoryTest extends \Codeception\Test\Unit
         $this->assertSame($this->entity->getId(), $lastUserOfUserList ->getId());
     }
 
-    private function createProductEntity() :User
+    private function createUser() :UserDataProvider
     {
-        $this->entity = new User();
+        $this->entity = new UserDataProvider();
         $this->entity->setUsername('mate');
         $this->entity->setPassword('seeyou');
         $this->entity->setRole('user');

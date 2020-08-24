@@ -41,4 +41,9 @@ class UserBusinessFacade implements UserBusinessFacadeInterface
     {
         $this->userEntityManager->delete($user);
     }
+
+    public function getById(int $id):?UserDataProvider
+    {
+        return $this->userRepository->getById($id);
+    }
 }

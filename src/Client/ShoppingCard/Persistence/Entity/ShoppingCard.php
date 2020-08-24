@@ -43,13 +43,13 @@ class ShoppingCard
      */
     protected $User;
 
-    /** @HasMany(target = "product", nullable=true) */
+    /**
+     * @Column(type="string", nullable = true)
+     * @var string
+     */
+
     protected $shoppingCard;
 
-    public function __construct()
-    {
-        $this->shoppingCard = new ArrayCollection();
-    }
 
     /**
      * @return int
@@ -116,17 +116,17 @@ class ShoppingCard
     }
 
     /**
-     * @return ArrayCollection
+     * @return string
      */
-    public function getShoppingCard(): ArrayCollection
+    public function getShoppingCard(): string
     {
         return $this->shoppingCard;
     }
 
     /**
-     * @param ArrayCollection $shoppingCard
+     * @param string $shoppingCard
      */
-    public function setShoppingCard(ArrayCollection $shoppingCard): void
+    public function setShoppingCard(string $shoppingCard): void
     {
         $this->shoppingCard = $shoppingCard;
     }

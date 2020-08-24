@@ -54,7 +54,7 @@ class UserEntityManagerTest extends \Codeception\Test\Unit
     {
         $this->testCreateUser();
 
-        $this->userDto->setUsername('fabulous');
+        $this->userDto->setUsername('fu');
         $this->userDto->setPassword('even more fabulous');
 
         $this->userDto = $this->userEntityManager->save($this->userDto);

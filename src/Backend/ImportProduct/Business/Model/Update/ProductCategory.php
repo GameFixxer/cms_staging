@@ -39,7 +39,7 @@ class ProductCategory implements ProductInterface
             $category = $this->categoryBusinessFacade->getByKey($csvDTO->getAttributeKey());
             if (!$category instanceof CategoryDataProvider) {
                 $category = new CategoryDataProvider();
-                $category->setCategoryKey($csvDTO->getAttributeKey());
+                $category->setCategoryKey($csvDTO->getCategoryKey());
                 $csvDTO->setCategoryId($this->categoryBusinessFacade->save($category)->getCategoryId());
                 $csvDTO->setCategory($this->categoryIntegrityManager->mapEntity($csvDTO));
                 $this->saveUpdatedProduct($csvDTO);

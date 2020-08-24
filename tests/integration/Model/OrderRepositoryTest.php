@@ -3,12 +3,7 @@
 
 namespace App\Tests\integration\Model;
 
-use App\Client\Address\Persistence\AddressEntityManagerInterface;
-use App\Client\Address\Persistence\Entity\Address;
 use App\Client\Order\Persistence\Entity\Order;
-use App\Client\Order\Persistence\OrderEntityManager;
-use App\Client\User\Business\UserBusinessFacadeInterface;
-use App\Client\User\Persistence\Entity\User;
 use App\Client\User\Persistence\UserEntityManagerInterface;
 use App\Generated\AddressDataProvider;
 use App\Generated\OrderDataProvider;
@@ -28,7 +23,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
     private Transaction $transaction;
     private \Cycle\ORM\RepositoryInterface $ormAttributeRepository;
     private UserEntityManagerInterface $userBusinessFace;
-    private  $addressBusinessFace;
+    private $addressBusinessFace;
     private OrderDataProvider $entity;
     private AddressDataProvider $address;
     private UserDataProvider $user;
@@ -52,67 +47,64 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $this->user = $this->userBusinessFace->save($this->createUser());
         $this->address = $this->addressBusinessFace->save($this->createAddressEntity());
         $this->shoppingCard = $this->shoppingCardEntityManager->save($this->createShoppingCard());
-        $this->entity =$this->orderEntityManager->save($this->createOrderEntity());
-
+        $this->entity = $this->orderEntityManager->save($this->createOrderEntity());
     }
 
     public function _after()
-    {
+    {/*
         if ($this->ormAttributeRepository->findByPK($this->entity->getId()) instanceof Order) {
             $this->transaction->delete($this->ormAttributeRepository->findByPK($this->entity->getId()));
             $this->transaction->run();
-        }
+        }*/
     }
 
     public function testGetOrderWithExistingOrder()
     {
         $orderRepository = $this->container->getOrderRepository();
 
-        $productDtoFromRepository = $orderRepository->getOrder($this->entity->getId());
+        $productDtoFromRepository = $orderRepository->get($this->entity->getId());
 
         $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
-        $this->assertSame($this->entity->getAddress()->hasAddress_id(), $productDtoFromRepository->getAddress()->getAddress_id());
+        $this->assertSame($this->entity->getAddress()->getAddress_id(), $productDtoFromRepository->getAddress()->getAddress_id());
         $this->assertSame($this->entity->getUser()->getId(), $productDtoFromRepository->getUser()->getId());
         $this->assertSame($this->entity->getSum(), $productDtoFromRepository->getSum());
         $this->assertSame($this->entity->getStatus(), $productDtoFromRepository->getStatus());
-        $this->assertSame($this->entity->getShoppingCard(), $productDtoFromRepository->getShoppingCard());
+        $this->assertSame($this->entity->getShoppingCard()->getId(), $productDtoFromRepository->getShoppingCard()->getId());
     }
 
     public function testGetProductWithNonExistingProduct()
     {
         $attributeRepository = $this->container->getOrderRepository();
 
-        $this->assertNull($attributeRepository->getOrder('0'));
+        $this->assertNull($attributeRepository->get(0));
     }
 
     public function testGetLastProductOfProductListWithNonEmptyDatabase()
     {
         $orderRepository = $this->container->getOrderRepository();
 
-        $orderList = $orderRepository->getOrderList();
+        $orderList = $orderRepository->getList();
 
         $lastOrderOfOrderRepositoryList = end($orderList);
 
-        $this->assertSame($this->entity->getId(), $lastOrderOfOrderRepositoryList->getId());
-        $this->assertSame($this->entity->getAddress(), $lastOrderOfOrderRepositoryList->getAddress());
-        $this->assertSame($this->entity->getUser(), $lastOrderOfOrderRepositoryList->getUser());
+        $this->assertSame($this->entity->getAddress()->getAddress_id(), $lastOrderOfOrderRepositoryList->getAddress()->getAddress_id());
+        $this->assertSame($this->entity->getUser()->getId(), $lastOrderOfOrderRepositoryList->getUser()->getId());
         $this->assertSame($this->entity->getSum(), $lastOrderOfOrderRepositoryList->getSum());
         $this->assertSame($this->entity->getStatus(), $lastOrderOfOrderRepositoryList->getStatus());
-        $this->assertSame($this->entity->getShoppingCard(), $lastOrderOfOrderRepositoryList->getShoppingCard());
+        $this->assertSame($this->entity->getShoppingCard()->getId(), $lastOrderOfOrderRepositoryList->getShoppingCard()->getId());
     }
 
     private function createOrderEntity() :OrderDataProvider
     {
-        $date = new  \DateTimeImmutable;
-        $date->setTimestamp(time());
-        $date->format('d,m,Y');
+        $date = "".getdate()['year'].'-'.getdate()['mon'].'-'.getdate()['mday'];
         $this->entity = new OrderDataProvider();
         $this->entity->setDateOfOrder($date);
         $this->entity->setUser($this->user);
         $this->entity->setAddress($this->address);
         $this->entity->setSum(0);
         $this->entity->setStatus('shipping');
-        $this->entity->setShoppingCard(null);
+        $this->entity->setShoppingCard($this->createShoppingCard());
+        $this->entity->setId(0);
 
         return $this->entity;
     }
@@ -151,7 +143,6 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $this->shoppingCard->setSum(0);
         $this->shoppingCard->setUser($this->user);
         $this->shoppingCard->setId(0);
-        return $this->shoppingCard;
+        return $this->shoppingCardEntityManager->save($this->shoppingCard);
     }
-
 }

@@ -6,6 +6,7 @@ use App\Client\Attribute\Persistence\Entity\Attribute;
 use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\ProductRepository;
+use App\Generated\AttributeDataProvider;
 use App\Generated\CategoryDataProvider;
 use App\Generated\CsvProductDataProvider;
 use App\Generated\ProductDataProvider;
@@ -22,7 +23,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
     private $importCreateProduct;
     private ProductRepository $productRepository;
     private $updateAttribute;
-    private $attributeRepository;
+    private $attributeBusinessFacade;
     private ContainerHelper $container;
     private CategoryEntityManagerInterface $categoryEntityManager;
 
@@ -33,7 +34,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $this->productRepository = $this->container->getProductRepository();
         $this->importCreateProduct = $this->container->getCreateProduct();
         $this->updateAttribute = $this->container->getUpdateAttribute();
-        $this->attributeRepository = $this->container->getAttributeRepository();
+        $this->attributeBusinessFacade = $this->container->getAttributeBusinessFacade();
         $this->categoryEntityManager = $this->container->getCategoryEntityManager();
     }
 
@@ -61,7 +62,6 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $orm = $orm->connect();
         $ormProductRepository = $orm->getRepository(Product::class);
         $productFromRepository2 = $ormProductRepository->select()->where('article_number', ''.$this->csvDTO->getArticleNumber())->load('attribute')->fetchAll();
-        dump($productFromRepository2);
         if (!empty(($productFromRepository->getAttribute()))) {
 
             // self::assertNotSame('', $productFromRepository->getAttribute()->getPivot()->getAttributeId());
@@ -75,7 +75,7 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
             self::assertNotNull($productFromRepository->getAttribute());
             self::assertTrue($productFromRepository->getAttribute() instanceof Attribute);
             self::assertSame(
-                $productFromRepository->getAttribute()->getAttributeValue(),
+                $productFromRepository->getAttribute()[0]->getAttributeValue(),
                 $ormCategoryRepository->findOne(['attribute_key'=>$this->csvDTO->getAttributeKey()])->getAttributeValue()
             );
 
@@ -100,14 +100,17 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
     private function createCSVDTO(string $articleNumber, string $categoryKey)
     {
         $this->csvDTO = new CsvProductDataProvider();
-        $this->csvDTO->setAttributeKey($categoryKey);
+        $attribute =  $this->createAttribute();
+        $this->csvDTO->setAttribute([$attribute]);
+        $this->csvDTO->setAttributeKey($attribute->getAttributeKey());
         $this->csvDTO->setCategoryKey($categoryKey);
-        $this->csvDTO->setAttributeValue($categoryKey);
+        $this->csvDTO->setAttributeValue($attribute->getAttributeValue());
         $this->csvDTO->setArticleNumber($articleNumber);
         $this->csvDTO->setCategory($this->createCategory());
         $this->csvDTO->setPrice(1);
         $this->csvDTO->setName('test');
         $this->csvDTO->setCategoryId($this->csvDTO->getCategory()->getCategoryId());
+        $this->csvDTO->setAttributeId($attribute->getAttributeId());
     }
 
     private function createCategory()
@@ -115,5 +118,13 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $category = new CategoryDataProvider();
         $category->setCategoryKey('abc');
         return $this->categoryEntityManager->save($category);
+    }
+    
+    private function createAttribute()
+    {
+        $attribute = new AttributeDataProvider();
+        $attribute->setAttributeKey('test');
+        $attribute->setAttributeValue('testattribute');
+        return $this->attributeBusinessFacade->save($attribute);
     }
 }

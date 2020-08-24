@@ -20,7 +20,7 @@ class OrderBusinessFacade implements OrderBusinessFacadeInterface
 
     public function get(int $orderId): ?OrderDataProvider
     {
-        return $this->orderRepository->getOrder($orderId);
+        return $this->orderRepository->get($orderId);
     }
 
     /**
@@ -29,7 +29,7 @@ class OrderBusinessFacade implements OrderBusinessFacadeInterface
 
     public function getList():array
     {
-        return$this->orderRepository->getOrderList();
+        return$this->orderRepository->getList();
     }
     public function save(OrderDataProvider $order):OrderDataProvider
     {
@@ -38,5 +38,9 @@ class OrderBusinessFacade implements OrderBusinessFacadeInterface
     public function delete(OrderDataProvider $order)
     {
         $this->orderEntityManager->delete($order);
+    }
+    public function getWithDateAndUserId(int $userId, string $dateOfOrder): ?OrderDataProvider
+    {
+        return $this->orderRepository->getWithDateAndUserId($userId, $dateOfOrder);
     }
 }

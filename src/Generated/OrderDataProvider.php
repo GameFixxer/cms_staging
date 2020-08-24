@@ -27,7 +27,7 @@ final class OrderDataProvider extends \Xervice\DataProvider\Business\Model\DataP
     /** @var string */
     protected $status = '';
 
-    /** @var DateTimeImmutable */
+    /** @var string */
     protected $dateOfOrder;
 
 
@@ -308,19 +308,19 @@ final class OrderDataProvider extends \Xervice\DataProvider\Business\Model\DataP
 
 
     /**
-     * @return DateTimeImmutable
+     * @return string
      */
-    public function getDateOfOrder(): DateTimeImmutable
+    public function getDateOfOrder(): string
     {
         return $this->dateOfOrder;
     }
 
 
     /**
-     * @param DateTimeImmutable $dateOfOrder
+     * @param string $dateOfOrder
      * @return OrderDataProvider
      */
-    public function setDateOfOrder(DateTimeImmutable $dateOfOrder)
+    public function setDateOfOrder(string $dateOfOrder)
     {
         $this->dateOfOrder = $dateOfOrder;
 

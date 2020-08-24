@@ -29,16 +29,16 @@ final class CsvProductDataProvider extends \Xervice\DataProvider\Business\Model\
     protected $id;
 
     /** @var int */
-    protected $price;
+    protected $price =0;
 
     /** @var int */
-    protected $categoryId;
+    protected $categoryId = 0;
 
     /** @var string */
     protected $categoryKey = '';
 
     /** @var int */
-    protected $attributeId;
+    protected $attributeId =0;
 
     /** @var string */
     protected $attributeKey = '';

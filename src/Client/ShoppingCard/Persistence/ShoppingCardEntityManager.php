@@ -34,7 +34,6 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
         $transaction = new Transaction($this->orm);
         $transaction->delete($this->repository->findByPK($shoppingCardDataProvider->getid()));
         $transaction->run();
-
     }
 
     public function save(ShoppingCardDataProvider $shoppingCardDataProvider): ShoppingCardDataProvider
@@ -43,15 +42,15 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
         $values = [
             'sum'         => $shoppingCardDataProvider->getSum(),
             'quantity'      => $shoppingCardDataProvider->getQuantity(),
-            'shoppingCard'         => $shoppingCardDataProvider->getProduct(),
+            'shopping_card'         => $this->extractArticleNumber($shoppingCardDataProvider->getProduct()),
             'User_id'        => $shoppingCardDataProvider->getUser()->getId()
         ];
 
         if (!$entity instanceof ShoppingCard) {
-            $transaction= $this->database->insert('shoppingCard')->values($values);
+            $transaction= $this->database->insert('shoppingcard')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-            $transaction = $this->database->update('shoppingCard')->values($values)->where('id', '=', $entity->getId());
+            $transaction = $this->database->update('shoppingcard')->values($values)->where('id', '=', $entity->getId());
         }
 
         $transaction->run();
@@ -59,5 +58,13 @@ class ShoppingCardEntityManager implements ShoppingCardEntityManagerInterface
         $shoppingCardDataProvider = $this->shoppingCardRepository->getByUserId($shoppingCardDataProvider->getUser()->getId());
 
         return $shoppingCardDataProvider;
+    }
+    private function extractArticleNumber(array $products):string
+    {
+        $articleNumbers = "";
+        foreach ($products as $article) {
+            $articleNumbers = $articleNumbers.$article->getArticleNumber();
+        }
+        return $articleNumbers;
     }
 }

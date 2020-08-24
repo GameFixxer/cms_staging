@@ -41,14 +41,14 @@ class ProductAttribute implements ProductInterface
             $attribute->setAttributeValue($csvDTO->getAttributeValue());
             $attribute->setAttributeId(($this->attributeBusinessFacade->save($attribute))->getAttributeId());
             $csvDTO->setAttributeId($attribute->getAttributeId());
-            $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));
+            $csvDTO->setAttribute([$this->integrityManager->mapEntity($csvDTO)]);
             $this->saveUpdatedProduct($csvDTO);
         } elseif ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $attribute)) {
             $attribute->setAttributeKey($csvDTO->getAttributeKey());
             $attribute->setAttributeValue($csvDTO->getAttributeValue());
             $attribute->setAttributeId($this->attributeBusinessFacade->save($attribute)->getAttributeId());
             $csvDTO->setAttributeId($attribute->getAttributeId());
-            $csvDTO->setAttribute($this->integrityManager->mapEntity($csvDTO));
+            $csvDTO->setAttribute([$this->integrityManager->mapEntity($csvDTO)]);
             $this->saveUpdatedProduct($csvDTO);
         }
     }

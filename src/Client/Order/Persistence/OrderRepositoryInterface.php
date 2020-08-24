@@ -10,7 +10,9 @@ interface OrderRepositoryInterface
     /**
      * @return OrderDataProvider[]
      */
-    public function getOrderList(): array;
+    public function getList(): array;
 
-    public function getOrder(int $orderId): ?OrderDataProvider;
+    public function get(int $orderId): ?OrderDataProvider;
+
+    public function getWithDateAndUserId(int $userId, string $dateOfOrder): ?OrderDataProvider;
 }

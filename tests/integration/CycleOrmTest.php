@@ -70,5 +70,6 @@ class CycleOrmTest extends \Codeception\Test\Unit
         $this->product->addAttribute($attribute);
         $this->product->setProductName('productname');
         $this->product->setProductDescription('productdescription');
+        $this->product->setPrice(0);
     }
 }

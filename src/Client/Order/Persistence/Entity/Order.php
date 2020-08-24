@@ -19,9 +19,10 @@ class Order
     protected $orderId;
 
     /**
-     * @BelongsTo(target="user", nullable=false)
+     * @Column(type="int")
+     * @var int
      */
-    protected $user;
+    protected $userId;
 
     /**
      * @BelongsTo(target="address", nullable=false)
@@ -40,30 +41,31 @@ class Order
     protected $status;
 
     /**
-     * @Column(type="date")
-     * @var \DateTimeImmutable
+     * @Column(type="string")
+     * @var string
      */
     protected $dateOfOrder;
 
     /**
-     * @BelongsTo(target="shoppingCard", nullable=false)
+     * @Column(type="int")
+     * @var int
      */
-    protected $shoppingCard;
+    protected $shoppingCardId;
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getShoppingCard()
+    public function getShoppingCardId()
     {
-        return $this->shoppingCard;
+        return $this->shoppingCardId;
     }
 
     /**
-     * @param mixed $shoppingCard
+     * @param int $shoppingCardId
      */
-    public function setShoppingCard($shoppingCard): void
+    public function setShoppingCardId($shoppingCardId): void
     {
-        $this->shoppingCard = $shoppingCard;
+        $this->shoppingCardId = $shoppingCardId;
     }
 
 
@@ -85,19 +87,19 @@ class Order
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getUser()
+    public function getUserId()
     {
-        return $this->user;
+        return $this->userId;
     }
 
     /**
-     * @param mixed $user
+     * @param int $userId
      */
-    public function setUser($user): void
+    public function setUserId($userId): void
     {
-        $this->user = $user;
+        $this->userId = $userId;
     }
 
     /**
@@ -149,17 +151,17 @@ class Order
     }
 
     /**
-     * @return DateTimeImmutable
+     * @return string
      */
-    public function getDateOfOrder(): DateTimeImmutable
+    public function getDateOfOrder(): string
     {
         return $this->dateOfOrder;
     }
 
     /**
-     * @param DateTimeImmutable $dateOfOrder
+     * @param string $dateOfOrder
      */
-    public function setDateOfOrder(DateTimeImmutable $dateOfOrder): void
+    public function setDateOfOrder(string $dateOfOrder): void
     {
         $this->dateOfOrder = $dateOfOrder;
     }

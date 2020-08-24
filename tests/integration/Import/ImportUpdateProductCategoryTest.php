@@ -89,6 +89,7 @@ class ImportUpdateProductCategoryTest extends \Codeception\Test\Unit
         $this->csvDTO->setName('test');
         $this->csvDTO->setCategory($this->createCategory());
         $this->csvDTO->setCategoryId(  $this->csvDTO->getCategory()->getCategoryId());
+        codecept_debug( $this->csvDTO->getCategory()->getCategoryId());
     }
     private function createCategory()
     {

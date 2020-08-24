@@ -468,7 +468,7 @@ class MyCachedContainer extends Container
      */
     protected function getOrderMapperService()
     {
-        return $this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] = new \App\Client\Order\Persistence\Mapper\OrderMapper();
+        return $this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] = new \App\Client\Order\Persistence\Mapper\OrderMapper(($this->services['App\\Client\\ShoppingCard\\Business\\ShoppingCardBusinessFacade'] ?? $this->getShoppingCardBusinessFacadeService()), ($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Address\\Business\\AddressBusinessFacade'] ?? $this->getAddressBusinessFacadeService()));
     }
 
     /**
@@ -488,7 +488,7 @@ class MyCachedContainer extends Container
      */
     protected function getOrderRepositoryService()
     {
-        return $this->services['App\\Client\\Order\\Persistence\\OrderRepository'] = new \App\Client\Order\Persistence\OrderRepository(($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] ?? ($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] = new \App\Client\Order\Persistence\Mapper\OrderMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Order\\Persistence\\OrderRepository'] = new \App\Client\Order\Persistence\OrderRepository(($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] ?? $this->getOrderMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
     }
 
     /**
@@ -548,7 +548,7 @@ class MyCachedContainer extends Container
      */
     protected function getShoppingCardMapperService()
     {
-        return $this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] = new \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? $this->getProductMapperService()));
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] = new \App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper(($this->services['App\\Client\\User\\Business\\UserBusinessFacade'] ?? $this->getUserBusinessFacadeService()), ($this->services['App\\Client\\Product\\Business\\ProductBusinessFacade'] ?? $this->getProductBusinessFacadeService()));
     }
 
     /**

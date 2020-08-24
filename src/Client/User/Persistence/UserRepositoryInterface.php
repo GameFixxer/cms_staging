@@ -13,4 +13,6 @@ interface UserRepositoryInterface
     public function getList(): array;
 
     public function get(string $username): ?UserDataProvider;
+
+    public function getById(int $id):?UserDataProvider;
 }

@@ -47,4 +47,13 @@ class UserRepository implements UserRepositoryInterface
         }
         return null;
     }
+
+    public function getById(int $id):?UserDataProvider
+    {
+        $userEntity = $this->ormUserRepository->findByPK($id);
+        if ($userEntity instanceof User) {
+            return $this->userMapper->map($userEntity);
+        }
+        return null;
+    }
 }
