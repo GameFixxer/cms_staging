@@ -14,7 +14,7 @@ use App\Tests\integration\Helper\ContainerHelper;
 use Cycle\ORM\Transaction;
 
 /**
- * @group Import
+ * @group Import9
  */
 class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
 {
@@ -50,11 +50,13 @@ class ImportUpdateProductInformationTest extends \Codeception\Test\Unit
     {
         $this->createProduct();
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
+        $csvProduct->setName('test');
         $this->updateProductInfo->update($csvProduct);
 
         $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
         self::assertNotNull($csvProduct);
         self::assertNotNull($productFromRepository);
+        dump('ProductFromRepository',$productFromRepository);
         self::assertSame($csvProduct->getArticleNumber(), $productFromRepository->getArticleNumber());
         self::assertSame($csvProduct->getId(), $productFromRepository->getId());
         self::assertSame($csvProduct->getName(), $productFromRepository->getName());

@@ -38,7 +38,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $databaseManager = new DatabaseManager();
 
         $orm = $databaseManager->connect();
-
+        $this->transaction = new Transaction($orm);
         $this->ormAttributeRepository = $orm->getRepository(Order::class);
         $this->shoppingCardEntityManager = $this->container->getShoppingCardEntityManager();
         $this->orderEntityManager = $this->container->getOrderEntityManager();
@@ -48,6 +48,7 @@ class OrderRepositoryTest extends \Codeception\Test\Unit
         $this->address = $this->addressBusinessFace->save($this->createAddressEntity());
         $this->shoppingCard = $this->shoppingCardEntityManager->save($this->createShoppingCard());
         $this->entity = $this->orderEntityManager->save($this->createOrderEntity());
+
     }
 
     public function _after()

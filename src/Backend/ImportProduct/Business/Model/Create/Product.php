@@ -34,7 +34,9 @@ class Product implements ProductInterface
         $productDTO = new ProductDataProvider();
         $productDTO->setArticleNumber($csvDTO->getArticleNumber());
         $productDTO->setPrice($csvDTO->getPrice());
-        $csvDTO->setId($this->productBusinessFacade->save($productDTO)->getId());
+        $tmp= $this->productBusinessFacade->save($productDTO);
+        dump('importer Create Product after safe',$tmp);
+        $csvDTO->setId($tmp->getId());
 
         return $csvDTO;
     }

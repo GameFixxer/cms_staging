@@ -42,7 +42,8 @@ class ProductEntityManager implements ProductEntityManagerInterface
 
     public function save(ProductDataProvider $product): ProductDataProvider
     {
-        $entity = $this->ormProductRepository->findByPK($product->getArticleNumber());
+        $entity = $this->ormProductRepository->findOne(['article_number'=>$product->getArticleNumber()]);
+        dump('Entity From Repository',  $entity);
         $values = [
             'article_number' =>  $product->getArticleNumber(),
             'name' =>  $product->getName(),
@@ -56,12 +57,14 @@ class ProductEntityManager implements ProductEntityManagerInterface
             $transaction= $this->database->insert('product')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-            $transaction = $this->database->update('product', $values, ['id' => $entity->getId()]);
+           // $transaction = $this->database->update('product', $values, ['id' => $entity->getId()]);
+            $transaction = $this->database->update('product')->values($values)->where('id', '=', $entity->getId());
+            //dump('transaction', $transaction);
         }
-        $transaction->run();
+        dump('transaction run ',$transaction->run());
 
         $newProduct = $this->productRepository->get($product->getArticleNumber());
-
+        dump($newProduct);
         if (! $newProduct instanceof ProductDataProvider) {
             throw new \Exception('Fatal error while saving/loading', 1);
         }

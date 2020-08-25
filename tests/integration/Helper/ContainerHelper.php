@@ -9,17 +9,23 @@ use App\Backend\ImportProduct\Business\Model\Update\ProductAttribute;
 use App\Backend\ImportProduct\Business\Model\Update\ProductCategory;
 use App\Backend\ImportProduct\Business\Model\Update\ProductImporter;
 use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
+use App\Client\Address\Business\AddressBusinessFacade;
 use App\Client\Address\Persistence\AddressEntityManager;
 use App\Client\Address\Persistence\AddressEntityManagerInterface;
 use App\Client\Attribute\Business\AttributeBusinessFacade;
 use App\Client\Attribute\Persistence\AttributeEntityManager;
 use App\Client\Attribute\Persistence\AttributeRepository;
+use App\Client\Category\Business\CategoryBusinessFacade;
 use App\Client\Category\Persistence\CategoryEntityManager;
 use App\Client\Category\Persistence\CategoryRepository;
+use App\Client\Order\Business\OrderBusinessFacade;
 use App\Client\Order\Persistence\OrderEntityManager;
 use App\Client\Order\Persistence\OrderRepository;
+use App\Client\Product\Business\ProductBusinessFacade;
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Client\Product\Persistence\ProductRepository;
+use App\Client\ShoppingCard\Business\ShoppingCardBusinessFacade;
+use App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper;
 use App\Client\ShoppingCard\Persistence\ShoppingCardEntityManager;
 use App\Client\User\Business\UserBusinessFacade;
 use App\Client\User\Persistence\UserEntityManager;
@@ -155,6 +161,36 @@ class ContainerHelper
     public function getUserBusinessFacade()
     {
         return $this->container->get(UserBusinessFacade::class);
+    }
+
+    public function getProductBusinessFacade()
+    {
+        return $this->container->get(ProductBusinessFacade::class);
+    }
+
+    public function getAddressBusinessFacade()
+    {
+        return $this->container->get(AddressBusinessFacade::class);
+    }
+
+    public function getShoppingCardBusinessFacade()
+    {
+        return $this->container->get(ShoppingCardBusinessFacade::class);
+    }
+
+    public function getOrderBusinessFacade()
+    {
+        return $this->container->get(OrderBusinessFacade::class);
+    }
+
+    public function getCategoryBusinessFacade()
+    {
+        return$this->container->get(CategoryBusinessFacade::class);
+    }
+
+    public function getShoppingCardMapper()
+    {
+        return $this->container->get(ShoppingCardMapper::class);
     }
 
 }

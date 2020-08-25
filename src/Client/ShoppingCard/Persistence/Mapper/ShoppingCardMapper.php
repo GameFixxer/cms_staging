@@ -24,9 +24,9 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
     public function map(ShoppingCard $shoppingCard): ShoppingCardDataProvider
     {
         $shoppingCardDataProvider = new  ShoppingCardDataProvider();
-        $user = $this->userBusinessFacade->get($shoppingCard->getUser()->getUsername());
+        $user = $this->userBusinessFacade->getById($shoppingCard->getUserId());
         if (!$user instanceof UserDataProvider) {
-            throw new \Exception('UserRepository Returned null for username:'.$shoppingCard->getUser()->getUsername(), 1);
+            throw new \Exception('UserRepository Returned null for username:'.$shoppingCard->getUserId(), 1);
         }
         $shoppingCardDataProvider->setUser($user);
         $shoppingCardDataProvider->setSum($shoppingCard->getSum());
@@ -43,7 +43,7 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
      * @param String $productString
      * @return ProductDataProvider[]
      */
-    private function mapProducts(String $productString): array
+    private function mapProducts(string $productString): array
     {
         $articleByNumber = explode(',', $productString);
         $mappedProducts = [];
@@ -52,7 +52,8 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
             if ($product instanceof ProductDataProvider) {
                 $mappedProducts[] = $product;
             }
-            return $mappedProducts;
         }
+        return $mappedProducts;
+
     }
 }

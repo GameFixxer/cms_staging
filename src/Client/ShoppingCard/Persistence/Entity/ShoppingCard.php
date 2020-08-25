@@ -38,10 +38,10 @@ class ShoppingCard
     protected $quantity;
 
     /**
-     * @BelongsTo(target="user", nullable=false)
-     * @var User
+     * @Column(type="int", nullable = true)
+     * @var int
      */
-    protected $User;
+    protected $userId;
 
     /**
      * @Column(type="string", nullable = true)
@@ -100,19 +100,19 @@ class ShoppingCard
     }
 
     /**
-     * @return User
+     * @return int
      */
-    public function getUser(): User
+    public function getUserId(): int
     {
-        return $this->User;
+        return $this->userId;
     }
 
     /**
-     * @param User $User
+     * @param int $userId
      */
-    public function setUser(User $User): void
+    public function setUserId(int $userId): void
     {
-        $this->User = $User;
+        $this->userId = $userId;
     }
 
     /**

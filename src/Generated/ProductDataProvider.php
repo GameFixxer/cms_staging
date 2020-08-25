@@ -42,7 +42,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      * @param string $name
      * @return ProductDataProvider
      */
-    public function setName(string $name = '')
+    public function setName(string $name )
     {
         $this->name = $name;
 
@@ -83,7 +83,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      * @param string $description
      * @return ProductDataProvider
      */
-    public function setDescription(string $description = '')
+    public function setDescription(string $description)
     {
         $this->description = $description;
 
@@ -124,7 +124,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
      * @param string $articleNumber
      * @return ProductDataProvider
      */
-    public function setArticleNumber(string $articleNumber = '')
+    public function setArticleNumber(string $articleNumber)
     {
         $this->articleNumber = $articleNumber;
 

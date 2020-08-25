@@ -31,7 +31,9 @@ class ProductInformation implements ProductInterface
         if (!$productDTO instanceof ProductDataProvider) {
             throw new \Exception('ProductDTO empty', 1);
         }
+        dump(__LINE__.'Before valuecheck');
         if ($this->valueIntegrityManager->checkValuesChanged($csvDTO, $productDTO)) {
+            dump(__LINE__.'After valuecheck. Name:'.$csvDTO->getName());
             $productDTO->setName($csvDTO->getName());
             $productDTO->setDescription($csvDTO->getDescription());
             $this->productBusinessFacade->save($productDTO);
