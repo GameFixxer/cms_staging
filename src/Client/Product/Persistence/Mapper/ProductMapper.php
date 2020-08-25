@@ -40,7 +40,7 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param array $attribute
+     * @param string $attribute
      * @return AttributeDataProvider[]
      */
     private function mapAttributes(string $attribute): array
@@ -50,8 +50,6 @@ class ProductMapper implements ProductMapperInterface
         foreach ($attributes as $attributeKey) {
             $mappedAttributes[]= $this->attributeBusinessFacade->get($attributeKey);
         }
-
-
         return $mappedAttributes;
     }
 

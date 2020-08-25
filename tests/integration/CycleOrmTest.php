@@ -67,7 +67,7 @@ class CycleOrmTest extends \Codeception\Test\Unit
         $transaction->run();
         $this->product = new Product();
         $this->product->setArticleNumber($articleNumber);
-        $this->product->addAttribute($attribute);
+        $this->product->setAttributeKey($attribute->getAttributeKey());
         $this->product->setProductName('productname');
         $this->product->setProductDescription('productdescription');
         $this->product->setPrice(0);

@@ -51,7 +51,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $product1->setArticleNumber('product1');
         $product1->setProductDescription('product1');
         $product1->setProductName('product1');
-        $product1->addAttribute(null);
+        $product1->setAttributeKey("");
 
         $transaction = new Transaction($this->orm);
         $transaction->persist($product1);
