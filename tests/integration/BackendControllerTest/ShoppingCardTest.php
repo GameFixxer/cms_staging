@@ -63,7 +63,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $product2->setArticleNumber('product2');
         $product2->setProductDescription('product2');
         $product2->setProductName('product2');
-        $product2->addAttribute(null);
+        $product2->setAttributeKey("");
 
         $transaction->persist($product2);
         $transaction->run();
@@ -74,7 +74,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
         $product3->setArticleNumber('product3');
         $product3->setProductDescription('product3');
         $product3->setProductName('product3');
-        $product3->addAttribute(null);
+        $product3->setAttributeKey("");
 
 
         $transaction->persist($product3);
