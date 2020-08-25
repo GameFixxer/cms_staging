@@ -13,7 +13,7 @@ interface OrderManagerInterface
 
     public function setUser(string $user) : void;
 
-    public function addAddressToOrder(string $type, bool $primary): void;
+    public function addAddressToOrder(string $type, int $postcode): void;
 
     public function pushOrder(): void;
 

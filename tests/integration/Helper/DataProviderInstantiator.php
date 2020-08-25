@@ -50,7 +50,7 @@ class DataProviderInstantiator
         $this->order->setStatus('shipping');
         $this->order->setShoppingCard($this->createBasket());
         $this->order->setId(0);
-        $this->order = $this-$this->orderBusinessFacade->save($this->order);
+        $this->order = $this->orderBusinessFacade->save($this->order);
         return $this->order;
     }
 

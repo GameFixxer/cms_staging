@@ -71,7 +71,6 @@ class ShoppingCardMapperTest extends \Codeception\Test\Unit
         }
         $this->dataProvider->deleteBasket($this->basked);
         $this->dataProvider->deleteProduct($this->product);
-        $this->dataProvider->deleteCategory($tmpCategoryCache);
         $this->dataProvider->deleteUser($this->user);
     }
 

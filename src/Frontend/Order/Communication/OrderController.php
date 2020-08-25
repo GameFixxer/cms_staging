@@ -46,7 +46,7 @@ class OrderController implements BackendController
             if (isset($_POST['checkout']) && $this->requirementsFullFilled()) {
                 if ($_POST['address'] === 'notNew') {
                     $this->addShoppingCardItems();
-                    $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['primary']);
+                    $this->addAddressToOrder($_POST['address']['type'], $_POST['address']['postcode']);
                     $this->pushOrder();
                 } elseif ($_POST['address'] === 'new') {
                     $this->createNewAddress();
@@ -81,9 +81,9 @@ class OrderController implements BackendController
         $this->orderManager->addShoppingCardItems($this->orderManager->createShoppingCard($this->userSession->getShoppingCard()));
     }
 
-    public function addAddressToOrder(string $type, bool $primary)
+    public function addAddressToOrder(string $type, int $postcode)
     {
-        $this->orderManager->addAddressToOrder($type, $primary);
+        $this->orderManager->addAddressToOrder($type, $postcode);
     }
 
     private function pushOrder()
