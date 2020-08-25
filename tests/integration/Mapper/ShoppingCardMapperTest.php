@@ -5,6 +5,7 @@ namespace App\Tests\integration\Mapper;
 
 use App\Client\ShoppingCard\Persistence\Entity\ShoppingCard;
 use App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper;
+use App\Generated\CategoryDataProvider;
 use App\Generated\ProductDataProvider;
 use App\Generated\ShoppingCardDataProvider;
 use App\Generated\UserDataProvider;
@@ -65,6 +66,9 @@ class ShoppingCardMapperTest extends \Codeception\Test\Unit
     public function _after()
     {
         $tmpCategoryCache = $this->product->getCategory();
+        if($tmpCategoryCache instanceof CategoryDataProvider){
+            $this->dataProvider->deleteCategory($tmpCategoryCache);
+        }
         $this->dataProvider->deleteBasket($this->basked);
         $this->dataProvider->deleteProduct($this->product);
         $this->dataProvider->deleteCategory($tmpCategoryCache);
@@ -95,9 +99,8 @@ class ShoppingCardMapperTest extends \Codeception\Test\Unit
         $shoppingCard->setShoppingCard('12,34,56');
 
         $basket = $this->basketMapper->map($shoppingCard);
-/*
+
         self::assertSame($basket->getUser()->getId(), $this->user->getId());
         self::assertSame($basket->getProduct()[0]->getId(), $this->product->getId());
-*/
     }
 }
