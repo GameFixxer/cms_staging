@@ -19,7 +19,7 @@ class UserMapper implements UserMapperInterface
         $userDataTransferObject->setRole($user->getRole());
         $userDataTransferObject->setSessionId($user->getSessionId());
         $userDataTransferObject->setResetPassword($user->getResetPassword());
-        $userDataTransferObject->setShoppingCardId($user->getShoppingcardId());
+        $userDataTransferObject->setShoppingCardId($user->getShoppingCardId());
 
 
         return $userDataTransferObject;

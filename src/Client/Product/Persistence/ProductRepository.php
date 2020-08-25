@@ -9,21 +9,23 @@ use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
 use App\Generated\ProductDataProvider;
 use Cycle\ORM\ORM;
+use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ObjectRepository;
 
 class ProductRepository implements ProductRepositoryInterface
 {
     private ProductMapperInterface $productMapper;
-    private \Cycle\ORM\RepositoryInterface $ormProductRepository;
+    private ObjectRepository $productRepository;
 
     /**
      * ProductRepository constructor.
      * @param ProductMapperInterface $productMapper
-     * @param \Cycle\ORM\ORM $ormProductRepository
+     * @param EntityManager $entityManager
      */
-    public function __construct(ProductMapperInterface $productMapper, \Cycle\ORM\ORM $ormProductRepository)
+    public function __construct(ProductMapperInterface $productMapper, EntityManager $entityManager)
     {
         $this->productMapper = $productMapper;
-        $this->ormProductRepository = $ormProductRepository->getRepository(Product::class);
+        $this->productRepository = $entityManager->getRepository('Product');
     }
 
 
@@ -33,7 +35,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function getList(): array
     {
         $productList = [];
-        $productEntityList = (array)$this->ormProductRepository->select()->fetchALl();
+        $productEntityList = (array)$this->productRepository->findAll();
         /** @var  Product $product */
         foreach ($productEntityList as $product) {
             $productList[] = $this->productMapper->map($product);
@@ -43,7 +45,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function get(string $articleNumber): ?ProductDataProvider
     {
-        $productEntity = $this->ormProductRepository->findOne(['article_Number'=>$articleNumber]);
+        $productEntity = $this->productRepository->findBy(['article_Number'=>$articleNumber]);
         if ($productEntity instanceof Product) {
             return $this->productMapper->map($productEntity);
         }

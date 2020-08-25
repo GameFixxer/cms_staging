@@ -3,134 +3,107 @@ declare(strict_types=1);
 
 namespace App\Client\ShoppingCard\Persistence\Entity;
 
-use App\Client\Product\Persistence\Entity\Product;
-use App\Client\User\Persistence\Entity\User;
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
-use Cycle\Annotated\Annotation\Relation\HasMany;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-/**
- * @Entity(
- *     table = "shoppingcard"
- *     )
- */
+/**@Entity */
 class ShoppingCard
 {
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
     protected $id;
-
-
-    /**
-     * @Column(type="int", nullable = true)
-     * @var int
-     */
+    /** @Column(type="int") */
     protected $sum;
-
-    /**
-     * @Column(type="int", nullable = true)
-     * @var int
-     */
+    /** @Column(type="int") */
     protected $quantity;
-
-    /**
-     * @Column(type="int", nullable = true)
-     * @var int
-     */
+    /** @Column(type="int") */
     protected $userId;
-
-    /**
-     * @Column(type="string", nullable = true)
-     * @var string
-     */
-
+    /** @Column(type="string") */
     protected $shoppingCard;
 
-
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param mixed $id
      */
-    public function setId(int $id): void
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getSum(): int
+    public function getSum()
     {
         return $this->sum;
     }
 
     /**
-     * @param int $sum
+     * @param mixed $sum
      */
-    public function setSum(int $sum): void
+    public function setSum($sum): void
     {
         $this->sum = $sum;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getQuantity(): int
+    public function getQuantity()
     {
         return $this->quantity;
     }
 
     /**
-     * @param int $quantity
+     * @param mixed $quantity
      */
-    public function setQuantity(int $quantity): void
+    public function setQuantity($quantity): void
     {
         $this->quantity = $quantity;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getUserId(): int
+    public function getUserId()
     {
         return $this->userId;
     }
 
     /**
-     * @param int $userId
+     * @param mixed $userId
      */
-    public function setUserId(int $userId): void
+    public function setUserId($userId): void
     {
         $this->userId = $userId;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getShoppingCard(): string
+    public function getShoppingCard()
     {
         return $this->shoppingCard;
     }
 
     /**
-     * @param string $shoppingCard
+     * @param mixed $shoppingCard
      */
-    public function setShoppingCard(string $shoppingCard): void
+    public function setShoppingCard($shoppingCard): void
     {
         $this->shoppingCard = $shoppingCard;
     }
-
-
 
 }

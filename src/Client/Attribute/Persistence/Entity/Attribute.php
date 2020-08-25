@@ -3,82 +3,71 @@
 
 namespace App\Client\Attribute\Persistence\Entity;
 
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-/**
- * @Entity(
- *     table = "attribute"
- * )
- */
+/**@Entity  */
 class Attribute
 {
-    public const TABLE = 'attribute';
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
-    protected $attribute_id;
-
-    /**
-     * @Column( unique = "true", type="string")
-     * @var string
-     */
+    protected $id;
+    /** @Column(type="string") */
     protected $attribute_key;
-
-    /**
-     * @Column( unique = "true", type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $attribute_value;
 
-
     /**
-     * @return string
+     * @return mixed
      */
-    public function getAttributeValue(): string
+    public function getId()
     {
-        return $this->attribute_value;
+        return $this->id;
     }
 
     /**
-     * @param string $attribute_value
+     * @param mixed $id
      */
-    public function setAttributeValue(string $attribute_value): void
+    public function setId($id): void
     {
-        $this->attribute_value = $attribute_value;
-    }
-
-
-    /**
-     * @param int $attributeId
-     */
-    public function setAttributeId(int $attributeId):void
-    {
-        $this->attribute_id = $attributeId;
+        $this->id = $id;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getAttributeId(): int
-    {
-        return $this->attribute_id;
-    }
-    /**
-     * @return string
-     */
-    public function getAttributeKey(): string
+    public function getAttributeKey()
     {
         return $this->attribute_key;
     }
 
     /**
-     * @param string $attribute_key
+     * @param mixed $attribute_key
      */
-
-    public function setAttributeKey(string $attribute_key): void
+    public function setAttributeKey($attribute_key): void
     {
         $this->attribute_key = $attribute_key;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAttributeValue()
+    {
+        return $this->attribute_value;
+    }
+
+    /**
+     * @param mixed $attribute_value
+     */
+    public function setAttributeValue($attribute_value): void
+    {
+        $this->attribute_value = $attribute_value;
+    }
+
 }

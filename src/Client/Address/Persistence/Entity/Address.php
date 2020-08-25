@@ -3,239 +3,179 @@
 
 namespace App\Client\Address\Persistence\Entity;
 
-use App\Client\User\Persistence\Entity\User;
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-/**
- * @Entity(
- *     table = "address"
- * )
- */
+/**@Entity  */
 class Address
 {
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
-    protected $address_id;
-
-    /**
-     * @BelongsTo(target = "user",   nullable =false)
-     */
-    protected $user;
-
-    /**
-     * @Column(type="string",nullable = false)
-     * @var string
-     */
+    protected $id;
+    /** @Column(type="int") */
+    protected $userId;
+    /** @Column(type="string") */
     protected $country;
-
-    /**
-     * @Column( type="string", nullable=false)
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $street;
-
-    /**
-     * @Column(type="string", nullable=false)
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $town;
-
-    /**
-     * @Column(type="int", nullable=false)
-     * @var int
-     */
+    /** @Column(type="int") */
     protected $postCode;
-
-    /**
-     * @Column(type="string", nullable=false)
-     * @var string
-     */
+    /** @Column(type="string", nullable=false) */
     protected $type;
-
-    /**
-     * @Column(type="boolean", nullable=false)
-     * @var bool
-     */
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string", nullable=false) */
     protected $firstName;
-
-    /**
-     * @return string
-     */
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string", nullable=false) */
     protected $lastName;
 
-    protected $active;
-
     /**
-     * @return bool
+     * @return mixed
      */
-
-    public function getActive(): bool
+    public function getId()
     {
-        return (bool) $this->active;
+        return $this->id;
     }
 
     /**
-     * @param bool $active
+     * @param mixed $id
      */
-    public function setActive($active): void
+    public function setId($id): void
     {
-        $this->active = $active;
+        $this->id = $id;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getAddressId(): int
+    public function getUserId()
     {
-        return $this->address_id;
+        return $this->userId;
     }
 
     /**
-     * @param int $address_id
+     * @param mixed $userId
      */
-    public function setAddressId(int $address_id): void
+    public function setUserId($userId): void
     {
-        $this->address_id = $address_id;
+        $this->userId = $userId;
     }
 
     /**
-     * @return User
+     * @return mixed
      */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user): void
-    {
-        $this->user = $user;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCountry(): string
+    public function getCountry()
     {
         return $this->country;
     }
 
     /**
-     * @param string $country
+     * @param mixed $country
      */
-    public function setCountry(string $country): void
+    public function setCountry($country): void
     {
         $this->country = $country;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getStreet(): string
+    public function getStreet()
     {
         return $this->street;
     }
 
     /**
-     * @param string $street
+     * @param mixed $street
      */
-    public function setStreet(string $street): void
+    public function setStreet($street): void
     {
         $this->street = $street;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getTown(): string
+    public function getTown()
     {
         return $this->town;
     }
 
     /**
-     * @param string $town
+     * @param mixed $town
      */
-    public function setTown(string $town): void
+    public function setTown($town): void
     {
         $this->town = $town;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getPostCode(): int
+    public function getPostCode()
     {
         return $this->postCode;
     }
 
     /**
-     * @param int $postCode
+     * @param mixed $postCode
      */
-    public function setPostCode(int $postCode): void
+    public function setPostCode($postCode): void
     {
         $this->postCode = $postCode;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
+     * @param mixed $type
      */
-    public function setType(string $type): void
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
 
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName): void
+    {
+        $this->lastName = $lastName;
+    }
 
 }

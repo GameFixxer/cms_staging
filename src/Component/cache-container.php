@@ -116,6 +116,7 @@ class MyCachedContainer extends Container
             'App\\Frontend\\Login\\Business\\LoginManager' => true,
             'App\\Frontend\\ShoppingCard\\Business\\ShoppingCardManager' => true,
             'Cycle\\ORM\\ORM' => true,
+            'Doctrine\\ORM\\EntityManager' => true,
             'Psr\\Container\\ContainerInterface' => true,
             'Symfony\\Component\\DependencyInjection\\ContainerInterface' => true,
         ];
@@ -398,7 +399,7 @@ class MyCachedContainer extends Container
      */
     protected function getAttributeRepositoryService()
     {
-        return $this->services['App\\Client\\Attribute\\Persistence\\AttributeRepository'] = new \App\Client\Attribute\Persistence\AttributeRepository(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Attribute\\Persistence\\AttributeRepository'] = new \App\Client\Attribute\Persistence\AttributeRepository(($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] ?? ($this->services['App\\Client\\Attribute\\Persistence\\Mapper\\AttributeMapper'] = new \App\Client\Attribute\Persistence\Mapper\AttributeMapper())), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**
@@ -528,7 +529,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductRepositoryService()
     {
-        return $this->services['App\\Client\\Product\\Persistence\\ProductRepository'] = new \App\Client\Product\Persistence\ProductRepository(($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? $this->getProductMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Product\\Persistence\\ProductRepository'] = new \App\Client\Product\Persistence\ProductRepository(($this->services['App\\Client\\Product\\Persistence\\Mapper\\ProductMapper'] ?? $this->getProductMapperService()), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**
@@ -852,6 +853,16 @@ class MyCachedContainer extends Container
     protected function getORMService()
     {
         return $this->privates['Cycle\\ORM\\ORM'] = \App\Service\DatabaseManager::connect();
+    }
+
+    /**
+     * Gets the private 'Doctrine\ORM\EntityManager' shared service.
+     *
+     * @return \Doctrine\ORM\EntityManager
+     */
+    protected function getEntityManagerService()
+    {
+        return $this->privates['Doctrine\\ORM\\EntityManager'] = \App\Service\DoctrineDataBaseManager::getEntityManager();
     }
 
     public function getParameter(string $name)

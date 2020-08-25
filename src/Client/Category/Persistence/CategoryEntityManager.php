@@ -49,11 +49,11 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
             }
         }
 
-        $entity->setCategoryKey($category->getCategoryKey());
+        $entity->setKey($category->getCategoryKey());
         $transaction->persist($entity);
         $transaction->run();
 
-        $category->setCategoryId($entity->getCategoryId());
+        $category->setCategoryId($entity->getId());
 
         return $category;
     }

@@ -44,17 +44,19 @@ class ProductEntityManager implements ProductEntityManagerInterface
     public function save(ProductDataProvider $product): ProductDataProvider
     {
         $entity = $this->ormProductRepository->findOne(['article_number'=>$product->getArticleNumber()]);
-        dump('injected Product', $product);
+        dump('injected Product', $product->getId());
         $values = [
             'article_number' =>  $product->getArticleNumber(),
             'name' =>  $product->getName(),
             'price'     =>  $product->getPrice(),
             'description'  => $product->getDescription(),
         ];
+
         if ($product->getCategory() instanceof CategoryDataProvider) {
             $values['category_id'] = $product->getCategory()->getCategoryId();
         }
-        $values['attributes_key'] = $this->changeAttributeFormat($product);
+        $values['attribute_key'] = $this->changeAttributeFormat($product);
+
         if (!$entity instanceof Product) {
             $transaction= $this->database->insert('product')->values($values);
         } else {
@@ -74,12 +76,12 @@ class ProductEntityManager implements ProductEntityManagerInterface
         return $newProduct;
     }
 
-    private function changeAttributeFormat(ProductDataProvider $product):array
+    private function changeAttributeFormat(ProductDataProvider $product):string
     {
-        $values = [];
+        $values = "";
         foreach ($product->getAttribute() as $item) {
             if ($item instanceof AttributeDataProvider) {
-                $values['attribute_key'] = $values['attribute_key'].','.$item->getAttributeKey();
+                $values = $values.','.$item->getAttributeKey();
             }
         }
         return $values;

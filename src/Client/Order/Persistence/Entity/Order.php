@@ -3,91 +3,54 @@ declare(strict_types=1);
 
 namespace App\Client\Order\Persistence\Entity;
 
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
-use DateTime;
-use DateTimeImmutable;
+
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
 /** @Entity */
 class Order
 {
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
-    protected $orderId;
-
-    /**
-     * @Column(type="int")
-     * @var int
-     */
+    protected $id;
+    /** @Column(type="int") */
     protected $userId;
-
-    /**
-     * @BelongsTo(target="address", nullable=false)
-     */
-    protected $address;
-
-    /**
-     * @Column(type="int")
-     * @var int
-     */
+    /** @Column(type="int") */
+    protected $addressId;
+    /** @Column(type="int") */
     protected $sum;
-
-    /**
-     * @Column(type="Enum(inProgress, shipping, delivered)", nullable=false)
-     */
+    /** @Column(type="string") */
     protected $status;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $dateOfOrder;
-
-    /**
-     * @Column(type="int")
-     * @var int
-     */
+    /** @Column(type="int") */
     protected $shoppingCardId;
+    /** @Column(type="int") */
+    protected $orderedProducts;
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getShoppingCardId()
+    public function getId()
     {
-        return $this->shoppingCardId;
+        return $this->id;
     }
 
     /**
-     * @param int $shoppingCardId
+     * @param mixed $id
      */
-    public function setShoppingCardId($shoppingCardId): void
+    public function setId($id): void
     {
-        $this->shoppingCardId = $shoppingCardId;
-    }
-
-
-
-    /**
-     * @return int
-     */
-    public function getOrderId(): int
-    {
-        return $this->orderId;
+        $this->id = $id;
     }
 
     /**
-     * @param int $orderId
-     */
-    public function setOrderId(int $orderId): void
-    {
-        $this->orderId = $orderId;
-    }
-
-    /**
-     * @return int
+     * @return mixed
      */
     public function getUserId()
     {
@@ -95,7 +58,7 @@ class Order
     }
 
     /**
-     * @param int $userId
+     * @param mixed $userId
      */
     public function setUserId($userId): void
     {
@@ -105,31 +68,31 @@ class Order
     /**
      * @return mixed
      */
-    public function getAddress()
+    public function getAddressId()
     {
-        return $this->address;
+        return $this->addressId;
     }
 
     /**
-     * @param mixed $address
+     * @param mixed $addressId
      */
-    public function setAddress($address): void
+    public function setAddressId($addressId): void
     {
-        $this->address = $address;
+        $this->addressId = $addressId;
     }
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getSum(): int
+    public function getSum()
     {
         return $this->sum;
     }
 
     /**
-     * @param int $sum
+     * @param mixed $sum
      */
-    public function setSum(int $sum): void
+    public function setSum($sum): void
     {
         $this->sum = $sum;
     }
@@ -151,40 +114,51 @@ class Order
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getDateOfOrder(): string
+    public function getDateOfOrder()
     {
         return $this->dateOfOrder;
     }
 
     /**
-     * @param string $dateOfOrder
+     * @param mixed $dateOfOrder
      */
-    public function setDateOfOrder(string $dateOfOrder): void
+    public function setDateOfOrder($dateOfOrder): void
     {
         $this->dateOfOrder = $dateOfOrder;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getOrderedProducts(): string
+    public function getShoppingCardId()
+    {
+        return $this->shoppingCardId;
+    }
+
+    /**
+     * @param mixed $shoppingCardId
+     */
+    public function setShoppingCardId($shoppingCardId): void
+    {
+        $this->shoppingCardId = $shoppingCardId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderedProducts()
     {
         return $this->orderedProducts;
     }
 
     /**
-     * @param string $orderedProducts
+     * @param mixed $orderedProducts
      */
-    public function setOrderedProducts(string $orderedProducts): void
+    public function setOrderedProducts($orderedProducts): void
     {
         $this->orderedProducts = $orderedProducts;
     }
 
-    /**
-     * @Column(type="string", nullable=false)
-     * @var string
-     */
-    protected $orderedProducts;
 }

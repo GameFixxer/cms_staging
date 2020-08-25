@@ -11,7 +11,7 @@ class AttributeMapper implements AttributeMapperInterface
     public function map(Attribute $attribute):AttributeDataProvider
     {
         $attributeDTO = new AttributeDataProvider();
-        $attributeDTO->setAttributeId($attribute->getAttributeId());
+        $attributeDTO->setAttributeId($attribute->getId());
         $attributeDTO->setAttributeKey($attribute->getAttributeKey());
         $attributeDTO->setAttributeValue($attribute->getAttributeValue());
         return  $attributeDTO;

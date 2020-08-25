@@ -55,8 +55,8 @@ class AddressEntityManager implements AddressEntityManagerInterface
         if (!$entity instanceof Address) {
             $transaction= $this->database->insert('address')->values($values);
         } else {
-            $values ['address_id'] =  $entity->getAddressId();
-            $transaction = $this->database->update('address')->values($values)->where('address_id', '=', $entity->getAddressId());
+            $values ['address_id'] =  $entity->getId();
+            $transaction = $this->database->update('address')->values($values)->where('address_id', '=', $entity->getId());
         }
 
         $transaction->run();

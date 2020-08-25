@@ -50,7 +50,7 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
         $transaction->persist($entity);
         $transaction->run();
 
-        $attribute->setAttributeId($entity->getAttributeId());
+        $attribute->setAttributeId($entity->getId());
 
         return $attribute;
     }

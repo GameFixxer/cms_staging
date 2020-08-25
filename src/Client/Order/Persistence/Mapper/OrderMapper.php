@@ -31,7 +31,7 @@ class OrderMapper implements OrderMapperInterface
     public function map(Order $order): OrderDataProvider
     {
         $orderDataTransferObject = new   OrderDataProvider();
-        $orderDataTransferObject->setId($order->getOrderId());
+        $orderDataTransferObject->setId($order->getId());
         $orderDataTransferObject->setStatus($order->getStatus());
         $user = $this->userBusinessFacade->getById($order->getUserId());
         if (! $user instanceof UserDataProvider) {
@@ -41,8 +41,8 @@ class OrderMapper implements OrderMapperInterface
         $orderDataTransferObject->setSum($order->getSum());
         $address = $this->addressBusinessFacade->get(
             $orderDataTransferObject->getUser(),
-            $order->getAddress()->getType(),
-            $order->getAddress()->getPostCode()
+            $order->getAddressId()->getType(),
+            $order->getAddressId()->getPostCode()
         );
         if (! $address instanceof AddressDataProvider) {
             throw new \Exception('Critical RepositoryError', 1);

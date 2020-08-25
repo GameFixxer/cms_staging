@@ -3,159 +3,162 @@ declare(strict_types=1);
 
 namespace App\Client\User\Persistence\Entity;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\HasMany;
-
-
-/**
- * @Entity(
- *     table = "user"
- *     )
- */
+/**@Entity */
 class User
 {
-    public const TABLE = 'user';
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
     protected $id;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string", unique=true) */
     protected $username;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $password;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $role;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $session_id;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $resetpassword;
-
-
-    /**
-     * @Column(type= "int")
-     * @var int
-     */
-    protected $shoppingcard_id;
-
-    /**
-     * @return int
-     */
-    public function getShoppingcardId(): int
-    {
-        return $this->shoppingcard_id;
-    }
-
-    /**
-     * @param int $shoppingcard_id
-     */
-    public function setShoppingcardId(int $shoppingcard_id): void
-    {
-        $this->shoppingcard_id = $shoppingcard_id;
-    }
-
-    /**
-     * @HasMany(target="address", nullable= true)
-     */
-    protected $address;
+    /** @Column(type="string") */
+    protected $resetPassword;
+    /** @Column(type="int") */
+    protected $shoppingCard_id;
+    /** @Column(type="int", unique=true) */
+    protected $addressId;
 
     /**
      * @return mixed
      */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param mixed $address
-     */
-    public function setAddress($address): void
-    {
-        $this->address = $address;
-    }
-
-
-    public function getSessionId():string
-    {
-        return $this->session_id;
-    }
-
-    public function setSessionId(string $sessionId):void
-    {
-        $this->session_id = $sessionId;
-    }
-
-    public function getResetPassword():string
-    {
-        return $this->resetpassword;
-    }
-
-    public function setResetPassword(string $reset):void
-    {
-        $this->resetpassword = $reset;
-    }
-
-    public function getRole():string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role):void
-    {
-        $this->role = $role;
-    }
-
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getUsername(): string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): void
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
     {
         $this->username = $username;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
 
     /**
-     * @param string $password
+     * @param mixed $password
      */
-    public function setPassword(string $password): void
+    public function setPassword($password): void
     {
         $this->password = $password;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param mixed $role
+     */
+    public function setRole($role): void
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSessionId()
+    {
+        return $this->session_id;
+    }
+
+    /**
+     * @param mixed $session_id
+     */
+    public function setSessionId($session_id): void
+    {
+        $this->session_id = $session_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResetPassword()
+    {
+        return $this->resetPassword;
+    }
+
+    /**
+     * @param mixed $resetPassword
+     */
+    public function setResetPassword($resetPassword): void
+    {
+        $this->resetPassword = $resetPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShoppingCardId()
+    {
+        return $this->shoppingCard_id;
+    }
+
+    /**
+     * @param mixed $shoppingCard_id
+     */
+    public function setShoppingCardId($shoppingCard_id): void
+    {
+        $this->shoppingCard_id = $shoppingCard_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddressId()
+    {
+        return $this->addressId;
+    }
+
+    /**
+     * @param mixed $addressId
+     */
+    public function setAddressId($addressId): void
+    {
+        $this->addressId = $addressId;
+    }
+
+
 }

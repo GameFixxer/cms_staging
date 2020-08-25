@@ -3,148 +3,75 @@ declare(strict_types=1);
 
 namespace App\Client\Product\Persistence\Entity;
 
-use App\Client\Attribute\Persistence\Entity\Attribute;
-use App\Generated\AttributeDataProvider;
-use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
 
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\ORM\Relation\Pivoted\PivotedCollection;
-
-/**
- * @Entity(
- *     table = "product"
- * )
- */
+/** @Entity */
 class Product
 {
-    public const TABLE = 'product';
-
-
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
     protected $id;
-
-
-    /**
-     * @Column(type="int")
-     * @var int
-     */
+    /** @Column(type="integer") */
     protected $price;
-
-    /**
-     * @return int
-     */
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param int $price
-     */
-    public function setPrice(int $price): void
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * @Column(type="int", nullable=true)
-     * @var int
-     */
+    /** @Column(type="integer") */
     protected $categoryId;
-
-    /**
-     * @Column(type="string", default="", nullable=true)
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $attributeKey;
-
-
-    public function getAttributeKey()
-    {
-        return $this->attributeKey;
-    }
-
-    /**
-     * @param string $attributes
-     */
-
-    public function setAttributeKey(string $attributes)
-    {
-        $this->attributeKey = $attributes;
-    }
-
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string", unique=true) */
     protected $articleNumber;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $name;
-
-    /**
-     * @Column(type="string")
-     * @var string
-     */
+    /** @Column(type="string") */
     protected $description;
 
     /**
-     * @return int
+     * @return mixed
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-
     /**
-     * @param int
+     * @param mixed $id
      */
-    public function setId(int $id):void
+    public function setId($id): void
     {
         $this->id = $id;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getArticleNumber(): string
+    public function getPrice()
     {
-        return $this->articleNumber;
+        return $this->price;
     }
 
     /**
-     * @return string
+     * @param mixed $price
      */
-    public function getProductName(): string
+    public function setPrice($price): void
     {
-        return $this->name;
+        $this->price = $price;
     }
+
     /**
-     * @param string $name
+     * @return mixed
      */
-
-    public function setProductName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-
     public function getCategoryId()
     {
         return $this->categoryId;
     }
+
     /**
-     * @param  $categoryId
+     * @param mixed $categoryId
      */
     public function setCategoryId($categoryId): void
     {
@@ -152,25 +79,68 @@ class Product
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getProductDescription(): string
+    public function getAttributeKey()
+    {
+        return $this->attributeKey;
+    }
+
+    /**
+     * @param mixed $attributeKey
+     */
+    public function setAttributeKey($attributeKey): void
+    {
+        $this->attributeKey = $attributeKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArticleNumber()
+    {
+        return $this->articleNumber;
+    }
+
+    /**
+     * @param mixed $articleNumber
+     */
+    public function setArticleNumber($articleNumber): void
+    {
+        $this->articleNumber = $articleNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
+     * @param mixed $description
      */
-    public function setProductDescription(string $description): void
+    public function setDescription($description): void
     {
         $this->description = $description;
     }
-    /**
-     * @param string $articleNumber
-     */
-    public function setArticleNumber(string $articleNumber)
-    {
-        $this->articleNumber = $articleNumber;
-    }
+
+
 }

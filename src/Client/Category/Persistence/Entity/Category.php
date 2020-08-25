@@ -3,60 +3,54 @@ declare(strict_types=1);
 
 namespace App\Client\Category\Persistence\Entity;
 
-use Cycle\Annotated\Annotation\Entity;
-use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\HasMany;
 
-/**
- * @Entity(
- *     table = "category"
- * )
- */
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+
+/**@Entity  */
 class Category
 {
-    public const TABLE = 'category';
     /**
-     * @Column(type="primary")
-     * @var int
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
-    protected $category_id;
+    protected $id;
+    /** @Column(type="string") */
+    protected $key;
 
     /**
-     * @Column( unique = "true", type="string")
-     * @var string
+     * @return mixed
      */
-    protected $categoryKey;
-
-    /**
-     * @param int $category_id
-     */
-    public function setCategoryId(int $category_id):void
+    public function getId()
     {
-        $this->category_id = $category_id;
+        return $this->id;
     }
 
     /**
-     * @return int
+     * @param mixed $id
      */
-    public function getCategoryId(): int
+    public function setId($id): void
     {
-        return $this->category_id;
-    }
-    /**
-     * @return string
-     */
-    public function getCategoryKey(): string
-    {
-        return $this->categoryKey;
+        $this->id = $id;
     }
 
     /**
-     * @param string $categoryKey
+     * @return mixed
      */
-
-    public function setCategoryKey(string $categoryKey): void
+    public function getKey()
     {
-        $this->categoryKey = $categoryKey;
+        return $this->key;
+    }
+
+    /**
+     * @param mixed $key
+     */
+    public function setKey($key): void
+    {
+        $this->key = $key;
     }
 
 }

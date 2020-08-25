@@ -37,8 +37,8 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
 
     public function _after()
     {
-        if ($this->ormCategoryRepository->findByPK($this->entity->getCategoryId()) instanceof Category) {
-            $this->transaction->delete($this->ormCategoryRepository->findByPK($this->entity->getCategoryId()));
+        if ($this->ormCategoryRepository->findByPK($this->entity->getId()) instanceof Category) {
+            $this->transaction->delete($this->ormCategoryRepository->findByPK($this->entity->getId()));
             $this->transaction->run();
         }
     }
@@ -47,9 +47,9 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
     {
         $categoryRepository = $this->container->getCategoryRepository();
 
-        $categoryDtoFromRepository = $categoryRepository->getCategory($this->entity->getCategoryId());
-        $this->assertSame($this->entity->getCategoryId(), $categoryDtoFromRepository->getCategoryId());
-        $this->assertSame($this->entity->getCategoryKey(), $categoryDtoFromRepository->getCategoryKey());
+        $categoryDtoFromRepository = $categoryRepository->getCategory($this->entity->getId());
+        $this->assertSame($this->entity->getId(), $categoryDtoFromRepository->getCategoryId());
+        $this->assertSame($this->entity->getKey(), $categoryDtoFromRepository->getCategoryKey());
     }
 
     public function testGetCategoryWithNonExistingCategory()
@@ -67,14 +67,14 @@ class CategoryRepositoryTest extends \Codeception\Test\Unit
 
         $lastCategoryOfCategoryRepositoryList = end($categoryListFromCategoryRepository);
 
-        $this->assertSame($this->entity->getCategoryId(), $lastCategoryOfCategoryRepositoryList->getCategoryId());
-        $this->assertSame($this->entity->getCategoryKey(), $lastCategoryOfCategoryRepositoryList->getCategoryKey());
+        $this->assertSame($this->entity->getId(), $lastCategoryOfCategoryRepositoryList->getCategoryId());
+        $this->assertSame($this->entity->getKey(), $lastCategoryOfCategoryRepositoryList->getCategoryKey());
     }
 
     private function createCategoryEntity() :Category
     {
         $this->entity = new Category();
-        $this->entity->setCategoryKey('tester');
+        $this->entity->setKey('tester');
 
         return $this->entity;
     }

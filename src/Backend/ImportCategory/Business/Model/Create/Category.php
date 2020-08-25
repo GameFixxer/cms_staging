@@ -26,7 +26,7 @@ class Category implements CategoryInterface
 
         $categoryFromRepository = $this->categoryBusinessFacade->getByKey($csvDTO->getCategoryKey());
         if ($categoryFromRepository instanceof CategoryEntity) {
-            $csvDTO->setCategoryId($categoryFromRepository->getCategoryId());
+            $csvDTO->setCategoryId($categoryFromRepository->getId());
             return $csvDTO;
         }
         $categoryDTO = new CategoryDataProvider();

@@ -25,7 +25,7 @@ class AddressMapper implements AddressMapperInterface
             throw new \Exception('UserRepository Returned null for username:'.$address->getUser()->getUsername(), 1);
         }
         $addressDataTransferObject->setUser($user);
-        $addressDataTransferObject->setAddress_id($address->getAddressId());
+        $addressDataTransferObject->setAddress_id($address->getId());
         $addressDataTransferObject->setCountry($address->getCountry());
         $addressDataTransferObject->setPostCode($address->getPostCode());
         $addressDataTransferObject->setStreet($address->getStreet());

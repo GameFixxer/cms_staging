@@ -6,7 +6,9 @@
 
 
     <services>
-
+        <service id="Doctrine\ORM\EntityManager">
+                <factory class="App\Service\DoctrineDataBaseManager" method="getEntityManager"/>
+        </service>
         <service id="Cycle\ORM\ORM">
             <factory class="App\Service\DatabaseManager" method="connect"/>
         </service>
@@ -51,11 +53,11 @@
         </service>
         <service id="App\Client\Attribute\Persistence\AttributeRepository" public ="true">
             <argument id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" type="service"/>
-            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
         </service>
         <service id="App\Client\Product\Persistence\ProductRepository" public="true">
             <argument type="service" id="App\Client\Product\Persistence\Mapper\ProductMapper"/>
-            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
         </service>
         <service id="App\Client\User\Persistence\UserRepository" public="true">
             <argument type="service" id="App\Client\User\Persistence\Mapper\UserMapper"/>
@@ -148,6 +150,7 @@
         <service id="App\Frontend\ShoppingCard\Business\ShoppingCardManager">
             <argument id="App\Client\Product\Persistence\ProductRepository" type="service"/>
         </service>
+
 
 
     </services>
