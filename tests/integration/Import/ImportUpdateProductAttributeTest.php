@@ -58,8 +58,6 @@ class ImportUpdateProductAttributeTest extends \Codeception\Test\Unit
         $productFromRepository = $this->productRepository->get($this->csvDTO->getArticleNumber());
 
         self::assertNotNull($productFromRepository);
-        $orm = new DatabaseManager();
-        $orm = $orm->connect();
         if (!empty(($productFromRepository->getAttribute()))) {
             $orm = new DatabaseManager();
             $orm = $orm->connect();
