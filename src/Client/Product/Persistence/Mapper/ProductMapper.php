@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Client\Product\Persistence\Mapper;
 
+use App\Client\Attribute\Business\AttributeBusinessFacade;
+use App\Client\Attribute\Business\AttributeBusinessFacadeInterface;
 use App\Client\Attribute\Persistence\Mapper\AttributeMapperInterface;
 use App\Client\Category\Business\CategoryBusinessFacadeInterface;
 use App\Client\Category\Persistence\Entity\Category;
@@ -14,12 +16,12 @@ use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
 class ProductMapper implements ProductMapperInterface
 {
-    private AttributeMapperInterface $attributeMapper;
+    private AttributeBusinessFacadeInterface $attributeBusinessFacade;
     private CategoryBusinessFacadeInterface $categoryBusinessFacade;
 
-    public function __construct(AttributeMapperInterface $attributeMapper, CategoryBusinessFacadeInterface $categoryBusinessFacade)
+    public function __construct(AttributeBusinessFacadeInterface $attributeBusinessFacade, CategoryBusinessFacadeInterface $categoryBusinessFacade)
     {
-        $this->attributeMapper = $attributeMapper;
+        $this->attributeBusinessFacade = $attributeBusinessFacade;
         $this->categoryBusinessFacade = $categoryBusinessFacade;
     }
 
@@ -30,24 +32,27 @@ class ProductMapper implements ProductMapperInterface
         $productDataTransferObject->setName($product->getProductName());
         $productDataTransferObject->setDescription($product->getProductDescription());
         $productDataTransferObject->setArticleNumber($product->getArticleNumber());
-        $productDataTransferObject->setCategory($this->mapCategory($product->getCategory()));
-        $productDataTransferObject->setAttribute($this->mapProducts($product->getAttribute()));
+        $productDataTransferObject->setCategory($this->mapCategory($product->getCategoryId()));
+        $productDataTransferObject->setAttribute($this->mapAttributes($product->getAttributeKey()));
         $productDataTransferObject->setPrice($product->getPrice());
 
         return $productDataTransferObject;
     }
 
     /**
-     * @param PivotedCollection $address
+     * @param array $attribute
      * @return AttributeDataProvider[]
      */
-    private function mapProducts($address): array
+    private function mapAttributes(string $attribute): array
     {
-        $mappedProducts = [];
-        foreach ($address->toArray() as $productEntity) {
-            $mappedProducts[]= $this->attributeMapper->map($productEntity);
+        $attributes = explode(',', $attribute);
+        $mappedAttributes = [];
+        foreach ($attributes as $attributeKey) {
+            $mappedAttributes[]= $this->attributeBusinessFacade->get($attributeKey);
         }
-        return $mappedProducts;
+
+
+        return $mappedAttributes;
     }
 
     private function mapCategory($category):?CategoryDataProvider

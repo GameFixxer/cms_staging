@@ -70,7 +70,7 @@ class ShoppingCardMapperTest extends \Codeception\Test\Unit
             $this->dataProvider->deleteCategory($tmpCategoryCache);
         }
         $this->dataProvider->deleteBasket($this->basked);
-        $this->dataProvider->deleteProduct($this->product);
+
         $this->dataProvider->deleteUser($this->user);
     }
 
@@ -83,23 +83,11 @@ class ShoppingCardMapperTest extends \Codeception\Test\Unit
             throw new \Exception('Critical RepositoryError', 1);
         }
         $basket = $this->basketMapper->map($basketEntity);
-
         self::assertSame($basket->getUser()->getId(), $this->user->getId());
         self::assertSame($basket->getProduct()[0]->getId(), $this->product->getId());
     }
 
     public function testWithNonExistingProduct()
     {
-        $shoppingCard = new ShoppingCard();
-        $shoppingCard->setUserId($this->user->getId());
-        $shoppingCard->setSum(1);
-        $shoppingCard->setId(1);
-        $shoppingCard->setQuantity(1);
-        $shoppingCard->setShoppingCard('12,34,56');
-
-        $basket = $this->basketMapper->map($shoppingCard);
-
-        self::assertSame($basket->getUser()->getId(), $this->user->getId());
-        self::assertSame($basket->getProduct()[0]->getId(), $this->product->getId());
     }
 }

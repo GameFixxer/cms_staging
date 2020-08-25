@@ -47,7 +47,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
     {
         $product1 = new Product;
         $product1->setPrice(1);
-        $product1->setCategory(null);
+        $product1->setCategoryId(null);
         $product1->setArticleNumber('product1');
         $product1->setProductDescription('product1');
         $product1->setProductName('product1');
@@ -59,7 +59,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
 
         $product2 = new Product;
         $product2->setPrice(2);
-        $product2->setCategory(null);
+        $product2->setCategoryId(null);
         $product2->setArticleNumber('product2');
         $product2->setProductDescription('product2');
         $product2->setProductName('product2');
@@ -70,7 +70,7 @@ class ShoppingCardTest extends \Codeception\Test\Unit
 
         $product3 = new Product;
         $product3->setPrice(3);
-        $product3->setCategory(null);
+        $product3->setCategoryId(null);
         $product3->setArticleNumber('product3');
         $product3->setProductDescription('product3');
         $product3->setProductName('product3');

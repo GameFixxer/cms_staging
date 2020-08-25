@@ -47,7 +47,7 @@ class CycleOrmTest extends \Codeception\Test\Unit
         self::assertNotNull($productEntity);
         self::assertSame($productEntity->getProductName(), $this->product->getProductName());
         self::assertSame($productEntity->getProductDescription(), $this->product->getProductDescription());
-        self::assertSame($productEntity->getAttribute(), $this->product->getAttribute());
+        self::assertSame($productEntity->getAttribute(), $this->product->getAttributeKey());
     }
 
 

@@ -153,7 +153,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @return \App\Generated?CategoryDataProvider
+     * @return \App\Generated\?CategoryDataProvider
      */
     public function getCategory(): ?CategoryDataProvider
     {
@@ -162,7 +162,7 @@ final class ProductDataProvider extends \Xervice\DataProvider\Business\Model\Dat
 
 
     /**
-     * @param \App\Generated?CategoryDataProvider $category
+     * @param \App\Generated\?CategoryDataProvider $category
      * @return ProductDataProvider
      */
     public function setCategory(?CategoryDataProvider $category)

@@ -10,6 +10,7 @@ use Cycle\ORM\ORM;
 use Cycle\ORM\Transaction;
 use App\Generated\ProductDataProvider;
 use phpDocumentor\Reflection\Types\Object_;
+use function PHPUnit\Framework\assertDirectoryDoesNotExist;
 
 class ProductEntityManager implements ProductEntityManagerInterface
 {
@@ -43,7 +44,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
     public function save(ProductDataProvider $product): ProductDataProvider
     {
         $entity = $this->ormProductRepository->findOne(['article_number'=>$product->getArticleNumber()]);
-        dump('Entity From Repository',  $entity);
+        dump('injected Product', $product);
         $values = [
             'article_number' =>  $product->getArticleNumber(),
             'name' =>  $product->getName(),
@@ -51,17 +52,24 @@ class ProductEntityManager implements ProductEntityManagerInterface
             'description'  => $product->getDescription(),
         ];
         if ($product->getCategory() instanceof CategoryDataProvider) {
-            $values['category_category_id'] = $product->getCategory()->getCategoryId();
+            $values['category_id'] = $product->getCategory()->getCategoryId();
+        }
+        foreach ($product->getAttribute() as $item) {
+            if ($item instanceof AttributeDataProvider) {
+                $values['attribute_key'] = $values['attribute_key'].','.$item->getAttributeKey();
+
+            }
         }
         if (!$entity instanceof Product) {
             $transaction= $this->database->insert('product')->values($values);
         } else {
             $values ['id'] =  $entity->getId();
-           // $transaction = $this->database->update('product', $values, ['id' => $entity->getId()]);
+            //$transaction = $this->database->update('product', $values, ['id' => $entity->getId()]);
             $transaction = $this->database->update('product')->values($values)->where('id', '=', $entity->getId());
-            //dump('transaction', $transaction);
+            dump('transaction', $transaction);
+            //die();
         }
-        dump('transaction run ',$transaction->run());
+        $transaction->run();
 
         $newProduct = $this->productRepository->get($product->getArticleNumber());
         dump($newProduct);

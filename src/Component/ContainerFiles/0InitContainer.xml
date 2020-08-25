@@ -29,7 +29,7 @@
             <argument type="service" id="App\Client\User\Business\UserBusinessFacade"/>
         </service>
         <service id="App\Client\Product\Persistence\Mapper\ProductMapper" public="true">
-            <argument type="service" id="App\Client\Attribute\Persistence\Mapper\AttributeMapper"/>
+            <argument type="service" id="App\Client\Attribute\Business\AttributeBusinessFacade"/>
             <argument type="service" id="App\Client\Category\Business\CategoryBusinessFacade"/>
         </service>
         <service id="App\Client\User\Persistence\Mapper\UserMapper" public="true"/>

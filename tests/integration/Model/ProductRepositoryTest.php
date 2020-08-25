@@ -84,7 +84,7 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $this->entity->setProductName('fucking neighour');
         $this->entity->setProductDescription('a very noisy neighbour');
         $this->entity->setArticleNumber($this->container->createArticleNumber());
-        $this->entity->setCategory(null);
+        $this->entity->setCategoryId(null);
         $this->entity->setPrice(0);
 
         return $this->entity;

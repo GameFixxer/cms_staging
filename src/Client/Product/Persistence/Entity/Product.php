@@ -52,46 +52,30 @@ class Product
     }
 
     /**
-     * @BelongsTo(target = "category",   nullable = true)
+     * @Column(type="int", nullable=true)
+     * @var int
      */
-    protected $category;
+    protected $categoryId;
 
     /**
-     * @ManyToMany(target = "attribute",  though = "ProductAttribute", nullable = true)
+     * @Column(type="string", default="", nullable=true)
+     * @var string
      */
-    protected $attribute;
+    protected $attributeKey;
 
-    public function __construct()
-    {
-        $this->attribute = new PivotedCollection();
-    }
 
-    public function getAttribute()
+    public function getAttributeKey()
     {
-        return $this->attribute;
+        return $this->attributeKey;
     }
 
     /**
-     * @param array $attributes
+     * @param string $attributes
      */
 
-    public function setAttribute(array $attributes)
+    public function setAttributeKey(string $attributes)
     {
-        foreach ($attributes as $attribute) {
-            $this->addAttribute($attribute);
-        }
-    }
-
-    public function addAttribute(?Attribute  $attribute): void
-    {
-        if (isset($attribute)) {
-            $this->getAttribute()->add($attribute);
-        }
-    }
-
-    public function removeAttribute(?Attribute  $attribute): void
-    {
-        $this->getAttribute()->removeElement($attribute);
+        $this->attributeKey = $attributes;
     }
 
 
@@ -155,16 +139,16 @@ class Product
     }
 
 
-    public function getCategory()
+    public function getCategoryId()
     {
-        return $this->category;
+        return $this->categoryId;
     }
     /**
-     * @param  $category
+     * @param  $categoryId
      */
-    public function setCategory($category): void
+    public function setCategoryId($categoryId): void
     {
-        $this->category = $category;
+        $this->categoryId = $categoryId;
     }
 
     /**
