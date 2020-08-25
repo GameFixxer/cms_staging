@@ -54,12 +54,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
         if ($product->getCategory() instanceof CategoryDataProvider) {
             $values['category_id'] = $product->getCategory()->getCategoryId();
         }
-        foreach ($product->getAttribute() as $item) {
-            if ($item instanceof AttributeDataProvider) {
-                $values['attribute_key'] = $values['attribute_key'].','.$item->getAttributeKey();
-
-            }
-        }
+        $values['attributes_key'] = $this->changeAttributeFormat($product);
         if (!$entity instanceof Product) {
             $transaction= $this->database->insert('product')->values($values);
         } else {
@@ -77,5 +72,16 @@ class ProductEntityManager implements ProductEntityManagerInterface
             throw new \Exception('Fatal error while saving/loading', 1);
         }
         return $newProduct;
+    }
+
+    private function changeAttributeFormat(ProductDataProvider $product):array
+    {
+        $values = [];
+        foreach ($product->getAttribute() as $item) {
+            if ($item instanceof AttributeDataProvider) {
+                $values['attribute_key'] = $values['attribute_key'].','.$item->getAttributeKey();
+            }
+        }
+        return $values;
     }
 }

@@ -57,9 +57,6 @@ class ProductMapper implements ProductMapperInterface
 
     private function mapCategory($category):?CategoryDataProvider
     {
-        if ($category instanceof Category) {
-            return $this->categoryBusinessFacade->get($category->getCategoryId());
-        }
-        return null;
+        return $this->categoryBusinessFacade->get($category->getCategoryId());
     }
 }
