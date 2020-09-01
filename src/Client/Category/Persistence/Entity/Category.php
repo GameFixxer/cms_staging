@@ -14,11 +14,11 @@ class Category
 {
     /**
      * @Id
-     * @Column(type="integer")
+     * @Column(type=int)
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $key;
 
     /**

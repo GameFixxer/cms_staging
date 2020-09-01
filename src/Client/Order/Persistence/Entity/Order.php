@@ -18,19 +18,19 @@ class Order
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type="int") */
+    /** @Column(type="integer") */
     protected $userId;
-    /** @Column(type="int") */
+    /** @Column(type="integer") */
     protected $addressId;
-    /** @Column(type="int") */
+    /** @Column(type="integer") */
     protected $sum;
     /** @Column(type="string") */
     protected $status;
     /** @Column(type="string") */
     protected $dateOfOrder;
-    /** @Column(type="int") */
+    /** @Column(type="integer") */
     protected $shoppingCardId;
-    /** @Column(type="int") */
+    /** @Column(type="integer") */
     protected $orderedProducts;
 
     /**

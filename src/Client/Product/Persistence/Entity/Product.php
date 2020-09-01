@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Client\Product\Persistence\Entity;
 
-use Cycle\Annotated\Annotation\Column;
+use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;

@@ -5,17 +5,29 @@ namespace App\Service;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Spiral\Database;
 
 class DoctrineDataBaseManager
 {
     public static function getEntityManager()
     {
-        $paths = array(dirname(__DIR__, 1)."Client/*/Persistence/Entity/");
+        $depth = dirname(__DIR__, 1);
+        $paths =
+            [
+                $depth."/Client/Address/Persistence/Entity/",
+                $depth."/Client/Attribute/Persistence/Entity/",
+                $depth."/Client/Category/Persistence/Entity/",
+                $depth."/Client/Order/Persistence/Entity/",
+                $depth."/Client/Product/Persistence/Entity/",
+                $depth."/Client/ShoppingCard/Persistence/Entity/",
+                $depth."/Client/User/Persistence/Entity/"
+            ];
         $isDevMode = false;
 
         // the connection configuration
         $dbParams = array(
             'driver'   => 'pdo_mysql',
+            'host' => '127.0.0.1',
             'user'     => 'root',
             'password' => 'pass123',
             'dbname'   => 'mvc',

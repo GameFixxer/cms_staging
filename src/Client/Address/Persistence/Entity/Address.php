@@ -17,21 +17,21 @@ class Address
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $userId;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $country;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $street;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $town;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $postCode;
-    /** @Column(type="string", nullable=false) */
+    /** @Column(type=string, nullable=false) */
     protected $type;
-    /** @Column(type="string", nullable=false) */
+    /** @Column(type=string, nullable=false) */
     protected $firstName;
-    /** @Column(type="string", nullable=false) */
+    /** @Column(type=string, nullable=false) */
     protected $lastName;
 
     /**

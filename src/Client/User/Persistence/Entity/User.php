@@ -13,23 +13,23 @@ class User
 {
     /**
      * @Id
-     * @Column(type="integer")
+     * @Column(typeint)
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type="string", unique=true) */
+    /** @Column(type=string, unique=true) */
     protected $username;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $password;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $role;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $session_id;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $resetPassword;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $shoppingCard_id;
-    /** @Column(type="int", unique=true) */
+    /** @Column(type=int, unique=true) */
     protected $addressId;
 
     /**

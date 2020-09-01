@@ -13,17 +13,17 @@ class ShoppingCard
 {
     /**
      * @Id
-     * @Column(type="integer")
+     * @Column(type=int)
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $sum;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $quantity;
-    /** @Column(type="int") */
+    /** @Column(type=int) */
     protected $userId;
-    /** @Column(type="string") */
+    /** @Column(type=string) */
     protected $shoppingCard;
 
     /**
