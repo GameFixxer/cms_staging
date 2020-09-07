@@ -8,22 +8,20 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**@Entity */
+/** @Entity */
 class ShoppingCard
 {
     /**
      * @Id
-     * @Column(type=int)
+     * @Column(type="integer")
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type=int) */
+    /** @Column(type="integer") */
     protected $sum;
-    /** @Column(type=int) */
-    protected $quantity;
-    /** @Column(type=int) */
+    /** @Column(type="integer") */
     protected $userId;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $shoppingCard;
 
     /**
@@ -56,22 +54,6 @@ class ShoppingCard
     public function setSum($sum): void
     {
         $this->sum = $sum;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param mixed $quantity
-     */
-    public function setQuantity($quantity): void
-    {
-        $this->quantity = $quantity;
     }
 
     /**

@@ -8,28 +8,28 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**@Entity */
+/** @Entity */
 class User
 {
     /**
      * @Id
-     * @Column(typeint)
+     * @Column(type="integer")
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type=string, unique=true) */
+    /** @Column(type="string") */
     protected $username;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $password;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $role;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $session_id;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $resetPassword;
-    /** @Column(type=int) */
+    /** @Column(type="integer") */
     protected $shoppingCard_id;
-    /** @Column(type=int, unique=true) */
+    /** @Column(type="integer") */
     protected $addressId;
 
     /**

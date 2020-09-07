@@ -22,7 +22,7 @@ class AttributeRepository implements AttributeRepositoryInterface
     public function __construct(AttributeMapperInterface $attributeMapper, EntityManager $entityManager)
     {
         $this->attributeMapper = $attributeMapper;
-        $this->attributeRepository = $entityManager->getRepository('Attribute');
+        $this->attributeRepository = $entityManager->getRepository(Attribute::class);
     }
 
 

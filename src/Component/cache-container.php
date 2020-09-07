@@ -439,7 +439,7 @@ class MyCachedContainer extends Container
      */
     protected function getCategoryRepositoryService()
     {
-        return $this->services['App\\Client\\Category\\Persistence\\CategoryRepository'] = new \App\Client\Category\Persistence\CategoryRepository(($this->services['App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper'] ?? ($this->services['App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper'] = new \App\Client\Category\Persistence\Mapper\CategoryMapper())), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Category\\Persistence\\CategoryRepository'] = new \App\Client\Category\Persistence\CategoryRepository(($this->services['App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper'] ?? ($this->services['App\\Client\\Category\\Persistence\\Mapper\\CategoryMapper'] = new \App\Client\Category\Persistence\Mapper\CategoryMapper())), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**

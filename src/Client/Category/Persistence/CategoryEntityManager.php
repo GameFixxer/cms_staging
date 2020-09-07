@@ -22,7 +22,7 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
     {
         $this->categoryRepository = $categoryRepository;
         $this->orm = $orm;
-        $this->ormCategoryRepository = $orm->getRepository(Category::class);
+        //$this->ormCategoryRepository = $orm->getRepository(Category::class);
     }
 
 

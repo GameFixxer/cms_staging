@@ -65,7 +65,7 @@
         </service>
         <service id="App\Client\Category\Persistence\CategoryRepository" public="true">
             <argument type="service" id="App\Client\Category\Persistence\Mapper\CategoryMapper"/>
-            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
         </service>
 
 

@@ -9,16 +9,16 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**@Entity  */
+/** @Entity  */
 class Category
 {
     /**
      * @Id
-     * @Column(type=int)
+     * @Column(type="integer")
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $key;
 
     /**

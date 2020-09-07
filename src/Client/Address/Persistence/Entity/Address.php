@@ -3,12 +3,13 @@
 
 namespace App\Client\Address\Persistence\Entity;
 
+
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**@Entity  */
+/** @Entity  */
 class Address
 {
     /**
@@ -17,21 +18,21 @@ class Address
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type=int) */
+    /** @Column(type="integer") */
     protected $userId;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $country;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $street;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $town;
-    /** @Column(type=int) */
+    /** @Column(type="integer") */
     protected $postCode;
-    /** @Column(type=string, nullable=false) */
+    /** @Column(type="string") */
     protected $type;
-    /** @Column(type=string, nullable=false) */
+    /** @Column(type="string") */
     protected $firstName;
-    /** @Column(type=string, nullable=false) */
+    /** @Column(type="string") */
     protected $lastName;
 
     /**

@@ -25,13 +25,14 @@ class DoctrineDataBaseManager
         $isDevMode = false;
 
         // the connection configuration
-        $dbParams = array(
+        $dbParams = [
             'driver'   => 'pdo_mysql',
             'host' => '127.0.0.1',
             'user'     => 'root',
             'password' => 'pass123',
             'dbname'   => 'mvc',
-        );
+            'port' => 3336
+        ];
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
         return EntityManager::create($dbParams, $config);
     }

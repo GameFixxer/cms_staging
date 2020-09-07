@@ -1,15 +1,13 @@
 <?php
-
-
+declare(strict_types=1);
 namespace App\Client\Attribute\Persistence\Entity;
-
 
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-/**@/Entity  */
+/** @Entity  */
 class Attribute
 {
     /**
@@ -18,9 +16,9 @@ class Attribute
      * @GeneratedValue
      */
     protected $id;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $attribute_key;
-    /** @Column(type=string) */
+    /** @Column(type="string") */
     protected $attribute_value;
 
     /**

@@ -8,16 +8,18 @@ use App\Client\Address\Persistence\Mapper\AddressMapperInterface;
 use App\Client\User\Persistence\Entity\User;
 use App\Generated\AddressDataProvider;
 use App\Generated\UserDataProvider;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class AddressRepository implements AddressRepositoryInterface
 {
     private AddressMapperInterface $addressMapper;
-    private \Cycle\ORM\RepositoryInterface $repository;
+    private EntityRepository $entityRepository;
 
-    public function __construct(AddressMapperInterface $addressMapper, \Cycle\ORM\ORM $ORM)
+    public function __construct(AddressMapperInterface $addressMapper, EntityManager $entityManager)
     {
         $this->addressMapper = $addressMapper;
-        $this->repository = $ORM->getRepository(Address::class);
+        $this->entityRepository = $entityManager->getRepository(Address::class);
     }
 
     /**
@@ -27,7 +29,7 @@ class AddressRepository implements AddressRepositoryInterface
     {
         $addressList = [];
 
-        $addressEntityList = (array)$this->repository->select()->fetchALl();
+        $addressEntityList = (array)$this->entityRepository->findAll();
         /** @var  Address $address */
         foreach ($addressEntityList as $address) {
             $addressList[] = $this->addressMapper->map($address);
@@ -38,7 +40,7 @@ class AddressRepository implements AddressRepositoryInterface
 
     public function getAddress(UserDataProvider $user, string $type, int $postcode): ?AddressDataProvider
     {
-        $addressEntity = $this->repository->findOne([
+        $addressEntity = $this->entityRepository->findBy([
             'user_id' => $user->getId(),
             'type' => $type,
             'post_code' => $postcode
@@ -52,10 +54,11 @@ class AddressRepository implements AddressRepositoryInterface
     public function getAddressListFromUser(int $userId):array
     {
         $addressList = [];
-        $userAddressEntityList = $this->repository
+        $userAddressEntityList = $this->entityRepository->createQueryBuilder('userAddress')
             ->select()
-            ->with('user')->where('user_id', $userId)
-            ->fetchAll();
+            ->where('user_id', $userId)
+            ->getQuery()
+            ->getResult();
         foreach ($userAddressEntityList as $address) {
             $addressList[] = $this->addressMapper->map($address);
         }

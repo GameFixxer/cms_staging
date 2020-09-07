@@ -23,7 +23,7 @@ class Product
     protected $categoryId;
     /** @Column(type="string") */
     protected $attributeKey;
-    /** @Column(type="string", unique=true) */
+    /** @Column(type="string") */
     protected $articleNumber;
     /** @Column(type="string") */
     protected $name;

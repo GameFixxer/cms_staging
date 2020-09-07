@@ -23,7 +23,7 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
     {
         $this->attributeRepository = $attributeRepository;
         $this->orm = $orm;
-        $this->ormAttributeRepository = $orm->getRepository(Attribute::class);
+        //$this->ormAttributeRepository = $orm->getRepository(Attribute::class);
     }
 
 

@@ -8,8 +8,9 @@ namespace App\Client\Product\Persistence;
 use App\Client\Product\Persistence\Entity\Product;
 use App\Client\Product\Persistence\Mapper\ProductMapperInterface;
 use App\Generated\ProductDataProvider;
-use Cycle\ORM\ORM;
+use App\Service\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectRepository;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -25,7 +26,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function __construct(ProductMapperInterface $productMapper, EntityManager $entityManager)
     {
         $this->productMapper = $productMapper;
-        $this->productRepository = $entityManager->getRepository('Product');
+        $this->productRepository = $entityManager->getRepository(Product::class);
     }
 
 
@@ -52,3 +53,4 @@ class ProductRepository implements ProductRepositoryInterface
         return null;
     }
 }
+

@@ -8,22 +8,24 @@ namespace App\Client\Category\Persistence;
 use App\Client\Category\Persistence\Entity\Category;
 use App\Client\Category\Persistence\Mapper\CategoryMapperInterface;
 use App\Generated\CategoryDataProvider;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
     private CategoryMapperInterface $categoryMapper;
-    private \Cycle\ORM\RepositoryInterface $ormCategoryRepository;
+    private EntityRepository $entityManager;
 
     /**
      * ProductRepository constructor.
      * @param CategoryMapperInterface $categoryMapper
-     * @param \Cycle\ORM\ORM $ormCategoryRepository
+     * @param EntityManager $entityManager
      */
-    public function __construct(CategoryMapperInterface $categoryMapper, \Cycle\ORM\ORM $ormCategoryRepository)
+    public function __construct(CategoryMapperInterface $categoryMapper, EntityManager $entityManager)
     {
         $this->categoryMapper = $categoryMapper;
-        $this->ormCategoryRepository = $ormCategoryRepository->getRepository(Category::class);
+        $this->entityManager = $entityManager->getRepository(Category::class);
     }
 
 
@@ -33,7 +35,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getCategoryList(): array
     {
         $categoryList = [];
-        $categoryEntityList = (array)$this->ormCategoryRepository->select()->fetchALl();
+        $categoryEntityList = (array)$this->entityManager->findAll();
         /** @var  Category $category */
         foreach ($categoryEntityList as $category) {
             $categoryList[] = $this->categoryMapper->map($category);
@@ -43,7 +45,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function getCategory(int $categoryId): ?CategoryDataProvider
     {
-        $categoryEntity = $this->ormCategoryRepository->findByPK($categoryId);
+        $categoryEntity = $this->entityManager->findBy(['categoryId'=> $categoryId]);
         if ($categoryEntity instanceof Category) {
             return $this->categoryMapper->map($categoryEntity);
         }
@@ -52,7 +54,7 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function getCategoryByKey(string $key): ?CategoryDataProvider
     {
-        $categoryEntity = $this->ormCategoryRepository->findOne(['category_key'=>$key]);
+        $categoryEntity = $this->entityManager->findBy(['category_key'=>$key]);
         if ($categoryEntity instanceof Category) {
             return $this->categoryMapper->map($categoryEntity);
         }
