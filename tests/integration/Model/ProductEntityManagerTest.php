@@ -7,10 +7,8 @@ use App\Client\Category\Persistence\CategoryEntityManagerInterface;
 use App\Client\Product\Persistence\ProductEntityManager;
 use App\Generated\CategoryDataProvider;
 use App\Generated\ProductDataProvider;
-use App\Service\DatabaseManager;
 use App\Tests\integration\Helper\ContainerHelper;
-use Cycle\ORM\Transaction;
-use App\Client\Product\Persistence\Entity\Product;
+
 
 /**
  * @group Product
@@ -32,15 +30,7 @@ class ProductEntityManagerTest extends \Codeception\Test\Unit
 
     }
 
-    public function _after()
-    {
-        $orm = new DatabaseManager();
-        $orm = $orm->connect();
-        $ormProductRepository = $orm->getRepository(Product::class);
-        $transaction = new Transaction($orm);
-        $transaction->delete($ormProductRepository->findByPK($this->productDto->getId()));
-        $transaction->run();
-    }
+
 
     public function testCreateProduct()
     {

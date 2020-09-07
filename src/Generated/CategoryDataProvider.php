@@ -8,7 +8,7 @@ namespace App\Generated;
 final class CategoryDataProvider extends \Xervice\DataProvider\Business\Model\DataProvider\AbstractDataProvider implements \Xervice\DataProvider\Business\Model\DataProvider\DataProviderInterface
 {
     /** @var int */
-    protected $categoryId = 0;
+    protected $categoryId;
 
     /** @var string */
     protected $categoryKey = '';

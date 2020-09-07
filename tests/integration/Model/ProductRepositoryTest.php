@@ -40,9 +40,8 @@ class ProductRepositoryTest extends \Codeception\Test\Unit
         $productRepository = $this->container->getProductRepository();
 
         $productDtoFromRepository = $productRepository->get($this->entity->getArticleNumber());
-        codecept_debug($productDtoFromRepository);
-        $this->assertSame($this->entity->getProductName(), $productDtoFromRepository->getName());
-        $this->assertSame($this->entity->getProductDescription(), $productDtoFromRepository->getDescription());
+        $this->assertSame($this->entity->getName(), $productDtoFromRepository->getName());
+        $this->assertSame($this->entity->getDescription(), $productDtoFromRepository->getDescription());
         $this->assertSame($this->entity->getId(), $productDtoFromRepository->getId());
 
 

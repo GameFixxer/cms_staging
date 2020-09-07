@@ -4,14 +4,12 @@ namespace App\Client\Product\Persistence;
 
 use App\Client\Product\Persistence\Entity\Product;
 use App\Generated\AttributeDataProvider;
-use App\Generated\CategoryDataProvider;
-use Cycle\ORM\Transaction;
 use App\Generated\ProductDataProvider;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query\ResultSetMapping;
+
 
 class ProductEntityManager implements ProductEntityManagerInterface
 {
@@ -34,56 +32,41 @@ class ProductEntityManager implements ProductEntityManagerInterface
 
     public function delete(ProductDataProvider $product):void
     {
-        $this->entityManager->remove(
-            $this->entityRepository->findBy(
-                ['article_Number'=>$product->getArticleNumber()]
-            )
-        );
-        try {
-            $this->entityManager->flush();
-        } catch (OptimisticLockException $e) {
-        } catch (ORMException $e) {
-        }
-
+        $this->entityManager->remove($product);
         $this->productRepository->getList();
     }
 
     public function save(ProductDataProvider $product): ProductDataProvider
     {
-        $entity = $this->entityRepository->findBy(['article_number'=>$product->getArticleNumber()]);
 
-        if (!$entity instanceof Product) {
-            $rsm = new ResultSetMapping();
-            $query = $this->entityManager->createNativeQuery(
-                'insert into product (article_number, name, description, price, attribute_id, category_id) values (??????)',
-                $rsm
-            );
-            $query->setParameters([
-                1 => $product->getArticleNumber(),
-                2 => $product->getName(),
-                3 => $product->getDescription(),
-                4 => $product->getPrice(),
-                5 => $product->getAttribute()->getAttributeId(),
-                6 => $product->getCategory()->getCategoryId(),
-            ]);
+        if ($product->hasId()) {
+            $this->entityRepository->createQueryBuilder('c')
+                ->update()
+                ->set('c.name', ':name')
+                ->set('c.description', ':description')
+                ->set('c.articleNumber', ':articleNumber')
+                ->set('c.price', ':price')
+                ->set('c.categoryId', ':categoryId')
+                ->set('c.attributeKey', ':attributeKey')
+                ->where('id = :id')
+                ->setParameter(':name', $product->getName())
+                ->setParameter(':description', $product->getDescription())
+                ->setParameter(':articleNumber', $product->getArticleNumber())
+                ->setParameter(':price', $product->getPrice())
+                ->setParameter(':categoryId', $product->getCategory()->getCategoryId())
+                ->setParameter(':attributeKey', $this->changeAttributeFormat($product))
+                ->getQuery()
+                ->execute();
+
+            $this->entityManager->clear();
+
         } else {
-            $rsm = new ResultSetMapping();
-            $query = $this->entityManager->createNativeQuery(
-                'update product set article_number = ?, name = ?, description = ?, price = ?, attribute_id = ?, category_id = ?) where article_number = ?',
-                $rsm
-            );
-            $query->setParameters([
-                1 => $product->getArticleNumber(),
-                2 => $product->getName(),
-                3 => $product->getDescription(),
-                4 => $product->getPrice(),
-                5 => $product->getAttribute()->getAttributeId(),
-                6 => $product->getCategory()->getCategoryId(),
-                7 => $product->getArticleNumber(),
-            ]);
+            $productEntity = new Product();
+            $productEntity = $this->convert($productEntity, $product);
+            $this->entityManager->persist($productEntity);
+            $this->entityManager->flush();
         }
 
-        if $query->getResult();
 
 
         $newProduct = $this->productRepository->get($product->getArticleNumber());
@@ -102,5 +85,16 @@ class ProductEntityManager implements ProductEntityManagerInterface
             }
         }
         return $values;
+    }
+
+    private function convert(Product $productEntity, ProductDataProvider $productDataProvider): Product
+    {
+        $productEntity->setAttributeKey($this->changeAttributeFormat($productDataProvider));
+        $productEntity->setCategoryId($productDataProvider->getCategory()->getCategoryId());
+        $productEntity->setPrice($productDataProvider->getPrice());
+        $productEntity->setArticleNumber($productDataProvider->getArticleNumber());
+        $productEntity->setDescription($productDataProvider->getDescription());
+        $productEntity->setName($productDataProvider->getName());
+
     }
 }

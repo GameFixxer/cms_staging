@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace App\Client\Category\Persistence;
 
 use App\Client\Category\Persistence\Entity\Category;
-use Cycle\ORM\ORM;
-use Cycle\ORM\Transaction;
 use App\Generated\CategoryDataProvider;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class CategoryEntityManager implements CategoryEntityManagerInterface
 {
@@ -14,47 +14,54 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
      * @var CategoryRepository
      */
     private CategoryRepository $categoryRepository;
-    private \Cycle\ORM\RepositoryInterface $ormCategoryRepository;
+    private EntityRepository $entityRepository;
+    private \Spiral\Database\DatabaseInterface $database;
+    private EntityManager $entityManager;
 
-    private ORM $orm;
-
-    public function __construct(ORM $orm, CategoryRepository $categoryRepository)
+    public function __construct(EntityManager $entityManager, CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
-        $this->orm = $orm;
-        //$this->ormCategoryRepository = $orm->getRepository(Category::class);
+        $this->entityManager = $entityManager;
+        $this->entityRepository = $entityManager->getRepository(Category::class);
     }
 
 
 
     public function delete(CategoryDataProvider $category):void
     {
-        $transaction = new Transaction($this->orm);
-        $transaction->delete($this->ormCategoryRepository->findByPK($category->getCategoryId()));
-        $transaction->run();
-
+        $this->entityManager->remove($category);
         $this->categoryRepository->getCategoryList();
     }
 
     public function save(CategoryDataProvider $category): CategoryDataProvider
     {
-        $transaction = new Transaction($this->orm);
+        if ($category->hasCategoryId()) {
+            $this->entityRepository->createQueryBuilder('c')
+                ->update()
+                ->set('c.key', ':categoryKey')
+                ->where('c.id = :categoryId')
+                ->setParameter(':categoryKey', $category->getCategoryKey())
+                ->setParameter(':categoryId', $category->getCategoryId())
+                ->getQuery()
+                ->execute();
 
-        if (empty($category->getCategoryId())) {
-            $entity = new Category();
+            $this->entityManager->clear();
         } else {
-            $entity = $this->ormCategoryRepository->findByPK($category->getCategoryId());
-            if (!$entity instanceof Category) {
-                $entity = new Category();
-            }
+            $categoryEntity = new Category();
+            $categoryEntity = $this->convert($categoryEntity, $category);
+
+            $this->entityManager->persist($categoryEntity);
+            $this->entityManager->flush();
         }
 
-        $entity->setKey($category->getCategoryKey());
-        $transaction->persist($entity);
-        $transaction->run();
 
-        $category->setCategoryId($entity->getId());
+
 
         return $category;
+    }
+    private function convert(Category $categoryEntity, CategoryDataProvider $categoryDataProvider): Category
+    {
+        $categoryEntity->setKey($categoryDataProvider->getCategoryKey());
+        return $categoryEntity;
     }
 }

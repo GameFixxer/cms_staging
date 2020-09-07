@@ -41,15 +41,18 @@
         <!--Repository-->
         <service id="App\Client\ShoppingCard\Persistence\ShoppingCardRepository" public="true">
             <argument id="App\Client\ShoppingCard\Persistence\Mapper\ShoppingCardMapper" type="service"/>
-            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
+
         </service>
         <service id="App\Client\Order\Persistence\OrderRepository" public="true">
             <argument id="App\Client\Order\Persistence\Mapper\OrderMapper" type="service"/>
-            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
+
         </service>
         <service id="App\Client\Address\Persistence\AddressRepository" public="true">
             <argument id="App\Client\Address\Persistence\Mapper\AddressMapper" type="service"/>
-            <argument id="Cycle\ORM\ORM" type="service"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
+
         </service>
         <service id="App\Client\Attribute\Persistence\AttributeRepository" public ="true">
             <argument id="App\Client\Attribute\Persistence\Mapper\AttributeMapper" type="service"/>
@@ -89,7 +92,7 @@
             <argument id="App\Client\Attribute\Persistence\AttributeRepository" type="service"/>
         </service>
         <service id="App\Client\Product\Persistence\ProductEntityManager" public="true">
-            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
             <argument type="service" id="App\Client\Product\Persistence\ProductRepository"/>
         </service>
         <service id="App\Client\User\Persistence\UserEntityManager" public="true">
@@ -97,7 +100,7 @@
             <argument type="service" id="App\Client\User\Persistence\UserRepository"/>
         </service>
         <service id="App\Client\Category\Persistence\CategoryEntityManager" public="true">
-            <argument type="service" id="Cycle\ORM\ORM"/>
+            <argument type="service" id="Doctrine\ORM\EntityManager"/>
             <argument type="service" id="App\Client\Category\Persistence\CategoryRepository"/>
         </service>
 

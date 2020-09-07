@@ -359,7 +359,7 @@ class MyCachedContainer extends Container
      */
     protected function getAddressRepositoryService()
     {
-        return $this->services['App\\Client\\Address\\Persistence\\AddressRepository'] = new \App\Client\Address\Persistence\AddressRepository(($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] ?? $this->getAddressMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Address\\Persistence\\AddressRepository'] = new \App\Client\Address\Persistence\AddressRepository(($this->services['App\\Client\\Address\\Persistence\\Mapper\\AddressMapper'] ?? $this->getAddressMapperService()), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**
@@ -429,7 +429,7 @@ class MyCachedContainer extends Container
      */
     protected function getCategoryEntityManagerService()
     {
-        return $this->services['App\\Client\\Category\\Persistence\\CategoryEntityManager'] = new \App\Client\Category\Persistence\CategoryEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Category\\Persistence\\CategoryRepository'] ?? $this->getCategoryRepositoryService()));
+        return $this->services['App\\Client\\Category\\Persistence\\CategoryEntityManager'] = new \App\Client\Category\Persistence\CategoryEntityManager(($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()), ($this->services['App\\Client\\Category\\Persistence\\CategoryRepository'] ?? $this->getCategoryRepositoryService()));
     }
 
     /**
@@ -489,7 +489,7 @@ class MyCachedContainer extends Container
      */
     protected function getOrderRepositoryService()
     {
-        return $this->services['App\\Client\\Order\\Persistence\\OrderRepository'] = new \App\Client\Order\Persistence\OrderRepository(($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] ?? $this->getOrderMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\Order\\Persistence\\OrderRepository'] = new \App\Client\Order\Persistence\OrderRepository(($this->services['App\\Client\\Order\\Persistence\\Mapper\\OrderMapper'] ?? $this->getOrderMapperService()), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**
@@ -519,7 +519,7 @@ class MyCachedContainer extends Container
      */
     protected function getProductEntityManagerService()
     {
-        return $this->services['App\\Client\\Product\\Persistence\\ProductEntityManager'] = new \App\Client\Product\Persistence\ProductEntityManager(($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()), ($this->services['App\\Client\\Product\\Persistence\\ProductRepository'] ?? $this->getProductRepositoryService()));
+        return $this->services['App\\Client\\Product\\Persistence\\ProductEntityManager'] = new \App\Client\Product\Persistence\ProductEntityManager(($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()), ($this->services['App\\Client\\Product\\Persistence\\ProductRepository'] ?? $this->getProductRepositoryService()));
     }
 
     /**
@@ -569,7 +569,7 @@ class MyCachedContainer extends Container
      */
     protected function getShoppingCardRepositoryService()
     {
-        return $this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository'] = new \App\Client\ShoppingCard\Persistence\ShoppingCardRepository(($this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] ?? $this->getShoppingCardMapperService()), ($this->privates['Cycle\\ORM\\ORM'] ?? $this->getORMService()));
+        return $this->services['App\\Client\\ShoppingCard\\Persistence\\ShoppingCardRepository'] = new \App\Client\ShoppingCard\Persistence\ShoppingCardRepository(($this->services['App\\Client\\ShoppingCard\\Persistence\\Mapper\\ShoppingCardMapper'] ?? $this->getShoppingCardMapperService()), ($this->privates['Doctrine\\ORM\\EntityManager'] ?? $this->getEntityManagerService()));
     }
 
     /**
