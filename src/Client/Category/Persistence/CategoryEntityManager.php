@@ -15,7 +15,6 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
      */
     private CategoryRepository $categoryRepository;
     private EntityRepository $entityRepository;
-    private \Spiral\Database\DatabaseInterface $database;
     private EntityManager $entityManager;
 
     public function __construct(EntityManager $entityManager, CategoryRepository $categoryRepository)

@@ -16,7 +16,6 @@ class UserEntityManager implements UserEntityManagerInterface
      * @var UserRepository
      */
     private UserRepository $userRepository;
-    private \Spiral\Database\DatabaseInterface $database;
     private EntityManager $entityManager;
     private EntityRepository $repository;
 
@@ -59,5 +58,9 @@ class UserEntityManager implements UserEntityManagerInterface
             throw new \Exception('Fatal error while saving/loading', 1);
         }
         return $newUser;
+    }
+    private function convert(User $userEntity, UserDataProvider $userDataProvider):User
+    {
+        return $userEntity;
     }
 }

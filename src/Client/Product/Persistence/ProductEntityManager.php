@@ -18,7 +18,6 @@ class ProductEntityManager implements ProductEntityManagerInterface
      */
     private ProductRepository $productRepository;
     private EntityRepository $entityRepository;
-    private \Spiral\Database\DatabaseInterface $database;
     private EntityManager $entityManager;
 
     public function __construct(EntityManager $entityManager, ProductRepository $productRepository)
@@ -70,7 +69,7 @@ class ProductEntityManager implements ProductEntityManagerInterface
 
 
         $newProduct = $this->productRepository->get($product->getArticleNumber());
-        if (! $newProduct instanceof ProductDataProvider) {
+        if (!$newProduct instanceof ProductDataProvider) {
             throw new \Exception('Fatal error while saving/loading', 1);
         }
         return $newProduct;
@@ -95,6 +94,6 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $productEntity->setArticleNumber($productDataProvider->getArticleNumber());
         $productEntity->setDescription($productDataProvider->getDescription());
         $productEntity->setName($productDataProvider->getName());
-
+        return $productEntity;
     }
 }
