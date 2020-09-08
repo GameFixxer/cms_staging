@@ -45,8 +45,8 @@ class AddressRepository implements AddressRepositoryInterface
             'type' => $type,
             'post_code' => $postcode
         ]);
-        if ($addressEntity instanceof Address) {
-            return $this->addressMapper->map($addressEntity);
+        if ($addressEntity !== null) {
+            return $this->addressMapper->map($addressEntity[0]);
         }
         return null;
     }

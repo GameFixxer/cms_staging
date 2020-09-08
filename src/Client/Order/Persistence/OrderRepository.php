@@ -39,8 +39,8 @@ class OrderRepository implements OrderRepositoryInterface
     public function get(int $orderId): ?OrderDataProvider
     {
         $order = $this->repository->findBy(['order_id'=>$orderId]);
-        if ($order instanceof Order) {
-            return $this->orderMapper->map($order);
+        if ($order !== null) {
+            return $this->orderMapper->map($order[0]);
         }
         return null;
     }
@@ -48,8 +48,8 @@ class OrderRepository implements OrderRepositoryInterface
     public function getWithDateAndUserId(int $userId, string $dateOfOrder): ?OrderDataProvider
     {
         $order = $this->repository->findBy(['user_id'=>$userId, 'date_of_order'=> $dateOfOrder]);
-        if ($order instanceof Order) {
-            return $this->orderMapper->map($order);
+        if ($order !== null) {
+            return $this->orderMapper->map($order[0]);
         }
         return null;
     }

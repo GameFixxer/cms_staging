@@ -43,20 +43,28 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $categoryList;
     }
 
+    /**
+     * @param int $categoryId
+     * @return CategoryDataProvider|null
+     */
     public function getCategory(int $categoryId): ?CategoryDataProvider
     {
         $categoryEntity = $this->entityManager->findBy(['categoryId'=> $categoryId]);
-        if ($categoryEntity instanceof Category) {
-            return $this->categoryMapper->map($categoryEntity);
+        if ($categoryEntity !== null) {
+            return $this->categoryMapper->map($categoryEntity[0]);
         }
         return null;
     }
 
+    /**
+     * @param string $key
+     * @return CategoryDataProvider|null
+     */
     public function getCategoryByKey(string $key): ?CategoryDataProvider
     {
         $categoryEntity = $this->entityManager->findBy(['category_key'=>$key]);
-        if ($categoryEntity instanceof Category) {
-            return $this->categoryMapper->map($categoryEntity);
+        if ($categoryEntity !== null) {
+            return $this->categoryMapper->map($categoryEntity[0]);
         }
         return null;
     }
