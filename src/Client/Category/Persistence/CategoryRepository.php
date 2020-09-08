@@ -50,7 +50,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getCategory(int $categoryId): ?CategoryDataProvider
     {
         $categoryEntity = $this->entityManager->findBy(['categoryId'=> $categoryId]);
-        if ($categoryEntity !== null) {
+        if (isset($categoryEntity)) {
             return $this->categoryMapper->map($categoryEntity[0]);
         }
         return null;
@@ -63,7 +63,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     public function getCategoryByKey(string $key): ?CategoryDataProvider
     {
         $categoryEntity = $this->entityManager->findBy(['category_key'=>$key]);
-        if ($categoryEntity !== null) {
+        if (isset($categoryEntity)) {
             return $this->categoryMapper->map($categoryEntity[0]);
         }
         return null;

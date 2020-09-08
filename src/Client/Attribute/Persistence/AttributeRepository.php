@@ -43,8 +43,8 @@ class AttributeRepository implements AttributeRepositoryInterface
     public function getAttribute(string $attributeKey): ?AttributeDataProvider
     {
         $attributeEntity = $this->attributeRepository->findBy(['attribute_key'=>$attributeKey]);
-        if ($attributeEntity instanceof Attribute) {
-            return $this->attributeMapper->map($attributeEntity);
+        if (isset($attributeEntity)) {
+            return $this->attributeMapper->map($attributeEntity[0]);
         }
         return null;
     }

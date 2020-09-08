@@ -42,8 +42,8 @@ class UserRepository implements UserRepositoryInterface
         $userEntity = $this->ormUserRepository->findOne([
             'username' => $username
         ]);
-        if ($userEntity instanceof User) {
-            return $this->userMapper->map($userEntity);
+        if (isset($userEntity)) {
+            return $this->userMapper->map($userEntity[0]);
         }
         return null;
     }
@@ -51,8 +51,8 @@ class UserRepository implements UserRepositoryInterface
     public function getById(int $id):?UserDataProvider
     {
         $userEntity = $this->ormUserRepository->findByPK($id);
-        if ($userEntity instanceof User) {
-            return $this->userMapper->map($userEntity);
+        if (isset($userEntity)) {
+            return $this->userMapper->map($userEntity[0]);
         }
         return null;
     }
