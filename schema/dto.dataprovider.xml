@@ -50,6 +50,7 @@
         <DataElement name="resetPassword" type="string" default="''" />
         <DataElement name="id" type="int" default="0" />
         <DataElement name="shoppingCardId" type="int" default="0" />
+        <DataElement name="addressId" type="string" default="" />
     </DataProvider>
 
     <DataProvider name="Product">

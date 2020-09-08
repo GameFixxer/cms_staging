@@ -36,11 +36,20 @@ class UserEntityManager implements UserEntityManagerInterface
     {
         if ($user->hasId()) {
             $this->repository->createQueryBuilder('c')
-                ->update()
-                ->set('c.key', ':categoryKey')
+                ->set('c.addressId', ':addressId')
+                ->set('c.password', ':password')
+                ->set('c.resetPassword', ':resetPassword')
+                ->set('c.role', ':role')
+                ->set('c.session_id', ':session_id')
+                ->set('c.shoppingCard_id', ':shoppingCard_id')
+                ->set('c.username', ':username')
                 ->where('c.id = :categoryId')
-                ->setParameter(':categoryKey', $user->getCategoryKey())
-                ->setParameter(':categoryId', $user->getCategoryId())
+                ->setParameter(':addressId', $user->getAddressId())
+                ->setParameter(':password', $user->getPassword())
+                ->setParameter(':resetPassword', $user->getResetPassword())
+                ->setParameter(':session_id', $user->getSessionId())
+                ->setParameter(':shoppingCard_id', $user->getShoppingCardId())
+                ->setParameter(':username', $user->getUsername())
                 ->getQuery()
                 ->execute();
 

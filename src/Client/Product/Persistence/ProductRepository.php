@@ -48,7 +48,7 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $productEntity = $this->productRepository->findBy(['article_Number'=>$articleNumber]);
         if (isset($productEntity)) {
-            return $this->productMapper->map($productEntity);
+            return $this->productMapper->map($productEntity[0]);
         }
         return null;
     }

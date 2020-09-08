@@ -11,6 +11,7 @@ class DoctrineDataBaseManager
 {
     public static function getEntityManager()
     {
+        debug_print_backtrace();
         $depth = dirname(__DIR__, 1);
         $paths =
             [

@@ -31,7 +31,6 @@ class ShoppingCardMapper implements ShoppingCardMapperInterface
         $shoppingCardDataProvider->setUser($user);
         $shoppingCardDataProvider->setSum($shoppingCard->getSum());
         $shoppingCardDataProvider->setId($shoppingCard->getId());
-        $shoppingCardDataProvider->setQuantity($shoppingCard->getQuantity());
         $shoppingCardDataProvider->setProduct($this->mapProducts($shoppingCard->getShoppingCard()));
 
 

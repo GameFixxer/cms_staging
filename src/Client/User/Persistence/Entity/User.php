@@ -29,8 +29,8 @@ class User
     protected $resetPassword;
     /** @Column(type="integer") */
     protected $shoppingCard_id;
-    /** @Column(type="integer") */
-    protected $addressId;
+    /** @Column(type="string") */
+    protected $addressIds;
 
     /**
      * @return mixed
@@ -147,17 +147,17 @@ class User
     /**
      * @return mixed
      */
-    public function getAddressId()
+    public function getAddressIds()
     {
-        return $this->addressId;
+        return $this->addressIds;
     }
 
     /**
-     * @param mixed $addressId
+     * @param mixed $addressIds
      */
-    public function setAddressId($addressId): void
+    public function setAddressIds($addressIds): void
     {
-        $this->addressId = $addressId;
+        $this->addressIds = $addressIds;
     }
 
 

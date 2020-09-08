@@ -28,6 +28,29 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
     /** @var int */
     protected $shoppingCardId;
 
+    /** @var string */
+    protected $addressId;
+
+    /**
+     * @return string
+     */
+    public function getAddressId(): string
+    {
+        return $this->addressId;
+    }
+
+    /**
+     * @param string $addressId
+     */
+    public function setAddressId(string $addressId): void
+    {
+        $this->addressId = $addressId;
+    }
+
+    public function hasAddressId():bool
+    {
+        return isset($this->addressId);
+    }
 
     /**
      * @return string
@@ -321,9 +344,9 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
      */
     protected function getElements(): array
     {
-        return array (
+        return array(
           'username' =>
-          array (
+          array(
             'name' => 'username',
             'allownull' => false,
             'default' => '\'\'',
@@ -333,7 +356,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'password' =>
-          array (
+          array(
             'name' => 'password',
             'allownull' => false,
             'default' => '\'\'',
@@ -343,7 +366,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'role' =>
-          array (
+          array(
             'name' => 'role',
             'allownull' => false,
             'default' => '\'\'',
@@ -353,7 +376,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'sessionId' =>
-          array (
+          array(
             'name' => 'sessionId',
             'allownull' => false,
             'default' => '\'\'',
@@ -363,7 +386,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'resetPassword' =>
-          array (
+          array(
             'name' => 'resetPassword',
             'allownull' => false,
             'default' => '\'\'',
@@ -373,7 +396,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'id' =>
-          array (
+          array(
             'name' => 'id',
             'allownull' => false,
             'default' => '0',
@@ -383,7 +406,7 @@ final class UserDataProvider extends \Xervice\DataProvider\Business\Model\DataPr
             'isCamelCase' => false,
           ),
           'shoppingCardId' =>
-          array (
+          array(
             'name' => 'shoppingCardId',
             'allownull' => false,
             'default' => '0',
