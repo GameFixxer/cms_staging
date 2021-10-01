@@ -8,5 +8,9 @@ use App\Generated\Dto\OrderDataTransferObject;
 
 interface OrderMapperInterface
 {
+    /**
+     * @param \App\Client\Order\Persistence\Entity\Order $order
+     * @return \App\Generated\Dto\OrderDataTransferObject
+     */
     public function map(Order $order): OrderDataTransferObject;
 }

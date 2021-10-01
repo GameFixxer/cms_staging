@@ -41,6 +41,10 @@ class ProductRepository implements ProductRepositoryInterface
         return $productList;
     }
 
+    /**
+     * @param string $articleNumber
+     * @return \App\Generated\Dto\ProductDataTransferObject|null
+     */
     public function getProduct(string $articleNumber): ?ProductDataTransferObject
     {
         $productEntity = $this->ormProductRepository->findOne(['article_Number'=>$articleNumber]);

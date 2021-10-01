@@ -37,6 +37,10 @@ class UserRepository implements UserRepositoryInterface
         return $userList;
     }
 
+    /**
+     * @param string $username
+     * @return \App\Generated\Dto\UserDataTransferObject|null
+     */
     public function getUser(string $username): ?UserDataTransferObject
     {
         $userEntity = $this->ormUserRepository->findOne([

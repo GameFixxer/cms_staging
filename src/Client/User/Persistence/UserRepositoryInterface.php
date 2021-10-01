@@ -11,5 +11,9 @@ interface UserRepositoryInterface
      */
     public function getUserList(): array;
 
+    /**
+     * @param string $username
+     * @return \App\Generated\Dto\UserDataTransferObject|null
+     */
     public function getUser(string $username): ?UserDataTransferObject;
 }

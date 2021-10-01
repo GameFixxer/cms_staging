@@ -14,10 +14,19 @@ class AddressEntityManager implements AddressEntityManagerInterface
      * @var AddressRepository
      */
     private AddressRepository $addressRepository;
+    /**
+     * @var \Cycle\ORM\RepositoryInterface
+     */
     private \Cycle\ORM\RepositoryInterface $repository;
-
+    /**
+     * @var \Cycle\ORM\ORM
+     */
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\Address\Persistence\AddressRepository $addressRepository
+     */
     public function __construct(ORM $orm, AddressRepository $addressRepository)
     {
         $this->addressRepository = $addressRepository;
@@ -26,7 +35,9 @@ class AddressEntityManager implements AddressEntityManagerInterface
     }
 
 
-
+    /**
+     * @param \App\Generated\Dto\AddressDataTransferObject $address
+     */
     public function delete(AddressDataTransferObject $address):void
     {
         $transaction = new Transaction($this->orm);
@@ -36,6 +47,10 @@ class AddressEntityManager implements AddressEntityManagerInterface
         $this->addressRepository->getAddressList();
     }
 
+    /**
+     * @param \App\Generated\Dto\AddressDataTransferObject $address
+     * @return \App\Generated\Dto\AddressDataTransferObject
+     */
     public function save(AddressDataTransferObject $address): AddressDataTransferObject
     {
         $transaction = new Transaction($this->orm);

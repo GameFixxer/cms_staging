@@ -8,6 +8,10 @@ use App\Generated\Dto\AttributeDataTransferObject;
 
 class AttributeMapper implements AttributeMapperInterface
 {
+    /**
+     * @param \App\Client\Attribute\Persistence\Entity\Attribute $attribute
+     * @return \App\Generated\Dto\AttributeDataTransferObject
+     */
     public function map(Attribute $attribute):AttributeDataTransferObject
     {
         $attributeDTO = new AttributeDataTransferObject();

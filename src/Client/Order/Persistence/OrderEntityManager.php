@@ -18,6 +18,10 @@ class OrderEntityManager implements OrderEntityManagerInterface
 
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\Order\Persistence\OrderRepository $orderRepository
+     */
     public function __construct(ORM $orm, OrderRepository $orderRepository)
     {
         $this->orderRepository = $orderRepository;
@@ -26,7 +30,9 @@ class OrderEntityManager implements OrderEntityManagerInterface
     }
 
 
-
+    /**
+     * @param \App\Generated\Dto\OrderDataTransferObject $order
+     */
     public function delete(OrderDataTransferObject $order):void
     {
         $transaction = new Transaction($this->orm);
@@ -36,6 +42,10 @@ class OrderEntityManager implements OrderEntityManagerInterface
         $this->orderRepository->getOrderList();
     }
 
+    /**
+     * @param \App\Generated\Dto\OrderDataTransferObject $order
+     * @return \App\Generated\Dto\OrderDataTransferObject
+     */
     public function save(OrderDataTransferObject $order): OrderDataTransferObject
     {
         $transaction = new Transaction($this->orm);

@@ -15,10 +15,17 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
      * @var AttributeRepository
      */
     private AttributeRepository $attributeRepository;
+    /**
+     * @var \Cycle\ORM\RepositoryInterface $ormAttributeRepository
+     */
     private \Cycle\ORM\RepositoryInterface $ormAttributeRepository;
 
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\Attribute\Persistence\AttributeRepository $attributeRepository
+     */
     public function __construct(ORM $orm, AttributeRepository $attributeRepository)
     {
         $this->attributeRepository = $attributeRepository;
@@ -27,7 +34,9 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
     }
 
 
-
+    /**
+     * @param \App\Generated\Dto\AttributeDataTransferObject $attribute
+     */
     public function delete(AttributeDataTransferObject $attribute):void
     {
         $transaction = new Transaction($this->orm);
@@ -38,6 +47,10 @@ class AttributeEntityManager implements AttributeEntityManagerInterface
         $this->attributeRepository->getAttributeList();
     }
 
+    /**
+     * @param \App\Generated\Dto\AttributeDataTransferObject $attribute
+     * @return \App\Generated\Dto\AttributeDataTransferObject
+     */
     public function save(AttributeDataTransferObject $attribute): AttributeDataTransferObject
     {
         $transaction = new Transaction($this->orm);

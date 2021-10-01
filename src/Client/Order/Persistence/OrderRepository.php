@@ -12,6 +12,10 @@ class OrderRepository implements OrderRepositoryInterface
     private OrderMapperInterface $orderMapper;
     private \Cycle\ORM\RepositoryInterface $repository;
 
+    /**
+     * @param \App\Client\Order\Persistence\Mapper\OrderMapperInterface $orderMapper
+     * @param \Cycle\ORM\ORM $ORM
+     */
     public function __construct(OrderMapperInterface $orderMapper, \Cycle\ORM\ORM $ORM)
     {
         $this->orderMapper = $orderMapper;
@@ -34,6 +38,10 @@ class OrderRepository implements OrderRepositoryInterface
         return $orderList;
     }
 
+    /**
+     * @param int $orderId
+     * @return \App\Generated\Dto\OrderDataTransferObject|null
+     */
     public function getAddress(int $orderId): ?OrderDataTransferObject
     {
         $order = $this->repository->findByPK($orderId);

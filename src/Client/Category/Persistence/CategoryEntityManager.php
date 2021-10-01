@@ -18,6 +18,10 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
 
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\Category\Persistence\CategoryRepository $categoryRepository
+     */
     public function __construct(ORM $orm, CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
@@ -26,7 +30,9 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
     }
 
 
-
+    /**
+     * @param \App\Generated\Dto\CategoryDataTransferObject $category
+     */
     public function delete(CategoryDataTransferObject $category):void
     {
         $transaction = new Transaction($this->orm);
@@ -36,6 +42,10 @@ class CategoryEntityManager implements CategoryEntityManagerInterface
         $this->categoryRepository->getCategoryList();
     }
 
+    /**
+     * @param \App\Generated\Dto\CategoryDataTransferObject $category
+     * @return \App\Generated\Dto\CategoryDataTransferObject
+     */
     public function save(CategoryDataTransferObject $category): CategoryDataTransferObject
     {
         $transaction = new Transaction($this->orm);

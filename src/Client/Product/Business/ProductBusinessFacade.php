@@ -35,7 +35,7 @@ class ProductBusinessFacade implements ProductBusinessFacadeInterface
     {
         return $this->productEntityManager->save($product);
     }
-    public function delete(ProductDataTransferObject $product)
+    public function delete(ProductDataTransferObject $product):void
     {
         $this->productEntityManager->delete($product);
     }

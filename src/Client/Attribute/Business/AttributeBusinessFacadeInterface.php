@@ -13,7 +13,14 @@ interface AttributeBusinessFacadeInterface
      */
     public function getList(): array;
 
+    /**
+     * @param \App\Generated\Dto\AttributeDataTransferObject $attribute
+     * @return \App\Generated\Dto\AttributeDataTransferObject
+     */
     public function save(AttributeDataTransferObject $attribute): AttributeDataTransferObject;
 
-    public function delete(AttributeDataTransferObject $attribute);
+    /**
+     * @param \App\Generated\Dto\AttributeDataTransferObject $attribute
+     */
+    public function delete(AttributeDataTransferObject $attribute):void ;
 }
