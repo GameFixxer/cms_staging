@@ -9,9 +9,24 @@ use App\Backend\ImportProduct\Business\Model\Update\ProductInformation;
 
 class ActionProvider
 {
+    /**
+     * @var \App\Backend\ImportProduct\Business\Model\Update\ProductCategory $productCategory
+     */
     private ProductCategory $productCategory;
+    /**
+     * @var \App\Backend\ImportProduct\Business\Model\Update\ProductInformation $productInformation
+     */
     private ProductInformation $productInformation;
+    /**
+     * @var \App\Backend\ImportProduct\Business\Model\Update\ProductAttribute $productAttribute
+     */
     private ProductAttribute $productAttribute;
+
+    /**
+     * @param \App\Backend\ImportProduct\Business\Model\Update\ProductCategory $productCategory
+     * @param \App\Backend\ImportProduct\Business\Model\Update\ProductInformation $productInformation
+     * @param \App\Backend\ImportProduct\Business\Model\Update\ProductAttribute $productAttribute
+     */
     public function __construct(
         ProductCategory $productCategory,
         ProductInformation $productInformation,
@@ -22,7 +37,10 @@ class ActionProvider
         $this->productAttribute = $productAttribute;
     }
 
-    public function getProductActionList()
+    /**
+     * @return array
+     */
+    public function getProductActionList():array
     {
         return [
             $this->productCategory,

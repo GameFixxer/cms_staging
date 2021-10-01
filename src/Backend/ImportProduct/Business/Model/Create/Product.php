@@ -12,15 +12,30 @@ use App\Generated\Dto\ProductDataTransferObject;
 
 class Product implements ProductInterface
 {
+    /**
+     * @var \App\Client\Product\Business\ProductBusinessFacadeInterface $productBusinessFacade
+     */
     private ProductBusinessFacadeInterface $productBusinessFacade;
+    /**
+     * @var \App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface $integrityManager
+     */
     private IntegrityManagerInterface $integrityManager;
 
+    /**
+     * @param \App\Client\Product\Business\ProductBusinessFacadeInterface $productBusinessFacade
+     * @param \App\Backend\ImportProduct\Business\Model\IntegrityManager\IntegrityManagerInterface $integrityManager
+     */
     public function __construct(ProductBusinessFacadeInterface $productBusinessFacade, IntegrityManagerInterface $integrityManager)
     {
         $this->productBusinessFacade = $productBusinessFacade;
         $this->integrityManager = $integrityManager;
     }
 
+    /**
+     * @param \App\Generated\Dto\CsvProductDataTransferObject $csvDTO
+     * @return \App\Generated\Dto\CsvProductDataTransferObject|null
+     * @throws \Exception
+     */
     public function createProduct(CsvProductDataTransferObject $csvDTO) : ?CsvProductDataTransferObject
     {
         if ($csvDTO->getArticleNumber() === '') {

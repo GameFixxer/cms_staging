@@ -7,5 +7,8 @@ use App\Generated\Dto\CsvCategoryDataTransferObject;
 
 interface CategoryUpdateInterface
 {
+    /**
+     * @param \App\Generated\Dto\CsvCategoryDataTransferObject $csvDTO
+     */
     public function performUpdateActions(CsvCategoryDataTransferObject $csvDTO): void;
 }
