@@ -24,7 +24,7 @@ class CategoryImporter implements CategoryUpdateInterface
     {
         foreach ($this->importArrayList as $action) {
             if ($action === null) {
-                throw new \Exception('Filter or Updatefunction'.get_class($action).'Broken', 1);
+                throw new \Exception('Filter or Updatefunction broken', 1);
             }
             try {
                 $action->update($csvDTO);
