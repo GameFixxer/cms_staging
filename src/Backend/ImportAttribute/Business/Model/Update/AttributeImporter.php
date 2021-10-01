@@ -19,12 +19,12 @@ class AttributeImporter implements AttributeImporterInterface
     {
         foreach ($this->importArrayList as $action) {
             if ($action === null) {
-                throw new \Exception('Filter or Updatefunction'.get_class($action).'Broken', 1);
+                throw new \Exception('Filter or Updatefunction broken (action = null)', 1);
             }
             try {
                 $action->update($csvDTO);
             } catch (\Exception $e) {
-                throw new \Exception(get_class($action).'Crashed', 1);
+                throw new \Exception(get_class($action) . ' crashed', 1);
             }
         }
     }
