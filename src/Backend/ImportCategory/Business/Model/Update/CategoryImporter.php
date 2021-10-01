@@ -15,11 +15,18 @@ class CategoryImporter implements CategoryUpdateInterface
 
     private array $importArrayList;
 
+    /**
+     * @param \App\Backend\ImportProduct\Business\Model\ActionProvider $filterProvider
+     */
     public function __construct(ActionProvider $filterProvider)
     {
         $this->importArrayList = $filterProvider->getCategoryActionList();
     }
 
+    /**
+     * @param \App\Generated\Dto\CsvCategoryDataTransferObject $csvDTO
+     * @throws \Exception
+     */
     public function performUpdateActions(CsvCategoryDataTransferObject $csvDTO):void
     {
         foreach ($this->importArrayList as $action) {

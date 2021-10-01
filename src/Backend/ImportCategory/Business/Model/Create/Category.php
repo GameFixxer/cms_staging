@@ -12,13 +12,24 @@ use App\Generated\Dto\CsvDataTransferObject;
 
 class Category implements CategoryInterface
 {
+    /**
+     * @var \App\Client\Category\Business\CategoryBusinessFacadeInterface
+     */
     private CategoryBusinessFacadeInterface $categoryBusinessFacade;
 
+    /**
+     * @param \App\Client\Category\Business\CategoryBusinessFacadeInterface $categoryBusinessFacade
+     */
     public function __construct(CategoryBusinessFacadeInterface $categoryBusinessFacade)
     {
         $this->categoryBusinessFacade = $categoryBusinessFacade;
     }
 
+    /**
+     * @param \App\Generated\Dto\CsvCategoryDataTransferObject $csvDTO
+     * @return \App\Generated\Dto\CsvCategoryDataTransferObject|null
+     * @throws \Exception
+     */
     public function createCategory(CsvCategoryDataTransferObject $csvDTO) : ?CsvCategoryDataTransferObject
     {
         if ($csvDTO->getCategoryKey() === '') {
