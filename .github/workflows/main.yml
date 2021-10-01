@@ -1,0 +1,20 @@
+name: CI CMS-Staging
+
+on: push
+
+jobs:
+  test:
+    name: checkout and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout project
+        uses: actions/checkout@v1
+      - name: composer install
+        run: composer install
+      # TODO database needed for these
+      #- name: run codeception
+      #  run: php vendor/bin/codecept run
+      #- name: run mutation tests
+      #  run: vendor/bin/infection --only-covered --min-msi=100
+      - name: run psalm
+        run: vendor/bin/psalm
