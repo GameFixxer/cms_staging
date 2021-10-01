@@ -35,7 +35,7 @@ class UserBusinessFacade implements UserBusinessFacadeInterface
     {
         return $this->userEntityManager->save($user);
     }
-    public function delete(UserDataTransferObject $user)
+    public function delete(UserDataTransferObject $user):void
     {
         $this->userEntityManager->delete($user);
     }

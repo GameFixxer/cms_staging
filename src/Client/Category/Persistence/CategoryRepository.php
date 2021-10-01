@@ -41,6 +41,10 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $categoryList;
     }
 
+    /**
+     * @param int $categoryId
+     * @return \App\Generated\Dto\CategoryDataTransferObject|null
+     */
     public function getCategory(int $categoryId): ?CategoryDataTransferObject
     {
         $categoryEntity = $this->ormCategoryRepository->findByPK($categoryId);
@@ -50,6 +54,10 @@ class CategoryRepository implements CategoryRepositoryInterface
         return null;
     }
 
+    /**
+     * @param string $key
+     * @return \App\Generated\Dto\CategoryDataTransferObject|null
+     */
     public function getCategoryByKey(string $key): ?CategoryDataTransferObject
     {
         $categoryEntity = $this->ormCategoryRepository->findOne(['category_key'=>$key]);

@@ -12,5 +12,9 @@ interface OrderRepositoryInterface
      */
     public function getOrderList(): array;
 
+    /**
+     * @param int $orderId
+     * @return \App\Generated\Dto\OrderDataTransferObject|null
+     */
     public function getAddress(int $orderId): ?OrderDataTransferObject;
 }

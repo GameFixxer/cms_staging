@@ -18,6 +18,10 @@ class ProductEntityManager implements ProductEntityManagerInterface
 
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\Product\Persistence\ProductRepository $productRepository
+     */
     public function __construct(ORM $orm, ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
@@ -25,7 +29,9 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $this->ormProductRepository = $orm->getRepository(Product::class);
     }
 
-
+    /**
+     * @param \App\Generated\Dto\ProductDataTransferObject $product
+     */
 
     public function delete(ProductDataTransferObject $product):void
     {
@@ -36,6 +42,10 @@ class ProductEntityManager implements ProductEntityManagerInterface
         $this->productRepository->getProductList();
     }
 
+    /**
+     * @param \App\Generated\Dto\ProductDataTransferObject $product
+     * @return \App\Generated\Dto\ProductDataTransferObject
+     */
     public function save(ProductDataTransferObject $product): ProductDataTransferObject
     {
         $transaction = new Transaction($this->orm);

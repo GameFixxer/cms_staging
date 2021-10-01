@@ -16,5 +16,5 @@ interface UserBusinessFacadeInterface
 
     public function save(UserDataTransferObject $user): UserDataTransferObject;
 
-    public function delete(UserDataTransferObject $user);
+    public function delete(UserDataTransferObject $user):void ;
 }

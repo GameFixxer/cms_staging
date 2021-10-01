@@ -18,6 +18,10 @@ class UserEntityManager implements UserEntityManagerInterface
     private \Cycle\ORM\RepositoryInterface $ormUserRepository;
     private ORM $orm;
 
+    /**
+     * @param \Cycle\ORM\ORM $orm
+     * @param \App\Client\User\Persistence\UserRepository $userRepository
+     */
     public function __construct(ORM $orm, UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
@@ -25,6 +29,9 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->ormUserRepository = $orm->getRepository(User::class);
     }
 
+    /**
+     * @param \App\Generated\Dto\UserDataTransferObject $user
+     */
     public function delete(UserDataTransferObject $user):void
     {
         $transaction = new Transaction($this->orm);
@@ -34,6 +41,10 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->userRepository->getUserList();
     }
 
+    /**
+     * @param \App\Generated\Dto\UserDataTransferObject $user
+     * @return \App\Generated\Dto\UserDataTransferObject
+     */
     public function save(UserDataTransferObject $user): UserDataTransferObject
     {
         $transaction = new Transaction($this->orm);

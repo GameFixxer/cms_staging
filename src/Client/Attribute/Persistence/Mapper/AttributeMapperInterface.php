@@ -7,5 +7,9 @@ use App\Generated\Dto\AttributeDataTransferObject;
 
 interface AttributeMapperInterface
 {
+    /**
+     * @param \App\Client\Attribute\Persistence\Entity\Attribute $attribute
+     * @return \App\Generated\Dto\AttributeDataTransferObject
+     */
     public function map(Attribute $attribute): AttributeDataTransferObject;
 }

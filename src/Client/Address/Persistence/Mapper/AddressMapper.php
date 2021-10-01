@@ -9,6 +9,10 @@ use App\Generated\Dto\ProductDataTransferObject;
 
 class AddressMapper implements AddressMapperInterface
 {
+    /**
+     * @param \App\Client\Address\Persistence\Entity\Address $address
+     * @return \App\Generated\Dto\AddressDataTransferObject
+     */
     public function map(Address $address): AddressDataTransferObject
     {
         $addressDataTransferObject = new  AddressDataTransferObject();

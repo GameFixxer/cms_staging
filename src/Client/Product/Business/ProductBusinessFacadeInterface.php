@@ -13,7 +13,14 @@ interface ProductBusinessFacadeInterface
      */
     public function getList(): array;
 
+    /**
+     * @param \App\Generated\Dto\ProductDataTransferObject $product
+     * @return \App\Generated\Dto\ProductDataTransferObject
+     */
     public function save(ProductDataTransferObject $product): ProductDataTransferObject;
 
-    public function delete(ProductDataTransferObject $product);
+    /**
+     * @param \App\Generated\Dto\ProductDataTransferObject $product
+     */
+    public function delete(ProductDataTransferObject $product):void ;
 }

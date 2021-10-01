@@ -6,7 +6,14 @@ use App\Generated\Dto\OrderDataTransferObject;
 
 interface OrderEntityManagerInterface
 {
+    /**
+     * @param \App\Generated\Dto\OrderDataTransferObject $order
+     */
     public function delete(OrderDataTransferObject $order): void;
 
+    /**
+     * @param \App\Generated\Dto\OrderDataTransferObject $order
+     * @return \App\Generated\Dto\OrderDataTransferObject
+     */
     public function save(OrderDataTransferObject $order): OrderDataTransferObject;
 }

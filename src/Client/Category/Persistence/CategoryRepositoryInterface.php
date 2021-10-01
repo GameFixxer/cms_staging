@@ -11,7 +11,15 @@ interface CategoryRepositoryInterface
      */
     public function getCategoryList(): array;
 
+    /**
+     * @param int $categoryId
+     * @return \App\Generated\Dto\CategoryDataTransferObject|null
+     */
     public function getCategory(int $categoryId): ?CategoryDataTransferObject;
 
+    /**
+     * @param string $key
+     * @return \App\Generated\Dto\CategoryDataTransferObject|null
+     */
     public function getCategoryByKey(string $key): ?CategoryDataTransferObject;
 }
