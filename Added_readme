@@ -1,8 +1,0 @@
-Clone the repository.
-Create you own branch
-install dependecies with : composer install
-Start your server via : php -S localhost:8000 -t <full-path-to-your-index.php-directory>
-Start your database via: docker-compose up -d
-
-
-Always use declare(strict_types=1); at the beginning of your files in order to not mess up with types.
