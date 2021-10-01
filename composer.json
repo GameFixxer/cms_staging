@@ -17,7 +17,8 @@
         "symfony/console": "^5.1",
         "symfony/filesystem": "^5.1",
         "symfony/dependency-injection": "^5.1",
-        "symfony/config": "^5.1"
+        "symfony/config": "^5.1",
+        "infection/infection": "^0.25.2"
     },
     "autoload": {
         "psr-4": {
