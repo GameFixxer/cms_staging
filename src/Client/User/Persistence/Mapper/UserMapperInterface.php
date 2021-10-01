@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Client\User\Persistence\Mapper;
 
 use App\Client\User\Persistence\Entity\User;

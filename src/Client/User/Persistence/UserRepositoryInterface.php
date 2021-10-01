@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Client\User\Persistence;
 
 use App\Generated\Dto\UserDataTransferObject;
