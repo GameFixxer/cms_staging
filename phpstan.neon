@@ -1,0 +1,6 @@
+parameters:
+    excludes_analyse:
+        - %currentWorkingDirectory%/vendor
+        - %currentWorkingDirectory%/src/Generated
+    reportUnmatchedIgnoredErrors: false
+    level: 7
