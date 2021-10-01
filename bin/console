@@ -4,16 +4,16 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-use App\Service\Container;
-use App\Service\DependencyProvider;
+//use App\Service\Container;
+//use App\Service\DependencyProvider;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 // ... register commands
-$container = new Container();
-$containerProvider = new DependencyProvider();
-$containerProvider->providerDependency($container);
+//$container = new Container();
+//$containerProvider = new DependencyProvider();
+//$containerProvider->providerDependency($container);
 
 $application->add(new \App\Command\ImportCommand($container));
 $application->run();
