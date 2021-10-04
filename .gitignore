@@ -1,7 +1,7 @@
 .idea/
 vendor
-/template_c/*
-!template_c/.gitkeep
+/templates_c/*
+!templates_c/.gitkeep
 /cache/*
 !cache/.gitkeep
 /configs/*
