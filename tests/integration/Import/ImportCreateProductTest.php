@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\Tests\integration\Import;
 
-
 use App\Client\Product\Persistence\ProductRepository;
 
 use App\Client\Product\Persistence\Entity\Product;
-use App\Generated\Dto\CsvDataTransferObject;
 use App\Generated\Dto\CsvProductDataTransferObject;
 use App\Generated\Dto\ProductDataTransferObject;
 use App\Service\DatabaseManager;
@@ -23,20 +21,18 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
     private CsvProductDataTransferObject $csvDTO;
     private CreateProduct $importCreateProduct;
     private ProductRepository $productRepository;
-    private ContainerHelper $container;
 
     public function _before()
     {
-        $this->container = new ContainerHelper();
-        $this->productRepository = $this->container->getProductRepository();
-        $this->importCreateProduct = $this->container->getCreateProduct();
+        $container = new ContainerHelper();
+        $this->productRepository = $container->getProductRepository();
+        $this->importCreateProduct = $container->getCreateProduct();
     }
 
     public function _after()
     {
         if ($this->productRepository->getProduct($this->csvDTO->getArticleNumber()) instanceof ProductDataTransferObject) {
-            $orm = new DatabaseManager();
-            $orm = $orm->connect();
+            $orm = DatabaseManager::connect();
             $ormProductRepository = $orm->getRepository(Product::class);
             $transaction = new Transaction($orm);
             $transaction->delete($ormProductRepository->findOne(['article_number'=>$this->csvDTO->getArticleNumber()]));
@@ -44,7 +40,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         }
     }
 
-    public function testWithNonExistingProduct()
+    public function testWithNonExistingProduct(): void
     {
         $this->createCSVDTO('abc123');
         $csvProduct = $this->importCreateProduct->createProduct($this->csvDTO);
@@ -55,7 +51,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         self::assertSame($csvProduct->getId(), $productFromRepository->getId());
     }
 
-    public function testWithExistingCorrectProduct()
+    public function testWithExistingCorrectProduct(): void
     {
         $this->createCSVDTO('abc123');
         $csvProduct1 = $this->importCreateProduct->createProduct($this->csvDTO);
@@ -73,7 +69,7 @@ class ImportCreateProductTest extends \Codeception\Test\Unit
         self::assertNotSame('test', $productFromRepository1->getName());
     }
 
-    private function createCSVDTO(string $articleNumber)
+    private function createCSVDTO(string $articleNumber): void
     {
         $this->csvDTO = new CsvProductDataTransferObject();
         $this->csvDTO->setArticleNumber($articleNumber);
