@@ -17,8 +17,7 @@
         "symfony/console": "^5.1",
         "symfony/filesystem": "^5.1",
         "symfony/dependency-injection": "^5.1",
-        "symfony/config": "^5.1",
-        "infection/infection": "^0.25.2"
+        "symfony/config": "^5.1"
     },
     "autoload": {
         "psr-4": {
@@ -33,11 +32,12 @@
     "require-dev": {
         "symfony/var-dumper": "^5.0",
         "phpstan/phpstan": "^0.12.99",
-        "vimeo/psalm": "^3.11",
+        "vimeo/psalm": "^4.10.0",
         "codeception/codeception": "^4.1",
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
         "codeception/c3": "^2.4",
-        "phpro/grumphp": "^1.5"
+        "phpro/grumphp": "^1.5",
+        "infection/infection": "^0.25.3"
     }
 }
