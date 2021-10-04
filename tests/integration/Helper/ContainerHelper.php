@@ -81,46 +81,46 @@ class ContainerHelper
         return $this->container->get(CsvImportLoader::class);
     }
 
-    public function getOrmProductRepository()
+    public function getOrmProductRepository(): DatabaseManager
     {
         return ($this->container->get(DatabaseManager::class))->connect();
     }
 
-    public function getCreateProduct()
+    public function getCreateProduct(): Product
     {
         return $this->container->get(Product::class);
     }
 
-    public function getUpdateProductCategory()
+    public function getUpdateProductCategory(): ProductCategory
     {
         return $this->container->get(ProductCategory::class);
     }
 
-    public function getUpdateProductInformation()
+    public function getUpdateProductInformation(): ProductInformation
     {
         return $this->container->get(ProductInformation::class);
     }
 
-    public function getUpdateImport()
+    public function getUpdateImport(): ProductImporter
     {
         return $this->container->get(ProductImporter::class);
     }
 
-    public function getAttributeRepository()
+    public function getAttributeRepository(): AttributeRepository
     {
         return $this->container->get(AttributeRepository::class);
     }
 
-    public function getUpdateAttribute()
+    public function getUpdateAttribute(): ProductAttribute
     {
         return $this->container->get(ProductAttribute::class);
     }
 
-    public function getAttributeEntityManager()
+    public function getAttributeEntityManager(): AttributeEntityManager
     {
         return $this->container->get(AttributeEntityManager::class);
     }
-    public function getUserSession()
+    public function getUserSession(): SessionUser
     {
         return$this->container->get(SessionUser::class);
     }
