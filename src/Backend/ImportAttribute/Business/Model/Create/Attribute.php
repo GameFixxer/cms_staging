@@ -11,20 +11,30 @@ class Attribute implements AttributeInterface
 {
     private AttributeBusinessFacadeInterface $attributeBusinessFacade;
 
+    /**
+     * @param \App\Client\Attribute\Business\AttributeBusinessFacadeInterface $attributeBusinessFacade
+     */
     public function __construct(AttributeBusinessFacadeInterface $attributeBusinessFacade)
     {
         $this->attributeBusinessFacade = $attributeBusinessFacade;
     }
 
-    public function createCategory(CsvAttributeDataTransferObject $csvDTO) : ?CsvAttributeDataTransferObject
+    /**
+     * @param \App\Generated\Dto\CsvAttributeDataTransferObject $csvDTO
+     *
+     * @return \App\Generated\Dto\CsvAttributeDataTransferObject|null
+     * @throws \Exception
+     */
+    public function createCategory(CsvAttributeDataTransferObject $csvDTO): ?CsvAttributeDataTransferObject
     {
-        if ($csvDTO->getAttributeKey() === '') {
+        if (trim($csvDTO->getAttributeKey()) === '') {
             throw new \Exception('CategoryKey must not be empty', 1);
         }
 
         $attributeFromRepository = $this->attributeBusinessFacade->get($csvDTO->getAttributeKey());
-        if ($attributeFromRepository instanceof \App\Client\Attribute\Persistence\Entity\Attribute) {
-            $csvDTO->setAttributeId($attributeFromRepository->getAttributeId());
+        if ($attributeFromRepository) {
+            $csvDTO->setAttributeId($attributeFromRepository->getId());
+
             return $csvDTO;
         }
         $attribute = new AttributeDataTransferObject();
