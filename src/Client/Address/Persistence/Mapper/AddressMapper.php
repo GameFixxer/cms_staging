@@ -5,7 +5,6 @@ namespace App\Client\Address\Persistence\Mapper;
 
 use App\Client\Address\Persistence\Entity\Address;
 use App\Generated\Dto\AddressDataTransferObject;
-use App\Generated\Dto\ProductDataTransferObject;
 
 class AddressMapper implements AddressMapperInterface
 {

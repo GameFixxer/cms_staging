@@ -5,10 +5,6 @@ namespace App\Client\Attribute\Persistence\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\BelongsTo;
-use Cycle\Annotated\Annotation\Relation\HasMany;
-use Cycle\Annotated\Annotation\Relation\ManyToMany;
-use Cycle\ORM\Relation\Pivoted\PivotedCollection;
 
 /** @Entity */
 class Attribute

@@ -5,7 +5,6 @@ namespace App\Client\Category\Persistence\Entity;
 
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
-use Cycle\Annotated\Annotation\Relation\HasMany;
 
 /**
  * @Entity(
