@@ -49,7 +49,7 @@ class CsvImportLoader implements CsvImportLoaderInterface
         return $productList;
     }
 
-    public function getHeader()
+    public function getHeader(): array
     {
         return $this->header;
     }
