@@ -43,6 +43,7 @@
     "config": {
         "allow-plugins": {
             "codeception/c3": true,
+            "phpro/grumphp": true,
             "infection/extension-installer": true,
             "third-party/required-plugin": true,
             "my-organization/*": true,
