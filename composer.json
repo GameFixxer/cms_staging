@@ -39,5 +39,15 @@
         "codeception/c3": "^2.4",
         "phpro/grumphp": "^1.5",
         "infection/infection": "^0.25.3"
-    }
+    },
+    "config": {
+        "allow-plugins": {
+            "codeception/c3": true,
+            "phpro/grumphp": true,
+            "infection/extension-installer": true,
+            "third-party/required-plugin": true,
+            "my-organization/*": true,
+            "unnecessary/plugin": true
+        }
+}
 }
