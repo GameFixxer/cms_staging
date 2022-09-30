@@ -43,9 +43,10 @@
     "config": {
         "allow-plugins": {
             "codeception/c3": true,
+            "infection/extension-installer": true,
             "third-party/required-plugin": true,
             "my-organization/*": true,
-            "unnecessary/plugin": false
+            "unnecessary/plugin": true,
         }
     
 }
