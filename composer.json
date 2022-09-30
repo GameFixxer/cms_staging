@@ -40,4 +40,13 @@
         "phpro/grumphp": "^1.5",
         "infection/infection": "^0.25.3"
     }
+    {
+    "config": {
+        "allow-plugins": {
+            "third-party/required-plugin": true,
+            "my-organization/*": true,
+            "unnecessary/plugin": false
+        }
+    }
+}
 }
