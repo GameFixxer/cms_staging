@@ -42,6 +42,7 @@
     },
     "config": {
         "allow-plugins": {
+            "codeception/c3": true,
             "third-party/required-plugin": true,
             "my-organization/*": true,
             "unnecessary/plugin": false
