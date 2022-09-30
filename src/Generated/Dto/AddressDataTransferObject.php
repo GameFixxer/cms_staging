@@ -21,7 +21,7 @@ class AddressDataTransferObject
 
     protected string $type = "";
 
-    protected $active = false;
+    protected bool $active = false;
 
 
     public function getActive(): bool

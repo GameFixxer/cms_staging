@@ -14,7 +14,7 @@ class ProductDataTransferObject implements DataTransferObjectInterface
     private string $articleNumber = '';
     private string $desc = '';
     private ?object $category = null;
-    private $attribute = null;
+    private ?object $attribute = null;
     private ?int $price = null;
 
     /**
@@ -44,7 +44,7 @@ class ProductDataTransferObject implements DataTransferObjectInterface
     /**
      * @param object|null $attribute
      */
-    public function setAttribute($attribute): void
+    public function setAttribute(?object $attribute): void
     {
         $this->attribute = $attribute;
     }
