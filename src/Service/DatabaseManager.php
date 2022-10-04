@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Service;
 
@@ -20,19 +19,19 @@ class DatabaseManager
     {
         $dbal = new Database\DatabaseManager(
             new DatabaseConfig([
-                'default' => 'default',
-                'databases' => [
+                'default'     => 'default',
+                'databases'   => [
                     'default' => [
                         'connection' => 'mysql',
                     ],
                 ],
                 'connections' => [
                     'mysql' => [
-                        'driver' => Database\Driver\MySQL\MySQLDriver::class,
+                        'driver'  => Database\Driver\MySQL\MySQLDriver::class,
                         'options' => [
                             'connection' => 'mysql:host=127.0.01:3336;dbname=mvc',
-                            'username' => 'root',
-                            'password' => 'pass123',
+                            'username'   => 'root',
+                            'password'   => 'pass123',
                         ],
                     ],
                 ],
