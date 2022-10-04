@@ -26,10 +26,15 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Mailer implements MailerInterface
 {
-    private $transport;
+    private TransportInterface $transport;
     private $bus;
-    private $dispatcher;
+    private ?EventDispatcherInterface $dispatcher;
 
+    /**
+     * @param \Symfony\Component\Mailer\Transport\TransportInterface $transport
+     * @param $bus
+     * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|null $dispatcher
+     */
     public function __construct(TransportInterface $transport, $bus = null, EventDispatcherInterface $dispatcher = null)
     {
         $this->transport = $transport;
@@ -37,11 +42,24 @@ class Mailer implements MailerInterface
         $this->dispatcher = class_exists(Event::class) ? LegacyEventDispatcherProxy::decorate($dispatcher) : $dispatcher;
     }
 
-    public function send(RawMessage $message, Envelope $envelope = null):void
+    /**
+     * @param \Symfony\Component\Mime\RawMessage $message
+     * @param \Symfony\Component\Mailer\Envelope|null $envelope
+     *
+     * @return void
+     */
+    public function send(RawMessage $message, Envelope $envelope = null): void
     {
     }
 
-    public function sendMail(RawMessage $message, Envelope $envelope = null):bool
+    /**
+     * @param \Symfony\Component\Mime\RawMessage $message
+     * @param \Symfony\Component\Mailer\Envelope|null $envelope
+     *
+     * @return bool
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
+    public function sendMail(RawMessage $message, Envelope $envelope = null): bool
     {
         if (null === $this->bus) {
             $this->transport->send($message, $envelope);
