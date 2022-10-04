@@ -16,7 +16,7 @@ class DatabaseManager
     /**
      * @return \Cycle\ORM\ORMInterface
      */
-    public static function connect()
+    public static function connect(): ORM\ORMInterface
     {
         $dbal = new Database\DatabaseManager(
             new DatabaseConfig([
