@@ -2,8 +2,6 @@
 declare(strict_types=1);
 namespace App\Service;
 
-use App\Generated\Dto\ProductDataTransferObject;
-
 class SessionUser
 {
     public function __construct()
@@ -19,17 +17,28 @@ class SessionUser
         //session_destroy();
     }
 
-    public function setSessionId(string $id)
+    /**
+     * @param string $id
+     *
+     * @return void
+     */
+    public function setSessionId(string $id): void
     {
         $_SESSION['ID'] = $id;
     }
 
-    public function setSessionTimer()
+    /**
+     * @return void
+     */
+    public function setSessionTimer(): void
     {
         $_SESSION['timeout'] = time();
     }
 
-    public function sessionTimeout():bool
+    /**
+     * @return bool
+     */
+    public function sessionTimeout(): bool
     {
         if (isset($_SESSION['timeout']) && $_SESSION['timeout'] - time() > 3600) {
             session_unset();
@@ -39,7 +48,12 @@ class SessionUser
         return false;
     }
 
-    public function addToShoppingCard(String $product):void
+    /**
+     * @param String $product
+     *
+     * @return void
+     */
+    public function addToShoppingCard(String $product): void
     {
         if (!isset($_SESSION['shoppingCard'])) {
             $_SESSION['shoppingCard'] = [];
@@ -53,12 +67,22 @@ class SessionUser
         array_push($_SESSION['shoppingCard'], $product);
     }
 
-    public function setShoppingCard(array $card):void
+    /**
+     * @param array $card
+     *
+     * @return void
+     */
+    public function setShoppingCard(array $card): void
     {
         $_SESSION['shoppingCard'] = $card;
     }
 
-    public function removeFromShoppingCard(String $articleNumber):void
+    /**
+     * @param String $articleNumber
+     *
+     * @return void
+     */
+    public function removeFromShoppingCard(String $articleNumber): void
     {
         $key = array_search($articleNumber, $_SESSION['shoppingCard']);
         if ($key !== false && isset($_SESSION['shoppingCard'])) {
@@ -73,7 +97,10 @@ class SessionUser
         }
     }
 
-    public function getShoppingCard()
+    /**
+     * @return array
+     */
+    public function getShoppingCard(): array
     {
         if (!isset($_SESSION['shoppingCard'])) {
             return [];
@@ -81,40 +108,72 @@ class SessionUser
         return $_SESSION['shoppingCard'];
     }
 
-    public function getSessionId():string
+    /**
+     * @return string
+     */
+    public function getSessionId(): string
     {
         return $_SESSION['ID'];
     }
+
+    /**
+     * @return bool
+     */
     public function isLoggedIn(): bool
     {
         return isset($_SESSION['loggedin']);
     }
 
-    public function setUser(String $name):void
+    /**
+     * @param String $name
+     *
+     * @return void
+     */
+    public function setUser(String $name): void
     {
         $_SESSION['username'] = $name;
     }
+
+    /**
+     * @param String $name
+     *
+     * @return void
+     */
     public function loginUser(String $name): void
     {
         $_SESSION['username'] = $name;
         $_SESSION['loggedin'] = true;
     }
 
-
+    /**
+     * @return string
+     */
     public function getUser(): string
     {
         return $_SESSION['username'];
     }
 
-    public function setUserRole(String $role):void
+    /**
+     * @param String $role
+     *
+     * @return void
+     */
+    public function setUserRole(String $role): void
     {
         $_SESSION['role'] = $role;
     }
 
+    /**
+     * @return mixed
+     */
     public function getUserRole()
     {
         return $_SESSION['role'];
     }
+
+    /**
+     * @return void
+     */
     public function logoutUser(): void
     {
         $_SESSION['username'] = null;
