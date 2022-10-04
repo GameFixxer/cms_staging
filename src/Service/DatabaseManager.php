@@ -1,20 +1,25 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Service;
 
 use Spiral\Database;
+use Spiral\Database\Config\DatabaseConfig;
 use Cycle\ORM;
 use Cycle\Annotated;
 use Cycle\Schema as CycleSchema;
+use Symfony\Component\Finder\Finder;
+use \Spiral\Tokenizer\ClassLocator;
 
 class DatabaseManager
 {
-
+    /**
+     * @return \Cycle\ORM\ORMInterface
+     */
     public static function connect()
     {
-
         $dbal = new Database\DatabaseManager(
-            new \Spiral\Database\Config\DatabaseConfig([
+            new DatabaseConfig([
                 'default' => 'default',
                 'databases' => [
                     'default' => [
@@ -34,8 +39,8 @@ class DatabaseManager
             ])
         );
 
-        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
-        $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
+        $finder = (new Finder())->files()->in([dirname(__DIR__, 2) . '/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
+        $classLocator = new ClassLocator($finder);
 
         $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($dbal), [
             new CycleSchema\Generator\ResetTables(), // re-declared table schemas (remove columns)
@@ -51,9 +56,8 @@ class DatabaseManager
             new CycleSchema\Generator\GenerateTypecast(), // typecast non string columns
         ]);
 
-
         $orm = new ORM\ORM(new ORM\Factory($dbal));
-        return  $orm->withSchema(new ORM\Schema($schema));
 
+        return $orm->withSchema(new ORM\Schema($schema));
     }
 }
