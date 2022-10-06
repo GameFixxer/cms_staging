@@ -49,7 +49,7 @@ class ActionProvider
         ];
     }
 
-    public function getCategoryActionList()
+    public function getCategoryActionList(): array
     {
         return [
 

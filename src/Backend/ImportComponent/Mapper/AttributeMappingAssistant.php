@@ -32,7 +32,7 @@ class AttributeMappingAssistant implements MappingAssistantInterface
         return $csvDataTransferObject;
     }
 
-    public function createMappingList(array $header)
+    public function createMappingList(array $header): array
     {
         $headerList = [];
         foreach ($header as $value) {

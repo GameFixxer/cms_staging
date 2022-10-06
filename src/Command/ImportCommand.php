@@ -29,7 +29,6 @@ class ImportCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // TODO add logic
         return 0;
     }
 }

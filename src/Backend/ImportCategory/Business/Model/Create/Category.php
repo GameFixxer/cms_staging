@@ -8,7 +8,6 @@ use App\Client\Category\Business\CategoryBusinessFacadeInterface;
 use App\Client\Category\Persistence\Entity\Category as CategoryEntity;
 use App\Generated\Dto\CategoryDataTransferObject;
 use App\Generated\Dto\CsvCategoryDataTransferObject;
-use App\Generated\Dto\CsvDataTransferObject;
 
 class Category implements CategoryInterface
 {
