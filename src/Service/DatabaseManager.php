@@ -10,7 +10,10 @@ use Cycle\Schema as CycleSchema;
 class DatabaseManager
 {
 
-    public static function connect()
+    /**
+     * @return \Cycle\ORM\ORMInterface
+     */
+    public static function connect(): ORM\ORMInterface
     {
 
         $dbal = new Database\DatabaseManager(
