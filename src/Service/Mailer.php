@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Mailer\Transport\TransportInterface;
@@ -25,6 +26,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Mailer implements MailerInterface
 {
+
     private TransportInterface $transport;
     private $bus;
     private ?EventDispatcherInterface $dispatcher;
