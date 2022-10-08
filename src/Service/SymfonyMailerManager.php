@@ -21,13 +21,22 @@ class SymfonyMailerManager
         $this->mailer = new Mailer(new Transports(['main' => new EsmtpTransport('localhost', 1025)]));
     }
 
-
-    public function sendMail(EmailDataTransferObject $emailDTO):bool
+    /**
+     * @param EmailDataTransferObject $emailDTO
+     * @return bool
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
+    public function sendMail(EmailDataTransferObject $emailDTO): bool
     {
         $this->createMail($emailDTO);
         return $this->mailer->sendMail($this->email);
     }
-    private function createMail(EmailDataTransferObject $emailDTO)
+
+    /**
+     * @param EmailDataTransferObject $emailDTO
+     * @return void
+     */
+    private function createMail(EmailDataTransferObject $emailDTO):void
     {
         $this->email = (new Email())
             ->from('r.berndt@nexus-united.com')
