@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\LegacyEventDispatcherProxy;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Mailer\Transport\TransportInterface;
@@ -26,9 +27,20 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Mailer implements MailerInterface
 {
-    private $transport;
+    /**
+     * @var TransportInterface
+     */
+    private TransportInterface $transport;
+
+    /**
+     * @var mixed|null
+     */
     private $bus;
-    private $dispatcher;
+
+    /**
+     * @var EventDispatcherInterface|null
+     */
+    private ?EventDispatcherInterface $dispatcher;
 
     public function __construct(TransportInterface $transport, $bus = null, EventDispatcherInterface $dispatcher = null)
     {
@@ -41,6 +53,9 @@ class Mailer implements MailerInterface
     {
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function sendMail(RawMessage $message, Envelope $envelope = null):bool
     {
         if (null === $this->bus) {
