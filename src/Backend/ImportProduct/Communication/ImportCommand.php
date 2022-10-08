@@ -18,8 +18,7 @@ class ImportCommand extends Command
     private  $container;
 
     /**
-     * ImportCommand constructor.
-     * @param $container
+     * @param \App\Component\SymfonyContainer $container
      */
     public function __construct(SymfonyContainer $container)
     {

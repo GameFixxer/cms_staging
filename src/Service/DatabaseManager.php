@@ -3,41 +3,43 @@
 namespace App\Service;
 
 use Spiral\Database;
+use Spiral\Database\Config\DatabaseConfig;
 use Cycle\ORM;
 use Cycle\Annotated;
 use Cycle\Schema as CycleSchema;
+use Symfony\Component\Finder\Finder;
+use \Spiral\Tokenizer\ClassLocator;
 
 class DatabaseManager
 {
     /**
-     * @return ORM\ORMInterface
+     * @return \Cycle\ORM\ORMInterface
      */
-    public static function connect(): \Cycle\ORM\ORMInterface
+    public static function connect(): ORM\ORMInterface
     {
-
         $dbal = new Database\DatabaseManager(
-            new \Spiral\Database\Config\DatabaseConfig([
-                'default' => 'default',
-                'databases' => [
+            new DatabaseConfig([
+                'default'     => 'default',
+                'databases'   => [
                     'default' => [
                         'connection' => 'mysql',
                     ],
                 ],
                 'connections' => [
                     'mysql' => [
-                        'driver' => Database\Driver\MySQL\MySQLDriver::class,
+                        'driver'  => Database\Driver\MySQL\MySQLDriver::class,
                         'options' => [
                             'connection' => 'mysql:host=127.0.01:3336;dbname=mvc',
-                            'username' => 'root',
-                            'password' => 'pass123',
+                            'username'   => 'root',
+                            'password'   => 'pass123',
                         ],
                     ],
                 ],
             ])
         );
 
-        $finder = (new \Symfony\Component\Finder\Finder())->files()->in([dirname(__DIR__, 2).'/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
-        $classLocator = new \Spiral\Tokenizer\ClassLocator($finder);
+        $finder = (new Finder())->files()->in([dirname(__DIR__, 2) . '/src/Client/*/Persistence/Entity/']); // __DIR__ here is folder with entities
+        $classLocator = new ClassLocator($finder);
 
         $schema = (new CycleSchema\Compiler())->compile(new CycleSchema\Registry($dbal), [
             new CycleSchema\Generator\ResetTables(), // re-declared table schemas (remove columns)
@@ -53,9 +55,8 @@ class DatabaseManager
             new CycleSchema\Generator\GenerateTypecast(), // typecast non string columns
         ]);
 
-
         $orm = new ORM\ORM(new ORM\Factory($dbal));
-        return  $orm->withSchema(new ORM\Schema($schema));
 
+        return $orm->withSchema(new ORM\Schema($schema));
     }
 }
