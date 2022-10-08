@@ -1,5 +1,4 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 /*
  * This file is part of the Symfony package.
  *
@@ -27,21 +26,16 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Mailer implements MailerInterface
 {
-    /**
-     * @var TransportInterface
-     */
+
     private TransportInterface $transport;
-
-    /**
-     * @var mixed|null
-     */
     private $bus;
-
-    /**
-     * @var EventDispatcherInterface|null
-     */
     private ?EventDispatcherInterface $dispatcher;
 
+    /**
+     * @param \Symfony\Component\Mailer\Transport\TransportInterface $transport
+     * @param $bus
+     * @param \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|null $dispatcher
+     */
     public function __construct(TransportInterface $transport, $bus = null, EventDispatcherInterface $dispatcher = null)
     {
         $this->transport = $transport;
@@ -49,14 +43,24 @@ class Mailer implements MailerInterface
         $this->dispatcher = class_exists(Event::class) ? LegacyEventDispatcherProxy::decorate($dispatcher) : $dispatcher;
     }
 
-    public function send(RawMessage $message, Envelope $envelope = null):void
+    /**
+     * @param \Symfony\Component\Mime\RawMessage $message
+     * @param \Symfony\Component\Mailer\Envelope|null $envelope
+     *
+     * @return void
+     */
+    public function send(RawMessage $message, Envelope $envelope = null): void
     {
     }
 
     /**
-     * @throws TransportExceptionInterface
+     * @param \Symfony\Component\Mime\RawMessage $message
+     * @param \Symfony\Component\Mailer\Envelope|null $envelope
+     *
+     * @return bool
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function sendMail(RawMessage $message, Envelope $envelope = null):bool
+    public function sendMail(RawMessage $message, Envelope $envelope = null): bool
     {
         if (null === $this->bus) {
             $this->transport->send($message, $envelope);
@@ -74,6 +78,7 @@ class Mailer implements MailerInterface
         }
         if (null !== $this->bus) {
             $this->bus->dispatch(new SendEmailMessage($message, $envelope));
+
             return true;
         }
 

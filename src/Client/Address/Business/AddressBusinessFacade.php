@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Client\Address\Business;
@@ -33,6 +34,7 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
      * @param \App\Client\User\Persistence\Entity\User $user
      * @param string $type
      * @param bool $primary
+     *
      * @return \App\Generated\Dto\AddressDataTransferObject|null
      */
     public function get(User $user, string $type, bool $primary): ?AddressDataTransferObject
@@ -44,16 +46,17 @@ class AddressBusinessFacade implements AddressBusinessFacadeInterface
      * @return AddressDataTransferObject[]
      */
 
-    public function getList():array
+    public function getList(): array
     {
-        return$this->addressRepository->getAddressList();
+        return $this->addressRepository->getAddressList();
     }
 
     /**
      * @param \App\Generated\Dto\AddressDataTransferObject $address
+     *
      * @return \App\Generated\Dto\AddressDataTransferObject
      */
-    public function save(AddressDataTransferObject $address):AddressDataTransferObject
+    public function save(AddressDataTransferObject $address): AddressDataTransferObject
     {
         return $this->addressEntityManager->save($address);
     }

@@ -39,7 +39,9 @@ class Product
     }
 
     /**
-     * @param int $price
+     * @param int|null $price
+     *
+     * @return void
      */
     public function setPrice(?int $price): void
     {
@@ -67,7 +69,9 @@ class Product
     }
 
     /**
-     * @param Attribute $attribute
+     * @param \App\Client\Attribute\Persistence\Entity\Attribute|null $attribute
+     *
+     * @return void
      */
     public function addAttribute(?Attribute  $attribute): void
     {
@@ -110,7 +114,9 @@ class Product
 
 
     /**
-     * @param int
+     * @param int $id
+     *
+     * @return void
      */
     public function setId(int $id):void
     {
