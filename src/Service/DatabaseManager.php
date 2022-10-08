@@ -1,5 +1,5 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
+
 namespace App\Service;
 
 use Spiral\Database;
@@ -9,8 +9,10 @@ use Cycle\Schema as CycleSchema;
 
 class DatabaseManager
 {
-
-    public static function connect()
+    /**
+     * @return ORM\ORMInterface
+     */
+    public static function connect(): \Cycle\ORM\ORMInterface
     {
 
         $dbal = new Database\DatabaseManager(

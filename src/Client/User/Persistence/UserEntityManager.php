@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Client\User\Persistence;
 
@@ -43,6 +41,7 @@ class UserEntityManager implements UserEntityManagerInterface
 
     /**
      * @param \App\Generated\Dto\UserDataTransferObject $user
+     * @throws \Throwable
      * @return \App\Generated\Dto\UserDataTransferObject
      */
     public function save(UserDataTransferObject $user): UserDataTransferObject
